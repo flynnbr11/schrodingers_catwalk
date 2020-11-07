@@ -1,0 +1,85 @@
+%%% Shortcuts
+% Model names
+\newcommand\ho{\hat{H}_0}
+\newcommand\hi{\hat{H}_i}
+\newcommand\hj{\hat{H}_j}
+\newcommand\hp{\hat{H}^{\prime}}
+\newcommand\ha{\hat{H}(\al)}
+
+% paulis
+\newcommand\s{\hat{\sigma}}
+\newcommand\sx{\hat{\sigma}^{x}}
+\newcommand\sy{\hat{\sigma}^{y}}
+\newcommand\sz{\hat{\sigma}^{z}}
+\newcommand\al{\vec{\alpha}}
+
+% Notation -> ensure consistency by providigin short cut for often used notation which may want to be changed later
+% and use the command EVERYWHERE that symbol is wanted.
+
+% \newcommand\lk{ \mathscr{l} } % likelihood - optional parameter used as subsrcipt
+\newcommand\lk{ l } % likelihood - optional parameter used as subsrcipt
+\newcommand\lgl{ { ln( \lk ) }} % log likelihood
+\newcommand\tll{{\mathcal{L}}} % total log likelihood - optional parameter used as subsrcipt
+% \newcommand\lk[1][d]{{ \mathscr{l}_{#1} }} % likelihood - optional parameter used as subsrcipt
+% \newcommand\lgl[1][]{ { ln( \lk{#1} ) }} % log likelihood
+% \newcommand\tll[1][]{{\mathcal{L}_{#1}}} % total log likelihood - optional parameter used as subsrcipt
+
+\newcommand{\expset}{{ \mathcal{E} }}
+\newcommand{\expdata}{{ \mathcal{D} }}
+
+
+\newcommand{\population}{\mathcal{P}}
+\newcommand{\termset}{{ \mathcal{T} }}
+\newcommand{\termseto}{{ \termset_0 }}
+\newcommand{\termseti}{{ \termset_i }} 
+
+\newcommand{\terms}{{ \vec{T} }}
+\newcommand\To{{ \termset_0 }}
+\newcommand\Ti{{ \termset_i }}
+
+\newcommand{\fs}{ \ensuremath{ F_{1}\text{-score} }}
+\newcommand\bij{B_{ij}}
+
+\newcommand{\Np}{N_p} % num particles 
+\newcommand{\Ne}{N_e} % num experiments
+\newcommand{\Npsi}{N_{\psi}} % num probes
+\newcommand{\Nt}{N_{t}} % num trees
+\newcommand{\mean}{\textrm{mean}}
+\newcommand{\std}{\textrm{std}}
+\newcommand{\cov}{\textrm{cov}}
+\newcommand{\pra}{\Pr\bk{\al}}
+
+% macros
+\newcommand{\italicbold}[1]{\textbf{\emph{#1}}}
+\newcommand{\icol}[1]{% inline column vector
+  \left(\begin{matrix}#1\end{matrix}\right)%
+}
+\newcommand{\irow}[1]{% inline row vector
+  \begin{matrix}(#1)\end{matrix}%
+}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\italicbold}[1]{\textbf{\emph{#1}}}
+\newcommand{\bk}[1]{\left(#1\right)} % wrap argument in brackets
+\newcommand{\pr}[1]{\Pr \left(#1\right)} % Prob distribution - TODO set default as alpha vector
+\newcommand{\absval}[1]{\left\lvert #1 \right\rvert} 
+% \newcommand{\exp}[1]{ exp \left( #1 \right) }
+\newcommand{\(}{\left(} % adaptive brackets
+\newcommand{\)}{\right)} % adaptive brackets
+
+
+% Example objective function values
+\newcommand{\objAICa}{28}
+\newcommand{\objAICCa}{28.42}
+\newcommand{\objLa}{-10}
+\newcommand{\objLLa}{0.1}
+\newcommand{\objAICb}{28}
+\newcommand{\objAICCb}{28.12}
+\newcommand{\objLb}{-12}
+\newcommand{\objLLb}{0.08}
+\newcommand{\objAICc}{48}
+\newcommand{\objAICCc}{48.42}
+\newcommand{\objLc}{-20}
+\newcommand{\objLLc}{0.05}
+\newcommand{\objAKWTa}{0.86}
+\newcommand{\objAKWTb}{1.0}
+\newcommand{\objAKWTc}{{10^{-5}}}

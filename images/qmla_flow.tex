@@ -1,0 +1,130 @@
+\tikzstyle{startstop} = [
+    rectangle, rounded corners, 
+    minimum width=12cm, 
+    minimum height=2cm,
+    % text top, 
+    text centered, 
+    text width=7cm, 
+    text depth=1mm,
+    text height=-5mm,
+    draw=black, 
+    fill=red!30
+]
+\tikzstyle{io} = [
+    trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm,
+    minimum height=1cm, text width = 3cm, text centered, draw=black, fill=blue!30
+]
+\tikzstyle{process} = [
+    rectangle, 
+    minimum width=5cm, 
+    minimum height=2cm, 
+    text centered, 
+    text width=4.5cm, 
+    text depth=1mm,
+    text height=-5mm,
+    draw=black, 
+    fill=orange!30
+]
+
+\tikzstyle{decision} = [
+    rectangle,
+    % trapezium, 
+    % trapezium left angle=70, 
+    % trapezium right angle=110, 
+    minimum width=2cm, 
+    minimum height=1cm, 
+    text width = 1.8cm, 
+    text centered, 
+    draw=black, 
+    fill=green!30
+]
+\tikzstyle{decided} = [
+    rectangle, 
+    minimum width=0.5cm, 
+    minimum height=1cm, 
+    text centered, 
+    text width=1cm, 
+    draw=black, 
+    fill=blue!30
+]
+\tikzstyle{qmla_step} = [
+    circle, 
+    fill=white, 
+    draw=red, 
+    text=red, 
+    minimum size=0.65cm
+]
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+
+\begin{figure}
+    \begin{center}
+    
+    \begin{tikzpicture}[node distance=2.25cm]
+    
+    \node (qmla) [startstop, label={[shift={(0ex,-5ex)}]north:Quantum Model Learning Agent}] {};
+    
+    \node (es) [process, below of=qmla, xshift=-1cm, ] {Exploration Strategy};
+    
+    \node (qhl) [process, below of=es] {Model Trainer};   
+
+    \node (system) [decision, right of=qhl,  xshift=1cm, below of=qhl] {System $Q$};   
+
+    \node (simulator) [decision, below of=system, yshift=0.5cm, ] {Simulator};   
+
+    \node (champion) [decided, below of=simulator, yshift=0.5cm, xshift=-1cm, left of=simulator] {$\hat{H}^{\prime}_{S}$};   
+ 
+    \draw [arrow, red] ([yshift=+0.5cm]es.west) -| node[qmla_step]{1}  ([xshift=-4cm]qmla.south);
+    \draw [arrow, red] ([xshift=-4.5cm]qmla.south) |- node[qmla_step]{2a}  ([yshift=-0.5cm]es.west);
+    \draw [arrow, red] ([yshift=-10pt]es.east)  -| node[qmla_step]{2c}  ([xshift=+62.5pt]qmla.south);
+    \draw [arrow, red] ([xshift=-5.1cm]qmla.south) |- node[qmla_step]{4a}  ([yshift=-10pt]qhl.west);
+    \draw [arrow, red] ([xshift=+0.5cm]qhl.south) |- node[qmla_step]{4d}  ([yshift=+0pt]system.west);
+    \draw [arrow, red] ([xshift=+1.25cm]qhl.south) |- node[qmla_step]{4e}  ([yshift=+0pt]simulator.west);
+    \draw [arrow, red] ([yshift=-10pt]qhl.east) -| node[qmla_step]{4g} ([xshift=+2.75cm]qmla.south) ;
+    \draw [arrow, red] ([xshift=+5.5cm]qmla.south) |- node[qmla_step]{7}  ([yshift=+0pt]champion.east);
+    
+    % \node (step_4) [qmla_step, left of=(0.1cm of qmla), above=(0.1cm of qmla.south)]{4};
+    \node (step_3) [qmla_step, left of=qmla.west, xshift=0cm, above=(0.1cm of qmla.south)]{3};
+    \node (step_5) [qmla_step, right of=step_3, xshift=3.75cm, ]{5};
+    \node (step_6) [qmla_step, right of=step_5, xshift=-1cm,]{6};
+    % \node (step_6a) [qmla_step, right of=step_6, xshift=-1cm]{6a};
+
+    \node (step_2b) [qmla_step, above=(0.1cm of es.south)]{2b};
+
+    \node (step_4b) [qmla_step, right of=qhl.west, xshift=-4cm, above=(0.1cm of qhl.south)]{4b};
+    \node (step_4c) [qmla_step, right of=step_4b, xshift=-1cm]{4c};
+    \node (step_4f) [qmla_step, right of=step_4c, ]{4f};
+
+
+    \end{tikzpicture}
+    \end{center}
+    
+    \caption[Interface between \gls{qmla} and a single \glsentryfull{es}.]{
+        Interface between \gls{qmla} and a single \gls{es}. 
+        The main components are the \gls{es}, model training subroutine, target quantum system (i.e. black box, $Q$), 
+        and (quantum) simulator. 
+        The main steps of the algorithm, shown in red with arrows denoting data transferred during that step, are as follows.
+        \textbf{1}, QMLA retrieves decision infrastructure from ES, such as the consolidation mechanism and termination criteria.
+        \textbf{2}, models are designed/spawned; 
+        \textbf{2a}, QMLA signals to ES requesting a set of models, passing the results of the previous layers' models if appropriate.
+        \textbf{2b}, ES spawns new models, $\mathbb{H}$;
+        \textbf{2c}, ES passes $\mathbb{H}$ to QMLA. 
+        \textbf{3}, QMLA assigns a new layer $(\mu \gets \mu + 1)$ and places the newly proposed models upon it.
+        \textbf{4}, Model training subroutine (here quantum Hamiltonian learning), performed independently for each model $\hi \in \mu$; 
+        \textbf{4a}, QMLA passes $\hi$ to the model trainer; 
+        \textbf{4b}, construct a prior distribution $P_i$ describing the model's parameterisation $\vec{\alpha}_i$;
+        \textbf{4c}, design experiment $e$ to perform on $Q$ to optimise $\vec{\alpha}_i$;
+        \textbf{4d}, perform $e$ on $Q$ to retrieve a datum $d$;
+        \textbf{4e}, simulate $e$ for particles $\{ \vec{\alpha}_1, \dots , \vec{\alpha}_N \}$ 
+            sampled from $P_i$ to retrieve a \emph{likelihood} $\lk_{e}$;
+        \textbf{4e}, update the prior $P_i$ based on $(d, \lk_{e})$.
+        \textbf{5}, Evaluate and rank $\hi \in \mu$ according to the ES's consolidation mechanism.
+        \textbf{6}, Check ES's termination criteria; if reached, proceed to \textbf{(7)}, otherwise return to \textbf{(2)}.
+        \textbf{7}, Nominate champion model, $\hp_{S}$.        
+    }
+    \label{fig:qmla_flow}
+\end{figure}
+
+   

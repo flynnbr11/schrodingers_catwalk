@@ -1,0 +1,37 @@
+\documentclass[12pt, a4paper, oneside, openright]{scrbook}
+
+% Load packages and other commands from preamble
+\input{logistics/preamble.tex}
+\input{logistics/macros.tex}
+\input{logistics/glossary.tex}
+
+\providetoggle{development_mode}
+\settoggle{development_mode}{true}
+
+% Compile main document
+\begin{document}
+  \subfile{front_back_matter/title_page}
+
+  % Add content to include in this build
+  \iftoggle{development_mode}{
+    % partial document - development
+    % \frontmatter
+    \tableofcontents
+    \printglossary[style=index, type=\acronymtype]
+    \printglossary[style=index]
+    % \printglossary
+    \setcounter{page}{1}
+    \pagenumbering{arabic}    
+
+    \subfile{logistics/development_layout.tex}
+  }{
+    % full document
+    \subfile{logistics/front_matter.tex}
+    \subfile{logistics/layout.tex}
+    \subfile{logistics/appendix_layout.tex}
+  }
+
+  \bibliographystyle{unsrt}
+  \bibliography{logistics/references}
+
+\end{document}

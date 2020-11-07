@@ -1,0 +1,168 @@
+\begin{thebibliography}{10}
+
+\bibitem{Granade:2012kj}
+Christopher~E Granade, C~Ferrie, N~Wiebe, and D~G Cory.
+\newblock {Robust online Hamiltonian learning}.
+\newblock {\em New Journal of Physics}, 14(10):103013, October 2012.
+
+\bibitem{wiebe2014qhlpra}
+Nathan Wiebe, Christopher Granade, Christopher Ferrie, and David Cory.
+\newblock Quantum hamiltonian learning using imperfect quantum resources.
+\newblock {\em Physical Review A}, 89(4):042314, 2014.
+
+\bibitem{Wiebe:2014qhl}
+N~Wiebe, C~Granade, C~Ferrie, and D~G Cory.
+\newblock {Hamiltonian Learning and Certification Using Quantum Resources}.
+\newblock {\em Physical Review Letters}, 112(19):190501--5, May 2014.
+
+\bibitem{wang2017experimental}
+Jianwei Wang, Stefano Paesani, Raffaele Santagati, Sebastian Knauer, Antonio~A
+  Gentile, Nathan Wiebe, Maurangelo Petruzzella, Jeremy~L O’Brien, John~G
+  Rarity, Anthony Laing, et~al.
+\newblock Experimental quantum hamiltonian learning.
+\newblock {\em Nature Physics}, 13(6):551--555, 2017.
+
+\bibitem{gentile2020learning}
+Antonio~A. Gentile, Brian Flynn, Sebastian Knauer, Nathan Wiebe, Stefano
+  Paesani, Christopher~E. Granade, John~G. Rarity, Raffaele Santagati, and
+  Anthony Laing.
+\newblock Learning models of quantum systems from experiments, 2020.
+
+\bibitem{liu2001combined}
+Jane Liu and Mike West.
+\newblock Combined parameter and state estimation in simulation-based
+  filtering.
+\newblock In {\em Sequential Monte Carlo methods in practice}, pages 197--223.
+  Springer, 2001.
+
+\bibitem{jalabert2001environment}
+Rodolfo~A Jalabert and Horacio~M Pastawski.
+\newblock Environment-independent decoherence rate in classically chaotic
+  systems.
+\newblock {\em Physical review letters}, 86(12):2490, 2001.
+
+\bibitem{wiebe2015quantum}
+Nathan Wiebe, Christopher Granade, and David~G Cory.
+\newblock Quantum bootstrapping via compressed quantum hamiltonian learning.
+\newblock {\em New Journal of Physics}, 17(2):022005, 2015.
+
+\bibitem{goussev2012loschmidt}
+Arseni Goussev, Rodolfo~A Jalabert, Horacio~M Pastawski, and Diego Wisniacki.
+\newblock Loschmidt echo.
+\newblock {\em arXiv preprint arXiv:1206.6348}, 2012.
+
+\bibitem{hensen2015loophole}
+Bas Hensen, Hannes Bernien, Ana{\"\i}s~E Dr{\'e}au, Andreas Reiserer, Norbert
+  Kalb, Machiel~S Blok, Just Ruitenberg, Raymond~FL Vermeulen, Raymond~N
+  Schouten, Carlos Abell{\'a}n, et~al.
+\newblock Loophole-free bell inequality violation using electron spins
+  separated by 1.3 kilometres.
+\newblock {\em Nature}, 526(7575):682--686, 2015.
+
+\bibitem{sergeevich2011characterization}
+Alexandr Sergeevich, Anushya Chandran, Joshua Combes, Stephen~D Bartlett, and
+  Howard~M Wiseman.
+\newblock Characterization of a qubit hamiltonian using adaptive measurements
+  in a fixed basis.
+\newblock {\em Physical Review A}, 84(5):052315, 2011.
+
+\bibitem{ferrie2013best}
+Christopher Ferrie, Christopher~E Granade, and David~G Cory.
+\newblock How to best sample a periodic probability distribution, or on the
+  accuracy of hamiltonian finding strategies.
+\newblock {\em Quantum Information Processing}, 12(1):611--623, 2013.
+
+\bibitem{granade2015characterizationp92}
+Christopher~E Granade.
+\newblock Characterization, verification and control for large quantum systems.
+\newblock page~92, 2015.
+
+\bibitem{qinfer-1_0}
+Christopher Granade, Christopher Ferrie, Steven Casagrande, Ian Hincks, Michal
+  Kononenko, Thomas Alexander, and Yuval Sanders.
+\newblock {QInfer}: Library for statistical inference in quantum information,
+  2016.
+
+\bibitem{ferrie2014high}
+Christopher Ferrie.
+\newblock High posterior density ellipsoids of quantum states.
+\newblock {\em New Journal of Physics}, 16(2):023006, 2014.
+
+\bibitem{todd2007khachiyan}
+Michael~J Todd and E~Alper Y{\i}ld{\i}r{\i}m.
+\newblock On khachiyan's algorithm for the computation of minimum-volume
+  enclosing ellipsoids.
+\newblock {\em Discrete Applied Mathematics}, 155(13):1731--1744, 2007.
+
+\bibitem{hincks2018hamiltonian}
+Ian Hincks, Thomas Alexander, Michal Kononenko, Benjamin Soloway, and David~G
+  Cory.
+\newblock Hamiltonian learning with online bayesian experiment design in
+  practice.
+\newblock {\em arXiv preprint arXiv:1806.02427}, 2018.
+
+\bibitem{fiderer2020neural}
+Lukas~J Fiderer, Jonas Schuff, and Daniel Braun.
+\newblock Neural-network heuristics for adaptive bayesian quantum estimation.
+\newblock {\em arXiv preprint arXiv:2003.02183}, 2020.
+
+\bibitem{2020SciPy-NMeth}
+Pauli Virtanen, Ralf Gommers, Travis~E. Oliphant, Matt Haberland, Tyler Reddy,
+  David Cournapeau, Evgeni Burovski, Pearu Peterson, Warren Weckesser, Jonathan
+  Bright, St{\'e}fan~J. {van der Walt}, Matthew Brett, Joshua Wilson, K.~Jarrod
+  Millman, Nikolay Mayorov, Andrew R.~J. Nelson, Eric Jones, Robert Kern, Eric
+  Larson, C~J Carey, {\.I}lhan Polat, Yu~Feng, Eric~W. Moore, Jake
+  {VanderPlas}, Denis Laxalde, Josef Perktold, Robert Cimrman, Ian Henriksen,
+  E.~A. Quintero, Charles~R. Harris, Anne~M. Archibald, Ant{\^o}nio~H. Ribeiro,
+  Fabian Pedregosa, Paul {van Mulbregt}, and {SciPy 1.0 Contributors}.
+\newblock {{SciPy} 1.0: Fundamental Algorithms for Scientific Computing in
+  Python}.
+\newblock {\em Nature Methods}, 17:261--272, 2020.
+
+\bibitem{wang2015hamiltonian}
+Sheng-Tao Wang, Dong-Ling Deng, and Lu-Ming Duan.
+\newblock Hamiltonian tomography for quantum many-body systems with arbitrary
+  couplings.
+\newblock {\em New Journal of Physics}, 17(9):093017, 2015.
+
+\bibitem{franklin1996agent}
+Stan Franklin and Art Graesser.
+\newblock Is it an agent, or just a program?: A taxonomy for autonomous agents.
+\newblock In {\em International Workshop on Agent Theories, Architectures, and
+  Languages}, pages 21--35. Springer, 1996.
+
+\bibitem{wooldridge2009introduction}
+Michael Wooldridge.
+\newblock {\em An introduction to multiagent systems}.
+\newblock John Wiley \& Sons, 2009.
+
+\bibitem{sarker2010agent}
+Ruhul~A Sarker and Tapabrata Ray.
+\newblock Agent based evolutionary approach: An introduction.
+\newblock In {\em Agent-Based Evolutionary Search}, pages 1--11. Springer,
+  2010.
+
+\bibitem{russell2002artificial}
+Stuart Russell and Peter Norvig.
+\newblock Artificial intelligence: a modern approach.
+\newblock 2002.
+
+\bibitem{python-manual}
+Guido Van~Rossum and Fred~L. Drake.
+\newblock {\em Python 3 Reference Manual}.
+\newblock CreateSpace, Scotts Valley, CA, 2009.
+
+\bibitem{hockney2019parallel}
+Roger~W Hockney and Chris~R Jesshope.
+\newblock {\em Parallel Computers 2: architecture, programming and algorithms}.
+\newblock CRC Press, 2019.
+
+\bibitem{redis}
+{Redis}, Nov 2020.
+\newblock [Online; accessed 7. Nov. 2020].
+
+\bibitem{redis_queue}
+{RQ: Simple job queues for Python}, Nov 2020.
+\newblock [Online; accessed 7. Nov. 2020].
+
+\end{thebibliography}

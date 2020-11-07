@@ -1,0 +1,132 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% Thesis formatting %%%%%%%%%%%%%
+\showthe\textwidth
+
+\usepackage[parts,pdfspacing]{classicthesis}
+\usepackage[a4paper, total={7in, 8.5in}]{geometry}
+
+%%%%%%%%%%%%% Standard packages %%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subfiles}
+\usepackage{datetime}
+\usepackage[
+    font=small,
+]{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\numberwithin{equation}{chapter}
+
+\usepackage{listings}
+\usepackage[ampersand, itemize]{easylist}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise]{cleveref}
+
+%%%%%%%%%%%%% Nonstandard packages %%%%%%%%%%%%%
+\usepackage[
+  style=long, 
+  nolist, 
+  acronym
+]{glossaries}
+\hypersetup{
+  % TODO colour glossary items but don't allow large red box
+  pdfborder = {0 0 0},
+  colorlinks,
+  citecolor=red,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage{braket}
+\usepackage{amsthm}
+\usepackage{nicefrac}
+
+% Algorithm writing
+\usepackage[ruled]{algorithm2e} 
+\usepackage{newfloat,algcompatible} 
+\widowpenalty=10000
+\clubpenalty=10000
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% Settings %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Format figures, tables etc
+\makeatletter
+\@addtoreset{table}{chapter}
+\makeatother
+\renewcommand\thetable{\thechapter.\arabic{table}}
+
+\makeatletter
+\@addtoreset{figure}{chapter}
+\makeatother
+\renewcommand\thefigure{\thechapter.\arabic{figure}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
+
+% Ensure chapter/part numbers are legible and formatted 
+\titleformat{\chapter}[display]  
+{\relax}{\vspace*{-3\baselineskip}\makebox[\linewidth][r]{\color{halfgray}\chapterNumber\thechapter}}{0pt}%
+{\raggedright\spacedallcaps}[\normalsize\vspace*{.8\baselineskip}\titlerule]%
+
+\renewcommand{\thepart}{\Roman{part}}
+%\AtBeginDocument{\renewcommand{\thepart}{\Roman{part}}}
+\titleformat{\part}[display]{\normalfont\large\centering}{\thispagestyle{empty}\partname~\thepart}{1em}{\color{red}\spacedallcaps}
+% \DeclareCaptionType{code}[Code Listing][List of Code Listings] 
+
+% Listing formatting
+\lstset{
+  numbers=left, % comment this line to remove line numbers from code listings
+  numberstyle=\small, 
+  numbersep=8,
+  frame=single, 
+  language=Python, 
+  xleftmargin=.05\textwidth,
+  xrightmargin=.02\textwidth,
+  framexleftmargin=20pt,
+  framextopmargin=6pt,
+  framexbottommargin=6pt, 
+  breaklines=TRUE,
+  showstringspaces=false,
+  captionpos=b,
+  deletekeywords={NUMBER}
+}
+\renewcommand*{\listlistingname}{List of XYZ}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+% Miscellaneous settings
+\setcounter{secnumdepth}{4}
+
+% \theoremstyle{plain}
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{lemma}[thm]{Lemma}
+% \newtheorem{proposition}[thm]{Proposition}
+% \newtheorem*{corollary}{Corollary}
+
+% \theoremstyle{definition}
+% \newtheorem{definition}{Definition}[section]
+% \newtheorem{conjecture}{Conjecture}[section]
+% \newtheorem{example}{Example}[section]
+
+% \theoremstyle{remark}
+% \newtheorem*{remark}{Remark}
+% \newtheorem*{note}{Note}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+

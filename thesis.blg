@@ -1,0 +1,60 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: thesis.aux
+The style file: unsrt.bst
+Database file #1: logistics/references.bib
+Repeated entry---line 308 of file logistics/references.bib
+ : @article{hincks2018hamiltonian
+ :                               ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 426 of file logistics/references.bib
+ :   
+ :   pages={11--12}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--string name "september" is undefined
+--line 439 of file logistics/references.bib
+Warning--empty journal in granade2015characterizationp92
+Warning--empty journal in russell2002artificial
+You've used 28 entries,
+            1791 wiz_defined-function locations,
+            610 strings with 9037 characters,
+and the built_in function-call counts, 6780 in all, are:
+= -- 523
+> -- 441
+< -- 4
++ -- 158
+- -- 130
+* -- 511
+:= -- 1120
+add.period$ -- 83
+call.type$ -- 28
+change.case$ -- 25
+chr.to.int$ -- 0
+cite$ -- 30
+duplicate$ -- 272
+empty$ -- 616
+format.name$ -- 130
+if$ -- 1471
+int.to.chr$ -- 0
+int.to.str$ -- 28
+missing$ -- 27
+newline$ -- 139
+num.names$ -- 26
+pop$ -- 101
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 121
+stack$ -- 0
+substring$ -- 358
+swap$ -- 53
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 2
+while$ -- 55
+width$ -- 30
+write$ -- 293
+(There were 2 error messages)

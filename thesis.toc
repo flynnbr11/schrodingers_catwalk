@@ -1,0 +1,48 @@
+\vspace {-\cftbeforepartskip }
+\select@language {english}
+\contentsline {part}{\numberline {I}\spacedlowsmallcaps {Algorithms}}{2}{part.1}
+\contentsline {chapter}{\numberline {1}\spacedlowsmallcaps {Quantum Hamiltonian Learning}}{3}{chapter.1}
+\contentsline {subsubsection}{\numberline {1.0.0.1}Bayes Rule}{4}{subsubsection.1.0.0.1}
+\contentsline {section}{\numberline {1.1}Sequential Monte Carlo}{5}{section.1.1}
+\contentsline {section}{\numberline {1.2}Likelihood}{7}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Interactive Quantum Likelihood Estimation}{7}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Analytical likelihood}{8}{subsection.1.2.2}
+\contentsline {section}{\numberline {1.3}Total log total likelihood}{9}{section.1.3}
+\contentsline {section}{\numberline {1.4}Parameter estimation}{10}{section.1.4}
+\contentsline {subsubsection}{\numberline {1.4.0.1}Volume}{10}{subsubsection.1.4.0.1}
+\contentsline {section}{\numberline {1.5}Experiment design heuristic}{12}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}Particle Guess Heuristic}{12}{subsection.1.5.1}
+\contentsline {subsection}{\numberline {1.5.2}Alternative experiment design heuristics}{13}{subsection.1.5.2}
+\contentsline {subsubsection}{\numberline {1.5.2.1}Forced exponential increase}{13}{subsubsection.1.5.2.1}
+\contentsline {subsubsection}{\numberline {1.5.2.2}Fixed set}{13}{subsubsection.1.5.2.2}
+\contentsline {subsubsection}{\numberline {1.5.2.3}Random time upper bounded}{13}{subsubsection.1.5.2.3}
+\contentsline {subsubsection}{\numberline {1.5.2.4}Mixed: PGH and fixed set}{13}{subsubsection.1.5.2.4}
+\contentsline {subsubsection}{\numberline {1.5.2.5}Altered \gls {pgh}}{14}{subsubsection.1.5.2.5}
+\contentsline {subsubsection}{\numberline {1.5.2.6}Volume adaptive \gls {pgh}}{14}{subsubsection.1.5.2.6}
+\contentsline {subsubsection}{\numberline {1.5.2.7}Sampled order of magnitude}{15}{subsubsection.1.5.2.7}
+\contentsline {section}{\numberline {1.6}Probe selection}{15}{section.1.6}
+\contentsline {chapter}{\numberline {2}\spacedlowsmallcaps {Quantum Model Learning Agent}}{16}{chapter.2}
+\contentsline {section}{\numberline {2.1}Models}{16}{section.2.1}
+\contentsline {section}{\numberline {2.2}Bayes factors}{17}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Experiment sets}{18}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}Quantum Model Learning Agent Protocol}{19}{section.2.3}
+\contentsline {section}{\numberline {2.4}Exploration Strategies}{20}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Model generation}{21}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Decision criteria for the model search phase}{23}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}True model specification}{23}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}Modular functionality}{23}{subsection.2.4.4}
+\contentsline {subsection}{\numberline {2.4.5}Exploration strategy examples}{24}{subsection.2.4.5}
+\contentsline {section}{\numberline {2.5}Generality}{26}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Agency}{27}{subsection.2.5.1}
+\contentsline {section}{\numberline {2.6}Algorithms}{27}{section.2.6}
+\contentsline {chapter}{\numberline {3}\spacedlowsmallcaps {Software}}{33}{chapter.3}
+\contentsline {section}{\numberline {3.1}Implementation}{33}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Object oriented programming}{33}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}Python framework}{36}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Application}{36}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}Modular functionality}{36}{subsubsection.3.2.1.1}
+\contentsline {subsection}{\numberline {3.2.2}Algorithm}{37}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}Parallel implementiation}{37}{subsubsection.3.2.2.1}
+\contentsline {subsection}{\numberline {3.2.3}Infrastructure}{38}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Analyses and plots}{39}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}Usage}{39}{section.3.3}
