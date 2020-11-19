@@ -323,7 +323,7 @@ Because training models is slow in general,
 
 \subsection{Decision criteria for the model search phase}
 Further control parameters, which direct the growth of the \gls{et}, are set within the \gls{es}.
-At several junctions within Algs. \ref{alg:qmla}, \ref{alg:model_search}, 
+At several junctions within Algs. \cref{alg:qmla}, \cref{alg:model_search}, 
     \gls{qmla} queries the \gls{es} in order to decide what happens next.
 Here we list the important cases of this behaviour. 
 
@@ -337,9 +337,9 @@ Here we list the important cases of this behaviour.
     & Branch comparison strategy
     && How to compare models within a branch (or \gls{qmla} layer). 
         Some examples used in this work are
-        (a) a points-ranking where each points are assigned according to Eqn. \ref{eqn:bf_cases}
+        (a) a points-ranking where each points are assigned according to Eqn. \cref{eqn:bf_cases}
         (b) ranking reflecting each model's log-likelihood after training. 
-        All methods in \S\ref{sm:objective_fncs} can be thought of as branch comparison strategies. 
+        All methods in \S\cref{sm:objective_fncs} can be thought of as branch comparison strategies. 
     & \gls{ms} termination criteria
     && e.g. instruction to stop after a fixed number of iterations, or when a certain fitness has been reached.
     & Champion nomination
@@ -382,7 +382,7 @@ These can be chosen to match the requirements of the user, and are set via the \
     & Experiment design heuristic: bespoke experiments to maximise the information 
         on which models are individually trained.
         && In particular, in this work the experimental controls consist solely of $\{ \ket{\psi}, t \}$. 
-        && Currently, probes are generated once according to \ref{item:probes}, 
+        && Currently, probes are generated once according to \cref{item:probes}, 
             but in principle it is feasible to choose optimal probes based on available or hypothetical information. 
             For example, probes can be chosen as a normalised sum of the candidate model's eigenvectors.
         && Choice of $t$ has a large effect on how well the model can train. 
@@ -393,7 +393,7 @@ These can be chosen to match the requirements of the user, and are set via the \
             reproduce the dynamics within those times' scale. 
             For instance, if a small amount of experimental data is available offline, 
             it is sensible to train all candidate models against the entire dataset.  
-    & Model training prior: change the prior distribution, e.g. Fig. \ref{fig:qhl_smc}(a)
+    & Model training prior: change the prior distribution, e.g. Fig. \cref{fig:qhl_smc}(a)
 \end{easylist}
 
 \subsection{Exploration strategy examples}
@@ -444,11 +444,11 @@ These examples illustrate some of the design decisions involved in \gls{es}s,
     namely whether timing considerations are more important than thoroughly exploring the model space.
 They also show considerable time--savings in cases where it is
     acceptable to forego all model comparisons. 
-The approch in \ref{gr:predefined} is clearly limited in its applicability, 
+The approch in \cref{gr:predefined} is clearly limited in its applicability, 
     mainly in that there is a heavy requirement for prior knowledge, 
     and it is only useful in cases where we either know $\ho \in \mathbb{H}$, 
     or would be satisfied with approximating $\ho$ as the closest available $\hj \in \mathbb{H}$. 
-On the opposite end of this spectrum, \ref{gr:generative_sparse}  is an excellent approach
+On the opposite end of this spectrum, \cref{gr:generative_sparse}  is an excellent approach
     with respect to minimising prior knowledge required by the algorithm, 
     although at the significant expense of testing a much larger number of candidate models. 
 There is no optimal strategy for all use--cases: 
@@ -463,12 +463,12 @@ Firstly, during the study of various physical classes (Ising, Heisenberg, Fermi-
     which were then mapped to Hamiltonian models.
 This \gls{es} is non-adaptive and indeed the model search
     consists merely of a single branch with no subsequent calls to the model generation routine, 
-    as in \ref{gr:predefined}. 
+    as in \cref{gr:predefined}. 
 In the latter section instead we use a \gls{ga}:
     this is clearly a far more general strategy, at a significant computational cost, 
     but is suitable for systems where we have less knowledge in advance. 
 In this case, new models are designed based heavily on results from earlier branches of the \gls{et}. 
-The genetic algorithm model generation subroutine is listed in Alg. \ref{alg:generate_models}, 
+The genetic algorithm model generation subroutine is listed in \cref{alg:generate_models}, 
     and can broadly be summed up thus: 
     the best models in a generation $\mu$ produce offspring which constitute models on the next generation.
 These types of evolutionary algorithms ensure that newly proposed candidates inherit 
@@ -527,13 +527,13 @@ Finally, the model design strategy encoded in the \gls{es} \emph{can} allow agen
 \section{Algorithms}
 We conclude this chapter by listing the algorithms used most frequently, 
     in order to clarify each of their roles, and how they interact. 
-Alg \ref{alg:qmla} shows the overall \gls{qmla} algorithm, 
+\cref{alg:qmla} shows the overall \gls{qmla} algorithm, 
     which is simplified greatly to a loop over the \gls{ms} of each \gls{es}. 
-The \gls{ms} iteself is listed in Alg. \ref{alg:model_search},
-    which contains calls to subroutines for model learning (\gls{qhl}, Alg. \ref{alg:qhl}), 
-    branch evaluation (which can be based upon \gls{bf}, Alg. \ref{alg:bayes_factor})
+The \gls{ms} iteself is listed in \cref{alg:model_search},
+    which contains calls to subroutines for model learning (\gls{qhl}, \cref{alg:qhl}), 
+    branch evaluation (which can be based upon \gls{bf}, \cref{alg:bayes_factor})
     and centers on the generation of new models, an example of which -- based on a genetic algorithm -- 
-    is given in  Alg. \ref{alg:generate_models}. 
+    is given in  \cref{alg:generate_models}. 
 
 \begin{algorithm}
     \caption{Quantum Model Learning Agent}
@@ -568,12 +568,12 @@ The \gls{ms} iteself is listed in Alg. \ref{alg:model_search},
 
     $\mathbb{H}_c \gets \{\}$\;   
     \While{ \ttt{!S.terminate()} }{
-        $\mu \gets $ \ttt{S.generate\_models($\nu$)} \tcp*[1]{e.g. Alg. \ref{alg:generate_models}}\; 
+        $\mu \gets $ \ttt{S.generate\_models($\nu$)} \tcp*[1]{e.g. \cref{alg:generate_models}}\; 
 
         \For{ $\hi \in \mu$}{
-            $\hi^{\prime} \gets $ \ttt{S.train($\hi$)} \tcp*[1]{e.g. Alg. \ref{alg:qhl}}
+            $\hi^{\prime} \gets $ \ttt{S.train($\hi$)} \tcp*[1]{e.g. \cref{alg:qhl}}
         }
-        $\nu \gets$ \ttt{S.evaluate($\mu$)} \tcp*[1]{e.g. pairwise via Alg. \ref{alg:bayes_factor}}
+        $\nu \gets$ \ttt{S.evaluate($\mu$)} \tcp*[1]{e.g. pairwise via \cref{alg:bayes_factor}}
 
         $\hat{H}_{c}^{\mu} \gets $ \ttt{S.branch\_champion($\nu$)} \tcp*[1]{use $\nu$ to select a branch champion}
 

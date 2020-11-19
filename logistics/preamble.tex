@@ -12,9 +12,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{titlesec}
+\usepackage{xr}
 \usepackage{float}
 \usepackage{graphicx}
-\graphicspath{ {/home/bf16951/QMD/Launch/Results/} }
 \usepackage{subfiles}
 \usepackage{datetime}
 \usepackage[
@@ -23,18 +23,16 @@
 \usepackage{subcaption}
 \usepackage{amsmath}
 \numberwithin{equation}{chapter}
+% Algorithm writing
+\usepackage[ruled]{algorithm2e} 
+\usepackage{newfloat,algcompatible} 
+\widowpenalty=10000
+\clubpenalty=10000
+
 
 \usepackage{listings}
 \usepackage[ampersand, itemize]{easylist}
 \usepackage[hidelinks]{hyperref}
-\usepackage[capitalise]{cleveref}
-
-%%%%%%%%%%%%% Nonstandard packages %%%%%%%%%%%%%
-\usepackage[
-  style=long, 
-  nolist, 
-  acronym
-]{glossaries}
 \hypersetup{
   % TODO colour glossary items but don't allow large red box
   pdfborder = {0 0 0},
@@ -44,18 +42,27 @@
   linkcolor=black,
   urlcolor=black
 }
+
+\usepackage[capitalise]{cleveref}
+
+
+
+% \crefname{algocf}{alg.}{algs.}
+% \Crefname{algocf}{Algorithm}{Algorithm}
+
+%%%%%%%%%%%%% Nonstandard packages %%%%%%%%%%%%%
+\usepackage[
+  style=long, 
+  nolist, 
+  acronym
+]{glossaries}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \usepackage{braket}
 \usepackage{amsthm}
 \usepackage{nicefrac}
-\usepackage{subfig}
+% \usepackage{subfig}
 % \usepackage{underscore}
 
-% Algorithm writing
-\usepackage[ruled]{algorithm2e} 
-\usepackage{newfloat,algcompatible} 
-\widowpenalty=10000
-\clubpenalty=10000
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

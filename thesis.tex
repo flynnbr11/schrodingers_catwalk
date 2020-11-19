@@ -10,26 +10,27 @@
 
 % Compile main document
 \begin{document}
-  \subfile{front_back_matter/title_page}
+  \input{front_back_matter/title_page}
 
   % Add content to include in this build
   \iftoggle{development_mode}{
     % partial document - development
-    % \frontmatter
+    \frontmatter
     \tableofcontents
     \printglossary[style=index, type=\acronymtype]
     \printglossary[style=index]
     % \printglossary
     \setcounter{page}{1}
     \pagenumbering{arabic}    
+    \mainmatter
 
-    \subfile{logistics/development_layout.tex}
-    \subfile{logistics/appendix_layout.tex}
+    \input{logistics/development_layout.tex}
+    \input{logistics/appendix_layout.tex}
   }{
     % full document
-    \subfile{logistics/front_matter.tex}
-    \subfile{logistics/layout.tex}
-    \subfile{logistics/appendix_layout.tex}
+    \input{logistics/front_matter.tex}
+    \input{logistics/layout.tex}
+    \input{logistics/appendix_layout.tex}
   }
 
   \bibliographystyle{unsrt}

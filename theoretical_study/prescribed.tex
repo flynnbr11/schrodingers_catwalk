@@ -221,13 +221,11 @@ In the first case, can represent the Ising model for a given lattice configurati
 \end{equation}    
     allowing for the compact representation, following \cref{sec:models},
 \begin{subequations}
-    \label{eqn:ising}    
+    \label{eqn:ising_terms}
     \begin{equation}
-        \label{eqn:ising_params}
         \vec{\alpha}_I = \irow{ J & h }
     \end{equation}
     \begin{equation}
-        \label{eqn:ising_terms}
         \terms_I = \icol{ 
             \sum\limits_{\bkl \in \mathcal{C}} \s^{z}_{k} \s_{l}^{z} \\
             \sum\limits_{k=1}^{N} \s^{x}_{k}
@@ -263,18 +261,32 @@ We summarise theses cases in \cref{table:ising_models}
 
 We can first construct models under each of these forms to verify \gls{qhl} is applicable. 
 The former case is the form standard of the Ising model; its training is shown in \cref{fig:ising_two_param_learning}, 
-    while the fully paramterised model is shown in \cref{fig:ising_two_param_learning}. 
-Unsurprisingly, the two-parameter model learns its parameters faster, 
-    whereas the fully parameterised model required double the number of experiments to learn the parameters well. 
-Interestingly, neither model converged; the \gls{volume} continues to reduce exponentially in both cases, 
+    while the fully paramterised model is shown in \cref{fig:ising_fully_parameterised}. 
+In this case, the fully parameterised model will learn the same parameters as the standard Ising model,
+    i.e. $J^{z}_{k} = J^z; J^x_k = J^x$. 
+Encouragingly, both models learaned the parameters to high precision, and neither model converged; 
+    the \gls{volume} continues to reduce exponentially in both cases, 
     suggesting it may be impractical to seek saturation in the model training phase for every model, 
     since this may require a very large number of experiments and particles. 
+\par 
+
+The dynamics produced by both models are shown in \cref{fig:ising_model_types_dynamics}:
+    the dynamics are almost indistinguishable by eye, but the standard Ising model, 
+    which in this case is $\ho$, outperforms the fully parameterised model, 
+    by a \gls{bf} of $10^{19}$.
+This serves as a good \emph{sanity check}, confirming our expectation that 
+    the \gls{bf} will favour the simpler model (i.e. fewer parameters) even when both models 
+    are trained to a high precision, and are difficult to distinguish through human intuition. 
+
 
 \begin{figure}
-    \QMLAfig{Nov_16/23_51/two_param_ising_qhl.pdf}
+    \begin{center}
+        \QMLAfig{Nov_18/13_56/standard_ising_qhl.pdf}
+    \end{center}
+
     \caption[\gls{qhl} for Ising model]{
-        \gls{qhl} for Ising model where terms are groued by their functionality, 
-        as in \cref{eqn:ising}. 
+        \gls{qhl} for Ising model where terms are grouped by their functionality, 
+        as in \cref{eqn:ising_standard_form}. 
         (a,b) show the parameter estimates progression against 
         epochs (experiments), with the corresponding term written on top of the plot; 
         (c) shows the \gls{volume} of the parameter distribution at each epoch, as well as the 
@@ -285,7 +297,9 @@ Interestingly, neither model converged; the \gls{volume} continues to reduce exp
 \end{figure}
 
 \begin{figure}
-    \QMLAfig{Nov_16/20_05/fully_parameterised_ising_qhl.pdf}
+    \begin{center}
+        \QMLAfig{Nov_18/13_56/fully_param_ising_qhl.pdf}        
+    \end{center}
     \caption[\gls{qhl} for Ising model]{
         \gls{qhl} for fully parameterised Ising model, 
             where every interaction between pairs of sites are assigned unique parameters, 
@@ -293,12 +307,24 @@ Interestingly, neither model converged; the \gls{volume} continues to reduce exp
             as in \cref{eqn:ising_fully_parameterised}. 
         (a)-(f) show the parameter estimates progression against 
         epochs (experiments), with the corresponding term written on top of the plot; 
-        (c) shows the \gls{volume} of the parameter distribution at each epoch, as well as the 
+        (g) shows the \gls{volume} of the parameter distribution at each epoch, as well as the 
         evolution time chosen by the \gls{edh}. 
         \figtableref
     }
     \label{fig:ising_fully_parameterised}
 \end{figure}
+
+\begin{figure}
+    \begin{center}
+        \QMLAfig{Nov_18/13_56/dynamics.pdf}
+    \end{center}
+    \caption[Ising model types' dynamics.]{
+        Dynamics reproduced by Ising models under standard and fully parameterised formalisms, 
+        compared with dynamics for the true system.     
+    }
+    \label{fig:ising_model_types_dynamics}
+\end{figure}
+
 
 
 \section{Heisenberg model}\label{sec:heisenberg}
@@ -368,7 +394,7 @@ The Hubbard model deals with systems of correlated fermions,
 Note the Hubbard model is synonymous with the \gls{fh} model, 
     which can be used to distinguish this model of fermions from a similar model of bosons, captured by the Bose-Hubbard model, 
     which is not studied in this thesis. 
-We use the subscript FH to distinguish the (Fermi-)Hubbard model from the Heisenberg model $\hat{H}_{H}$, \ref{eqn:heisenberg_model_general}.
+We use the subscript FH to distinguish the (Fermi-)Hubbard model from the Heisenberg model $\hat{H}_{H}$, \cref{eqn:heisenberg_model_general}.
 The Hubbard model is generally stated in second quantisation as
 
 \begin{equation}
@@ -523,7 +549,7 @@ For example, with $N=2$
     \label{eqn:hubbard_half_filled_basis_states}
     \{
         \ket{ 1100 }, \ket{ 1010 }, \ket{ 1001 }, 
-        \ket{ 0101 }, \ket{ 0110 }, \ket{ 0011 }, 
+        \ket{ 0101 }, \ket{ 0110 }, \ket{ 0011 }
     \}
 \end{equation}
 
@@ -535,54 +561,107 @@ Finally, then, we can use the lattice systems introduced in \cref{sec:lattices,s
     as firsts case studies for \gls{qmla}. 
 Each $\cc \in \mathbb{C}$ can specify a unique model under the standard model formalism
     for each of Ising (\cref{eqn:ising_terms}), Heisenberg (\cref{eqn:heisenberg_terms}) 
-    and Hubbard (\cref{eqn:hubbard_terms}) models. 
+    and Hubbard (\cref{eqn:hubbard_terms}) models.     
 We can then devise a simple \gls{es} which only tests the models corresponding to $\mathbb{C}$, 
-    with no further model generation, and compares every pair of models through \gls{bf}, 
+    with no further model generation, i.e. \cref{alg:lattice_exploration_strategy}, 
+    and compares every pair of models through \gls{bf}, 
     deeming the champion as that which wins the largest number of comparisons, 
-    \crefrange{alg:lattice_exploration_strategy,alg:lattice_exploration_strategy_consolidation}.
+    as in \cref{alg:lattice_exploration_strategy_consolidation}.
 
-    \begin{algorithm}
-        \caption{Lattice exploration strategy: model generation}
-        \label{alg:lattice_exploration_strategy}
-        \DontPrintSemicolon
-        \KwIn{ $\mathbb{C}$ \tcp*[1]{Set of lattice configurations}}
-    
-        \KwOut{$\{ \hi \}$ \tcp*[1]{Set of models to tests}}\;
+\begin{algorithm}
+    \caption{Lattice exploration strategy: model generation}
+    \label{alg:lattice_exploration_strategy}
+    \DontPrintSemicolon
+    \KwIn{ $\mathbb{C}$ \tcp*[1]{Set of lattice configurations}}
 
-        $\mathbb{H}$ = \{ \}\;
-        \For{$\cc \in \mathbb{C}$}{
-            $\hi \gets$ \ttt{map\_lattice\_to\_model}($\cc$)\;
-            $\mathbb{H} \gets \mathbb{H} \cup \{ \hi\}$
-        }
-        return $\mathbb{H}$
-    \end{algorithm}
-    
-    \begin{algorithm}
-        \caption{Lattice exploration strategy: consolidation}
-        \label{alg:lattice_exploration_strategy_consolidation}
-        \DontPrintSemicolon
-        \KwIn{ $\mathbb{H}$ \tcp*[1]{Set of trained models}}
-    
-        \KwOut{$\hp$ \tcp*[1]{Favoured model}}\;
+    \KwOut{$\{ \hi \}$ \tcp*[1]{Set of models to tests}}\;
 
-        \For{ $\hi \in \mathbb{H}$}{
-            $s_i \gets 0 $ \tcp*[1]{Score for every model}
-        }
+    $\mathbb{H}$ = \{ \}\;
+    \For{$\cc \in \mathbb{C}$}{
+        $\hi \gets$ \ttt{map\_lattice\_to\_model}($\cc$)\;
+        $\mathbb{H} \gets \mathbb{H} \cup \{ \hi\}$
+    }
+    return $\mathbb{H}$
+\end{algorithm}
 
-        \For{$\hi \in \mathbb{H}$}{
-            \For{$\hj \in \mathbb{H}\setminus \{\hi\}$}{
-                $\bij \gets BF(\hi, \hj)$ \tcp*[1]{Compute Bayes factor via \cref{alg:bayes_factor}}
+\begin{algorithm}
+    \caption{Lattice exploration strategy: consolidation}
+    \label{alg:lattice_exploration_strategy_consolidation}
+    \DontPrintSemicolon
+    \KwIn{ $\mathbb{H}$ \tcp*[1]{Set of trained models}}
 
-                \If{$\bij > 1$}{
-                    $s_i \gets s_i + 1$ \tcp*[1]{$\hi$'s score increases if it is the stronger model}
-                }
+    \KwOut{$\hp$ \tcp*[1]{Favoured model}}\;
+
+    \For{ $\hi \in \mathbb{H}$}{
+        $s_i \gets 0 $ \tcp*[1]{Score for every model}
+    }
+
+    \For{$\hi \in \mathbb{H}$}{
+        \For{$\hj \in \mathbb{H}\setminus \{\hi\}$}{
+            $\bij \gets BF(\hi, \hj)$ \tcp*[1]{Compute Bayes factor via \cref{alg:bayes_factor}}
+
+            \If{$\bij > 1$}{
+                $s_i \gets s_i + 1$ \tcp*[1]{$\hi$'s score increases if it is the stronger model}
             }
         }
-        $\hp \gets \argmax\limits_{s_i} \bk{\hi}$
+    }
+    $\hp \gets \argmax\limits_{s_i} \bk{\hi}$
 
-        return $\hp$
-    \end{algorithm}
+    return $\hp$
+\end{algorithm}
 
 
+\begin{figure}
+    \QMLAfig{Nov_19/12_04/lattice_qmla_summary.pdf}
+    \caption[\gls{qmla} for set of lattices under Ising formalism]{
+        \gls{qmla} for set of lattices under Ising formalism. 
+        The lattice indices correspond to those in \cref{fig:lattices}, 
+            and the true system is given by lattice $d$. 
+        (a,b) show the decrease in \gls{volume} for each model's training phase. (spread over two plots for readibility) 
+        (c,d), trained models are used to reproduce dynamics, compared with the dynamics of the
+            true system. 
+        (e) Heatmap of $\log_{10} \bij$ between every pair of models. The \gls{bf} is read as 
+        $i$ versus $j$, where $i$ is the model on the $y$-axis and $j$ is the model on the $x$-axis. 
+        $\log_{10} \bij > 0$ (green) favours the model listed on the $y$-axis;
+        $\log_{10} \bij < 0$ (purple) favours the model listed on the $x$-axis.
+        The inset shows the number of \gls{bf} comparisons won by each model, i.e. the models' scores. 
+    }
+    \label{fig:lattice_qmla_eg}
+\end{figure}    
 
-    
+For example, we adopt the fully connected four site lattice ($d$ in \cref{fig:lattices})
+    as the true lattice specifying $\ho$, under the Ising formalism (\cref{eqn:ising_model_full}) in \cref{fig:lattice_qmla_eg}.
+We can then run \gls{qmla} by training each model (\cref{fig:lattice_qmla_eg}a-b);
+    comparing the models predictive power (\cref{fig:lattice_qmla_eg}c-d) 
+    through \gls{bf} (\cref{fig:lattice_qmla_eg}e), 
+    and choosing the model which wins the largest number of \gls{bf} contests. 
+In this example, $\ho$ is stronger than every alternative model according to the \glspl{bf}, 
+    and is hence determined as $\hp$. 
+
+\par 
+In order to test \gls{qmla} robustly, 
+    we can use each of the lattices shown in \cref{fig:lattices} to specify $\ho$, 
+    to ensure the algorithm is capable of finding the underlying model of arbitrary complexity, 
+    within the constraints of a prescribed model set\footnotemark. 
+Moreover, we can extend this test to the Heisenberg and Hubbard formalisms; 
+    note that due to the overhead given by the \gls{jwt} (\cref{sec:jordan_wigner}), i.e. the requirement of two qubits per site, 
+    we restrict study of the Hubbard model to lattices $a-e$ for practicality. 
+By running 10 independent \gls{qmla} instances for each lattice under each formalism
+    we can gauge the success rate of the algorithm for distinguishing basic lattices from each other. 
+We present the result of these tests in \cref{fig:lattice_success_rates},   
+    finding in all cases that \gls{qmla} identifies $\ho$ with success rates at least $70\%$. 
+
+\footnotetext{The remainder of this thesis is dedicated to cases where we do not prescribe the model set, but instead generate models dynamically.}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{theoretical_study/lattice_success_rates.pdf}
+    \caption{
+        Rates of success for \gls{qmla} under various conditions. 
+        Each lattice is set as the true model $\ho$ for ten independent instances. 
+        In each instance, the \gls{es} considers the available lattices 
+            (\textbf{a-j} for Ising and Heisenberg cases and \textbf{a-e} for the Fermi-Hubbard case), 
+            and selects a champion model $\hp$ as that most consistent with data generated by $\ho$. 
+    }
+    \label{fig:lattice_success_rates}
+\end{figure}    
+
