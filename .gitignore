@@ -6,12 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+qmla_run_data/*
+
 # Unwanted large files/plots/compiled python
 *.pyc
 *.npy
-*.pdf
-*.png
-*.jpg
+# *.pdf
+# *.png
 *.csv
 *.dat
 *.pptx
@@ -24,9 +25,6 @@ __pycache__/
 *conflicted*
 # Documentation build directories
 docs/_build
-
-# Specific to this project
-qmla_run_data/*
 
 # Output files from cluster
 *.e*
@@ -147,7 +145,7 @@ ENV/
 # *.pdf
 
 ## Generated if empty string is given at "Please type another file name for output:"
-.pdf
+# .pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
