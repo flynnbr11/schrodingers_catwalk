@@ -1,4 +1,5 @@
 \glsreset{qmla}
+% TODO references about learning representations e.g. Renner's group; Briegel, HendrikPoulsen-Nautrup
 \gls{qmla} is an algorithm that extends the concept of applying machine learning to the 
     characterisation of Hamiltonians we've seen so far. 
 The extension, and central question of \gls{qmla} is:
@@ -60,7 +61,7 @@ In short, \gls{qmla} proposes candidate models $\hi$ as hypoteses to explain $Q$
     and finally nominate the model with the best performance after training. 
 In particular, \gls{qmla} uses \gls{qhl} as the parameter learning subroutine, 
     but in principle this step can be performed by any algorithm which learns $\al$ for given $\terms$, 
-    such as tomography \cite{wang2015hamiltonian}. 
+    \cite{wang2015hamiltonian, krastanov2019stochastic, flurin2020using, niu2019learning, greplova2017quantum,lokhov2018optimal}. 
 While discussing a model $\hi$, their \emph{training} then simply means the implementation 
     of \gls{qhl}, where $\hi$ is assumed to represent $Q$, 
     such that $\al_i$ is optimised as well as it can be, even if $\hi$ is entirely inaccurate. 

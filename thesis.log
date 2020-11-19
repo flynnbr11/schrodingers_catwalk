@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2019.5.2)  7 NOV 2020 20:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2019.5.2)  19 NOV 2020 11:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1056,7 +1056,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.29 \usepackage
+l.30 \usepackage
                 [capitalise]{cleveref}
 ? 
 (/usr/share/texlive/texmf-dist/tex/latex/cleveref/cleveref.sty
@@ -1234,7 +1234,7 @@ Package: supertabular 2004/02/20 v4.1e the supertabular environment
 Package: glossary-tree 2016/01/24 v4.21 (NLCT)
 \glstreeindent=\skip105
 ))
-Package hyperref Info: Option `colorlinks' set `true' on input line 45.
+Package hyperref Info: Option `colorlinks' set `true' on input line 46.
 
 (/usr/share/texlive/texmf-dist/tex/latex/todonotes/todonotes.sty
 Package: todonotes 2015/07/09 .dtx Todonotes source and documentation.
@@ -1539,10 +1539,20 @@ Package: nicefrac 1998/08/04 v0.9b Nice fractions
 \L@UnitsRaiseTextstyle=\skip113
 \L@UnitsRaiseScriptstyle=\skip114
 )
+(/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+\c@KVtest=\count292
+\sf@farskip=\skip115
+\sf@captopadj=\dimen276
+\sf@capskip=\skip116
+\sf@nearskip=\skip117
+\sf@top=\skip118
+\sf@bottom=\skip119
+)
 (/usr/share/texlive/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2013/01/06 v5.00 algorithms environments
-\c@AlgoLine=\count292
-\algocf@hangindent=\skip115
+\c@AlgoLine=\count293
+\algocf@hangindent=\skip120
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
@@ -1557,38 +1567,38 @@ Package `algorithm2e' Release 5.1 -- october 19 2015 --
 subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 - Author: Christophe Fiorio (christophe.fiorio@umontpellier.fr)
 ********************************************************
-\skiptotal=\skip116
-\skiplinenumber=\skip117
-\skiprule=\skip118
-\skiphlne=\skip119
-\skiptext=\skip120
-\skiplength=\skip121
-\algomargin=\skip122
-\skipalgocfslide=\skip123
-\algowidth=\dimen276
-\inoutsize=\dimen277
-\inoutindent=\dimen278
-\interspacetitleruled=\dimen279
-\interspacealgoruled=\dimen280
-\interspacetitleboxruled=\dimen281
-\algocf@ruledwidth=\skip124
+\skiptotal=\skip121
+\skiplinenumber=\skip122
+\skiprule=\skip123
+\skiphlne=\skip124
+\skiptext=\skip125
+\skiplength=\skip126
+\algomargin=\skip127
+\skipalgocfslide=\skip128
+\algowidth=\dimen277
+\inoutsize=\dimen278
+\inoutindent=\dimen279
+\interspacetitleruled=\dimen280
+\interspacealgoruled=\dimen281
+\interspacetitleboxruled=\dimen282
+\algocf@ruledwidth=\skip129
 \algocf@inoutbox=\box52
 \algocf@inputbox=\box53
-\AlCapSkip=\skip125
-\AlCapHSkip=\skip126
-\algoskipindent=\skip127
+\AlCapSkip=\skip130
+\AlCapHSkip=\skip131
+\algoskipindent=\skip132
 \algocf@nlbox=\box54
 \algocf@hangingbox=\box55
 \algocf@untilbox=\box56
-\algocf@skipuntil=\skip128
+\algocf@skipuntil=\skip133
 \algocf@capbox=\box57
-\algoheightruledefault=\skip129
-\algoheightrule=\skip130
-\algotitleheightruledefault=\skip131
-\algotitleheightrule=\skip132
-\c@algocfline=\count293
-\c@algocfproc=\count294
-\c@algocf=\count295
+\algoheightruledefault=\skip134
+\algoheightrule=\skip135
+\algotitleheightruledefault=\skip136
+\algotitleheightrule=\skip137
+\c@algocfline=\count294
+\c@algocfproc=\count295
+\c@algocf=\count296
 \algocf@algoframe=\box58
 \algocf@algobox=\box59
 ) (/usr/share/texlive/texmf-dist/tex/latex/caption/newfloat.sty
@@ -1601,31 +1611,27 @@ Package: algcompatible
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count296
-\c@ALG@rem=\count297
-\c@ALG@nested=\count298
-\ALG@tlm=\skip133
-\ALG@thistlm=\skip134
-\c@ALG@Lnr=\count299
-\c@ALG@blocknr=\count300
-\c@ALG@storecount=\count301
-\c@ALG@tmpcounter=\count302
-\ALG@tmplength=\skip135
+\c@ALG@line=\count297
+\c@ALG@rem=\count298
+\c@ALG@nested=\count299
+\ALG@tlm=\skip138
+\ALG@thistlm=\skip139
+\c@ALG@Lnr=\count300
+\c@ALG@blocknr=\count301
+\c@ALG@storecount=\count302
+\c@ALG@tmpcounter=\count303
+\ALG@tmplength=\skip140
 )
 Document Style - algorithmic compatible environments for the `algorithmicx' sty
 le
+) (/usr/share/texlive/texmf-dist/tex/latex/rotating/rotating.sty
+Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
+\c@r@tfl@t=\count304
+\rotFPtop=\skip141
+\rotFPbot=\skip142
+\rot@float@box=\box60
+\rot@mess@toks=\toks61
 )
-
-! LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.88 n
-      umbers=left, % comment this line to remove line numbers from code list...
-
-? 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
@@ -1636,10 +1642,10 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.104 \renewcommand*{\listlistingname}
+l.107 \renewcommand*{\listlistingname}
                                       {List of XYZ}
 ? 
-\c@definition=\count303
+\c@definition=\count305
 ) (./logistics/macros.tex
 
 ! LaTeX Error: Command \italicbold already defined.
@@ -1649,7 +1655,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.61 ...ommand{\italicbold}[1]{\textbf{\emph{#1}}}
+l.64 ...ommand{\italicbold}[1]{\textbf{\emph{#1}}}
                                                   
 ? 
 
@@ -1660,7 +1666,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.66 \newcommand{\(}{\left(}
+l.69 \newcommand{\(}{\left(}
                              % adaptive brackets
 ? 
 
@@ -1671,7 +1677,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.67 \newcommand{\)}{\right)}
+l.70 \newcommand{\)}{\right)}
                               % adaptive brackets
 ? 
 ) (./logistics/glossary.tex
@@ -1679,11 +1685,11 @@ l.67 \newcommand{\)}{\right)}
 \glo@main@file=\write5
 \openout5 = `thesis.glo'.
 
-Package glossaries Info: Writing glossary file thesis.glo on input line 121.
+Package glossaries Info: Writing glossary file thesis.glo on input line 145.
 \glo@acronym@file=\write6
 \openout6 = `thesis.acn'.
 
-Package glossaries Info: Writing glossary file thesis.acn on input line 121.
+Package glossaries Info: Writing glossary file thesis.acn on input line 145.
 ) (./thesis.aux)
 \openout1 = `thesis.aux'.
 
@@ -1707,7 +1713,7 @@ LaTeX Font Info:    Try loading font information for OT1+pplj on input line 12.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pplj.fd
 File: ot1pplj.fd 2004/09/06 font definitions for OT1/pplj.
 )
-\AtBeginShipoutBox=\box60
+\AtBeginShipoutBox=\box61
 Package hyperref Info: Link coloring ON on input line 12.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -1716,7 +1722,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count304
+\c@section@level=\count306
 )
 LaTeX Info: Redefining \ref on input line 12.
 LaTeX Info: Redefining \pageref on input line 12.
@@ -1729,17 +1735,17 @@ LaTeX Info: Redefining \nameref on input line 12.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count305
-\scratchdimen=\dimen282
-\scratchbox=\box61
-\nofMPsegments=\count306
-\nofMParguments=\count307
-\everyMPshowfont=\toks61
-\MPscratchCnt=\count308
-\MPscratchDim=\dimen283
-\MPnumerator=\count309
-\makeMPintoPDFobject=\count310
-\everyMPtoPDFconversion=\toks62
+\scratchcounter=\count307
+\scratchdimen=\dimen283
+\scratchbox=\box62
+\nofMPsegments=\count308
+\nofMParguments=\count309
+\everyMPshowfont=\toks62
+\MPscratchCnt=\count310
+\MPscratchDim=\dimen284
+\MPnumerator=\count311
+\makeMPintoPDFobject=\count312
+\everyMPtoPDFconversion=\toks63
 )
 LaTeX Info: Redefining \microtypecontext on input line 12.
 Package microtype Info: Generating PDF output.
@@ -1802,53 +1808,27 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: longtable package is loaded.
 
 (/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
 )
+Package caption Info: rotating package is loaded.
 Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count311
+\c@lstlisting=\count313
 
 (./thesis.glsdefs) ABD: EveryShipout initializing macros
+! Undefined control sequence.
+<argument> \sf@counterlist 
+                           
+l.12 \begin{document}
+                     
+? 
 (./front_back_matter/title_page.tex
-LaTeX Font Info:    Try loading font information for OT1+pplx on input line 1.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pplx.fd
-File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
-)
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 1.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlzplm.fd
-File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
-)
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 1.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omszplm.fd
-File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
-)
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 1.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxzplm.fd
-File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
-)
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 1.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1zplm.fd
-File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
-)
-Package microtype Info: Loading generic settings for font family
-(microtype)             `zplm' (encoding: OT1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
-
-\openout4 = `thesis.ist'.
-
-]
-<logos/qecdt.png, id=154, 111.79568pt x 31.19429pt>
+<logos/qecdt.png, id=78, 111.79568pt x 31.19429pt>
 File: logos/qecdt.png Graphic file (type png)
  <use logos/qecdt.png>
 Package pdftex.def Info: logos/qecdt.png used on input line 13.
@@ -1858,7 +1838,41 @@ Overfull \hbox (21.23792pt too wide) in paragraph at lines 13--14
 []  
  []
 
-<logos/bristol_uni.png, id=156, 803.0pt x 242.9075pt>
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 15.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pplx.fd
+File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
+)
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 15.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlzplm.fd
+File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 15.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omszplm.fd
+File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 15.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxzplm.fd
+File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
+)
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 15.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
+)
+Package microtype Info: Loading generic settings for font family
+(microtype)             `zplm' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+<logos/bristol_uni.png, id=80, 803.0pt x 242.9075pt>
 File: logos/bristol_uni.png Graphic file (type png)
 
 <use logos/bristol_uni.png>
@@ -1875,35 +1889,39 @@ LaTeX Font Info:    Font shape `OT1/pplj/bx/n' in size <24.88> not available
 Package microtype Info: Character `013' is missing
 (microtype)             in font `OT1/pplj/m/sc/17.28'.
 (microtype)             Ignoring protrusion settings for this character.
- [2
+ [1
+
+\openout4 = `thesis.ist'.
 
 
- <./logos/qecdt.png> <./logos/bristol_uni.png>])
-Package tocbasic Info: character protrusion at toc deactivated on input line 32
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./logos/qecdt.png> <./logo
+s/bristol_uni.png>])
+Package tocbasic Info: character protrusion at toc deactivated on input line 33
 .
-
-(./thesis.toc)
+ (./thesis.toc
+LaTeX Font Info:    Font shape `OT1/pplj/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/pplj/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/pplj/bx/n' in size <12> not available
+(Font)              Font shape `OT1/pplj/b/n' tried instead on input line 4.
+)
 \tf@toc=\write8
 \openout8 = `thesis.toc'.
 
- (./thesis.acr [3
+ (./thesis.acr [2
 
 
-]
-LaTeX Font Info:    Font shape `OT1/pplj/bx/n' in size <12> not available
-(Font)              Font shape `OT1/pplj/b/n' tried instead on input line 6.
-) (./thesis.gls [4
+]) (./thesis.gls [3
 
 
 
 
-])
-(./logistics/development_layout.texpdfTeX warning (ext4): destination with the 
-same identifier (name{page.1}) has been already used, duplicate ignored
+]) (./logistics/development_layout.texpdfTeX warning (ext4): destination with t
+he same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.18 \part{Algorithms}
-                      \label{part:algorithms} [1
+l.26 \part{Theoretical Study}
+                             \label{part:theoretical_study} [1
 
 
 
@@ -1912,8 +1930,8 @@ l.18 \part{Algorithms}
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.18 \part{Algorithms}
-                      \label{part:algorithms} [2
+l.26 \part{Theoretical Study}
+                             \label{part:theoretical_study} [2
 
 
 ]
@@ -1933,403 +1951,275 @@ Class scrbook Warning: \float@addtolists detected!
 (scrbook)              a package that still implements the
 (scrbook)              deprecated \float@addtolist interface .
 
-(./algorithms/quantum_hamiltonian_learning.texpdfTeX warning (ext4): destinatio
-n with the same identifier (name{page.3}) has been already used, duplicate igno
-red
+(./theoretical_study/prescribed.tex
+! Undefined control sequence.
+l.5 ...uppose we wish to characterise a new, \epmh
+                                                  {untrustued} quantum simul...
+
+? 
+
+LaTeX Warning: Reference `eqn:likelihood' on page 1 undefined on input line 8.
+
+LaTeX Font Info:    Try loading font information for U+fplmbb on input line 14.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ufplmbb.fd
+File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
+)pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has
+ been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.54 \par
-          [3
+l.50     & 
+           4-site fully conneted (square) [3
 
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+pplj on input line 83.
+<theoretical_study/lattices/_2_site_chain.png, id=353, 76.6062pt x 52.7571pt>
+File: theoretical_study/lattices/_2_site_chain.png Graphic file (type png)
 
-LaTeX Font Info:    No file OMSpplj.fd. on input line 83.
+<use theoretical_study/lattices/_2_site_chain.png>
+Package pdftex.def Info: theoretical_study/lattices/_2_site_chain.png used on i
+nput line 64.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
 
-
-LaTeX Font Warning: Font shape `OMS/pplj/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 83.
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.96 I
-      n order to compute the updated probability for a given particle, then,...
-[4]
-! Undefined control sequence.
-l.118     \subfloat
-                   {
-? 
-<figure_development/smc_demo/epoch_0.pdf, id=403, 157.99992pt x 167.93813pt>
-File: figure_development/smc_demo/epoch_0.pdf Graphic file (type pdf)
-
-<use figure_development/smc_demo/epoch_0.pdf>
-Package pdftex.def Info: figure_development/smc_demo/epoch_0.pdf used on input 
-line 119.
-(pdftex.def)             Requested size: 157.99953pt x 167.93771pt.
-
-! Undefined control sequence.
-l.121     \subfloat
-                   {
-? 
-<figure_development/smc_demo/epoch_9.pdf, id=404, 157.99992pt x 167.93813pt>
-File: figure_development/smc_demo/epoch_9.pdf Graphic file (type pdf)
-
-<use figure_development/smc_demo/epoch_9.pdf>
-Package pdftex.def Info: figure_development/smc_demo/epoch_9.pdf used on input 
-line 122.
-(pdftex.def)             Requested size: 157.99953pt x 167.93771pt.
-
-! Undefined control sequence.
-l.124     \subfloat
-                   {
-? 
-<figure_development/smc_demo/epoch_10.pdf, id=405, 157.99992pt x 167.93813pt>
-File: figure_development/smc_demo/epoch_10.pdf Graphic file (type pdf)
-
-<use figure_development/smc_demo/epoch_10.pdf>
-Package pdftex.def Info: figure_development/smc_demo/epoch_10.pdf used on input
- line 125.
-(pdftex.def)             Requested size: 157.99953pt x 167.93771pt.
-
-! Undefined control sequence.
-l.129     \subfloat
-                   {
-? 
-<figure_development/smc_demo/epoch_50.pdf, id=406, 157.99992pt x 167.93813pt>
-File: figure_development/smc_demo/epoch_50.pdf Graphic file (type pdf)
-
-<use figure_development/smc_demo/epoch_50.pdf>
-Package pdftex.def Info: figure_development/smc_demo/epoch_50.pdf used on input
- line 130.
-(pdftex.def)             Requested size: 157.99953pt x 167.93771pt.
-
-! Undefined control sequence.
-l.132     \subfloat
-                   {
-? 
-
-<figure_development/smc_demo/epoch_100.pdf, id=407, 158.54321pt x 167.93813pt>
-File: figure_development/smc_demo/epoch_100.pdf Graphic file (type pdf)
-
-<use figure_development/smc_demo/epoch_100.pdf>
-Package pdftex.def Info: figure_development/smc_demo/epoch_100.pdf used on inpu
-t line 133.
-(pdftex.def)             Requested size: 158.5428pt x 167.93771pt.
-
-! Undefined control sequence.
-l.135     \subfloat
-                   {
-? 
-
-<figure_development/smc_demo/epoch_500.pdf, id=408, 158.54321pt x 167.93813pt>
-File: figure_development/smc_demo/epoch_500.pdf Graphic file (type pdf)
-
-<use figure_development/smc_demo/epoch_500.pdf>
-Package pdftex.def Info: figure_development/smc_demo/epoch_500.pdf used on inpu
-t line 136.
-(pdftex.def)             Requested size: 158.5428pt x 167.93771pt.
-
-! Undefined control sequence.
-l.139     \subfloat
-                   {
-? 
-<figure_development/smc_demo/cbar.pdf, id=409, 433.62pt x 36.135pt>
-File: figure_development/smc_demo/cbar.pdf Graphic file (type pdf)
-
-<use figure_development/smc_demo/cbar.pdf>
-Package pdftex.def Info: figure_development/smc_demo/cbar.pdf used on input lin
-e 140.
-(pdftex.def)             Requested size: 433.61894pt x 36.13489pt.
-LaTeX Font Info:    Font shape `OT1/pplj/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/pplj/b/n' tried instead on input line 161.
- [5] [6 <./figure_development/smc_demo/epoch_0.pdf> <./figure_development/smc_d
-emo/epoch_9.pdf
-
-pdfTeX warning: pdflatex (file ./figure_development/smc_demo/epoch_9.pdf): PDF 
-inclusion: multiple pdfs with page group included in a single page
-> <./figure_development/smc_demo/epoch_10.pdf
-
-pdfTeX warning: pdflatex (file ./figure_development/smc_demo/epoch_10.pdf): PDF
- inclusion: multiple pdfs with page group included in a single page
-> <./figure_development/smc_demo/epoch_50.pdf
-
-pdfTeX warning: pdflatex (file ./figure_development/smc_demo/epoch_50.pdf): PDF
- inclusion: multiple pdfs with page group included in a single page
-> <./figure_development/smc_demo/epoch_100.pdf
-
-pdfTeX warning: pdflatex (file ./figure_development/smc_demo/epoch_100.pdf): PD
-F inclusion: multiple pdfs with page group included in a single page
-> <./figure_development/smc_demo/epoch_500.pdf
-
-pdfTeX warning: pdflatex (file ./figure_development/smc_demo/epoch_500.pdf): PD
-F inclusion: multiple pdfs with page group included in a single page
-> <./figure_development/smc_demo/cbar.pdf
-
-pdfTeX warning: pdflatex (file ./figure_development/smc_demo/cbar.pdf): PDF inc
-lusion: multiple pdfs with page group included in a single page
->] [7]
-LaTeX Font Info:    Try loading font information for U+fplmbb on input line 268
-.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ufplmbb.fd
-File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
-) [8] [9]
-<figure_development/params.pdf, id=658, 410.45692pt x 299.17671pt>
-File: figure_development/params.pdf Graphic file (type pdf)
-
-<use figure_development/params.pdf>
-Package pdftex.def Info: figure_development/params.pdf used on input line 371.
-(pdftex.def)             Requested size: 410.45592pt x 299.17596pt.
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 415.
-
-Overfull \hbox (94.50719pt too wide) in paragraph at lines 413--418
-\OT1/pplj/m/n/12 cles of [][][]high par-ti-cle den-sity (HPD)[][], $\OMS/zplm/m
-/n/12 P$\OT1/pplj/m/n/12 , such that $[] \OML/zplm/m/it/12 w[] \OMS/zplm/m/n/12
- ^^U \OML/zplm/m/it/12 ^^T$\OT1/pplj/m/n/12 . We use the con-cept [][][][][]][]
-[]of
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 64--65
+[][] 
  []
 
-[10]
-! Extra }, or forgotten \endgroup.
-l.421     \end{equation}}
-                         
-? 
-[11 <./figure_development/params.pdf>] [12]
-! Missing delimiter (. inserted).
-<to be read again> 
-                   \right 
-l.490 ...ch had been recently sampled from $\pr\bk
-                                                  {\al}$.
-? 
-[13]
+<theoretical_study/lattices/_3_site_chain.png, id=354, 76.6062pt x 52.7571pt>
+File: theoretical_study/lattices/_3_site_chain.png Graphic file (type png)
+
+<use theoretical_study/lattices/_3_site_chain.png>
+Package pdftex.def Info: theoretical_study/lattices/_3_site_chain.png used on i
+nput line 69.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 69--70
+[][] 
+ []
+
+
+<theoretical_study/lattices/_3_site_lattice_fully_connected.png, id=355, 76.606
+2pt x 52.7571pt>
+File: theoretical_study/lattices/_3_site_lattice_fully_connected.png Graphic fi
+le (type png)
+
+<use theoretical_study/lattices/_3_site_lattice_fully_connected.png>
+Package pdftex.def Info: theoretical_study/lattices/_3_site_lattice_fully_conne
+cted.png used on input line 74.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 74--75
+[][] 
+ []
+
+
+<theoretical_study/lattices/_4_site_lattice_fully_connected.png, id=356, 76.606
+2pt x 52.7571pt>
+File: theoretical_study/lattices/_4_site_lattice_fully_connected.png Graphic fi
+le (type png)
+
+<use theoretical_study/lattices/_4_site_lattice_fully_connected.png>
+Package pdftex.def Info: theoretical_study/lattices/_4_site_lattice_fully_conne
+cted.png used on input line 79.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 79--80
+[][] 
+ []
+
+
+<theoretical_study/lattices/_4_site_square.png, id=357, 76.6062pt x 52.7571pt>
+File: theoretical_study/lattices/_4_site_square.png Graphic file (type png)
+
+<use theoretical_study/lattices/_4_site_square.png>
+Package pdftex.def Info: theoretical_study/lattices/_4_site_square.png used on 
+input line 84.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 84--85
+[][] 
+ []
+
+<theoretical_study/lattices/_4_site_chain.png, id=358, 76.6062pt x 52.7571pt>
+File: theoretical_study/lattices/_4_site_chain.png Graphic file (type png)
+
+<use theoretical_study/lattices/_4_site_chain.png>
+Package pdftex.def Info: theoretical_study/lattices/_4_site_chain.png used on i
+nput line 89.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 89--90
+[][] 
+ []
+
+<theoretical_study/lattices/_5_site_chain.png, id=359, 76.6062pt x 52.7571pt>
+File: theoretical_study/lattices/_5_site_chain.png Graphic file (type png)
+
+<use theoretical_study/lattices/_5_site_chain.png>
+Package pdftex.def Info: theoretical_study/lattices/_5_site_chain.png used on i
+nput line 94.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 94--95
+[][] 
+ []
+
+<theoretical_study/lattices/_6_site_chain.png, id=360, 76.6062pt x 52.7571pt>
+File: theoretical_study/lattices/_6_site_chain.png Graphic file (type png)
+
+<use theoretical_study/lattices/_6_site_chain.png>
+Package pdftex.def Info: theoretical_study/lattices/_6_site_chain.png used on i
+nput line 99.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 99--100
+[][] 
+ []
+
+
+<theoretical_study/lattices/_5_site_lattice_fully_connected.png, id=361, 76.606
+2pt x 52.7571pt>
+File: theoretical_study/lattices/_5_site_lattice_fully_connected.png Graphic fi
+le (type png)
+
+<use theoretical_study/lattices/_5_site_lattice_fully_connected.png>
+Package pdftex.def Info: theoretical_study/lattices/_5_site_lattice_fully_conne
+cted.png used on input line 104.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (12.58731pt too wide) in paragraph at lines 104--105
+[][] 
+ []
+
+<theoretical_study/lattices/_6_site_grid.png, id=362, 76.6062pt x 52.7571pt>
+File: theoretical_study/lattices/_6_site_grid.png Graphic file (type png)
+
+<use theoretical_study/lattices/_6_site_grid.png>
+Package pdftex.def Info: theoretical_study/lattices/_6_site_grid.png used on in
+put line 109.
+(pdftex.def)             Requested size: 76.606pt x 52.75696pt.
+
+Overfull \hbox (19.7005pt too wide) in paragraph at lines 109--110
+[][] 
+ []
+
+[4 <./theoretical_study/lattices/_2_site_chain.png> <./theoretical_study/lattic
+es/_3_site_chain.png> <./theoretical_study/lattices/_3_site_lattice_fully_conne
+cted.png> <./theoretical_study/lattices/_4_site_lattice_fully_connected.png> <.
+/theoretical_study/lattices/_4_site_square.png> <./theoretical_study/lattices/_
+4_site_chain.png> <./theoretical_study/lattices/_5_site_chain.png> <./theoretic
+al_study/lattices/_6_site_chain.png> <./theoretical_study/lattices/_5_site_latt
+ice_fully_connected.png> <./theoretical_study/lattices/_6_site_grid.png>]
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [14]
 
-! Package easylist Error: 
-==> `numbers' is not a valid parameter. It is ignored.
 
-See the easylist package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.601         \ListProperties(numbers=r)
-                                        
+LaTeX Warning: Reference `eqn:likelihood' on page 1 undefined on input line 208
+.
+
+[5]
+
+LaTeX Warning: Reference `sec:models' on page 1 undefined on input line 222.
+
+! Limit controls must follow a math operator.
+l.244     \right\}\limits
+                         _{\bkl \in \cc}.
 ? 
-) [15]
+
+<qmla_run_data/Nov_16/23_51/two_param_ising_qhl.pdf, id=419, 485.23277pt x 374.
+31604pt>
+File: qmla_run_data/Nov_16/23_51/two_param_ising_qhl.pdf Graphic file (type pdf
+)
+ <use qmla_run_data/Nov_16/23_51/two_param_ising_qhl.pdf>
+Package pdftex.def Info: qmla_run_data/Nov_16/23_51/two_param_ising_qhl.pdf use
+d on input line 274.
+(pdftex.def)             Requested size: 485.23157pt x 374.31512pt.
+ [6]
+<qmla_run_data/Nov_16/20_05/fully_parameterised_ising_qhl.pdf, id=441, 486.1391
+8pt x 432.30934pt>
+File: qmla_run_data/Nov_16/20_05/fully_parameterised_ising_qhl.pdf Graphic file
+ (type pdf)
+
+<use qmla_run_data/Nov_16/20_05/fully_parameterised_ising_qhl.pdf>
+Package pdftex.def Info: qmla_run_data/Nov_16/20_05/fully_parameterised_ising_q
+hl.pdf used on input line 288.
+(pdftex.def)             Requested size: 486.13797pt x 432.30829pt.
+ [7] [8 <./qmla_run_data/Nov_16/23_51/two_param_ising_qhl.pdf>] [9 <./qmla_run_
+data/Nov_16/20_05/fully_parameterised_ising_qhl.pdf>]
+! Limit controls must follow a math operator.
+l.378     + \sum_{k}^{N} U_k \hat{n}\limits
+                                           _{k\uparrow}\hat{n}_{k\downarrow}
+? 
+! Limit controls must follow a math operator.
+l.379 ... \sum_{k}^{N} \mu_k \left( \hat{n}\limits
+                                                  _{k\uparrow} + \hat{n}_{k\...
+
+? 
+LaTeX Font Info:    Try loading font information for OMS+pplj on input line 383
+.
+LaTeX Font Info:    No file OMSpplj.fd. on input line 383.
+
+LaTeX Font Warning: Font shape `OMS/pplj/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 383.
+
+[10] [11]
+
+LaTeX Warning: Reference `alg:lattice_exploration_strategy,alg:lattice_explorat
+ion_strategy_consolidation' on page 12 undefined on input line 542.
+
+
+LaTeX Warning: Reference `.' on page 12 undefined on input line 542.
+
+[12]
+
+LaTeX Warning: Reference `alg:bayes_factor' on page 1 undefined on input line 5
+81.
+
+) [13]
 chapter 2.
-(./algorithms/quantum_model_learning_agent.tex
-! Extra }, or forgotten \endgroup.
-<recently read> }
-                 
-l.28     composed of a set of \emph{}\glspl{term}}
-                                                  , $\termset = \{ \hat{t}\}$,
-? 
-[16
-
-
-] [17] [18]
-
-pdfTeX warning: pdflatex (file ./figure_development/overview_loop.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figure_development/overview_loop.pdf, id=870, 810.90355pt x 455.2441pt>
-File: figure_development/overview_loop.pdf Graphic file (type pdf)
-
-<use figure_development/overview_loop.pdf>
-Package pdftex.def Info: figure_development/overview_loop.pdf used on input lin
-e 231.
-(pdftex.def)             Requested size: 505.89pt x 284.01282pt.
- [19] [20 <./figure_development/overview_loop.pdf>] (./images/qmla_flow.tex
-Overfull \hbox (0.86493pt too wide) in paragraph at lines 75--75
- [][][][]\OT1/pplj/m/n/12 Simulator 
- []
-
-Missing character: There is no ) in font nullfont!
-Missing character: There is no ) in font nullfont!
-Missing character: There is no ) in font nullfont!
-)
-
-! Package glossaries Error: Glossary entry `model space' has not been defined.
-
-See the glossaries package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.304 ...curs within some \emph{\gls{model space}}
-                                                  , the size of which can us...
-
-? 
-! Missing { inserted.
-<to be read again> 
-                   \left 
-l.307     then there are $2^\absval{\termset}
-                                             $ available candidates in the m...
-
-? 
-! Missing } inserted.
-<inserted text> 
-                }
-l.307     then there are $2^\absval{\termset}$
-                                               available candidates in the m...
-
-? 
-[21] [22]
-
-LaTeX Warning: Reference `sm:objective_fncs' on page 23 undefined on input line
- 341.
-
-[23] [24]
-
-Package amsmath Warning: Foreign command \atopwithdelims;
-(amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 427.
-
-[25]
-
-LaTeX Warning: Reference `chapter:nv' on page 1 undefined on input line 490.
-
-
-LaTeX Warning: Reference `sec:ga' on page 1 undefined on input line 496.
-
-[26] (./images/agents.tex
-(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
-zlibrarycalc.code.tex
-File: tikzlibrarycalc.code.tex 2013/07/15 v3.0.1a (rcs-revision 1.9)
-)
-Overfull \hbox (10.97849pt too wide) in paragraph at lines 98--98
- [][][][]\OT1/pplj/m/n/12 Performance 
- []
-
-
-Overfull \hbox (32.78229pt too wide) in paragraph at lines 112--113
-[][] 
- []
-
-
-Overfull \hbox (0.74248pt too wide) in paragraph at lines 119--119
- [][][][]\OT1/pplj/m/n/12 Likelihood 
- []
-
-
-Overfull \hbox (5.05048pt too wide) in paragraph at lines 121--121
- [][][][]\OT1/pplj/m/n/12 Experiment 
- []
-
-
-Overfull \hbox (5.05048pt too wide) in paragraph at lines 122--122
- [][][][]\OT1/pplj/m/n/12 Experiment 
- []
-
-
-Overfull \hbox (32.78229pt too wide) in paragraph at lines 136--137
-[][] 
- []
-
-)
-
-LaTeX Font Warning: Font shape `OMS/pplj/m/it' undefined
-(Font)              using `OMS/pplj/m/n' instead
-(Font)              for symbol `textbraceright' on input line 703.
-
-) [27] [28] [29] [30] [31] [32]
-chapter 3.
-(./algorithms/software.tex
-
-LaTeX Warning: Reference `part:' on page 1 undefined on input line 15.
-
-
-! Package xkeyval Error: `encoding the concept of an athlete"' undefined in fam
-ilies `lst'.
-
-See the xkeyval package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.45 ]
-      
-? 
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 45.
-[33
+(./theoretical_study/black_box.tex) [14
 
 
 ]
-
-! Package xkeyval Error: `encoding the concept of a footballer' undefined in fa
-milies `lst'.
-
-See the xkeyval package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.90 ]
-      
-? 
-
-! Package xkeyval Error: `which adopts the abstrat representation of an athlete
-.' undefined in families `lst'.
-
-See the xkeyval package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.90 ]
-      
-? 
-[34] [35]
-
-pdfTeX warning: pdflatex (file ./algorithms/software_overview.pdf): PDF inclusi
-on: found PDF version <1.7>, but at most version <1.5> allowed
-<algorithms/software_overview.pdf, id=1455, 494.84875pt x 483.8075pt>
-File: algorithms/software_overview.pdf Graphic file (type pdf)
-
-<use algorithms/software_overview.pdf>
-Package pdftex.def Info: algorithms/software_overview.pdf used on input line 13
-8.
-(pdftex.def)             Requested size: 494.84755pt x 483.80632pt.
+chapter 3.
+(./theoretical_study/genetic_algorithms.tex)) (./logistics/appendix_layout.tex
+[15
 
 
-LaTeX Warning: Reference `chapter:nv' on page 1 undefined on input line 191.
+] [16
 
-[36]
-! Undefined control sequence.
-l.222 \gls{qmla} distributes jobs to \epmh
-                                          {worker} processes in a server,
-? 
 
-LaTeX Warning: Reference `sec:qmla_analysis' on page 1 undefined on input line 
-232.
+]
+chapter A.
+(./appendix/figure_reproduction.tex
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 47.
+ [17
 
-[37]
 
-pdfTeX warning: pdflatex (file ./algorithms/parallel_architecture.pdf): PDF inc
-lusion: found PDF version <1.7>, but at most version <1.5> allowed
-<algorithms/parallel_architecture.pdf, id=1534, 523.9575pt x 379.4175pt>
-File: algorithms/parallel_architecture.pdf Graphic file (type pdf)
+] [18]
+(./figure_development/figure_implementations.tex
 
-<use algorithms/parallel_architecture.pdf>
-Package pdftex.def Info: algorithms/parallel_architecture.pdf used on input lin
-e 277.
-(pdftex.def)             Requested size: 523.95622pt x 379.41656pt.
+LaTeX Warning: Reference `fig:param_learning_vary_particles' on page 1 undefine
+d on input line 6.
 
-Overfull \hbox (18.06622pt too wide) in paragraph at lines 277--293
-[][] 
+)
+Overfull \hbox (115.53012pt too wide) in paragraph at lines 1--78
+ [] 
  []
 
-[38])) (./thesis.bbl [39] [40 <./algorithms/software_overview.pdf>] [41 <./algo
-rithms/parallel_architecture.pdf>]
+[19])) (./thesis.bbl
 Underfull \hbox (badness 1237) in paragraph at lines 50--53
 []\OT1/pplj/m/n/12 Arseni Gous-sev, Rodolfo A Jal-abert, Ho-ra-cio M Pastawski,
  and Diego Wis-ni-acki.
  []
 
-[42
+[20
+
+
 
 
 ]
@@ -2338,14 +2228,14 @@ Underfull \hbox (badness 1436) in paragraph at lines 81--85
 , Ian Hincks, Michal
  []
 
-[43]) [44]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 37.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 37.
+[21] [22]) [23]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 38.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 38.
  (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 37.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 37.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 38.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 38.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: F3DDFB48FCBE163BDBF07469AC850BB5;2407.
+(rerunfilecheck)             Checksum: 975ECD2979BA56417FF43AEA2F3D78E3;1167.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -2353,40 +2243,115 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 37.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 38.
  ) 
 Here is how much of TeX's memory you used:
- 36840 strings out of 493029
- 670954 string characters out of 6136235
- 1020457 words of memory out of 5000000
- 39330 multiletter control sequences out of 15000+600000
- 74172 words of font info for 174 fonts, out of 8000000 for 9000
+ 36646 strings out of 493029
+ 668143 string characters out of 6136235
+ 979780 words of memory out of 5000000
+ 39226 multiletter control sequences out of 15000+600000
+ 62024 words of font info for 143 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 76i,23n,100p,1962b,2553s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/fpl/fplbj8a.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/mathpazo/fplmbb.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/mathpazo/fplmr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/m
-athpazo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/fpl/fplrc8
-a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/fpl/fplrij8a.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (48 pages, 1265917 bytes).
+ 76i,23n,100p,1962b,2483s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{page.33} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{page.57} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.50} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.52} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.vi} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.56} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.45} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.31} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.29} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.28} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.26} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.25} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.67} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.58} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.47} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.41} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.38} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.54} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.53} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.43} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.49} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.46} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.32} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.30} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{page.24} has been referenced but does not exist, re
+placed by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/f
+pl/fplbj8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmb
+b.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/fpl/fplrij8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/rsfs/rsfs10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/pala
+tino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/times/utmri8a.pfb>
+Output written on thesis.pdf (26 pages, 738655 bytes).
 PDF statistics:
- 1764 PDF objects out of 2073 (max. 8388607)
- 1531 compressed objects within 16 object streams
- 296 named destinations out of 1000 (max. 500000)
- 22374 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 820 PDF objects out of 1000 (max. 8388607)
+ 725 compressed objects within 8 object streams
+ 220 named destinations out of 1000 (max. 500000)
+ 19171 words of extra memory for PDF output out of 20736 (max. 10000000)
 

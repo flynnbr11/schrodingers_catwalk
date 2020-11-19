@@ -10,9 +10,14 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {6.1}{\ignorespaces Quantum Model Learning Agent overview}}{25}{figure.caption.15}
 \contentsline {figure}{\numberline {6.2}{\ignorespaces Interface between \gls {qmla} and a single exploration strategy\glsspace (ES).}}{27}{figure.caption.16}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Learning agents}}{33}{figure.caption.17}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces \gls {QMLA} codebase overview}}{42}{figure.caption.23}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Parallel architecture for \gls {qmla}}}{44}{figure.caption.24}
 \addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Lattices for prescribed QMLA}}{50}{figure.caption.25}
+\contentsline {figure}{\numberline {8.2}{\ignorespaces \gls {qhl} for Ising model}}{53}{figure.caption.27}
+\contentsline {figure}{\numberline {8.3}{\ignorespaces \gls {qhl} for Ising model}}{54}{figure.caption.28}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

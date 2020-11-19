@@ -14,6 +14,7 @@
 \usepackage{titlesec}
 \usepackage{float}
 \usepackage{graphicx}
+\graphicspath{ {/home/bf16951/QMD/Launch/Results/} }
 \usepackage{subfiles}
 \usepackage{datetime}
 \usepackage[
@@ -47,6 +48,8 @@
 \usepackage{braket}
 \usepackage{amsthm}
 \usepackage{nicefrac}
+\usepackage{subfig}
+% \usepackage{underscore}
 
 % Algorithm writing
 \usepackage[ruled]{algorithm2e} 
@@ -72,7 +75,7 @@
 
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
-
+\usepackage{rotating}
 
 % Ensure chapter/part numbers are legible and formatted 
 \titleformat{\chapter}[display]  
@@ -86,7 +89,7 @@
 
 % Listing formatting
 \lstset{
-  numbers=left, % comment this line to remove line numbers from code listings
+  % numbers=left, % comment this line to remove line numbers from code listings
   numberstyle=\small, 
   numbersep=8,
   frame=single, 

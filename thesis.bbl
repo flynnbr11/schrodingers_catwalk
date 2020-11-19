@@ -125,6 +125,35 @@ Sheng-Tao Wang, Dong-Ling Deng, and Lu-Ming Duan.
   couplings.
 \newblock {\em New Journal of Physics}, 17(9):093017, 2015.
 
+\bibitem{krastanov2019stochastic}
+Stefan Krastanov, Sisi Zhou, Steven~T Flammia, and Liang Jiang.
+\newblock Stochastic estimation of dynamical variables.
+\newblock {\em Quantum Science and Technology}, 4(3):035003, 2019.
+
+\bibitem{flurin2020using}
+Emmanuel Flurin, Leigh~S Martin, Shay Hacohen-Gourgy, and Irfan Siddiqi.
+\newblock Using a recurrent neural network to reconstruct quantum dynamics of a
+  superconducting qubit from physical observations.
+\newblock {\em Physical Review X}, 10(1):011006, 2020.
+
+\bibitem{niu2019learning}
+Murphy~Yuezhen Niu, Vadim Smelyanskyi, Paul Klimov, Sergio Boixo, Rami Barends,
+  Julian Kelly, Yu~Chen, Kunal Arya, Brian Burkett, Dave Bacon, et~al.
+\newblock Learning non-markovian quantum noise from
+  moir$\backslash$'$\{$e$\}$-enhanced swap spectroscopy with deep evolutionary
+  algorithm.
+\newblock {\em arXiv preprint arXiv:1912.04368}, 2019.
+
+\bibitem{greplova2017quantum}
+Eliska Greplova, Christian~Kraglund Andersen, and Klaus M{\o}lmer.
+\newblock Quantum parameter estimation with a neural network.
+\newblock {\em arXiv preprint arXiv:1711.05238}, 2017.
+
+\bibitem{lokhov2018optimal}
+Andrey~Y Lokhov, Marc Vuffray, Sidhant Misra, and Michael Chertkov.
+\newblock Optimal structure and parameter learning of ising models.
+\newblock {\em Science advances}, 4(3):e1700791, 2018.
+
 \bibitem{franklin1996agent}
 Stan Franklin and Art Graesser.
 \newblock Is it an agent, or just a program?: A taxonomy for autonomous agents.
@@ -164,5 +193,76 @@ Roger~W Hockney and Chris~R Jesshope.
 \bibitem{redis_queue}
 {RQ: Simple job queues for Python}, Nov 2020.
 \newblock [Online; accessed 7. Nov. 2020].
+
+\bibitem{onsager1944crystal}
+Lars Onsager.
+\newblock Crystal statistics. i. a two-dimensional model with an order-disorder
+  transition.
+\newblock {\em Physical Review}, 65(3-4):117, 1944.
+
+\bibitem{barahona1982computational}
+Francisco Barahona.
+\newblock On the computational complexity of ising spin glass models.
+\newblock {\em Journal of Physics A: Mathematical and General}, 15(10):3241,
+  1982.
+
+\bibitem{garey1979computers}
+Michael~R Garey and David~S Johnson.
+\newblock {\em Computers and intractability}, volume 174.
+\newblock freeman San Francisco, 1979.
+
+\bibitem{santoro2006optimization}
+Giuseppe~E Santoro and Erio Tosatti.
+\newblock Optimization using quantum mechanics: quantum annealing through
+  adiabatic evolution.
+\newblock {\em Journal of Physics A: Mathematical and General}, 39(36):R393,
+  2006.
+
+\bibitem{bapst2013quantum}
+Victor Bapst, Laura Foini, Florent Krzakala, Guilhem Semerjian, and Francesco
+  Zamponi.
+\newblock The quantum adiabatic algorithm applied to random optimization
+  problems: The quantum spin glass perspective.
+\newblock {\em Physics Reports}, 523(3):127--205, 2013.
+
+\bibitem{johnson2011quantum}
+Mark~W Johnson, Mohammad~HS Amin, Suzanne Gildert, Trevor Lanting, Firas Hamze,
+  Neil Dickson, Richard Harris, Andrew~J Berkley, Jan Johansson, Paul Bunyk,
+  et~al.
+\newblock Quantum annealing with manufactured spins.
+\newblock {\em Nature}, 473(7346):194--198, 2011.
+
+\bibitem{greiner2012thermodynamics}
+Walter Greiner, Ludwig Neise, and Horst St{\"o}cker.
+\newblock {\em Thermodynamics and statistical mechanics}.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{hubbard1963electron}
+John Hubbard.
+\newblock Electron correlations in narrow energy bands.
+\newblock {\em Proceedings of the Royal Society of London. Series A.
+  Mathematical and Physical Sciences}, 276(1365):238--257, 1963.
+
+\bibitem{scalettar2016introduction}
+Richard~T Scalettar.
+\newblock An introduction to the hubbard hamiltonian.
+\newblock {\em Quantum Materials: Experiments and Theory}, 6, 2016.
+
+\bibitem{hubbard2013}
+Editorial.
+\newblock The hubbard model at half a century.
+\newblock {\em Nature Physics}, 2013.
+
+\bibitem{jordan1993paulische}
+Pascual Jordan and Eugene~Paul Wigner.
+\newblock {\"u}ber das paulische {\"a}quivalenzverbot.
+\newblock In {\em The Collected Works of Eugene Paul Wigner}, pages 109--129.
+  Springer, 1993.
+
+\bibitem{steudtner2018fermion}
+Mark Steudtner and Stephanie Wehner.
+\newblock Fermion-to-qubit mappings with varying resource requirements for
+  quantum simulation.
+\newblock {\em New Journal of Physics}, 20(6):063010, 2018.
 
 \end{thebibliography}

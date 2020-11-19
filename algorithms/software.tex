@@ -135,10 +135,10 @@ mickey.summarise()
 \end{lstlisting}
 
 \section{Python framework}
-\begin{figure}[t]
+\begin{figure}
     \includegraphics{algorithms/software_overview.pdf}
     \caption[\gls{QMLA} codebase overview]{
-        Overview of important \emph{objects} in the \gls{qmla} codebase.
+        Overview of important \emph{objects} in the \gls{qmla} framework.
         Colours encdoe the type of object: red objects are \emph{data}, blue are \emph{functions/methods} 
         and green are \emph{classes}. 
         Objects are grouped broady, with double lines showing communication channels between (groups of) objects. 
@@ -166,7 +166,7 @@ In short, users need only specify the elements of the framework in the \emph{app
 
 
 \subsection{Application}\label{sec:application}
-The application of \gls{qmla} refers to the choice of target system, and how \gls{qmla} searches the 
+The application of \gls{qmla} refers to the choice of target system, $Q$, and how \gls{qmla} searches the 
     \gls{ms} in attempt to discover its model. 
 As outlined in \cref{sec:exploration_strategies}, \glspl{es} play the role of 
     defining \gls{qmla}'s objectives, guiding the steps it takes, and designing the models to be tested. 
@@ -183,7 +183,10 @@ The most crucial methods\footnotemark \ of the \gls{es} class are modular,
 Our base \gls{es} class uses sensbile defaults for this modular functionality, 
     but this flexible mechanism allows for adapting \gls{qmla} by choosing an approach for each 
     of the following subroutines. 
-\footnotetext{Methods are functions which are associated with classes.}
+\footnotetext{
+    The words \emph{method} and \emph{function} are mostly interchangeable, although methods are specifically associated with a class, 
+    while functions are stand-alone.
+}
 
 \begin{easylist}[itemize]
     & Likelihood function. By default, \gls{qhl} calls a subroutine to compute \cref{eqn:likelihood}. 
@@ -194,11 +197,15 @@ Our base \gls{es} class uses sensbile defaults for this modular functionality,
     & Probe generation. The training phase requires a set of probes against which to optimise individual models. 
         Users may wish to specify the design of such probes, for example to match experimental constraints 
         which restrict the realisible probes in the performance of the experiment. 
+        Alternatively, it may be feasible to design probes which increase the information gained per experiment, 
+        enabling faster learning. 
     & \Glsentryfull{edh}. The choice of \gls{edh} greatly influences how the training will perform. 
         We provide a base class implementing \gls{pgh}, as well as child classes for each of 
         the \glspl{edh} listed in \cref{sec:alt_heuristics}. 
     & Prior. The method of drawing the prior distribution can be replaced, for example, with 
         a method for constructing a uniform distribution on each parameter.
+        A key input to the procedure is the initial knowledge the user has about the system, 
+        which is encoded in the prior, for instance varying orders of magnitude of the viable terms.
 \end{easylist}
 
 Additionally, applications require a series of settings for the model training phase, 
@@ -216,10 +223,32 @@ The core \gls{qmla} class manages the database of models and their comparisons,
 \par 
 
 \subsubsection{Parallel implementiation}\label{sec:parallel}
+\begin{figure}
+    \includegraphics{algorithms/parallel_architecture.pdf}
+    \caption[Parallel architecture for \gls{qmla}]{
+        Parallel architecture for \gls{qmla}.
+        \textbf{Left}, \gls{qmla} generates tasks 
+            -- either to train (blue dumbbells) or compare (oragne scales) models -- 
+            and places them in a task queue. 
+        Worker processes (depicted as computers) retrieve those tasks and compute them in parallel, 
+            and interact with a database. 
+        \textbf{Right}, Distributed tasks occuring in parallel. 
+        The left-hand process assumes the task of training the model with ID 5:
+            it first queries the database for a packet of core information, $M_5$, 
+            which informs the model training procedure, for example the terms and parameters 
+            of model 5. 
+        After training, it sends a packet, $R_5$, summarising the result of model 5's training. 
+        The right-hand process compares two models with IDs 1 and 2, by first retrieivng the results packets
+            $R_1, R_2$, then storing the comparison $C_{1,2}$ on the database. 
+    }
+    \label{fig:parallel}
+\end{figure}
+
 The implementation of \gls{qmla} seeks to separate the organisation of the \gls{ms} from the 
     cumbersome calculations which enable the search. 
 We can offload those calculations to a compute cluster (server) to run \emph{in parallel},
-    allowing for significant speedup of the entire \gls{qmla} procedure. 
+    allowing for significant speedup of the entire \gls{qmla} procedure, 
+    limited by Amdahl's law. % TODO reference/explain Amdahls law (do we need it here? somewhere else?) 
 \gls{qmla} distributes jobs to \epmh{worker} processes in a server, 
     i.e. we assume that \gls{qmla} is run on a machine with $N_c$ available parallel \emph{processes}\footnotemark. 
 Then, the expensive calculations, namely training and comparing models, are not performed 
@@ -241,7 +270,7 @@ While there are a number of strategies for parallelising code over a cluster,
     then brokering self-contained tasks to \emph{workers}, 
     which blindly solve a small problem, without knowledge of the wider context or algorithm \cite{hockney2019parallel}.
 The mapping here is trivial: the master of our algorithm is \gls{qmla}, 
-    while workers can be used for the training and comparison of models. 
+    while workers can be used for the tasks of training and comparing models. 
 The \gls{qmla} class is hence assigned a single process solely for its considerations, 
     e.g. for the ranking of models and determination of the next models to tests, 
     while the remaining $N_c - 1$ processes lay dormant until \gls{qmla} requests that they perform a job. 
@@ -268,51 +297,98 @@ This is dealt with easily by using a \emph{blocking} protocol,
     where new batches of jobs are not released until the master receives all the results of jobs on which the new tasks depend.
 \gls{qmla} simply waits until all models on a given layer have been trained before queueing comparisons 
     on that layer, to ensure a comparison can not start without the data needed to compute that comparison. 
+\par
+
+Models are assigned a unique ID upon creation; 
+    models are uniquely described by their name, represented as a string in the \gls{qmla} class, 
+    such that newly proposed models can be checked against the set of previously considered models 
+    before being added to the database. 
+\gls{qmla} can hence check whether a proposed model has already been trained, 
+    in which case it does not resubmit the model, but instead relies on the previous result. 
+Likewise \gls{qmla} can check for the presence of any comparison result $C_{ij}$ before setting it as a new task, 
+    ensuring we do not duplicate expensive calculation. 
+\par 
 We use a redis database and task queue \cite{redis, redis_queue}. 
-We depict the structure of our parallel architecture, and the master-worker strategy, in \cref{fig:parallel}.
-
-\begin{figure}[t]
-    \includegraphics{algorithms/parallel_architecture.pdf}
-    \caption[Parallel architecture for \gls{qmla}]{
-        Parallel architecture for \gls{qmla}.
-        \textbf{Left}, \gls{qmla} generates tasks 
-            -- either to train (blue dumbbells) or compare (oragne scales) models -- 
-            and places them in a task queue. 
-        Worker processes (depicted as computers) retrieve those tasks and compute them in parallel, 
-            and interact with a database. 
-        \textbf{Right}, Distributed tasks occuring in parallel. 
-        The left-hand process assumes the task of training the model with ID 5:
-            it first queries the database for a packet of core information, $M_5$, 
-            which informs the model training procedure, for example the terms and parameters 
-            of model 5. 
-        After training, it sends a packet, $R_5$, summarising the result of model 5's training. 
-        The right-hand process compares two models with IDs 1 and 2, by first retrieivng the results packets
-            $R_1, R_2$, then storing the comparison $C_{1,2}$ on the database. 
-    }
-    \label{fig:parallel}
-\end{figure}
-
+We depict the structure of this parallel architecture, and the master-worker strategy, in \cref{fig:parallel}.
 
 \subsection{Infrastructure}\label{sec:infrastructure}
-The infrastructure enabling the distribution of \gls{qmla}'s tasks across a set of worker processes
-    can be summarised as a set of classes representing the objects on which we must perform expensive calculations, 
-    as well as functions to launch those calculations independently of any other calculation, 
-    and a database which can be accessed by \gls{qmla} and all workers.
+The infrastructure enabling the distribution of \gls{qmla}'s tasks across 
+    a set of worker processes can be summarised as
+\begin{easylist}
+    & a set of classes representing the objects on which we must perform expensive calculations;
+    & functions to launch those calculations independently of any other calculation;
+    & a database which can be accessed by all workers as well as \gls{qmla}.
+\end{easylist}
 \par 
+
 We need a series of distinct classes to represent models, for use in each stage of \gls{qmla}: 
     a \emph{trainable} class is used for the parameter optimisation, 
     while \emph{comparable} classes are used for computing \glspl{bf}, 
 Crucially, this separation allows us to perform data-heavy calculations independently, 
     e.g. on a remote process within a compute cluster, 
-    and discard the class instance used for the calculation, 
+    and discard the class instance used for the calculation and the large amount of data it generates, 
     while only the relatively small \emph{storage} classs is retained by \gls{qmla} for later use. 
-To achieve this separation between calculation and analysis, we use a redis database,
-    which holds compressed summaries of the outcomes of tasks. 
 
+\par 
+The tasks which actually implement the calculations (\cref{sec:parallel}) are captured by standalone \emph{remote} functions. 
+These functions receive instructions such as \ttt{train model 10}; 
+    they then contact the database for the set of shared settings, 
+    such as $\Ne, \Np$ and the set of probes, 
+    before performing the task, and then sending the compressed result to the database for storage. 
 
+\par 
+To achieve this separation between calculation and analysis, we use a redis database \cite{redis},
+    which holds the core implementation settings, e.g. $\Ne, \Np$ and the set of probes to train upon, 
+    as well as the compressed summaries of the outcomes of tasks
 
+\section{Usage}
+
+Several aspects of \gls{qmla} are \emph{probabilistic}.
+Firstly, the Bayesian updates within model training of \gls{qhl} relies on Likelihoods which 
+    implicitly depend on the measurement datum of a quantum system; 
+    in the case where the the measurement collapses $Q$ into the less-likely basis, 
+    the likelihoods will reflect that accurate hypotheses were poor, 
+    resulting in misguided posterior distributions. 
+It is thus \emph{possible} that the parameter learning will converge on incorrect values. 
+Moreover, the model design subroutine is not gauranteed to exploit the aspects of favoured models which are 
+    actually informative, e.g. given a favoured model with four correct terms and two incorrect terms, 
+    the model generator may opt to build on the incorrect terms, in the common situation where it does not know 
+    which constituent terms are helpful and which aren't. 
+\par 
+Overall, then, it is pertinent to run \gls{qmla} many times and gather statistics about its performance, 
+    rather than making overly-strong claims about $Q$ based on a single \emph{instance} of the algorithm. 
+We say that a \gls{qmla} \emph{\gls{run}} consists of $N_r$ independent \emph{\glspl{instance}},
+    which can be run in parallel, such that we are primarily concerned with the performance of the run 
+    instead of any individual instance. 
+For example, with $N_r=100$, we can interpret the \emph{\gls{win rate}} of every model in the model space
+    as evidence for that model being $\ho$.
+For the sake of evaluating \gls{qmla} itself, as in \cref{part:theoretical_study}, 
+    we can use the \gls{win rate} of $\ho$ as indication of the \emph{\gls{success rate}}, 
+    i.e. the fraction of instances within a run where \gls{qmla} identifies precisely $\hp = \ho$. 
+Note, however, that neither the \gls{win rate} nor \gls{success rate} are singularly informative 
+    of \gls{qmla}'s performance: in some cases, we can deem \gls{qmla} successful even if it does not 
+    identify $\ho$ exactly, e.g. if it finds the majority of terms present in $\termset_0$ from a large space, 
+    i.e. a high $\fs$, see \cref{sec:f_score}. 
 
 
 \subsection{Analyses and plots}
+\gls{qmla} provides a large amount of anaytics to assess the performance of the algorithm. 
+These range from \emph{big picture} perspectives such as the \gls{win rate} across the entire \gls{run}, 
+    to zooming in on the internal metrics for training individual models.
+Some of these analyses are generated by deafult, while others are optional depending on the 
+    level of detail the user requires. 
+Most plots used in this thesis are generated directly by the \gls{qmla} framework; 
+    here we outline some of the available analytics at each of the \gls{run}, \gls{instance} and \gls{es} levels.
+\par 
+When a \gls{run} is launched, \gls{qmla} generates a directory unique to that \gls{run}, 
+    identified by the time and date of its launch; 
+    all the resultant data for that \gls{run}, including raw data and figures, are stored in that directory. 
 
-\section{Usage}
+\subsubsection{\Gls{run} level}
+
+\subsubsection{\Gls{instance} level}
+
+\subsection{\Glsentryfull{es} level}
+
+
+

@@ -27,6 +27,9 @@
 \newcommand{\expset}{{ \mathcal{E} }}
 \newcommand{\expdata}{{ \mathcal{D} }}
 
+\newcommand{\bkl}{{ \langle k, l \rangle }} % angled brackets with k,l inside (often summed over)
+\newcommand{\cc}{{ \mathcal{C}}} % angled brackets with k,l inside (often summed over)
+
 
 \newcommand{\population}{\mathcal{P}}
 \newcommand{\termset}{{ \mathcal{T} }}
@@ -83,3 +86,27 @@
 \newcommand{\objAKWTa}{0.86}
 \newcommand{\objAKWTb}{1.0}
 \newcommand{\objAKWTc}{{10^{-5}}}
+
+% Path to QMLA results directories
+\newcommand{\qmlaresults}[1]{
+  \includegraphics{/home/bf16951/QMD/Launch/Results/#1}
+}
+
+\newcommand{\QMLAfig}[1]{
+  \includegraphics{qmla_run_data/#1}
+}
+
+
+\newcommand{\localQMLA}[1]{
+  \includegraphics{qmla_run_data/local/#1}
+}
+
+\newcommand{\bcQMLA}[1]{
+  \includegraphics{qmla_run_data/blue_crystal/#1}
+}
+
+\newcommand{\figtableref}{
+  Implementation details are listed in \cref{table:figure_reproduction}
+}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
