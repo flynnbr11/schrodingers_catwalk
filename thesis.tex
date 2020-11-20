@@ -15,15 +15,7 @@
   % Add content to include in this build
   \iftoggle{development_mode}{
     % partial document - development
-    \frontmatter
-    \tableofcontents
-    \printglossary[style=index, type=\acronymtype]
-    \printglossary[style=index]
-    % \printglossary
-    \setcounter{page}{1}
-    \pagenumbering{arabic}    
-    \mainmatter
-
+    \input{logistics/front_matter.tex}
     \input{logistics/development_layout.tex}
     \input{logistics/appendix_layout.tex}
   }{
