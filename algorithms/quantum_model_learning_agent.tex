@@ -61,7 +61,8 @@ In short, \gls{qmla} proposes candidate models $\hi$ as hypoteses to explain $Q$
     and finally nominate the model with the best performance after training. 
 In particular, \gls{qmla} uses \gls{qhl} as the parameter learning subroutine, 
     but in principle this step can be performed by any algorithm which learns $\al$ for given $\terms$, 
-    \cite{wang2015hamiltonian, krastanov2019stochastic, flurin2020using, niu2019learning, greplova2017quantum,lokhov2018optimal}. 
+    \cite{wang2015hamiltonian, krastanov2019stochastic, flurin2020using, niu2019learning, 
+    greplova2017quantum,lokhov2018optimal, acampora2019evolutionary}. 
 While discussing a model $\hi$, their \emph{training} then simply means the implementation 
     of \gls{qhl}, where $\hi$ is assumed to represent $Q$, 
     such that $\al_i$ is optimised as well as it can be, even if $\hi$ is entirely inaccurate. 
@@ -76,7 +77,7 @@ Of course it is first necessary to ensure that each model has
     i.e. they should undergo the process in \cref{chapter:qhl}.
 It is statistically meaningful to compare models via their \gls{tltl}, $\tll_i$, 
     if and only if they have considered the same data, 
-    i.e. if models have each attempted to account for the same set of experiments, $\expset$.
+    i.e. if models have each attempted to account for the same set of experiments, $\expset$ \cite{kass1995bayes}.
 \par 
 
 We can then exploit direct pairwise comparisons between models,  
@@ -229,25 +230,30 @@ In short, the \gls{ms} proceeds by grouping models in \emph{layers},
     and new models are then \emph{spawned}. 
 
 \begin{figure}[t!]
-    \includegraphics[width=\textwidth]{figure_development/overview_loop.pdf}
+    \begin{center}
+        \includegraphics{algorithms/overview.jpg}
+    \end{center}
     \caption[Quantum Model Learning Agent overview]{
         Schematic of \acrfull{qmla}. 
-        \textbf{(a-d)} \gls{ms} phase within an Exploration strategy (ES).
-        \textbf{(a)} Models are placed as (empty, purple) nodes on the \emph{active layer} $\mu$, 
+        \textbf{(a-d)} \Glsentryfull{ms} phase within an \Glsentryfull{es}.
+        \textbf{(a)} Models are placed as (empty, purple) nodes on the \emph{active branch} $\mu$, 
             where each model is a sum of terms $\hat{t}_k$ multiplied by a scalar parameter $\alpha_k$. 
         \textbf{(b)} Each active model is trained according to a subroutine such as 
             quantum Hamiltonian learning to optimise $\al_i$, 
-            resulting in the trained (filled purple node) $\hat{H}(\al_i^{\prime})$. 
+            resulting in the trained $\hat{H}(\al_i^{\prime})$ (filled purple node). 
         \textbf{(c)} $\mu$ is consolidated, i.e. models are evaluated relative to other
             models on $\mu$, according to the consolidation mechanism specificed by the \gls{es}.
             In this example, pairwise Bayes factors $B_{ij}$ between $\hi, \hj$ are computed, 
-            resulting in the election of a single layer champion $\hat{H}_C^{\mu}$ (bronze). 
+            resulting in the election of a single branch champion $\hat{H}_C^{\mu}$ (bronze). 
         \textbf{(d)} A new set of models are \emph{spawned} according to the chosen
             \gls{es}'s model genertion strategy.
             In this example, models are spawned from a single parent. 
+            The newly spawned models are placed on the next layer $\mu+1$, 
+            iterating back to \textbf{(a)}.
         \textbf{(e-f)} Higher level of entire QMLA procedure.
-        \textbf{(e)} The \gls{ms} phase is presented on \emph{exploration trees}. 
-            Multiple \gls{es} can operate in parallel, e.g. assuming different underlying physics.
+        \textbf{(e)} The \gls{ms} phase for a unique \gls{es} is presented on an \emph{exploration tree}. 
+            Multiple \gls{es} can operate in parallel, e.g. assuming different underlying physics, 
+            so the overall \gls{qmla} procedure involves a \emph{forest search} across multiple exploration trees.
             Each \gls{es} nominates a champion, $\hat{H}_{S}^{\prime}$ (silver), 
             after consolidating its branch champions (bronze). 
         \textbf{(f)} $\hat{H}_{S}^{\prime}$ from each of the above exploration trees are gathered on a single layer, 

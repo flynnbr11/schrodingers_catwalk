@@ -53,7 +53,7 @@ Access to a fully operational, trusted quantum simulator admits an exponential
     speedup by simulating the unitary evolution instead of computing the matrix exponential classically.
 \par 
 
-\subsubsection{Bayes Rule}
+\section{Bayes Rule}
 Bayes' rule is used to update a probability distribution describing hypotheses, $\Pr(\textrm{hypothesis})$, when presented with new information (data).
 That is, the probabilty that a hypothesis is true is replaced
     by the initial probability that is was true, $\Pr(\textrm{hypothesis})$, multiplied by 
@@ -402,7 +402,7 @@ We can record the \gls{ql} at each experiment of our training regime and hence t
 \end{definition}
 \par 
 
-\subsubsection{Volume}\label{sec:volume}
+\subsection{Volume}\label{sec:volume}
 We also care about the range of parameters supported by $\Pr(\al)$ at each experiment: 
     the \gls{volume} of the particle distribution can be seen as a proxy for our certainty
     that the approximation $\mean\bk{\Pr(\al)} $ is accurate. 
@@ -487,11 +487,12 @@ The experimental evolution time for experiment $k$ is then given by
 \end{equation}
     where $\al_i, \al_j$ are distinct particles sampled from $\mathcal{P}$ where 
     $\mathcal{P}$ is the set of particles under consideration by \gls{smc} after experiment $k-1$, 
-    which had been recently sampled from $\pr\bk{\al}$. 
+    which had been recently sampled from $\Pr\bk{\al}$. 
 \par 
 
-We adopt \gls{pgh} as the default \gls{edh} throughout this thesis, 
-    but will have cause to deviate in paricular circumstances. 
+We will have cause to use alternative \glspl{edh} in paricular circumstances, 
+    but we adopt \gls{pgh} as the default \gls{edh} throughout this thesis, 
+    unless otherwise stated.
 
 \subsection{Alternative experiment design heuristics}\label{sec:alt_heuristics}
 We briefly summarise some alternative \gls{edh}s which we will use later in this thesis. 
