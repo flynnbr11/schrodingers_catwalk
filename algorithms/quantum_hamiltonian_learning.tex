@@ -586,7 +586,25 @@ Then, the probabilities are $\{\frac{2.8}{21}, \frac{9}{21}, \frac{9.2}{21} \}$ 
 Then, when a parameter scale is chosen, we take the distance between two sampled particles $\al_i, \al_j$ (as in \gls{pgh}),
     only with respect to that scale, e.g. if $MHz$ is sampled, $t_k \sim \mathcal{O}(10^{-6}s)$.
 
+
+\subsection{\glsentryfull{edh} }
+
+\begin{figure}
+    \begin{center}
+        \QMLAfig{Nov_27/heuristic_comparisons.pdf}
+    \end{center}
+    \caption[Training with different heuristics]{
+        The volume of various models when trained through \gls{qhl} using different \glspl{edh}.
+        We show models of various complexity and dimension, each trained using heuristics outlined above.
+        \figtableref
+    }
+    \label{fig:heuristics_test}
+\end{figure}
+
+
+
 \section{Probe selection}
+
 A final consideration for experiments within \gls{qhl} is the choice of input \gls{probe} state, $\ket{\psi}$,
     which is evolved in the course of finding the likelihood used during the Bayesian update. 
 We can consider the choice of probe as an output of the \gls{edh},  
@@ -598,11 +616,116 @@ In principle it is possible for the \gls{edh} to design a new \gls{probe} at eac
     allowing for the same $\ket{\psi}$ to be used in training of multiple experiments. 
 $\Psi$ can be generated with respect to the individual learning problem as we will examine later, 
     although some straightforward strategies for generating $\Psi$ are
-    \begin{easylist}
-        \ListProperties(numbers=r)
-        & $\ket{\psi}$ are random, separable probes;
-        & $\Psi$ is the tomographic basis set;
-        & $\Psi = \{\ket{+}\}, \ \ \Npsi=1$.
+    \begin{easylist}[enumerate]
+        \ListProperties(Numbers=r)
+        & $\ket{0} : \ \Psi = \{\ket{0}^{\otimes n}\}, \ \ \Npsi=1$ 
+        & $\ket{+} : \ \Psi = \{\ket{+}^{\otimes n}\}, \ \ \Npsi=1$ 
+        & $\ket{t} : \ \Psi$ is the tomographic basis set, \ \ $\Npsi=40$ 
+        & $\ket{r} : \ \ket{\psi}$ are random, separable probes, \ \ $\Npsi=40$ 
     \end{easylist}
+\par 
+
+We show some examples of how the choie of \gls{probe} set can influence the training procedure in \ref{fig:probes_test},
+    testing models of various complexity amd dimension. 
+In particular, we first a simple 1-qubit model, \cref{eqn:probe_test_1}; 
+    followed by more complicated 1-qubit model, \cref{eqn:probe_test_2};
+    and randomly generated 5-qubit Ising, \cref{eqn:probe_test_3} and 4-qubit Heisenberg models, \cref{eqn:probe_test_4}.
+Each $\hi$ have randomly chosen parameters implicitly assigned to each term. 
+\begin{subequations}
+    \begin{equation}
+        \label{eqn:probe_test_1}
+        \h_1=\s_1
+    \end{equation}
+    \begin{equation}
+        \label{eqn:probe_test_2}
+        \h_2 = \s_x + \s_y + \s_z
+    \end{equation}
+    \begin{equation}
+        \label{eqn:probe_test_3}
+        \h_3 = \sigma_{(1, 3)}^{z} + \sigma_{(1, 4)}^{z} + \sigma_{(1, 5)}^{z} + \sigma_{(2, 4)}^{z} + \sigma_{(2, 5)}^{z} + \sigma_{(3, 4)}^{z} + \sigma_{(3, 5)}^{z}        
+    \end{equation}
+    \begin{equation}
+        \label{eqn:probe_test_4}
+        \h_4 = \sigma_{(1, 2)}^{z}+ \sigma_{(1, 3)}^{z}+ \sigma_{(2, 3)}^{xz}+ \sigma_{(2, 4)}^{x}+ \sigma_{(3, 4)}^{z}        
+    \end{equation}
+\end{subequations}
 
 
+As standard for the remainder of this thesis, unless otherwise stated, 
+    we adopt the random probe generator as the defualt mechanism for selecting probes,
+    only iterating between probes after batches of 5 experiments.
+
+\begin{figure}
+    \begin{center}
+        \QMLAfig{Nov_27/training_probes.pdf}
+    \end{center}
+    \caption[Training with different probes]{
+        The volume of various models when trained through \gls{qhl} using different initial \gls{probe} sets. 
+        We show models of various complexity and dimension, each trained using random probes, $\ket{r}$, 
+        tomographic basis set probes, $\ket{t}$, as well as $\ket{0}$ and $\ket{+}$ probes. 
+        In each case the probes are generated for arbitrary numbers of qubits; 
+        for $\ket{0}, \ket{1}$, the number of probes generated is $N_{\psi}=1$, 
+        and for $\ket{t}, \ket{r}$, $N_{\psi}=40$.
+        \figtableref
+    }
+    \label{fig:probes_test}
+\end{figure}
+
+
+\begin{figure}
+    \begin{center}
+        \subfloat{
+            \includegraphics[width=0.2\textwidth]{qmla_run_data/Nov_27/zero_probes.pdf}
+        }
+        \qquad
+        \subfloat{
+            \includegraphics[width=0.2\textwidth]{qmla_run_data/Nov_27/plus_probes.pdf}
+        }
+        \qquad
+        \subfloat{
+            \includegraphics[width=0.2\textwidth]{qmla_run_data/Nov_27/tomographic_probes.pdf}
+        }
+        \qquad
+        \subfloat{
+            \includegraphics[width=0.2\textwidth]{qmla_run_data/Nov_27/random_probes.pdf}
+        }
+        \qquad
+    \end{center}
+    \caption[Probes used for tests]{
+        1-qubit probes used for tests in \cref{fig:probes_test}.
+    }
+    \label{fig:probes_used_bloch}
+\end{figure}
+
+
+We can draw a number of useful observations from these simple tests: 
+\begin{easylist}[enumerate]
+    \ListProperties(Numbers=r)
+    & Training on an eigenstate, $\ket{0}$, of the model yields no information gain. 
+        This is because all particles give likelihoods $l=1$, 
+    so no weight update can occur, meaning the parameter distribution does not change when presented new evidence. 
+    & Training on an even superposition of the model's eigenstates, $\ket{+}$, is maximally informative: 
+        any deviations from the true parameterisation are registered most dramatically in this basis,
+        providing the optimal training probe for this case.     
+    & These observations are reinforced by \cref{fig:probes_test}\textbf{c}, where a 5-qubit Ising model also 
+        fails to learn from one of its eigenstates, $\ket{0}^{\otimes 5}$.
+        Of note, however, is that $\ket{+}^{\otimes 5}$ is not the strongest probe here: the much larger Hilbert space here 
+        can not be scanned sufficiently using a single probe; 
+        using a larger number of probes is more effective, even if those are randomly chosen. 
+    & In general the tomographic and random probe sets perform reliably. 
+\end{easylist}
+
+It is an open challenge to identify the optimal probe for training any given model, 
+    and the choice of such informative probes could be built into the \gls{edh} in general, 
+    for example by computing the eigenstates of the candidate, and generating a probe set
+    from superposition between those eigenstates. 
+However, a further consideration is that, for model comparison purposes, 
+    it is helpful to have a universal set of probes, upon which all models are learned. 
+This would minimise bias towards particlar models, which might arise from probes which are favourable bases 
+    for a subset of models, for example $\ket{+}$ in \cref{fig:probes_test}\textbf{a}. 
+Careful consideration should be given to $N_{\psi}$ in the choice of the probe generator, 
+    since it is important to ensure probes test the parameterisation across the Hilbert space robustly, 
+However this must be balanced by ensuring \gls{smc} has sufficient opportunity to learn within a subspace before moving to the next; 
+    we can mitigate this concern by instructing the \gls{edh} to repeatedly select a probe from $\Psi$ for a batch of experiments, 
+    say five, before moving to the next available probe. 
+\par 

@@ -1,0 +1,25 @@
+This part details the algorithm which form the basis for the research conducted in this thesis. 
+\par 
+\vspace{1cm}
+\Cref{chapter:qhl} introduces \glsentryfull{qhl}, an algorithm for the optimisation of Hamiltonian parameters
+    when the form of the model describing a system of interest is known. 
+    This is not presented as new work, but rather as a bedrock for later sections. 
+    The analysis/figures presented in this chapter are unique to this thesis but do not necessarily offer novel insights. 
+\par 
+\vspace{1cm}
+\Cref{chapter:qmla} builds upon \gls{qhl} by posing the question: 
+    without assuming access to the model describing the target system, can we combine model training algorithms, 
+    in particular \gls{qhl}, with model recovery methodologies, to learn the Hamiltonian model 
+    governing the system, and hence uncover the physics of quantum systems. 
+    This motivation leads to the \glsentryfull{qmla}: 
+    a machine learning framework for reverse engineering models of quantum systems from the data it produces. 
+    This protocol was initially devised by Dr. Rafaelle Santagati, with Drs. Andreas Gentile, Nathan Wiebe and Chris Granade. 
+    I contributed to the refinement of \gls{qmla} with Drs. Santagati and Gentile; 
+    the version presented in \cref{chapter:qmla} represents the culmination of several conceptual stages. 
+    The protocol has been described in \cite{gentile2020learning}, which are described in later Parts. 
+
+\par
+\vspace{1cm}
+\Cref{chapter:sw} describes the implementation of \gls{qmla} through an open source software package. 
+I was the principle designer and programmer of the codebase described, which constitutes a large proportion of the output of my research. 
+The results presented in \cref{part:theoretical_study}, \cref{part:experimental_study} are all found using this framework. 
