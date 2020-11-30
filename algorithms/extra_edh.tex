@@ -1,0 +1,91 @@
+
+We briefly summarise some alternative \gls{edh}s which we will use later in this thesis. 
+\subsubsection{Forced exponential increase}
+One early candidate for a viable \gls{edh} was 
+\begin{equation}
+    t_k = \bk{\frac{9}{8}}^k, 
+\end{equation}
+    where $k$ is the experiment number. 
+This forces \gls{qhl} to consider exponentially-increasing times, irrespective of its current state of knowledge. 
+
+\subsubsection{Fixed set}
+By providing a list of times, chosen in advance, we can attempt to ensure that \gls{qhl} tries to account for 
+    an entire dataset. 
+For instance, if only a small set of experimental measurements are available, 
+    it is sensible to train on all of them, perhaps repeatedly. 
+
+\subsubsection{Random time upper bounded}
+    Given $t_{max}$, time is chosen randomly: $t_k = \mathcal{U}(0, t_{max})$. 
+    
+\subsubsection{Mixed: PGH and fixed set}
+In cases where we wish to allow \gls{smc} to train both adaptively and according to a fixed schedule,
+    we can employ this \gls{edh}. 
+For instance, where a small set of experimental data is available offline, 
+    we can first use the adapative routine (\gls{pgh}) to coarsely refine the distribution, 
+    but if the parameters cannot be learned sufficiently, e.g. because of noise in the data, 
+    the posterior will never be narrow enough to allow the \gls{pgh} to reach higher 
+    experimentally measured times. 
+In this case, it is reasonable to force the \gls{edh} to focus some of the learning 
+    resources on the data for higher times, 
+    especially where much of the underlying physics of interest only starts to be visible for those times, 
+    e.g. where the experimental system starts to decohere. 
+
+\subsubsection{Altered \gls{pgh}}
+A straightforward alternative is simply to replace the reciprocal in \cref{eqn:pgh_time} with any another distance metric, 
+    $d(\al_i, \al_j)$.
+In doing so we retain much of the reasoning for \gls{pgh}. 
+While \gls{pgh} uses the Euclidean distance, we can instead consider, for example, 
+    any of the distance metrics available in \ttt{scipy.spatial.distance.pdist} \cite{2020SciPy-NMeth}, 
+    of which in particular we implement \ttt{cityblock, euclidean, chebyshev, canberra, braycurtis, minkowski}. 
+        
+\subsubsection{Volume adaptive \gls{pgh}}
+Where it is suspected that \gls{pgh} is performing poorly, it is feasible to force the \gls{edh} to consider orders of magnitude 
+    greater or smaller than the distance $d(\al_i, \al_j)$.
+We include a heuristic which tracks the change in volume across experiments, 
+    given by $\Delta V = 1 - \nicefrac{V^{\prime}}{V}$, where $V$ is the volume of the prior
+    and $V^{\prime}$ is the volume of the posterior, 
+    noting that several experiments may elapse between measuring $V, V^{\prime}$,
+    such that we can interpret
+\begin{align}
+    \label{eqn:volume_adaptive_cases}
+    \begin{cases}
+        V = V^{\prime} \bk{ \textrm{no change} }  & \Delta V = 0   \\
+        V^{\prime} > V  \bk{ \textrm{disimprovement} }  & \Delta V < 0  \\ 
+        V^{\prime} < V \bk{ \textrm{improvement} }   & 0 < \Delta V < 1\\ 
+    \end{cases}
+\end{align}
+
+\cref{eqn:volume_adaptive_cases} allows us to set acceptable levels for the learning via the volume reduction: 
+    when the change in volume is deemed inappropriate, we force the experimental times into another order of magnitude, 
+    by imposing a scalar factor on the \gls{pgh} chosen time, again facilitating any distance metric, $d$, 
+\begin{equation}
+    \label{eqn:volume_adaptive_pgh}
+    t_k = \kappa_k \frac{1}{d(\al_i, \al_j)},
+\end{equation}
+    where $\kappa_k$ is a scalar set for each experiment $k$, initially set as $\kappa_0=1$.
+For example, if $\Delta V > 0.2$ across a small number of experiments (say 10), 
+    we see that the volume has reduced by $20\%$ over 10 experiments, which is a strong rate of learning, 
+    so we retain $\kappa_k = \kappa_{k-1}$. 
+Conversely, $\Delta V = 0.01$ indicates that the learning has stalled, 
+    to compensate, we set $\kappa_{k} = 10 \kappa_{k-1}$, 
+    such that \gls{smc} challenges $\pra$ to explain much more challenging experiments.
+Likewise, in the case where $\pra$ disimproves significantly, say $\Delta V < -0.2$, 
+    we can force the heuristic to design conservative experiments by setting $\kappa_k = \nicefrac{\kappa_{k-1}}{10}$. 
+% Q: is this silly? does loschmidt echo mean high times can never be learned from?
+
+\subsubsection{Sampled order of magnitude}
+When a parameter distribution contains parameters of varying magnitude, 
+    it is challenging to select a time that suitably trains all parameters simulataneously. 
+One attempt to resolve this problem is to treat the parameters independently, 
+    effectively trying to train them separately. 
+We sample from the individual uncertainty on each parameter, 
+    approximated as the square root of the covariance matrix's diagnoal element 
+    corresponding to that parameter. 
+For example, suppose a three parameter distribution involves $kHz, MHz$ and $GHz$ terms:
+    the diagonal of the covariance matrix might read $\irow{10^{8}, 10^{27}, 10^{85}}$, 
+    such that the individual uncertainties are $\irow{10^{2.8}, 10^{9}, 10^{9.2}}$.
+Recognising that parameters of higher order of magnitude have a greater impact on dynamics, 
+    we assign sampling probability of focusing on that parameter scale according to $log_{10}$ of the individual uncertainties. 
+Then, the probabilities are $\{\frac{2.8}{21}, \frac{9}{21}, \frac{9.2}{21} \}$ for the $kHz, MHz, GHz$ terms respectively. 
+Then, when a parameter scale is chosen, we take the distance between two sampled particles $\al_i, \al_j$ (as in \gls{pgh}),
+    only with respect to that scale, e.g. if $MHz$ is sampled, $t_k \sim \mathcal{O}(10^{-6}s)$.

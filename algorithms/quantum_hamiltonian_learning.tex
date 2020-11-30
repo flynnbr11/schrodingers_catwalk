@@ -451,7 +451,8 @@ We can categorise each \gls{edh} as either \emph{online} of \emph{offline},
 The \gls{edh} is modular and can be replaced by any method that returns a valid set of experimental controls, 
     so we can consider numerous approaches, for instance those described in \cite{hincks2018hamiltonian, fiderer2020neural}.
 \par 
-\subsection{Particle Guess Heuristic}
+
+\subsection{Particle Guess Heuristic}\label{sec:pgh}
 The default \gls{edh} is the \gls{pgh} \cite{Wiebe:2014qhl}, 
     an online method which attempts to design the optimal evolution time based on the posterior.
 Note \gls{pgh} does not specify the \gls{probe}, so is coupled with a \gls{probe} selection routine to comprise 
@@ -490,104 +491,55 @@ The experimental evolution time for experiment $k$ is then given by
     which had been recently sampled from $\Pr\bk{\al}$. 
 \par 
 
-We will have cause to use alternative \glspl{edh} in paricular circumstances, 
-    but we adopt \gls{pgh} as the default \gls{edh} throughout this thesis, 
-    unless otherwise stated.
 
 \subsection{Alternative experiment design heuristics}\label{sec:alt_heuristics}
-We briefly summarise some alternative \gls{edh}s which we will use later in this thesis. 
-\subsubsection{Forced exponential increase}
-One early candidate for a viable \gls{edh} was 
-\begin{equation}
-    t_k = \bk{\frac{9}{8}}^k, 
-\end{equation}
-    where $k$ is the experiment number. 
-This forces \gls{qhl} to consider exponentially-increasing times, irrespective of its current state of knowledge. 
+The \gls{edh} can be used to suit the requirements of the target system; 
+    we test four such examples against a series of models. 
+Here the \gls{edh} must only design the evolution time for the experiment, 
+    with probe design discussed in the next section. 
+The heuristics tested are:
 
-\subsubsection{Fixed set}
-By providing a list of times, chosen in advance, we can attempt to ensure that \gls{qhl} tries to account for 
-    an entire dataset. 
-For instance, if only a small set of experimental measurements are available, 
-    it is sensible to train on all of them, perhaps repeatedly. 
+\begin{easylist}
+    \ListProperties(Numbers=r)
+    & $\textrm{Random}(0, t_{max})$: Randomly chosen time up to some arbitrary maximum, we set $t_{max} = 1000$. 
+        This approach is clearly subobtimal, since it does not account whatsoever for the knowledge of the training so far, 
+        and demands the user choose a suitable $t_{max}$, which is not gauranteed to be meaningful. 
+    & $t$ list: forcing the training to consider a set of times decided in advance.
+        For instance, when only a small set of experimental measurements are available, it is sensible to train on all of them, perhaps repeatedly. 
+        We test uniformly spaced times between 0 and $t_{max}$, and train on the list twice.
+        Again this \gls{edh} fails to account for the performance of the trainer so far, so may use times either 
+        far above or below the ability of the parameterisation. 
+    & $(\nicefrac{9}{8})^k$: An early attempt to match the expected exponential decrease in volume from the training, 
+        was to set $t = (\nicefrac{9}{8})^k$ \cite{Granade:2012kj}.
+        Note we increment $k$ after 10 experiments in the training regime, 
+        rather than after each experiment, which would result in extremely high times which flood memory.
+    & \Gls{pgh}: as in \cref{sec:pgh}. 
+\end{easylist}
 
-\subsubsection{Random time upper bounded}
-    Given $t_{max}$, time is chosen randomly: $t_k = \mathcal{U}(0, t_{max})$. 
-    
-\subsubsection{Mixed: PGH and fixed set}
-In cases where we wish to allow \gls{smc} to train both adaptively and according to a fixed schedule,
-    we can employ this \gls{edh}. 
-For instance, where a small set of experimental data is available offline, 
-    we can first use the adapative routine (\gls{pgh}) to coarsely refine the distribution, 
-    but if the parameters cannot be learned sufficiently, e.g. because of noise in the data, 
-    the posterior will never be narrow enough to allow the \gls{pgh} to reach higher 
-    experimentally measured times. 
-In this case, it is reasonable to force the \gls{edh} to focus some of the learning 
-    resources on the data for higher times, 
-    especially where much of the underlying physics of interest only starts to be visible for those times, 
-    e.g. where the experimental system starts to decohere. 
-
-\subsubsection{Altered \gls{pgh}}
-A straightforward alternative is simply to replace the reciprocal in \cref{eqn:pgh_time} with any another distance metric, 
-    $d(\al_i, \al_j)$.
-In doing so we retain much of the reasoning for \gls{pgh}. 
-While \gls{pgh} uses the Euclidean distance, we can instead consider, for example, 
-    any of the distance metrics available in \ttt{scipy.spatial.distance.pdist} \cite{2020SciPy-NMeth}, 
-    of which in particular we implement \ttt{cityblock, euclidean, chebyshev, canberra, braycurtis, minkowski}. 
-        
-\subsubsection{Volume adaptive \gls{pgh}}
-Where it is suspected that \gls{pgh} is performing poorly, it is feasible to force the \gls{edh} to consider orders of magnitude 
-    greater or smaller than the distance $d(\al_i, \al_j)$.
-We include a heuristic which tracks the change in volume across experiments, 
-    given by $\Delta V = 1 - \nicefrac{V^{\prime}}{V}$, where $V$ is the volume of the prior
-    and $V^{\prime}$ is the volume of the posterior, 
-    noting that several experiments may elapse between measuring $V, V^{\prime}$,
-    such that we can interpret
-\begin{align}
-    \label{eqn:volume_adaptive_cases}
-    \begin{cases}
-        V = V^{\prime} \bk{ \textrm{no change} }  & \Delta V = 0   \\
-        V^{\prime} > V  \bk{ \textrm{disimprovement} }  & \Delta V < 0  \\ 
-        V^{\prime} < V \bk{ \textrm{improvement} }   & 0 < \Delta V < 1\\ 
-    \end{cases}
-\end{align}
-
-\cref{eqn:volume_adaptive_cases} allows us to set acceptable levels for the learning via the volume reduction: 
-    when the change in volume is deemed inappropriate, we force the experimental times into another order of magnitude, 
-    by imposing a scalar factor on the \gls{pgh} chosen time, again facilitating any distance metric, $d$, 
-\begin{equation}
-    \label{eqn:volume_adaptive_pgh}
-    t_k = \kappa_k \frac{1}{d(\al_i, \al_j)},
-\end{equation}
-    where $\kappa_k$ is a scalar set for each experiment $k$, initially set as $\kappa_0=1$.
-For example, if $\Delta V > 0.2$ across a small number of experiments (say 10), 
-    we see that the volume has reduced by $20\%$ over 10 experiments, which is a strong rate of learning, 
-    so we retain $\kappa_k = \kappa_{k-1}$. 
-Conversely, $\Delta V = 0.01$ indicates that the learning has stalled, 
-    to compensate, we set $\kappa_{k} = 10 \kappa_{k-1}$, 
-    such that \gls{smc} challenges $\pra$ to explain much more challenging experiments.
-Likewise, in the case where $\pra$ disimproves significantly, say $\Delta V < -0.2$, 
-    we can force the heuristic to design conservative experiments by setting $\kappa_k = \nicefrac{\kappa_{k-1}}{10}$. 
-% Q: is this silly? does loschmidt echo mean high times can never be learned from?
-
-\subsubsection{Sampled order of magnitude}
-When a parameter distribution contains parameters of varying magnitude, 
-    it is challenging to select a time that suitably trains all parameters simulataneously. 
-One attempt to resolve this problem is to treat the parameters independently, 
-    effectively trying to train them separately. 
-We sample from the individual uncertainty on each parameter, 
-    approximated as the square root of the covariance matrix's diagnoal element 
-    corresponding to that parameter. 
-For example, suppose a three parameter distribution involves $kHz, MHz$ and $GHz$ terms:
-    the diagonal of the covariance matrix might read $\irow{10^{8}, 10^{27}, 10^{85}}$, 
-    such that the individual uncertainties are $\irow{10^{2.8}, 10^{9}, 10^{9.2}}$.
-Recognising that parameters of higher order of magnitude have a greater impact on dynamics, 
-    we assign sampling probability of focusing on that parameter scale according to $log_{10}$ of the individual uncertainties. 
-Then, the probabilities are $\{\frac{2.8}{21}, \frac{9}{21}, \frac{9.2}{21} \}$ for the $kHz, MHz, GHz$ terms respectively. 
-Then, when a parameter scale is chosen, we take the distance between two sampled particles $\al_i, \al_j$ (as in \gls{pgh}),
-    only with respect to that scale, e.g. if $MHz$ is sampled, $t_k \sim \mathcal{O}(10^{-6}s)$.
-
-
-\subsection{\glsentryfull{edh} }
+We show how the choie of \gls{edh} within this set can influence the training procedure,
+    by testing models of various complexity amd dimension. 
+In particular, we first test a simple 1-qubit model, \cref{eqn:qhl_test_model_1}; 
+    followed by more complicated 1-qubit model, \cref{eqn:qhl_test_model_2};
+    as well as randomly generated 5-qubit Ising, \cref{eqn:qhl_test_model_3}, and 4-qubit Heisenberg models, \cref{eqn:qhl_test_model_4}.
+Each $\hi$ have randomly chosen parameters implicitly assigned to each term. 
+\begin{subequations}\label{eqn:qhl_test_models}
+    \begin{equation}
+        \label{eqn:qhl_test_model_1}
+        \h_1=\s^z_1
+    \end{equation}
+    \begin{equation}
+        \label{eqn:qhl_test_model_2}
+        \h_2 = \s^x_1 + \s^y_1 + \s^z_1
+    \end{equation}
+    \begin{equation}
+        \label{eqn:qhl_test_model_3}
+        \h_3 = \s^z_1\s^z_3 + \s^z_1\s^z_4 + \s^z_1\s^z_5 + \s^z_2\s^z_4 +\s^z_2\s^z_5 + \s^z_3+\s^z_4 + \s^z_3+\s^z_5
+    \end{equation}
+    \begin{equation}
+        \label{eqn:qhl_test_model_4}
+        \h_4 = \s^z_1\s^z_2 + \s^z_1\s^z_3 +\s^x_2\s^x_3 + \s^z_2\s^z_3 + \s^x_2\s^x_4 + \s^z_3\s^z_4
+    \end{equation}
+\end{subequations}
 
 \begin{figure}
     \begin{center}
@@ -595,12 +547,17 @@ Then, when a parameter scale is chosen, we take the distance between two sampled
     \end{center}
     \caption[Training with different heuristics]{
         The volume of various models when trained through \gls{qhl} using different \glspl{edh}.
-        We show models of various complexity and dimension, each trained using heuristics outlined above.
+        We show models of various complexity and dimension, each trained using four heuristics, 
+        outlined in the main text.
         \figtableref
     }
     \label{fig:heuristics_test}
 \end{figure}
 
+We show the performance of each of the listed \glspl{edh} in \cref{fig:heuristics_test}. 
+We will have cause to use alternative \glspl{edh} in paricular circumstances, 
+    but we adopt \gls{pgh} as the default \gls{edh} throughout this thesis, 
+    unless otherwise stated.
 
 
 \section{Probe selection}
@@ -611,66 +568,22 @@ We can consider the choice of probe as an output of the \gls{edh},
     although previous work has usually not considered optimising the \gls{probe}, 
     instead usually setting $\ket{\psi} = \ket{+}^{\otimes n}$ for $n$ qubits \cite{wang2017experimental, ferrie2013best}.
 In principle it is possible for the \gls{edh} to design a new \gls{probe} at each experiment, 
-    although a more straightforward approach is to compose a set, $\Psi = \{ \ket{\psi} \}$,
-    of size $\Npsi = \absval{\Psi}$, from which a probe is chosen at each experiment, 
-    allowing for the same $\ket{\psi}$ to be used in training of multiple experiments. 
+    although a more straightforward approach is to compose a set of probes offline, $\Psi = \{ \ket{\psi} \}$,
+    of size $\Npsi = \absval{\Psi}$.
+Then, a probe is chosen at each experiment from $\Psi$, 
+    allowing for the same $\ket{\psi}$ to be used for the multiple experiments within the training, e.g. by iterating over $\Psi$. 
 $\Psi$ can be generated with respect to the individual learning problem as we will examine later, 
-    although some straightforward strategies for generating $\Psi$ are
+    but it is usually sufficient to use generic strategies which should work for all models;
+    some straightforward examples are
     \begin{easylist}[enumerate]
         \ListProperties(Numbers=r)
-        & $\ket{0} : \ \Psi = \{\ket{0}^{\otimes n}\}, \ \ \Npsi=1$ 
-        & $\ket{+} : \ \Psi = \{\ket{+}^{\otimes n}\}, \ \ \Npsi=1$ 
-        & $\ket{t} : \ \Psi$ is the tomographic basis set, \ \ $\Npsi=40$ 
-        & $\ket{r} : \ \ket{\psi}$ are random, separable probes, \ \ $\Npsi=40$ 
+        & $\ket{0} : \ \Psi = \{\ket{0}^{\otimes n}\}, \ \ \Npsi=1$;
+        & $\ket{+} : \ \Psi = \{\ket{+}^{\otimes n}\}, \ \ \Npsi=1$;
+        & $\ket{t} : \ \Psi$ is the tomographic basis set, \ \ $\Npsi=40$;
+        & $\ket{r} : \ \ket{\psi}$ are random, separable probes, \ \ $\Npsi=40$.
     \end{easylist}
 \par 
-
-We show some examples of how the choie of \gls{probe} set can influence the training procedure in \ref{fig:probes_test},
-    testing models of various complexity amd dimension. 
-In particular, we first a simple 1-qubit model, \cref{eqn:probe_test_1}; 
-    followed by more complicated 1-qubit model, \cref{eqn:probe_test_2};
-    and randomly generated 5-qubit Ising, \cref{eqn:probe_test_3} and 4-qubit Heisenberg models, \cref{eqn:probe_test_4}.
-Each $\hi$ have randomly chosen parameters implicitly assigned to each term. 
-\begin{subequations}
-    \begin{equation}
-        \label{eqn:probe_test_1}
-        \h_1=\s_1
-    \end{equation}
-    \begin{equation}
-        \label{eqn:probe_test_2}
-        \h_2 = \s_x + \s_y + \s_z
-    \end{equation}
-    \begin{equation}
-        \label{eqn:probe_test_3}
-        \h_3 = \sigma_{(1, 3)}^{z} + \sigma_{(1, 4)}^{z} + \sigma_{(1, 5)}^{z} + \sigma_{(2, 4)}^{z} + \sigma_{(2, 5)}^{z} + \sigma_{(3, 4)}^{z} + \sigma_{(3, 5)}^{z}        
-    \end{equation}
-    \begin{equation}
-        \label{eqn:probe_test_4}
-        \h_4 = \sigma_{(1, 2)}^{z}+ \sigma_{(1, 3)}^{z}+ \sigma_{(2, 3)}^{xz}+ \sigma_{(2, 4)}^{x}+ \sigma_{(3, 4)}^{z}        
-    \end{equation}
-\end{subequations}
-
-
-As standard for the remainder of this thesis, unless otherwise stated, 
-    we adopt the random probe generator as the defualt mechanism for selecting probes,
-    only iterating between probes after batches of 5 experiments.
-
-\begin{figure}
-    \begin{center}
-        \QMLAfig{Nov_27/training_probes.pdf}
-    \end{center}
-    \caption[Training with different probes]{
-        The volume of various models when trained through \gls{qhl} using different initial \gls{probe} sets. 
-        We show models of various complexity and dimension, each trained using random probes, $\ket{r}$, 
-        tomographic basis set probes, $\ket{t}$, as well as $\ket{0}$ and $\ket{+}$ probes. 
-        In each case the probes are generated for arbitrary numbers of qubits; 
-        for $\ket{0}, \ket{1}$, the number of probes generated is $N_{\psi}=1$, 
-        and for $\ket{t}, \ket{r}$, $N_{\psi}=40$.
-        \figtableref
-    }
-    \label{fig:probes_test}
-\end{figure}
-
+We show the 1-qubit probes within $\Psi$ under each of these strategies on the Bloch sphere in \cref{fig:probes_used_bloch}.
 
 \begin{figure}
     \begin{center}
@@ -697,10 +610,26 @@ As standard for the remainder of this thesis, unless otherwise stated,
     \label{fig:probes_used_bloch}
 \end{figure}
 
+\begin{figure}
+    \begin{center}
+        \QMLAfig{Nov_27/training_probes.pdf}
+    \end{center}
+    \caption[Training with different probes]{
+        The volume of various models when trained through \gls{qhl} using different initial \gls{probe} sets. 
+        We show models of various complexity and dimension, each trained using random probes, $\ket{r}$, 
+        tomographic basis set probes, $\ket{t}$, as well as $\ket{0}$ and $\ket{+}$ probes. 
+        In each case the probes are generated for arbitrary numbers of qubits; 
+        for $\ket{0}, \ket{1}$, the number of probes generated is $N_{\psi}=1$, 
+        and for $\ket{t}, \ket{r}$, $N_{\psi}=40$.
+        \figtableref
+    }
+    \label{fig:probes_test}
+\end{figure}
 
+We test the same set of models as \cref{eqn:qhl_test_models} and test each of these \gls{probe} construction 
+    strategies in \cref{fig:probes_test}. 
 We can draw a number of useful observations from these simple tests: 
-\begin{easylist}[enumerate]
-    \ListProperties(Numbers=r)
+\begin{easylist}[itemize]
     & Training on an eigenstate, $\ket{0}$, of the model yields no information gain. 
         This is because all particles give likelihoods $l=1$, 
     so no weight update can occur, meaning the parameter distribution does not change when presented new evidence. 
@@ -729,3 +658,7 @@ However this must be balanced by ensuring \gls{smc} has sufficient opportunity t
     we can mitigate this concern by instructing the \gls{edh} to repeatedly select a probe from $\Psi$ for a batch of experiments, 
     say five, before moving to the next available probe. 
 \par 
+
+As standard for the remainder of this thesis, unless otherwise stated, 
+    we adopt the random probe generator as the defualt mechanism for selecting probes,
+    only iterating between probes after batches of 5 experiments.

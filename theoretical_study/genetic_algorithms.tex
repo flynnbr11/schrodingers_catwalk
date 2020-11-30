@@ -1,3 +1,138 @@
+The \gls{qmla} framework lends itself easily to the family of optimsation techniques called \emph{evolutionary algorithms}, 
+    where individuals, sampled from a population of candidates, are considered, in generations, as solutions to the given problem,
+    and iterative generations aim to efficiently search the available population, 
+    by mimicing biological evolutionary mechanisms \cite{back1996evolutionary}. 
+In particular, we develop a \gls{es} which incorporates an \gls{ga} in the generation of models;
+    \glspl{ga} are a subset of evolutionary algorithms where candidate solutions are expressed as 
+    strings of numbers representing some configuration of the system of interest \cite{holland1992adaptation}.
+Here we will first introduce the concept of a \gls{ga}, before describing the adaptations which allow us to 
+    build a \gls{ges}. 
+
+\section{Genetic algorithm definition}
+\glspl{ga} work by assuming a given problem can be optimised, if not solved, by a single candidate 
+    among a fixed, closed space of candidates, called the population, $\population$. 
+A number of candidates are sampled at random from $\population$ into a single \emph{generation}, 
+    and evaluated through some \gls{of}, which assesses the fitness of the candidates at solving the problem of interest. 
+Candidates from the generation are then mixed together to produce the next generation's candidates: 
+    this \emph{crossover} process aims to combine only relatively strong candidates, such that the average 
+    candidates' fitness improve at each successive generation, 
+    mimicing the biological mechanism whereby the genetic makeup of offspring is an even mixture of both parents. 
+The selection of strong candidates as parents for future generations is therefore imperative; 
+    in general parents are chosen according to their fitness as determined by the \gls{of}. 
+Buidling on this biological motivation, much of the power of \glspl{ga} comes from the concept of \emph{mutation}: 
+    while offspring retain most of the genetic expressions of their parents, some elements are mutated at random.
+Mutation is crucial in avoiding local optima of the \gls{of} landscape
+    by maintaining diversity in the examined subspace of the population.
+\par 
+
+Pseudocode for a generic \gls{ga} is given in \cref{alg:ga},
+    but we can also informally define the procedure as follows. 
+Given access to the population, $\population$, 
+
+\begin{easylist}
+    & Sample $N_m$ candidates from the population at random
+    && term this group of candidates the first generation, $mu$. 
+    & \label{ga:loop} Evaluate each candidate $\gamma_j \in \mu$. 
+    && each $\gamma_j$ is assigned a fitness, $g_j$.
+    & Map the fitnesses $\{\g_j\}$ to selection probabilities for each model, $\{s_j\}$
+    && e.g. by normalising the fitnesses, or by removing some poorly-performing candidates and then normalising. 
+    & Generate the next generation of candidates, $\mu^{\prime}$
+    && Select pairs of parents, $p_1, p_2$, from $\mu$
+    &&& Each candidate's probability of being chosen is given by their $s_j$
+    && Cross over $p_1,p_2$ to produce children candidates, $c_1,c_2$. 
+    &&& mutate $c_1, c_2$ according to some random probabilistic process
+    &&& keep $c_i$ only if not already in $\mu^{\prime}$.
+\end{easylist}
+
+
+
+\begin{algorithm}
+    \caption{Genetic algorithm}
+    \label{alg:ga}
+    \DontPrintSemicolon
+    \KwIn{ $\population$ \tcp*[1]{Population of candidate models}}
+    \KwIn{ $g()$ \tcp*[1]{objective funtion}}
+    \KwIn{ $\ttt{map\_g\_to\_s}()$ \tcp*[1]{function to map fitness to selection probability}}
+    \KwIn{ $\ttt{select\_parents}()$ \tcp*[1]{function to select parents among generation}}
+    \KwIn{ $\ttt{crossover}()$ \tcp*[1]{function to cross over two parents to produce offspring}}
+    \KwIn{ $N_g$ \tcp*[1]{number of generations}}
+    \KwIn{ $N_m$ \tcp*[1]{number of candidates per generation}}\;
+
+    \KwOut{$\gamma^{\prime}$ \tcp*[1]{strongest candidate}}\;
+    
+    $\mu \gets \ttt{sample} \left( \population, N_m\right)$\; 
+
+    \For{$i \in 1, ..., N_g$}{
+        \For{$\gamma_j \in \mathbb{S}$ }{
+            $g_j \gets g(\gamma_j) $ \tcp*[1]{assess fitness of candidate}
+        }
+
+        $\{ s_j \}  \gets \ttt{ map\_g\_to\_s}(\{g_j \})$ \tcp*[1]{map fitnesses to normalised selection probability}
+        $\mu_c = \argmax\limits_{s_j} \{ \gamma_j \}$ \tcp*[1]{record champion of this generation}\;
+
+        $\mu \gets \{ \}$ \tcp*[1]{empty set for next generation}
+
+        \While{$| \mu | < N_m$}{
+            $p_1, p_2 \gets \ttt{select\_parents}(\{s_j\})$ \tcp*[1]{choose parents based on candidates' $s_j$}
+            $c_1, c_2 \gets \ttt{crossover}(p_1,p_2)$ \tcp*[1]{generate offspring candidates based on parents}
+
+            \For{$c \in \{c_1, c_2\}$ }{
+                \If{$c \notin \mu$}{
+                    $\mu \gets \mu \cup \{ c\}$ \tcp*[1]{keep if child is new} 
+                }
+            }
+        }
+    }
+
+    $\gamma^{\prime} \gets \argmax\limits_{s_j}\{ \gamma_j \in \mu \}$ \tcp*[1]{strongest candidate on final generation}\;
+
+    return $\gamma^{\prime}$
+
+\end{algorithm}
+
+
 \section{Adaptation to QMLA framework}
+
+
+\begin{algorithm}
+    \caption{ES subroutine: \ttt{generate\_models} (example: genetic algorithm)}
+    \label{alg:generate_models}
+    \DontPrintSemicolon
+    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\;
+    \KwIn{ $g(\hi)$ \tcp*[1]{objective function}}\;
+
+    \KwOut{$\mathbb{H}$ \tcp*[1]{set of models}}\;
+    
+    $ N_m = \left| \nu \right| $ \tcp*[1]{number of models}
+
+    \For{$\hi \in \nu$}{
+       $g_i \gets g(\hi)$ \tcp*[1]{model fitness via objective function}
+    }
+    $r \gets $ \ttt{rank($\{ g_i \}$)} \tcp*[1]{rank models by their fitness}
+    $\mathbb{H}_t \gets $ \ttt{truncate($r, \frac{N_m}{2}$)} \tcp*[1]{truncate models by rank: only keep $\frac{N_m}{2}$}
+    $ s \gets $ \ttt{normalise($\{g_i\}$)} $\forall \hi \in \mathbb{H}_t$ \tcp*[1]{normalise remaining models' fitness}
+
+    $\mathbb{H} = \{\}$ \tcp*[1]{new batch of chromosomes/models}
+
+    \While{ $\left| \mathbb{H} \right| < N_m$ }{
+        $p_1, p_2 = $ \ttt{roulette($s$)} \tcp*[1]{use $s$ to select two parents via roulette selection}
+    
+        $c_1, c_2$ = \ttt{crossover($p_1, p_2$)} \tcp*[1]{produce offspring models}
+
+        $c_1, c_2$ = \ttt{mutate($c_1, c_2$)} \tcp*[1]{probabilistically mutate}
+
+        $\mathbb{H} \gets \mathbb{H} \cup \{ c_1, c_2 \} $ \tcp*[1]{add new models to batch}
+
+    }
+
+    % \ttt{roulette($s$)}
+
+    return $\mathbb{H}$ 
+
+\end{algorithm}
+
+
+
 \section{Objective functions}
+
 \section{Application}
