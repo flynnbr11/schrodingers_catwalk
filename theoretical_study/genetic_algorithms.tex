@@ -29,22 +29,26 @@ Pseudocode for a generic \gls{ga} is given in \cref{alg:ga},
     but we can also informally define the procedure as follows. 
 Given access to the population, $\population$, 
 
-\begin{easylist}
+\begin{easylist}[enumerate]
+    \ListProperties(Numbers2=l, Numbers3=r)
     & Sample $N_m$ candidates from the population at random
-    && term this group of candidates the first generation, $mu$. 
+    && call this group of candidates the first generation, $\mu$. 
     & \label{ga:loop} Evaluate each candidate $\gamma_j \in \mu$. 
-    && each $\gamma_j$ is assigned a fitness, $g_j$.
-    & Map the fitnesses $\{\g_j\}$ to selection probabilities for each model, $\{s_j\}$
+    && each $\gamma_j$ is assigned a fitness, $g_j$
+    && the fitness is computed through an objective function acting on the candidate, $g(\gamma_j)$. 
+    & Map the fitnesses of each candidate, $\{g_j\}$, to selection probabilities for each model, $\{s_j\}$
     && e.g. by normalising the fitnesses, or by removing some poorly-performing candidates and then normalising. 
     & Generate the next generation of candidates, $\mu^{\prime}$
-    && Select pairs of parents, $p_1, p_2$, from $\mu$
+    && $\mu = \{ \}$
+    && \label{ga:select} Select pairs of parents, $p_1, p_2$, from $\mu$
     &&& Each candidate's probability of being chosen is given by their $s_j$
     && Cross over $p_1,p_2$ to produce children candidates, $c_1,c_2$. 
     &&& mutate $c_1, c_2$ according to some random probabilistic process
-    &&& keep $c_i$ only if not already in $\mu^{\prime}$.
-    
+    &&& keep $c_i$ only if it is not already in $\mu^{\prime}$, to ensure $N_m$ unique models are tested at each generation.
+    && until $| \mu^{\prime}| = N_m$, iterate to step (\ref{ga:select}.
+    & Until the $N_g^{th}$ generation is reached, iterate to step \ref{ga:loop}.
+    & The strongest candidate on the final generation is deemed the solution to the posed problem. 
 \end{easylist}
-
 
 
 \begin{algorithm}
@@ -92,45 +96,128 @@ Given access to the population, $\population$,
 \end{algorithm}
 
 
+\par 
+
+Candidates are manifested as \emph{\glspl{chromosome}}, i.e. strings of fixed length, 
+    whose entries, called  \emph{\glspl{gene}}, each represent some element of the system.
+In general, \glspl{gene} can have continuous values, although usually, and for all purposes in this thesis, 
+    genes are binary, capturing simply whether or not the \gls{gene}'s corresponding feature is present 
+    in the \gls{chromosome}. 
+
+\subsection{Example: knapsack problem}
+One commonly referenced combinatorial optimisation problem is the \emph{knacksack problem}: 
+    given a set of objects, where each object has a defined mass and also a defined value, 
+    determine the set of objects to pack in a knapsack which can support a limited weight, 
+    such that the value of the packed objects is maximised. 
+Say there are $n$ objects, 
+    we can write the vector containing the values of those objects as $\vec{v}$, 
+    and the vector of their weights as $\vec{w}$. 
+We can then represent configurations of object sets as candidate vectors $\vec{\gamma}_j$, 
+    whose genes are binary, and simply indicate whether or not the associated object is included in the set. 
+For example, $\vec{\gamma}_j = $\ttt{100001}  indicates a set of objects consisting only of those
+    indexed first and last, with none of the intermediate objects included. 
+
+\par
+The fitness of any candidate is then given by the total value of that configuration of objects, $v_j = \vec{v} \cdot \vec{\gamma}_j$, 
+    but candidates are only admitted\footnotemark \ if the weight of the corresponding set of objects 
+    is less than the capacity of the knapsack, i.e. $\vec{w}_j \cdot{\gamma}_j \leq w_{max}$. 
+\footnotetext{
+    Note there are alternative strategies to dealing with candidates who violate the weight condition, 
+    such as to impose a penalty within the \gls{of}, but for our purposes let us assume we simply disregard violators. 
+}
+\par 
+
+For example with $n=6$, where each individual object has value $<50$ and weight $<25$ and $w_{max} = 50$, 
+recalling $\vec{\gamma}_j = \ttt{100001}$, say, 
+\begin{subequations}
+    \begin{equation}
+        \vec{ v } = \irow{ 48 & 15 & 26 & 19 & 39 & 15 } \Longrightarrow v_j = \vec{\gamma}_j \cdot \vec{v} = 48 + 15 = 63;
+    \end{equation}
+    \begin{equation}
+        \vec{ w } = \irow{ 21 & 7 & 2 & 17 & 10 & 20 } \Longrightarrow w_j = \vec{\gamma}_j \cdot \vec{w} = 21 + 20 = 41.
+    \end{equation}
+\end{subequations}
+We can hence assess the fitness of $\gamma_j$ as $63$ and deem it a valid candidate since it does not exceed the weight threshold.
+We can likewise compute the total weight and value of a series of randomly generated candidates, 
+    and deem them valid or not. 
+
+\begin{table}[H]
+    \begin{center}
+        \input{figure_development/knapsack.tex}
+        \caption[Candidate solutions to knapsack problem]{
+            Candidate solutions to the knapsack problem. 
+        }
+        \label{table:knapsack_candidates}
+    \end{center}
+\end{table}
+
+The strongest (valid) candidates from \cref{table:knapsack_candidates} are \ttt{101010}, \ttt{011110}. 
+By spawning from these candidates through a one-point crossover at the midpoint, 
+    we get $\gamma_{c_1} = \ttt{101110}, \gamma_{c_2} = \ttt{011010}$, 
+    from which we can see $v_{c_1} = 132, w_{c_1} = 50$, i.e. by combining two strong candidates we produce 
+    the strongest-yet-seen valid candidate. \par 
+
+By repeating this procedure, it is expected to uncover candidates which optimise $v_j$ while maintining $w_j \leq w_{max}$, 
+    or at least to produce near-optimal solutions, using far less time/resources than brute-force evaluation of all candidates, 
+    which is usually sufficient. 
+For instance, if there $n=100$ objects to consider, there are $2^{100} \approx 10^{30}$ candidates to consider; 
+    the most powerful supercomputers in the world currently claim on the order of Exa-FLOPs, 
+    i.e. $10^{18}$ operations per second, of which say $\sim1000$ operations are required to test each candidate, 
+    meaning $10^{15}$ candidates can be checked per second. 
+This would still require $10^{12}$ seconds to solve absolutely, so it is reasonable in cases like this to accept 
+    \emph{approximately optimal} solutions\footnote{
+        Simply put: in machine learning, \emph{good enough} is good enough. 
+    }. 
+
+
+\subsection{Selection mechanism}
+
+\subsection{Offspring production}
+crossover and mutation mechanisms
+
+\subsection{Candidate evaluation}
+
+
 \section{Adaptation to QMLA framework}
 
 
-\begin{algorithm}
-    \caption{ES subroutine: \ttt{generate\_models} (example: genetic algorithm)}
-    \label{alg:generate_models}
-    \DontPrintSemicolon
-    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\;
-    \KwIn{ $g(\hi)$ \tcp*[1]{objective function}}\;
+% TODO uncomment the algorithm below - excluded for readibility of other sections
+% \begin{algorithm}
+%     \caption{ES subroutine: \ttt{generate\_models} (example: genetic algorithm)}
+%     \label{alg:generate_models}
+%     \DontPrintSemicolon
+%     \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\;
+%     \KwIn{ $g(\hi)$ \tcp*[1]{objective function}}\;
 
-    \KwOut{$\mathbb{H}$ \tcp*[1]{set of models}}\;
+%     \KwOut{$\mathbb{H}$ \tcp*[1]{set of models}}\;
     
-    $ N_m = \left| \nu \right| $ \tcp*[1]{number of models}
+%     $ N_m = \left| \nu \right| $ \tcp*[1]{number of models}
 
-    \For{$\hi \in \nu$}{
-       $g_i \gets g(\hi)$ \tcp*[1]{model fitness via objective function}
-    }
-    $r \gets $ \ttt{rank($\{ g_i \}$)} \tcp*[1]{rank models by their fitness}
-    $\mathbb{H}_t \gets $ \ttt{truncate($r, \frac{N_m}{2}$)} \tcp*[1]{truncate models by rank: only keep $\frac{N_m}{2}$}
-    $ s \gets $ \ttt{normalise($\{g_i\}$)} $\forall \hi \in \mathbb{H}_t$ \tcp*[1]{normalise remaining models' fitness}
+%     \For{$\hi \in \nu$}{
+%        $g_i \gets g(\hi)$ \tcp*[1]{model fitness via objective function}
+%     }
+%     $r \gets $ \ttt{rank($\{ g_i \}$)} \tcp*[1]{rank models by their fitness}
+%     $\mathbb{H}_t \gets $ \ttt{truncate($r, \frac{N_m}{2}$)} \tcp*[1]{truncate models by rank: only keep $\frac{N_m}{2}$}
+%     $ s \gets $ \ttt{normalise($\{g_i\}$)} $\forall \hi \in \mathbb{H}_t$ \tcp*[1]{normalise remaining models' fitness}
 
-    $\mathbb{H} = \{\}$ \tcp*[1]{new batch of chromosomes/models}
+%     $\mathbb{H} = \{\}$ \tcp*[1]{new batch of chromosomes/models}
 
-    \While{ $\left| \mathbb{H} \right| < N_m$ }{
-        $p_1, p_2 = $ \ttt{roulette($s$)} \tcp*[1]{use $s$ to select two parents via roulette selection}
+%     \While{ $\left| \mathbb{H} \right| < N_m$ }{
+%         $p_1, p_2 = $ \ttt{roulette($s$)} \tcp*[1]{use $s$ to select two parents via roulette selection}
     
-        $c_1, c_2$ = \ttt{crossover($p_1, p_2$)} \tcp*[1]{produce offspring models}
+%         $c_1, c_2$ = \ttt{crossover($p_1, p_2$)} \tcp*[1]{produce offspring models}
 
-        $c_1, c_2$ = \ttt{mutate($c_1, c_2$)} \tcp*[1]{probabilistically mutate}
+%         $c_1, c_2$ = \ttt{mutate($c_1, c_2$)} \tcp*[1]{probabilistically mutate}
 
-        $\mathbb{H} \gets \mathbb{H} \cup \{ c_1, c_2 \} $ \tcp*[1]{add new models to batch}
+%         $\mathbb{H} \gets \mathbb{H} \cup \{ c_1, c_2 \} $ \tcp*[1]{add new models to batch}
 
-    }
+%     }
 
-    % \ttt{roulette($s$)}
+%     % \ttt{roulette($s$)}
 
-    return $\mathbb{H}$ 
+%     return $\mathbb{H}$ 
 
-\end{algorithm}
+% \end{algorithm}
 
 
 

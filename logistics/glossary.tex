@@ -50,6 +50,7 @@
 \newacronym{et}{ET}{exploration tree}
 \newacronym{es}{ES}{exploration strategy}
 \newacronym{ms}{MS}{model search}
+\newacronym{of}{OF}{objective function}
 
 % \newacronym{le}{LE}{\gls{Loschmidt echo}}
 
@@ -80,10 +81,10 @@
     Jordan Wigner transformation
 }
 
-\newdefinedabbreviation{of}{OF}{objective funtion}{
-    Function which acts on a candidate in a \gls{ga} to assess the fitness of the candidate at 
-        solving the problem of interest.
-}
+% \newdefinedabbreviation{of}{OF}{objective funtion}{
+%     Function which acts on a candidate in a \gls{ga} to assess the fitness of the candidate at 
+%         solving the problem of interest.
+% }
 
 %%%%%%%%%%% TERMS %%%%%%%%%%%
 \newglossaryentry{spawn}
@@ -155,6 +156,21 @@
     }
 }
 
+\newglossaryentry{chromosome}
+{
+    name=chromosome,
+    description={
+        A single candidate in the space of valid solutions to the posed problem in a genetic algorithm.
+    }
+}
+
+\newglossaryentry{gene}
+{
+    name=gene,
+    description={
+        Individual element within a \gls{chromosome}.
+    }
+}
 
 
 %%%%%%%%%%% MAKE - keep at bottom of file %%%%%%%%%%%
