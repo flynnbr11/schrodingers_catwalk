@@ -68,7 +68,7 @@ Given access to the population, $\population$,
     $\mu \gets \ttt{sample} \left( \population, N_m\right)$\; 
 
     \For{$i \in 1, ..., N_g$}{
-        \For{$\gamma_j \in \mathbb{S}$ }{
+        \For{$\gamma_j \in \mu$ }{
             $g_j \gets g(\gamma_j) $ \tcp*[1]{assess fitness of candidate}
         }
 
@@ -114,21 +114,24 @@ Say there are $n$ objects,
     and the vector of their weights as $\vec{w}$. 
 We can then represent configurations of object sets as candidate vectors $\vec{\gamma}_j$, 
     whose genes are binary, and simply indicate whether or not the associated object is included in the set. 
-For example, $\vec{\gamma}_j = $\ttt{100001}  indicates a set of objects consisting only of those
-    indexed first and last, with none of the intermediate objects included. 
+For example, with $n=6$,
+\begin{equation}
+    {\gamma}_j = $\ttt{100001} \Longrightarrow $\vec{\gamma}_j = \irow{1 & 0 & 0 & 0 & 0 & 1},
+\end{equation} 
+indicates a set of objects consisting only of those indexed first and last, with none of the intermediate objects included. 
 
 \par
 The fitness of any candidate is then given by the total value of that configuration of objects, $v_j = \vec{v} \cdot \vec{\gamma}_j$, 
     but candidates are only admitted\footnotemark \ if the weight of the corresponding set of objects 
-    is less than the capacity of the knapsack, i.e. $\vec{w}_j \cdot{\gamma}_j \leq w_{max}$. 
+    is less than the capacity of the knapsack, i.e. $\vec{w}_j \cdot \vec{\gamma}_j \leq w_{max}$. 
 \footnotetext{
     Note there are alternative strategies to dealing with candidates who violate the weight condition, 
     such as to impose a penalty within the \gls{of}, but for our purposes let us assume we simply disregard violators. 
 }
 \par 
 
-For example with $n=6$, where each individual object has value $<50$ and weight $<25$ and $w_{max} = 50$, 
-recalling $\vec{\gamma}_j = \ttt{100001}$, say, 
+For example where each individual object has value $<50$ and weight $<25$ and $w_{max} = 50$, 
+recalling $\gamma_j = \ttt{100001}$, say, 
 \begin{subequations}
     \begin{equation}
         \vec{ v } = \irow{ 48 & 15 & 26 & 19 & 39 & 15 } \Longrightarrow v_j = \vec{\gamma}_j \cdot \vec{v} = 48 + 15 = 63;
@@ -160,17 +163,68 @@ By spawning from these candidates through a one-point crossover at the midpoint,
 By repeating this procedure, it is expected to uncover candidates which optimise $v_j$ while maintining $w_j \leq w_{max}$, 
     or at least to produce near-optimal solutions, using far less time/resources than brute-force evaluation of all candidates, 
     which is usually sufficient. 
-For instance, if there $n=100$ objects to consider, there are $2^{100} \approx 10^{30}$ candidates to consider; 
+For instance, with $n=100$ objects to consider, there are $2^{100} \approx 10^{30}$ candidates to consider; 
     the most powerful supercomputers in the world currently claim on the order of Exa-FLOPs, 
     i.e. $10^{18}$ operations per second, of which say $\sim1000$ operations are required to test each candidate, 
-    meaning $10^{15}$ candidates can be checked per second. 
-This would still require $10^{12}$ seconds to solve absolutely, so it is reasonable in cases like this to accept 
+    meaning $10^{15}$ candidates can be checked per second in a generous example. 
+This would still require $10^{12}$ seconds to solve absolutely, 
+    so it is reasonable in cases like this to accept 
     \emph{approximately optimal} solutions\footnote{
-        Simply put: in machine learning, \emph{good enough} is good enough. 
+        Simply put: in machine learning, \emph{good enough} is good enough.
+        We will adopt this philosophy for the remainder of this thesis and life. 
     }. 
 
 
 \subsection{Selection mechanism}
+A key subroutine of every \gls{ga} is the mechanism through which it nominates candidates fromm generation $g$ 
+as parents to offsping candidates in $g+1$ \cite{luke11}. 
+All mechanisms have in common that they act on a set of candidates from the previous generation, 
+    where each candidate, $\gamma_j$, has been evaluated and has fitness value, $g_j$. 
+Among the viable schemes for selecting individual parents from the set of candidates, $\mu$  are
+\begin{easylist}[itemize]
+    & Rank selection: candidates are selected with probabilty proportional to their ranking relative to 
+        the fitness of contemporary candidates in the same generation. 
+    & Tournament selection: a subset of $k$ candidates are chosen at random from $\mu$, 
+        of which the candidate with the highest fitness is taken as the parent. 
+    & Stochastic universal sampling: candidates are sampled proportional to their fitness, 
+        but the sampling algorithm is biased to ensure high-fitness candidates are chosen at least once 
+        within the generation. 
+\end{easylist}
+
+We will only detail the mechanism used later within \gls{qmla}, 
+    the common fitness proportional selection, known as \emph{roulette selection} \cite{luke11}. 
+This is a straightforward strategy where we directly map candidates' fitness, $g_i$ to a selection probability, $s_i$,
+    simply by normalising $\{g_i\}$, 
+    allowing us to visualise a roulette wheel of uneven wedges, eachh of which correspond to a candidate. 
+Then we need only conceptually spin the roulette wheel to select the first parent, $\gamma_{p_1}$. 
+We then remove $\gamma_{p_1}$ from the set of potential parents, renormalise the remaining $\{s_i\}$, 
+    and spin the wheel again to choose the second parent, $\gamma_{p_2}$. 
+\par 
+Practically, we repeat the process outlined until the next generation is filled, 
+    usually we have $|\mu| = N_m$, and desire that every generation should contain the same 
+    $N_m$ candidates, so we repeat the roulette selection $\nicefrac{N_m}{2}$ times per generation, 
+    since every pair of parents yield two offspring.
+It is important that meaningful differences in fitness are reflected by the selection probability, 
+    which is difficult to ensure for large $N_m$, e.g. with ten models, the strongest candidate is only 
+    a marginally more probable parent than the worst -- this effect is amplified for larger $N_m$. 
+We therefore wish to reduce the set of potential parents to ensure high quality offspring:
+    we truncate $\mu$ and retain only the highest-fitness $\frac{N_m}{2}$ models as selectable parents. 
+The roulette selection is shown in \cref{fig:knapsack_roulette}\textbf{a-c}. 
+
+\begin{figure}
+    \begin{center}
+        \includegraphics{theoretical_study/figures/knapsack_roulette.pdf}
+    \end{center}
+    \caption[Roulette wheels for selection]{
+        Roulette wheels showing selection probability $s_i$ for corresponding candidates $\gamma_i$. 
+        Colours here only distinguish candidates, they do not encode any information. 
+        \textbf{a}, All valid candidates are assigned selection probability based on their value in \ref{table:knapsack_candidates}. 
+        \textbf{b}, The set of potential parents is truncated to include only the strongest five candidates. 
+        \textbf{c}, After one parent ($\gamma_2$) has been chosen, it is removed from the roulette wheel and the remaining
+         candidates' probabilities are renormalised for the selection of the second parent. 
+    }
+    \label{fig:knapsack_roulette}
+\end{figure}
 
 \subsection{Offspring production}
 crossover and mutation mechanisms
