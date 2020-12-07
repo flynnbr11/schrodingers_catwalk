@@ -149,7 +149,7 @@ Therfore $\left| B_{ij} \right|$ is the strength of the statistical evidence
     \end{cases}
 \end{equation} 
 
-\subsection{Experiment sets}
+\subsection{Experiment sets}\label{sec:experiments_for_bf}
 As mentioned it is necessary for the \gls{tltl} of both models in a \gls{bf} calculation to
     refer to the same set of experiments, $\expset$. 
 There are a number of ways to achieve this, 
@@ -364,7 +364,7 @@ For example where the target system is an untrusted quantum simulator to be char
     those corresponding to $\ho$ are computed $S_u$, 
     while particles' \gls{likelihood} are computed on $S_t$. 
 
-\subsection{Modular functionality}
+\subsection{Modular functionality}\label{sec:modular_functionality}
 Finally, there are a number of fundamenetal subroutines which are called upon throughout the \gls{qmla} algorithm. 
 These are written independently such that each subroutine has a number of available implementations. 
 These can be chosen to match the requirements of the user, and are set via the \gls{es}. 
@@ -376,12 +376,18 @@ These can be chosen to match the requirements of the user, and are set via the \
     && i.e. whether to use \gls{qhl} or quantum process tomography, etc. 
     && In this work we always used \gls{qhl}. 
     & Likelihood function: the method used to estimate the likelihood 
-        for use during quantum likelihood estimation within \gls{qhl}, 
+        for use during \gls{qle} within \gls{qhl}, 
         which ultimately depends on the measurement scheme. 
     && By default, here we use projective measurement back onto the input probe state, 
-        $\left| \bra{\psi} e^{-i\hat{H}t} \ket{\psi} \right|^2$.
+        $\left| \bra{\psi} e^{-i\hat{H}t} \ket{\psi} \right|^2$.        
+    && The role of these functions is to compute $\Pr(0)$ to be used by QInfer, 
+        which is not always the same as computing the likelihood,
+        although these are equiavelent when we measure $d=0$, see .
+    &&& Generically, without referring to the likelihood, these functions are to compute the expectation value
+            of the unitary operator corresponding to the model of the system.        
     && It is possible to change this to implement any measurement procedure, 
-        for example an experimental procedure where the environment is traced out. 
+        for example an experimental procedure where the environment is traced out.
+                
     & \label{item:probes} Probes: defining the input probes to be used during training. 
         && In general it is preferable to use numerous probes in order to avoid biasing particular terms. 
         && In some cases we are restricted to a small number available input probes, e.g. to match experimental constraints.

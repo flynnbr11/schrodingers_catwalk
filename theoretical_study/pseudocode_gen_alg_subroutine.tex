@@ -1,0 +1,36 @@
+\begin{algorithm}
+    \caption{\gls{es} subroutine: \ttt{generate\_models} via genetic algorithm}
+    \label{alg:ga_generate_models}
+    \DontPrintSemicolon
+    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\;
+    \KwIn{ $g(\hi)$ \tcp*[1]{objective function}}\;
+
+    \KwOut{$\mathbb{H}$ \tcp*[1]{set of models}}\;
+    
+    $ N_m = \left| \nu \right| $ \tcp*[1]{number of models}
+
+    \For{$\hi \in \nu$}{
+       $g_i \gets g(\hi)$ \tcp*[1]{model fitness via objective function}
+    }
+    $r \gets $ \ttt{rank($\{ g_i \}$)} \tcp*[1]{rank models by their fitness}
+    $\mathbb{H}_t \gets $ \ttt{truncate($r, \frac{N_m}{2}$)} \tcp*[1]{truncate models by rank: only keep $\frac{N_m}{2}$}
+    $ s \gets $ \ttt{normalise($\{g_i\}$)} $\forall \hi \in \mathbb{H}_t$ \tcp*[1]{normalise remaining models' fitness}
+
+    $\mathbb{H} = \{\}$ \tcp*[1]{new batch of chromosomes/models}
+
+    \While{ $\left| \mathbb{H} \right| < N_m$ }{
+        $p_1, p_2 = $ \ttt{roulette($s$)} \tcp*[1]{use $s$ to select two parents via roulette selection}
+    
+        $c_1, c_2$ = \ttt{crossover($p_1, p_2$)} \tcp*[1]{produce offspring models}
+
+        $c_1, c_2$ = \ttt{mutate($c_1, c_2$)} \tcp*[1]{probabilistically mutate}
+
+        $\mathbb{H} \gets \mathbb{H} \cup \{ c_1, c_2 \} $ \tcp*[1]{add new models to batch}
+
+    }
+
+    % \ttt{roulette($s$)}
+
+    return $\mathbb{H}$ 
+
+\end{algorithm}

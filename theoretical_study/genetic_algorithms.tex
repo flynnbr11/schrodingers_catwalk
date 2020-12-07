@@ -36,16 +36,16 @@ Given access to the population, $\population$,
     & \label{ga:loop} Evaluate each candidate $\gamma_j \in \mu$. 
     && each $\gamma_j$ is assigned a fitness, $g_j$
     && the fitness is computed through an objective function acting on the candidate, $g(\gamma_j)$. 
-    & Map the fitnesses of each candidate, $\{g_j\}$, to selection probabilities for each model, $\{s_j\}$
+    & Map the fitnesses of each candidate, $\{g_j\}$, to selection probabilities for each candidate, $\{s_j\}$
     && e.g. by normalising the fitnesses, or by removing some poorly-performing candidates and then normalising. 
-    & Generate the next generation of candidates, $\mu^{\prime}$
-    && $\mu = \{ \}$
+    & Generate the next generation of candidates
+    && Reset $\mu = \{ \}$
     && \label{ga:select} Select pairs of parents, $p_1, p_2$, from $\mu$
     &&& Each candidate's probability of being chosen is given by their $s_j$
     && Cross over $p_1,p_2$ to produce children candidates, $c_1,c_2$. 
     &&& mutate $c_1, c_2$ according to some random probabilistic process
-    &&& keep $c_i$ only if it is not already in $\mu^{\prime}$, to ensure $N_m$ unique models are tested at each generation.
-    && until $| \mu^{\prime}| = N_m$, iterate to step (\ref{ga:select}.
+    &&& keep $c_i$ only if it is not already in $\mu$, to ensure $N_m$ unique candidates are tested at each generation.
+    && until $| \mu| = N_m$, iterate to step (\ref{ga:select}.
     & Until the $N_g^{th}$ generation is reached, iterate to step \ref{ga:loop}.
     & The strongest candidate on the final generation is deemed the solution to the posed problem. 
 \end{easylist}
@@ -325,6 +325,7 @@ $r_m$ is a \emph{hyperparameter} of the \gls{ga}:
     for a given problem. 
 
 \subsection{Candidate evaluation}
+\label{sec:candidate_evaluation}
 Within every generation of the \gls{ga}, each candidate must be evaluated, 
     so that the relative strength of candidates can be exploited in constructing 
     candidates for the next generation.
@@ -342,6 +343,13 @@ We wish to optimise the modelling of $\hp$, but assume we do not know the target
 Instead, we must devise schemes which exploit the knowledge we \emph{do} have about each candidate $\hj$, 
     which is the primary challenge in building an \gls{es} based on a \gls{ga}.  
 We propose and discuss a number of options in \cref{sec:objective_functions}. 
+\par 
+
+Common to all proposed \glspl{of}, however, is that candidates should first be trained before evaluation, 
+    so that their assessment is based on their actual power in explaining the target system, 
+    rather than some initial paramterisation which may not capture their potential. 
+This is a tenet of \gls{qmla}: for each candidate $\hj ( \al_j )$, we use a subroutine to optimise $\al_j$, 
+    again for this study we rely on \gls{qhl}. 
 
 
 \section{Adaptation to QMLA framework}
@@ -365,6 +373,47 @@ We recognise the limitations this structure imposes: we can only identify terms 
 }    
 \par 
 
+The structure of the overall \gls{qmla} algorithm, recall \cref{fig:qmla_overview},
+    is unchanged.
+In a \glsentryfull{ges}:
+\begin{easylist}[itemize]
+    & models are still grouped in branches, here called generations;
+    & models are still trained, again through \gls{qhl};
+    & branches are evaluated according the the \gls{of} to be described in \cref{sec:objective_functions};
+    & new models are spawned through the genetic algorithm by selecting pairs of parents for crossover, 
+    with the resultant offspring models probabilistically mutated. 
+\end{easylist}
+
+
+We detail the corresponding \ttt{generate\_models} subroutine in \cref{alg:ga_generate_models}. 
+We can restate the informal description of \glspl{ga}, now in the context of \gls{qmla}, as
+
+\begin{easylist}[enumerate]
+    \ListProperties(Numbers2=l, Numbers3=r)
+    & Sample $N_m$ models from $\population$ at random 
+    && this is the first generation, $\mu$. 
+    & \label{qmla_ga:loop} Evaluate each model $\hj \in \mu$. 
+    && train $\hj$ through \gls{qhl}
+    && apply the \glsentrylong{of} to assign the model's fitness $g_j$
+    & Map the fitnesses of each model, $\{g_j\}$, to selection probabilities for each model, $\{s_j\}$
+    && e.g. by normalising the fitnesses, or by removing some poorly-performing models and then normalising. 
+    & Generate the next generation of models
+    && Reset $\mu = \{ \}$
+    && \label{qmla_ga:select} Select pairs of parents, $\h_{p_1}, \h_{p_2}$, from $\mu$
+    &&& Each model's probability of being chosen is given by their $s_j$
+    && Cross over $\h_{p_1}, \h_{p_2}$ to produce children models, $\h_{c_1}, \h_{c_2}$. 
+    &&& mutate $\h_{c_1}, \h_{c_2}$ according to some random probabilistic process
+    &&& keep $\h_{c_i}$ only if it is not already in $\mu$, to ensure $N_m$ unique models are tested at each generation.
+    && until $| \mu| = N_m$, iterate to step (\ref{qmla_ga:select}.
+    & Until the $N_g^{th}$ generation is reached, iterate to step \ref{qmla_ga:loop}.
+    & The strongest model on the final generation is deemed the approximation to the system, $\hp$. 
+\end{easylist}
+
+
+
+\par 
+
+\subsection{Models as chromosomes}
 We first need a mapping from models to chromosomes; 
     this is straightforward given the description of chromosomes as binary strings, 
     exemplified in \cref{sec:knapsack}. 
@@ -373,51 +422,607 @@ We give an example of the mapping between models and chromosomes in \cref{table:
 
 \input{theoretical_study/figures/qmla_chromosome.tex}
 
+
 \subsection{$F_1$-score}\label{sec:f_score}
 We need a metric against which to evaluate models, and indeed the entire \gls{qmla} procedure. 
+We can gauge the performance of \gls{qmla}'s model search by the quality of candidate models 
+    produced at each generation, so we introduce a mertic to act as proxy for model quality: 
+    the $\fs$. 
+In short, $f \in \left(0, 1\right)$ indicates the degree to which $\hi$ captures the physics of the target system: 
+    $f=0$ indicates that $\hi$ shares no terms with $\ho$, while $f=1$ is found uniquely for $\hi=\ho$. 
+We will define the concept formally next. 
+Note that here we are able to compute $f$ for candidate models because the target $\ho$
+    is simulated, i.e. we know the true terms $\mathcal{T}_0$; 
+    this would not be available for a real system with unknown $\ho$, 
+    but is useful for the analysis of the algorithm itself. 
+\par 
 
+We emphasise that the goal of this work is to identify the \emph{model} which best describes 
+    quantum systems, and not to improve on parameter-learning when given access to particular models, 
+    since those already exist to a high standard \cite{wiebe2014qhlpra,bairey2019learning}. 
+Therefore we can consider \gls{qmla} as a classification algorithm, 
+    with the goal of classifying whether individual terms $\hat{t}$ from a set of available 
+    terms $\termset = \{\hat{t}\}$ are helpful in describing data which is generated by $\ho$, 
+    which has $\termset_0$. 
+Candidate models $\hi$ then have $\termset_i$.
+We can assess $\hi$ using standard metrics used regularly in the \gls{ml} literature, 
+    which simply count the number of terms identified correctly and incorrectly,
+\begin{easylist}[itemize]
+    & \gls{tp}: number of terms in $\To$ which are in $\Ti$;
+    & \gls{tn}: number of terms not in $\To$ which are also not in $\Ti$;
+    & \gls{fp}: number of terms in $\Ti$ which are not in $\To$;
+    & \gls{fn}: number of terms in $\To$ which are not in $\Ti$.
+\end{easylist}
+\par 
 
+\noindent These concepts allow us to define 
 
-% TODO uncomment the algorithm below - excluded for readibility of other sections
-% \begin{algorithm}
-%     \caption{ES subroutine: \ttt{generate\_models} (example: genetic algorithm)}
-%     \label{alg:generate_models}
-%     \DontPrintSemicolon
-%     \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\;
-%     \KwIn{ $g(\hi)$ \tcp*[1]{objective function}}\;
+\begin{easylist}
+    & \emph{precision}: how precisely does $\hi$ capture $\ho$,
+    i.e. if a term is included in $\Ti$ how likely it is to actually be in $\To$, Eqn \ref{eqn:precision};
+    & \emph{sensitivity}: how sensitive is $\hi$ to $\ho$, 
+    i.e. if a term is in $\To$, how likely $\Ti$ is to include it, Eqn. \ref{eqn:sensitivity}.
+\end{easylist}
 
-%     \KwOut{$\mathbb{H}$ \tcp*[1]{set of models}}\;
-    
-%     $ N_m = \left| \nu \right| $ \tcp*[1]{number of models}
+\begin{subequations}
+    \begin{equation}
+        \label{eqn:precision}
+        \text{precision} = \frac{TP}{TP + FP}
+    \end{equation}
+       
+    \begin{equation}
+        \label{eqn:sensitivity}
+        \text{sensitivity} = \frac{TP}{TP + FN}
+    \end{equation}
+\end{subequations}
 
-%     \For{$\hi \in \nu$}{
-%        $g_i \gets g(\hi)$ \tcp*[1]{model fitness via objective function}
-%     }
-%     $r \gets $ \ttt{rank($\{ g_i \}$)} \tcp*[1]{rank models by their fitness}
-%     $\mathbb{H}_t \gets $ \ttt{truncate($r, \frac{N_m}{2}$)} \tcp*[1]{truncate models by rank: only keep $\frac{N_m}{2}$}
-%     $ s \gets $ \ttt{normalise($\{g_i\}$)} $\forall \hi \in \mathbb{H}_t$ \tcp*[1]{normalise remaining models' fitness}
+Informally, precision prioritises that predicted terms are correct, 
+    while sensitivity prioritises that true terms are identified. 
+In practice, it is important to balance these considerations. 
+$F_{\beta}$-score is a measure which balances these, with $F_1$-score in particular giving them equal importance. 
+\begin{equation}
+    \label{eqn:f1_score}
+    F_1 = \frac{2\times (precision)\times(sensitivity)}{(precision + sensitivity)} = \frac{TP}{TP + \frac{1}{2}(FP + FN)}.
+\end{equation}
+We give an example of these quantities in \cref{fig:classification_eg}, 
+    where $TP=3, TN=4, FP=1, FN=2$, giving $\textmr{precision} = \nicefrac{3}{4}$ 
+    and $\textmr{sensitivity} = \nicefrac{3}{5}$, 
+    with a final $f = 0.67$, i.e. the average of the indicators of model quality which we care about. 
+\par 
 
-%     $\mathbb{H} = \{\}$ \tcp*[1]{new batch of chromosomes/models}
+We adopt \fs \ as an indication of model quality because we are concerned both with precision and sensitivity
+    of output models. 
+We can use \fs \ to measure the success of the algorithm,
+    by recording $f$ for all models in all generations, allowing us to 
+    see whether or not the approximation of the system is improving on average. 
 
-%     \While{ $\left| \mathbb{H} \right| < N_m$ }{
-%         $p_1, p_2 = $ \ttt{roulette($s$)} \tcp*[1]{use $s$ to select two parents via roulette selection}
-    
-%         $c_1, c_2$ = \ttt{crossover($p_1, p_2$)} \tcp*[1]{produce offspring models}
+Of course in realistic cases we can not assume knoweldge of $\termset_o$ and therefore cannot compute 
+    $\fs$, but it is a useful tool in the development of the \gls{ges} itself, 
+    or in cases where $\ho$ is known, such as when the target system is simualated, e.g. in the case of device calibration.
+Our search for an effective \gls{of} can then be guided by seeking the 
+    method which correlates most strongly with \fs \ in test-cases.
 
-%         $c_1, c_2$ = \ttt{mutate($c_1, c_2$)} \tcp*[1]{probabilistically mutate}
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=\textwidth]{theoretical_study/figures/classication_example.pdf}
+    \end{center}
+    \caption[Classification concepts]{
+        Concepts used for classification. 
+        \textbf{a}, the set of available terms $\termset$ containing individual terms $\hat{t}_1$ to $\hat{t}_{10}$. 
+        The true model $\ho$ is constructed from the set $\termset_0$. 
+        Suppose a candidate $\hp$ has the set $\termset^{\prime}$. 
+        \textbf{b}, the confusion matrix for $\hp$. Correctly classified terms are \glsentrylong{tp} and \glsentrylong{tn} (green), 
+            and incorrectly classified terms are \glsentrylong{fp} and \glsentrylong{tn} (red). 
+    }
+    \label{fig:classification_eg}
+\end{figure}
 
-%         $\mathbb{H} \gets \mathbb{H} \cup \{ c_1, c_2 \} $ \tcp*[1]{add new models to batch}
+\input{theoretical_study/pseudocode_gen_alg_subroutine.tex}
 
-%     }
+\subsection{Hyperparameter search}
+Firstly we will validate our reasoning that $\fs$ is a sensible figure of merit, 
+    by directly invoking it as the \glsentrylong{of}. 
+That is, we first implement a \gls{ga}, using the mapping between models and chromosomes outlined above,
+    where we fix the numbers of sites $d=4$, and assume full connectivity between the sites, with $x-$, $y-$ and $z-$ couplings available,
+        such that there are $N_t = 3 \times {4 \choose 2} = 18$ terms in $\termset$, so that the total population is of size $2^{18}$ chromosomes.
+We can then sweep over the \gls[ga] hyperparameters to find a suitable configuration:
+    in \cref{fig:ga_param_sweep} we show how the choice of parameters affect the success rate of preciesly identifying the 
+    target chromosome, which is chosen at random for each instance, and we run 20 instance of each configuration. 
+The studied hyperparameters\footnotemark \ are
+\begin{easylist}[enumerate]
+    \ListProperties(Letters=r)
+    & number of generations;
+    & number of models per generation;
+    & mutation rate, $r_m$;
+    & number of generation a candidate must reign as the strongest observed, before the search terminates, the \emph{cutoff}. 
+\end{easylist}
+\footnotetext{  
+    These and further hyperparameters can be swept using code given in the \gls{qmla} codebase, 
+    in the directory \ttt{scripts/genetic\_alg\_param\_sweep}.  
+}
+Naturally, we expect that running for more generations with more models per generation will result in a more effective search in the model space, 
+    having examined $N_gN_m$ models. 
+We must also consider, however, that -- in realistic cases of \gls{qmla} -- the total computation time scales badly with these, 
+    since training and comparing models are such expensive subroutines. 
+Our goal is therefore to identify the set of hyperparameters which best searches the model space with minmial $N_g, N_m$.  
 
-%     % \ttt{roulette($s$)}
-
-%     return $\mathbb{H}$ 
-
-% \end{algorithm}
-
+\begin{figure}
+    \begin{center}
+        \includegraphics{theoretical_study/figures/gen_alg_param_sweep.pdf}
+    \end{center}
+    \caption[Genetic algorithm parameter sweep]{
+        Genetic algorithm parameter sweep.
+        Each subplot shows the success rates 
+    }
+    \label{fig:ga_param_sweep}
+\end{figure}
 
 
 \section{Objective functions}\label{sec:objective_functions}
+We have alluded to the central probelm in building a \gls{ga} into \gls{qmla}:
+    how to evaluate trained candidate models in the absence of a natural \gls{of}. 
+Here we will propose and analyse a number of potential \glspl{of}, 
+    some of which will underlie later studies in this thesis. 
+We will show how each \gls{of} computes $g_i$ for candidate models $\hi$, 
+    and summarise the outcomes in \cref{table:objective_functions}.
+For each $\hi$, we may refer to 
+\begin{easylist}[itemize]\label{list:obj_fnc_terms}
+    & $\tll_i$, \glsentryfull{tltl},  introduced in \cref{sec:total_log_total_likelihood}
+    & $k_i$: the model's cardinality, i.e. number of terms in its parameterisation;
+    & $\expset_i$: the bespoke set of experiments composed by the \gls{edh} solely for trainng $\hi$;
+    & $n = |\expset_i|$: the number of samples used in trainng $\hi$. 
+\end{easylist}
+\par 
+Readers may prefer to skip to \cref{sec:obj_fnc_selection},
+    where we conclude this study by choosing a single \gls{of} for consideration in this chapter.
+
+\par 
+
+\subsection{Inverse Log-likelihood}\label{sec:inverse_ll}
+$\tll_{i}$ can be thought of as a measure of the success of a given model at explaining data from any set of experiments, $\expset$. 
+This can be immediately interpreted as an \gls{of}, provided each candidate model 
+    computes a meaningful \gls{tltl}, requiring that they are all based on the same set of experiments, $\expset_v$,
+    which are designed explicitly for the purpose of model evaluation. 
+\par 
+
+\gls{tltl} are negative and the strongest model has lowest $\left| \tll_{i} \right|$ (or highest $\tll_{i}$ overall),
+    so the corresponding \gls{of} for candidate $\hi$ is 
+\begin{equation}
+    \label{eqn:obj_log_likelihood}
+    g_i^{L} = \frac{-1}{\tll_{i}}.
+\end{equation}
+
+In our tests, Eqn. \ref{eqn:obj_log_likelihood} is found to be too generous to poor models, 
+    assigning them non-negligible probability. 
+Its primary flaw, however, is its reliance on $\expset_v$: 
+    in order that the \gls{tltl} is significant, it must be based on meaningful experiments, 
+    the design of which can not be gauranteed in advance, or at least risks introducing strong bias. 
+
+\subsection{Akaike Information Criterion}\label{sec:akaike_info_criterion}
+A common metric in model selection is \gls{aic} \cite{dr2002model}.
+Incorporating \gls{tltl}, 
+    \gls{aic} objectively quantifies how well a given model accounts for data from the target system,
+    and punishes models which use extraneous parameters, 
+    by incurring a penalty on $k_i$. 
+\gls{aic} is given by 
+\begin{equation}
+    \label{eqn:aic}
+    AIC_i = 2k_i - 2 \tll_{i}.
+\end{equation}
+
+In practice we use a slightly modified form of Eqn. \ref{eqn:aic} which
+    corrects for the number of samples $n=\left|\expset_i\right|$, 
+    called the \gls{aicc}, 
+\begin{equation}
+    \label{eqn:aicc}
+    AICC_i = AIC_i + 2k_i \frac{k_i+1}{n-k_i-1}. 
+\end{equation}
+
+Model selection from a set of candidates occurs simply by selecting the model with $AICC_{\textrm{min}}$.
+A suggestion to retrieve selection probability,
+    by using Eqn. \ref{eqn:aicc} as a measure of \emph{relative likelihood},
+    is to compute \emph{Akaike weights} (as defined in in Chapter 2 of \cite{dr2002model}),
+\begin{equation}
+    \label{eqn:akaike_weights}
+    w_i^A = exp \left( \frac{{AICC_{\textrm{min}} - AICC_i}}{2} \right), 
+\end{equation}
+where $AICC_{\textrm{min}}$ is the lowest $AICC$ observed among the models under consideration
+    e.g. all models in a given generation. 
+
+Clearly, Akaike weights impose quite strong penalties 
+    on models which do not explain the data well, 
+    but also punish models with extra parameters, i.e. overfitting models, 
+    effectively searching for the strongest and simplest model simultaneously.
+The level of punishment for poorly performing models is likely too drastic: 
+    very few models will be in a range sufficiently close to $AICC_{\textrm{min}}$ 
+    to receive a meaningful Akaike weight, 
+    suppressing diversity in the model population.
+    Indeed, we can see from Table \ref{table:objective_functions} that this results in most 
+    models being assigned negligible weight, which is not useful for parent selection. 
+Instead we compute a straightforward quantity as the \gls{aic}--inspired fitness, Eqn. \ref{eqn:akaike_fitness},
+\begin{equation}
+    \label{eqn:akaike_fitness}
+    g_i^{A} = \left(\frac{1}{AICc_i}\right)^2,
+\end{equation}
+    where we square the inverse \gls{aic} to amplify the difference in quality between models, 
+    such that stronger models are generously rewarded.
+
+\par 
+
+\subsection{Bayesian Information Criterion}\label{sec:bayes_info_criterion}
+Related to the idea of \gls{aic}, Eqn. \ref{eqn:aic}, 
+    is that of \gls{bic}, 
+\begin{equation}
+    \label{eqn:bic}
+    BIC_i = k_i \ ln(n_i) - 2 \tll_{i},
+\end{equation}
+    where $k_i, n_i$ and $\tll_i$ are as defined on \cpageref{list:obj_fnc_terms}.
+    % where $k, \tll_{i}$ are as defined above and $n$ is the number of samples.
+Analagously to Akaike weights, 
+    \emph{Bayes weights} as proposed in \S7.7 of \cite{friedman2001elements}, are given by
+
+\begin{equation}
+    w_i^B = exp\left( - \frac{BIC_i}{2}  \right).
+\end{equation}
+
+\gls{bic} is harsher than \gls{aic} in its punishment of the number of parameters in each model, 
+    therefore requiring strong statistical justification for the addition of any parameters. 
+Again, this may be overly cumbersome for our use case:
+    with such a relatively small number of parameters, 
+    the punishment is disproportionate; 
+    moreover since we are trying to uncover physical interactions, 
+    we do not necessarily want to suppress models merely for 
+    their cardinality, since this might result in favouring 
+    simple models which do not capture the physics.  
+As with Akaike weights, then, we opt instead for a simpler objective function,
+\begin{equation}
+    \label{eqn:bic_fitness}
+    g_i^B = \left( \frac{1}{BIC_i}\right)^2.
+\end{equation}
+    
+
+\subsection{Bayes factor points}\label{sec:bf_points}
+A cornerstone of model selection within \gls{qmla} is the calculation of \glsentryfull{bf} (see \cref{sec:bayes_factors}). 
+We can compute the pairwise \gls{bf} between two candidate models, $\bij$, according to Eqn. \ref{eqn:bf_succinct}.
+$\bij$ can be based on some evaluation dataset, $\expset_v$, but can also be calculated from $\expset_i \cup \expset_j$: 
+    this is a strong advantage since the resulting insight (Eqn. \ref{eqn:bf_cases}) is based on 
+    experiments which were bespoke to both $\hi, \hj$. 
+As such we can be confident that this insight accurately points us to the stronger of two candidate models. 
+\par 
+
+We can utilise this facility by simply computing the \gls{bf} between all 
+    pairs of models in a set of $N_m$ candidates $\{\hi\}$, 
+    i.e. compute ${N_m \choose 2}$ \gls{bf}s. 
+Note that this is computationally expensive: 
+    in order to train $\hi$ on $\expset_j$ requires a further $\left| \expset_j \right|$ experiments, 
+    each requiring $N_P$ particles\footnote{Caveat the reduction in overhead outlined in \cref{sec:experiments_for_bf}.}, 
+    where each particle corresponds to a unitary evolution and therefore the caluclation of a matrix exponential. 
+The combinatorial scaling of the model space is then quite a heavy disadvantage. 
+However, in the case where all pairwise \gls{bf} are performed, 
+    we can assign a point to $\hi$ for every comparison which favours it. 
+\begin{equation}
+    \label{eqn:bf_points}
+    g_i^p = \sum_{j \in \mu} b_{ij}, \ \ \ \ b_{ij} = 
+        \begin{cases}
+            1, \ \ \ \ \bij > 1 \\
+            0, \ \ \ \ \text{otherwise}
+        \end{cases}
+\end{equation}
+This is a straightforward mechanism, but is overly blunt
+    because it does not account for the strength of the evidence
+    in favour of each model. 
+For example, a dominant model will receive only a slightly higher selection probability 
+    than the second strongest, even if the difference between them was $\bij = 10^{100}$. 
+Further, the unfavourable scaling make this an expensive method. 
+
+\subsection{Ranking}\label{sec:bf_ranking}
+Related to \cref{sec:bf_points}, we can rank models in a generation based on their number of \gls{bf} points.
+\gls{bf} points are assigned as in Eqn. \ref{eqn:bf_points}, 
+    but instead of corresponding directly to fitness, 
+    we assign models a rank $R$, 
+    i.e. the model with highest $g_i^p$ gets $R=1$, 
+    and the model with $n^{th}$ highest $g_i^p$ gets $R=n$. 
+Note here we truncate $\mu$, meaning we remove the worse-performing models and retain only $N_m^{\prime}$ models, 
+    before calculating $R$.
+This is because computing $R$ using all $N_m$ models results in less distinct selection probabilities. 
+
+\begin{equation}
+    \label{eqn:ranking}
+    g_i^R = \frac{N_m^{\prime}-R_i+1}{\sum\limits_{n=1}^{N^{\prime}_m} n},
+\end{equation}
+    where $R_i$ is the rank of $\hi$ and $N_m^{\prime}$ is the number of models retained after truncation. 
+
+
+\subsection{Residuals}\label{sec:residuals}
+Recall at each experiment, $N_P$ particles are compared against a single experimental datum, $d$. 
+For consistency with QInfer \cite{qinfer-1_0} -- on which \gls{qmla}'s code base extends --
+    we call the expectation value for the system $\Pr_Q(0)$, 
+    and that of each particle $\Pr_p(0)$, recall \cref{sec:likelihood}. 
+Typically, $\Pr_Q(0) = \left| \bra{\psi} e^{-i\ho t} \ket{\psi} \right|^2$, 
+    but this can be changed to match given experimental schemes, 
+    e.g. the Hahn-echo sequence applied in \cite{gentile2020learning}. 
+By definition, the datum $d$ is the binary outcome of the measurement on the system under experimental conditions $e$.
+That is, $d$ encodes the answer to the question: 
+    after time $t$ under Hamiltonian evolution, did $Q$ project onto 
+    the basis we have labelled $0$ (usually the same as the input probe state $\ket{\psi}$)?
+However, in practice we often have access also to the \gls{likelihood} , 
+    i.e. rather than a binary value, a number representing the probability that 
+    $Q$ will project on to $0$ for a given experiment $e$, $\Pr_Q(0 | e)$. 
+Likewise, we can simulate this quantity for each particle, $\Pr_p(0 | e)$. 
+This allows us to calculate the \emph{residual} between the system and individual particles' likelihoods, 
+    $r_p^e$, as well as the mean residual across all particles in a single experiment $r^e$:
+\begin{align}
+    \label{eqn:particle_residual}
+    \begin{split}
+    r_p^e & = \left| Pr_Q(0 | e) - Pr_p(0 | e) \right|  \\
+    r^e &= \underset{p}{\text{mean}} \{r_p^e\}
+    \end{split}
+\end{align}
+\par 
+
+Residuals capture how closely the particle distribution reproduced the dynamics from $Q$:
+    $r^{e}_{p} = 0$ indicates perfect preditiction, while $r^e_p=1$ is completely incorrect. 
+We can therefore maximise the quantity $1-r$ to find    the best model, 
+    using the \gls{of}
+\begin{equation}
+    \label{eqn:residual_fitness}
+    g^r_i = \left| 1 - \underset{e \in \expset}{\text{mean}}\{ {r^e} \}\right|^2.
+\end{equation}
+\par     
+This \gls{of} can be thought of in frequentist terms 
+    as similar to the residual sum of squares,
+    although instead of summing the residual squares, we average to ensure $0 \leq r \leq 1$. 
+$g_i^r$ encapsulates how well a candidate model can reproduce dynamics 
+    from the target system, as a proxy for whether that candidate describes the system. 
+This is not always a safe figure of merit: 
+    in most cases, we do not expect parameter learning to perfectly optimise $\al_i$. 
+Reproduced dynamics alone can not capture the likelihood that $\hi=\ho$. 
+However, this \gls{of} provides a useful test for \gls{qmla}'s \gls{ga}:
+    by simulating the case where parameters \emph{are} learned perfectly, 
+    such that we know that $g_i^r$ truly represents the ability of $\hi$ to 
+    simulate $\ho$, then this \gls{of} gaurantees to promote  the strongest models,
+    especially given that $\hi=\ho \implies r_p^e=0 \ \forall \ \{e, p\}$. 
+In realistic cases, however, the non-zero residuals -- even for 
+    strong $\hi$ -- may arise from imperfectly learned parameters,
+    rendering the usefulness of this \gls{of} uncertain. 
+Finally, it does not account for the cardinality, $k_i$, of the candidate models, 
+    which could result in favouring severely overfitting models in order to gain marginal improvement 
+    in residuals, which all machine learning protocols aim to avoid in general.
+
+\subsection{Bayes factor enhanced Elo-ratings}\label{sec:elo}
+A popular tool for rating individual competitors in sports and games is the \emph{Elo rating} scheme, 
+    e.g. used to rate chess players and soccer teams \cite{elo1978rating, fifa_elo}, 
+    also finding application in the study of animal hierarchies \cite{neumann2011assessing}. 
+Elo ratings allow for evaluating relative quality of individuals 
+    based on incomplete pairwise competitions, 
+    e.g. despite two football teams having never played against each other before, 
+    it is possible to quantify the difference in quality between those teams, 
+    and therefore to predict a result in advance \cite{hvattum2010using}. 
+We recognise a parallel with these types of competitions by noting that
+    in our case, we similarly have a pool of individuals (models), 
+    which we can place in direct competition, and quantify the comparitive outcome through \gls{bf}. 
+
+\par 
+Elo ratings are transitive: given some interconnectivity in a generation, 
+    we need not compare \emph{every} pair of models in order to 
+    make meaningful claims about which are strongest;
+    it is sufficient to perform a subset of comparisons, 
+    ensuring each individual is tested robustly. 
+We can take advantage of this transitivity to reduce the combinatorial overhead 
+    usually associated with computing bespoke \gls{bf} between all models 
+    (i.e. using their own training data $\expset_i$ instead of a generic 
+    $\expset_v$).
+In practice, we map models within a generation to nodes on a graph,
+    which is then sparsely connected. 
+In composing the list of edges for this graph, 
+    we primarily prioritise each node having a similar number of edges,
+    and secondarily the distance between any two nodes. 
+For example, with 14 nodes we overlay edges such that each node 
+    is connected with 5,6 or 7 other nodes, 
+    and all nodes at least share a competitor in common. 
+\par 
+
+The Elo rating scheme is as follows: 
+    upon creation, $\hi$ is assigned a rating $R_i$; 
+    every comparison with a competitor $\hj$ results in $\bij$; 
+    $R_i$ is updated according to the known strength of its competitor, $R_j$, 
+    as well as the result $\bij$. 
+The Elo update ensures that winning models are rewarded 
+    for defeating another model, 
+    but that the extent of that reward reflects the quality of its opponent. 
+As such, this is a fairer mechanism than \gls{bf} points, 
+    which award a point for every victory irrespective of the opposition:
+    if $\hj$ is already known to be a strong or poor model, 
+    then $\Delta R_i$ proportionally changes the credence we assign to $\hi$. 
+It achieves this by first computing the \emph{expected} result of a given comparison
+    with respect to each model, based on the current ratings, 
+
+\begin{subequations}
+    \label{eqn:elo_expected_score}
+    \begin{equation}
+        E_i 
+        = \frac{1}{1 + 10^{\frac{R_j - R_i}{400}}} ;
+    \end{equation}
+    \begin{equation}
+        E_i + E_j = 1,
+    \end{equation}    
+\end{subequations}
+
+Then, we find the binary \emph{score} from the perspective of each model:
+\begin{equation}
+    \label{eqn:elo_score}
+    \begin{cases}
+        B_{ij} > 1 & \Rightarrow \ S_i = 1; \ S_j =0  \\
+        B_{ij} < 1 & \Rightarrow \ S_i = 0; \ S_j = 1 \\
+    \end{cases}
+\end{equation}
+which is used to determine the change to each model's rating:
+\begin{equation}
+    \label{eqn:elo_delta_r}
+    \Delta R_i = \eta \times \left( S_i - E_i \right).
+\end{equation}
+
+An important detail is the choice of $\eta$, i.e. the \emph{weight} of the 
+    change to the models' ratings. 
+In standard Elo schemes this is a fixed constant, 
+    but here -- taking inspiration from football ratings where $\eta$ is the number of goals 
+    by which one team won -- we weight the change by the strength of our belief in the outcome: 
+    $\eta \propto \left| \bij \right|$.
+That is, similarly to the interpretation of Eqn. \ref{eqn:bf_cases}, 
+    we use the evidence in favour of the winning model to transfer points from the loser to the winner,
+    albeit we temper this by instead using $\eta = log_{10}(B_{ij})$, since \gls{bf} can give very large numbers. 
+In total, then, following the comparison between models $\hi, \hj$, we can perform the Elo rating update
+\begin{equation}
+    \label{eqn:elo_update}
+    R_i^{\prime} = R_i + \text{log}_{10}(B_{ij}) \left(S_i - \frac{1}{1 + 10^{\frac{R_j - R_i}{400}}}\right).
+\end{equation}
+This procedure is easiest to understand by following the example in Table \ref{table:elo_eg}. 
+
+\begin{table}
+    \centering
+    \input{theoretical_study/figures/elo_example.tex}
+    \caption[Example of Elo rating updates.]{
+        Example of Elo rating updates. 
+        We have two models, where $\h_a$ is initially believed to be a stronger candidate than $\h_b$, 
+            i.e. has a higher starting Elo rating.     
+        We show the effect of strong evidence\footnotemark \ in favour of each model following \gls{bf} comparison, $bij \sim 10^{100}$. 
+        In the case where $\h_a$ defeats $\h_b$, because this was so strongly expected given their initial ratings, 
+            the reward for $\h_a$ (and cost to $\h_b$) is relatively small, 
+            compared with the case where -- contrary to prediction -- $\h_b$ defeats $\h_a$. 
+    }
+    \label{table:elo_eg}
+\end{table}
+\footnotetext{
+    Note to achieve $\bij = 10^{100} = e^{\tll_{i} - \tll_{j}} \implies \tll_{i} - \tll_{j} = ln(10^{100}) \approx 7$.
+}
+
+
+\par 
+Finally, it remains to select the starting rating $R_i^0$ to assign models upon creation. 
+Although this choice is arbitrary, it can have a strong effect on the progression of the algorithm. 
+Here we impose details specific to the \gls{qmla} \gls{ga}: 
+    at each generation we admit the top two  models automatically 
+    for consideration in the next generation, 
+    such that strongest models can stay alive in the population and ultimately win. 
+These are called \emph{elite} models, $\hat{H}_e^1, \hat{H}_e^2$. 
+This poses the strong possibility for a form of generational wealth:
+    if elite models have already existed for several generations, 
+    their Elo ratings will be higher than all alternatives by defintion. 
+Therefore by maintaining a constant $R_i^0$, 
+    i.e. a model born at generation 12 gets the same $R_i^0$ as $\hat{H}_e^1$ -- which was 
+    born several generations prior and has been winning \gls{bf} comparisons ever since --  
+    we bias the \gls{ga} to continue to favour the elite models. 
+Instead, we would prefer that newly born models can overtake the Elo rating of elite models. 
+We achieve this through an imprecise mechanism:
+    newly born models are given the Elo rating of the second-most-elite model, $\h_e^2$. 
+This performs three key functions: 
+\begin{easylist}[enumerate]
+    \ListProperties(Numbers=r, Start=0)
+    & new models are immediately \emph{within range} of the elite models; 
+    if they perform well enough, they have a realistic and fair chance of overtaking them; 
+    & the strongest model retains some of its advantage gained over previous generations 
+    -- in order that the ratings are meaningful, there must be some advantage accrued over series of victories; 
+    & $\hat{H}_e^2$ is allowed continue to compete, but has no advantage:
+    in order to retain its status as elite, it must perform well \emph{again} in this generation,
+    so it can not simply rely on results from previous generations -- against inferior opposition -- 
+    to remain active in the gene pool. 
+    
+\end{easylist}
+
+\par 
+
+Given the arbitrary scaling of the Elo rating scheme, 
+    and in order to derive a meaningful selection probability, 
+    we ought to ground the raw Elo rating somehow at each generation $\mu$. 
+We do this by subtracting the lowest rating among the entertained models, $R_{\textrm{min}}^{\mu}$.
+This serves to ensure the range of remaining $R_i$ is defined only by the difference between
+    models as assessed within $\mu$: 
+    a very strong model might have much higher $R_i$ than its contemporaries, 
+    but that difference was earned exclusively by comparison within $\mu$, 
+    so it deserves higher fitness. 
+We perform this step before truncation, so that the reamining models post-truncation
+    all have non-zero fitness. 
+Finally, then, we name this \gls{of} the \emph{Bayes-factor enhanced Elo rating}, 
+    whereby the fitness of each model is attained directly from its rating
+    after undergoing Elo updates in the current generation minus the minimum rating of any model 
+    in the same generation $\mu$,
+
+\begin{equation}
+    \label{eqn:elo_fitness}
+    g_i^E = R_i^{\mu} - R_{\textrm{min}}^{\mu}.
+\end{equation}
+The advantage of this \gls{of} is that it gives a meaningful value on the absolute quality of every model, 
+    allowing us to determine the strongest, and importantly to find the relative strength between models. 
+Further, it exploits bespoke \glspl{bf}, i.e. based on the considered models' 
+    individually designed $\expset_i$,
+    removing the impetus to design $\expset_v$ which can
+    evaluate models definitively. 
+One disadvantage is that it does not explicitly punish models based 
+    on their cardinality, 
+    however this feature is partially embedded by adopting \gls{bf} for the comparisons, 
+    which are known to protect against overfitting.
+
+\subsection{Choice of objective function}\label{sec:obj_fnc_selection}
+Having proposed a series of possible objective functions, 
+    we are now in a position to analyse which of those are most appropriate for \gls{qmla}. 
+Recall from \cref{sec:f_score} the figure of merit we use for models, \fs, 
+    which we will use to distinguish between the outputs of each \gls{of}.
+\par 
+
+After choosing some random target $\ho$, 
+    we run a single generation using each \gls{of}, and judge them 
+    by the quality of models they produce 
+We train the same batch of $N_m=28$ random models in each case, and allow each \gls{of} 
+    to compute the selection probabilities for those models, 
+    and therefore direct the design of the hypothetical next generation of models. 
+We plot the distribution of \fs \ that each \gls{of} produces in Fig. \ref{fig:obj_fnc_comparison},
+    also accounting for the time taken in each case, i.e. 
+    we report the time to train and evaluate the single generation on a 16--core node.
+\par
+
+Overall, then, we can see that a strong balance of outcome with resource considerations 
+    are achieved by the Bayes factor enhanced Elo rating strategy, \cref{sec:elo}
+    so we use that for the case study presented in this chapter. 
+We strongly emphasise, however, that the performance of each objective function
+    can vary under alternative conditions, and therefore similar analysis may 
+    be warranted for future applications. 
+For instance, if $t_{max}$ is known to be small, 
+    in smaller model spaces, using $g^r$ results in higher success rates.
+We retain \gls{bfeer}, however, for generality and novelty, 
+    but it is important to recognise that the results listed not reflect
+    an upper limit of \gls{qmla}'s performance, 
+    but rather reflect the constraints of the system under study; 
+    each $Q$ will bring its own unique considerations which can result in 
+    significantly stronger or weaker performance. 
+In particular, we will later use the \gls{of} based on residuals, \cref{sec:residuals}, 
+    to study a much larger model space under assumptions of perfect parameter learning, \cref{chapter:many_qubits}.
+
+
+\glsreset{of}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth]{theoretical_study/figures/objective_fnc_comparison.pdf}
+    \caption[Comparison between proposed \glspl{of}.]{
+        Comparison between proposed \glspl{of}. 
+        Each \gls{of} trains the same initial generation of $N_m=28$ models with resources
+        $N_E=500, N_P=2000$, and then design a new set of $N_m$ models through 
+        the same roulette strategy, such that the only difference between \gls{of}'s output 
+        is how they assign selection probability.
+        We run each \gls{of} 25 times for the same target system, 
+            a $4$--qubit Heisenberg--XYZ model. 
+        \textbf{(a)} shows the box--plot of new models' \fs, \ $f$, 
+            where the median and inter--quartile ranges are indicated by the boxes,
+            as well as those of the initial generation $\mu$ centered on $f_{\mu}=0.45$.
+            We mark $f=\{0.4, 0.5, ..., 1.0\}$ for ease of interpretation. 
+        \textbf{(b)} shows box--plots of the time taken to compute the single generation in each case.
+        In \textbf{(c)} we report the difference between the median $f$ among the 
+            newly proposed models from $f_{\mu}$, $\Delta f$,
+            plotted against the time to achieve the result. 
+    }
+    \label{fig:obj_fnc_comparison}
+\end{figure}
+
+
+
 
 \section{Application}

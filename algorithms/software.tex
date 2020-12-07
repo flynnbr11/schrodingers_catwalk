@@ -182,6 +182,7 @@ In particular, \glspl{es} allow users to specify the implementation of aspects l
 
 \subsubsection{Modular functionality}\label{sec:modular_functionality}
 The most crucial methods\footnotemark \ of the \gls{es} class are modular, 
+    described in \cref{sec:modular_functionality},
     meaning that they can be directly replaced, provided the alternative method fulfils the same role. 
 Our base \gls{es} class uses sensbile defaults for this modular functionality, 
     but this flexible mechanism allows for adapting \gls{qmla} by choosing an approach for each 
@@ -197,6 +198,7 @@ Our base \gls{es} class uses sensbile defaults for this modular functionality,
         returns the likelihood, according to the experiment you wish to simulate. 
         For example, in \cref{chapter:nv}, the data on which models are trained comes from experimental measurements, 
             so we replace the likelihood function with a calculation corresponding to the experimental procedure. 
+        Importantly, QInfer requires the quantity $\Pr(0)$, see \cref{eqn:pr0}, so that is the output of these functions. 
     & Probe generation. The training phase requires a set of probes against which to optimise individual models. 
         Users may wish to specify the design of such probes, for example to match experimental constraints 
         which restrict the realisible probes in the performance of the experiment. 

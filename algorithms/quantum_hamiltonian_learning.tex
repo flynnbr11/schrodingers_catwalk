@@ -209,6 +209,25 @@ Access to such hardware, operating perfectly, would provide exponential speedup 
 \gls{qle} was implemented in \cite{wang2017experimental}. 
 \par 
 
+We adopt notation used by QInfer, which \gls{qmla} for the likelihood estimation stage \cite{qinfer-1_0}. 
+The expectation value for a the unitary operator is given by
+\begin{equation}\label{eqn:pr0}
+    \Pr(0) =  |\bra{\psi} e^{-i \hat{H}_p t} \ket{\psi}|^2  = l(d=0 | \hat{H}_p; e), 
+\end{equation}
+    i.e. the input basis is assigned the measurement label $d=0$, and this quantity is the probability 
+    of measuring $d=0$, i.e. measuring the same state as input. 
+However, we assume a binary outcome model, 
+    i.e. that the system is measured either in $\ket{\psi}$ (labelled $d=0$), or it is not ($d=1$);
+    the likelihood for the latter case is
+\begin{equation}\label{eqn:pr1}
+    \Pr(1) = l(d=1 | \hat{H}_p; e) = \sum_{\{\ket{\psi_{\perp}}\}} | \bra{\psi_{\perp}} e^{-i \hat{H}_p t} \ket{\psi}  |^2 = 1 - \Pr(0).
+\end{equation}
+\par 
+Usually we will refer to the case where $Q$ is projeced onto the input state $\ket{\psi}$, 
+    so the terms \emph{likelihood}, \emph{expectation value} and \emph{$\Pr(0)$} are synonymous, 
+    unless otherwise stated. 
+
+
 \subsection{Interactive Quantum Likelihood Estimation}
 An important extension to \gls{qle} is \gls{iqle}, 
     which follows \gls{smc} but uses an alternative \gls{likelihood} function in order to 
