@@ -520,6 +520,20 @@ Our search for an effective \gls{of} can then be guided by seeking the
 \input{theoretical_study/pseudocode_gen_alg_subroutine.tex}
 
 \subsection{Hyperparameter search}
+\begin{figure}
+    \begin{center}
+        \includegraphics{theoretical_study/figures/gen_alg_param_sweep.pdf}
+    \end{center}
+    \caption[Genetic algorithm parameter sweep]{
+        Genetic algorithm parameter sweep.
+        Each subplot shows the success rates for varying numbers of generations, $N_G \in \{8, 16, 32, 64\}$, 
+        and numbers of models per generation, $N_m \in \{8, 16, 32, 64\}$. 
+        A subplot is generated for ranges of the mutation rate, $r_m$ and the number of 
+        generations for which the elite model is unchanged after which the \gls{ga} is cut off. 
+    }
+    \label{fig:ga_param_sweep}
+\end{figure}
+
 Firstly we will validate our reasoning that $\fs$ is a sensible figure of merit, 
     by directly invoking it as the \glsentrylong{of}. 
 That is, we first implement a \gls{ga}, using the mapping between models and chromosomes outlined above,
@@ -545,24 +559,21 @@ Naturally, we expect that running for more generations with more models per gene
 We must also consider, however, that -- in realistic cases of \gls{qmla} -- the total computation time scales badly with these, 
     since training and comparing models are such expensive subroutines. 
 Our goal is therefore to identify the set of hyperparameters which best searches the model space with minmial $N_g, N_m$.  
-
-\begin{figure}
-    \begin{center}
-        \includegraphics{theoretical_study/figures/gen_alg_param_sweep.pdf}
-    \end{center}
-    \caption[Genetic algorithm parameter sweep]{
-        Genetic algorithm parameter sweep.
-        Each subplot shows the success rates 
-    }
-    \label{fig:ga_param_sweep}
-\end{figure}
-
+We see that, unsurprisingly, the \gls{ga} performs poorly when run with few resources, 
+    but broadly the performances are similiar provided it is run with sufficient resources.
+We can bound the parameters $r_m \geq 0.1, cutoff \geq 5, N_m \geq 16, N_g \geq 16$ to ensure a reasonable 
+    search through the model space, without having to consider a prohibitive number of models. 
+We must bear in mind, however, that this parameter sweep refers only to the trivial case where 
+    the $\fs$ is used as the \gls{of}, so we do not expect such high success rates in realistic cases.
 
 \section{Objective functions}\label{sec:objective_functions}
 We have alluded to the central probelm in building a \gls{ga} into \gls{qmla}:
     how to evaluate trained candidate models in the absence of a natural \gls{of}. 
 Here we will propose and analyse a number of potential \glspl{of}, 
     some of which will underlie later studies in this thesis. 
+Readers may prefer to skip to \cref{sec:obj_fnc_selection},
+    where we conclude this study by choosing a single \gls{of} for consideration in this chapter.
+\par 
 We will show how each \gls{of} computes $g_i$ for candidate models $\hi$, 
     and summarise the outcomes in \cref{table:objective_functions}.
 For each $\hi$, we may refer to 
@@ -572,11 +583,41 @@ For each $\hi$, we may refer to
     & $\expset_i$: the bespoke set of experiments composed by the \gls{edh} solely for trainng $\hi$;
     & $n = |\expset_i|$: the number of samples used in trainng $\hi$. 
 \end{easylist}
-\par 
-Readers may prefer to skip to \cref{sec:obj_fnc_selection},
-    where we conclude this study by choosing a single \gls{of} for consideration in this chapter.
+In \cref{table:objective_functions}, 
+    we consider six models as examples of the outcome using each \gls{of}; 
+    the models, randomly generated of varying quality with respect to the target $\ho$, are
 
-\par 
+\renewcommand{\arraystretch}{1.25} % space between rows
+\setlength{\tabcolsep}{2pt}
+
+\begin{equation}
+    \label{eqn:obj_fnc_eg_models}
+    \begin{align}
+        \hat{H}_0 \ &= \ $\sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 5)}^{z}$;\\
+        \hat{H}_a \ &= \ $\sigma_{(1, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(4, 5)}^{z}$; \\
+        \hat{H}_b \ &= \ $\sigma_{(1, 4)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}$; \\
+        \hat{H}_c \ &= \ $\sigma_{(1, 2)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(4, 5)}^{z}$; \\
+        \hat{H}_d \ &= \ $\sigma_{(1, 3)}^{z}\sigma_{(1, 4)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(3, 5)}^{z}$; \\
+        \hat{H}_e \ &= \ $\sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(4, 5)}^{z}$; \\
+        \hat{H}_f \ &= \ $\sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(3, 5)}^{z}$.
+    \end{align}
+\end{equation}
+
+\begin{table}    
+    \input{theoretical_study/figures/obj_fnc_table.tex}
+    \caption[Objective function examples]{
+        Examples of how each objective function, $g$ as described in \cref{sec:inverse_ll} to \cref{sec:elo},
+            assign selection probability (denoted \%) to the same set of candidate models, $\{\hi\}$, 
+            when attempting to learn data from $\ho$, listed in \cref{eqn:obj_fnc_eg_models}. 
+        For each model we first summarise its
+            average likelihood $\lk_{e}$ (Eqn. \ref{eqn:log_likelihood}),     
+            total log-likelihood $\tll_{i}$ (Eqn. \ref{eqn:log_total_likelihood}), 
+            as well as $\fs$ and number of terms $k$.
+        We use $n=250$ samples, i.e. $\tll_{i}$ is a sum of $n$ likelihoods.  
+        The set of models is truncated so that only the strongest four are assigned selection probability. 
+    }
+    \label{table:objective_functions}
+\end{table}
 
 \subsection{Inverse Log-likelihood}\label{sec:inverse_ll}
 $\tll_{i}$ can be thought of as a measure of the success of a given model at explaining data from any set of experiments, $\expset$. 
@@ -885,7 +926,7 @@ This procedure is easiest to understand by following the example in Table \ref{t
         Example of Elo rating updates. 
         We have two models, where $\h_a$ is initially believed to be a stronger candidate than $\h_b$, 
             i.e. has a higher starting Elo rating.     
-        We show the effect of strong evidence\footnotemark \ in favour of each model following \gls{bf} comparison, $bij \sim 10^{100}$. 
+        We show the effect of strong evidence\footnotemark \ in favour of each model following \gls{bf} comparison, $\bij \sim 10^{100}$. 
         In the case where $\h_a$ defeats $\h_b$, because this was so strongly expected given their initial ratings, 
             the reward for $\h_a$ (and cost to $\h_b$) is relatively small, 
             compared with the case where -- contrary to prediction -- $\h_b$ defeats $\h_a$. 
@@ -969,9 +1010,25 @@ Recall from \cref{sec:f_score} the figure of merit we use for models, \fs,
     which we will use to distinguish between the outputs of each \gls{of}.
 \par 
 
-After choosing some random target $\ho$, 
-    we run a single generation using each \gls{of}, and judge them 
-    by the quality of models they produce 
+First we can remark on the examples listed in \cref{table:objective_functions}. 
+The \glspl{of} which rely on the \gls{tltl}, i.e. $g^L, g^A, g^B, g^r$, 
+    are effectively tricked by the log likelihood, which appears reasonably convincing for 
+    poor models, e.g. $\h_a, \h_c$. 
+This underlines the risk in buidling $\expset_v$, which can be biased towards weak models, 
+    for example resulting in high selection probability for $\h_a$ which has $f=0$, 
+    while $\h_d$, with $f=0.4$ is discarded. 
+On the other hand, \glspl{of} grounded by the \gls{bf} ($g^p, g^R, g^E$) invariably 
+    promote models of higher $\fs$, justifying the role of statistical evidence 
+    used for those calculations. 
+Overall, however, the insights from this complete example are insufficient to 
+    make general claims about the performance of each \gls{of}, 
+    so here we examine their outputs systematically. 
+\par 
+
+Returning to the task of determining our favoured \gls{of}, 
+    we choose some random target $\ho$, 
+    and run a single generation using each \gls{of}, 
+    judging them by the quality of models they produce.
 We train the same batch of $N_m=28$ random models in each case, and allow each \gls{of} 
     to compute the selection probabilities for those models, 
     and therefore direct the design of the hypothetical next generation of models. 
@@ -997,8 +1054,6 @@ We retain \gls{bfeer}, however, for generality and novelty,
 In particular, we will later use the \gls{of} based on residuals, \cref{sec:residuals}, 
     to study a much larger model space under assumptions of perfect parameter learning, \cref{chapter:many_qubits}.
 
-
-\glsreset{of}
 \begin{figure}
     \centering
     \includegraphics[width=0.95\textwidth]{theoretical_study/figures/objective_fnc_comparison.pdf}
@@ -1023,6 +1078,8 @@ In particular, we will later use the \gls{of} based on residuals, \cref{sec:resi
 \end{figure}
 
 
-
-
 \section{Application}
+Having introduced all the necessary concepts of \glspl{ga}, 
+    mapped them to the \gls{qmla} framework and chosen a suitable 
+    \gls{of}, we can finally use the \gls{ges} for model search. 
+
