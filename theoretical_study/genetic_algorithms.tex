@@ -519,6 +519,63 @@ Our search for an effective \gls{of} can then be guided by seeking the
 
 \input{theoretical_study/pseudocode_gen_alg_subroutine.tex}
 
+\subsubsection{Distinguishing $\fs$ through \glsentrylongpl{bf}}\label{sec:bf_by_f_score}
+We have so far relied on \gls{bf} as the means by which to distinguish models' 
+    ability to explain data from the target system. 
+We conjecture that models of higher $\fs$ are usually stronger at this task than those of 
+    lower $\fs$, which will allow us to incorporate these statistical tools into the design of \glspl{of}. 
+We can test this simply by training models of equally spaced $\fs$, and computing \glsentryshort{bf} between all pairs.
+\par 
+
+In \cref{fig:bf_bayes}, we show the relationships between $\fs$ and \gls for various conditions: 
+Firstly, under a standard training regime with full \gls{bf} comparisons between all pairs, 
+    we see that in most cases, the model with higher $\fs$ is favoured by \gls{bf}.
+In \cref{fig:bf_by_fscore}b, we run a complete model training subroutine, but compute the \gls{bf} based on fewer experiments and particles 
+    (retaining a fraction 0.2).
+This verifies an earlier claim from \cref{sec:experiments_for_bf}: 
+    although the strength of evidence is weaker given reduced \gls{bf} resources, 
+    the direction of the evidence is usually the same, i.e. the insight is indicative of the true physics, 
+    so we can save considerable compute time by trusting these restricted \glspl{bf} calculations. 
+On the other extreme, we see in \cref{fig:bf_by_fscore}\textbf{c}, where models are trained with, 
+    and \glspl{bf} based upon, even greater resources, we see a similar effect: 
+    adding resources strengthens the evidence, but does not fundamentally change the outlook. 
+Finally, in addition to reducing the resources used per \gls{bf} calculation, 
+    we reduce the number of comparisons computed, as would be required for rating models according to \gls{bfeer},
+    in \cref{fig:bf_by_fscore}\textbf{d}. 
+In essence, we can see that the insight is largely the same 
+    from the most and least expensive training/comparison strategies, 
+    and by exploiting the available evidence through Elo ratings, rather than 
+    brute-force computing as much evidence as possible, we can achieve similar results. 
+Note that the time saving reported between full and partial connectivity between models scales with $N_m$: 
+    here, with $N_m=10$, the former computes 45 \glspl{bf}, while the latter computes 17;
+    for $N_m=28$, these rise to 190 and 378 respectively. 
+This saving depends on the user's choice of graph connectivity, see \cref{sec:elo_graph}, 
+    though is typically a factor between 2-3;
+    in general, though, assuming we can reduce the resources used within the \gls{bf}, 
+    this phase is considerably less cumbersome than the model training itself, so 
+    it is feasible to compute all available \glspl{bf} to inform the \gls{bfeer}.
+
+\begin{figure}
+    \includegraphics{theoretical_study/figures/bayes_factors_by_f_scores.pdf}
+    \caption[\glsentrylong{bf} by $\fs$.]{
+        Pairwise \glsentrylong{bf}, $\bij$ by $\fs$ of candidates $\hi$ ($f_i$ on the $y$-axis) 
+        and $\hj$ ($f_j$ on the $x$-axis).
+        $\log_{10}\bij > 0 \ (<0)$, green (purple), indicates statistical evidence that $\hi$ ($\hj$) 
+        is the better model with respect to the observed data.
+        Visualisation is curtailed to $\log_{10} \bij = \pm 50$. 
+        \textbf{a}, Models are trained with $\Ne=500, \Np=2500$,
+            and all available data uis used in the calculation of \glspl{bf}. 
+        \textbf{b}, $\Ne=500, \Np=2500$ using only a fraction (0.2) of experiments/particles for \gls{bf} calculation. 
+        \textbf{c}, $\Ne=1000, \Np=5000$, using all available data in the calculation of \gls{bf}. 
+        \textbf{d}, $\Ne=500, \Np=2500$, comparing only a subset of pairs of models through \gls{bf}, 
+            and using only a fraction ($0.2$) of experiments/particles for those calculations. 
+            This pairwise comparison strategy is used for the \gls{bfeer} \gls{of}. 
+        \textbf{Inset}, timings for each approach in seconds, with $t=1\textrm{hr}$ marked vertically in blue. 
+    }
+    \label{fig:bf_by_fscore}
+\end{figure}
+
+
 \subsection{Hyperparameter search}
 \begin{figure}
     \begin{center}
@@ -1046,7 +1103,7 @@ We strongly emphasise, however, that the performance of each objective function
 For instance, if $t_{max}$ is known to be small, 
     in smaller model spaces, using $g^r$ results in higher success rates.
 We retain \gls{bfeer}, however, for generality and novelty, 
-    but it is important to recognise that the results listed not reflect
+    but it is important to recognise that the results listed do not reflect
     an upper limit of \gls{qmla}'s performance, 
     but rather reflect the constraints of the system under study; 
     each $Q$ will bring its own unique considerations which can result in 
@@ -1082,4 +1139,121 @@ In particular, we will later use the \gls{of} based on residuals, \cref{sec:resi
 Having introduced all the necessary concepts of \glspl{ga}, 
     mapped them to the \gls{qmla} framework and chosen a suitable 
     \gls{of}, we can finally use the \gls{ges} for model search. 
+In summary of this chapter so far, we use the following settings. 
+\begin{easylist}[itemize]
+    & Models are mapped to a bit string (chromosome), where each bit represents whether a given
+        model term (gene) is present; chromosomes are of length $N_t$ genes. 
+    & A maximum of $N_g$ generations are run, each with $N_m$ unique models. 
+    & Models' fitness are determined by their \gls{bfeer}, 
+        after having been trained by \gls{qhl} 
+        and compared against some set of competing candidate models. 
+    & For generating models on $\mu+1$, the models on $\mu$ are first truncated 
+        (the worst-performing $\nicefrac{N_m}{2}$ are discarded), and then assigned 
+        selection probability based on their fitness. 
+    & Models are selected to become parents sequentially using roulette selection. 
+        Highly favoured models can parent many children models. 
+    & Selected parent models are crossed over via a one point cross-over,
+        at crossover location $\kappa \in \left( \frac{N_t}{4}, \frac{3N_t}{4} \right)$, 
+        and probabilistically mutated with rate $r_m=0.25$. 
+    & The top two elite models from $\mu$ are included on the $\mu+1$.
+    & If, after 5 generations, the highest-fitness (elite) model is unchanged, 
+        we terminate the search and declare that model as the champion, $\hp$. 
+    & Otherwise, after $N_g$ generations, the highest-fitness model on the final generation is 
+        declared $\hp$.
+\end{easylist}
 
+We will use a four-qubit model space under the Heisenberg formalism, \cref{eqn:heisenberg_model_general}, 
+    such that any pair of sites $\bkl$ can be coupled by any of $\s^x_{\bkl}, \s^y_{\bkl}m \s^z_{\bkl}$, 
+    so in total there are $N_t = |\termset| = 3 \times {4 \choose 2} = 18$ terms, 
+    giving a model space of $2^{18} \approx 250,000$ viable models/chromosomes. 
+For practical reasons\footnotemark, we set $N_m=28$ and $N_g=32$, although in most cases the 
+    elitism clause is triggered so the search terminates long before $N_g$ is reached. 
+\footnotetext{
+    This is to ensure, with 15 available worker nodes, and accounting for some slowly-learning models, 
+    that all $N_m$ models in a generation are trained within $2 t_{qhl}$, 
+    where $t_{qhl}$ is the time to train a single model. 
+}
+The true parameters $\al_0$ are assigned randomly in the range $(0.25, 0.75)$; 
+    within \gls{qhl} the prior is set as a multivariate normal distribution $0.5 \pm 0.125$. 
+We choose $\ho$ at random to contain half the available terms\footnotemark,
+\begin{equation}
+    \label{eqn:gen_alg_true_model}
+    \ho = \sigma_{(1, 2)}^{yz}\sigma_{(1, 3)}^{z}\sigma_{(1, 4)}^{y}\sigma_{(2, 3)}^{xy}\sigma_{(2, 4)}^{x}\sigma_{(3, 4)}^{xz}.
+\end{equation} 
+\footnotetext{
+    Note we use a compact model representation, e.g. 
+    $\hi = \sigma_{(1, 2)}^{yz}\sigma_{(1, 3)}^{z} = \sigma_{(1, 2)}^{y} + \sigma_{(1, 2)}^{z} + \sigma_{(1, 3)}^{z}$.
+}
+\par 
+\subsection{Analysis}
+We will analyse the \gls{ges} from four perspectives: 
+    a single model, a single generation, a single \gls{qmla} \gls{instance}, 
+    and the overall performance across many instances, i.e. a \gls{run}.
+\par 
+
+Recall that \gls{bfeer} are mediated through random graphs: 
+    given $N_m$ models on $\mu$, a given model $\hi$ undergoes some 
+    $N^i_{BF} < N_m$ \gls{bf} comparisons. 
+In \cref{fig:single_models_elo_ratings} we show the \gls{bf} results 
+    and effects on the rating of a random model, $\hi$, where $N_m=60$ and $N^i_{BF}=12$,
+    i.e. $\hi$ is directly compared against $\sim20\%$ of contemporary models on $\mu$. 
+We see that $\hi$'s rating is effected by whether it wins a given comparison, 
+    but also by the strength of evidence provided by the comparison (the \gls{bf}), 
+    and the quality of its opposition (its rating).
+
+\begin{figure}
+    \begin{center}
+        \includegraphics{theoretical_study/figures/single_generation_ratings_progression.pdf}
+    \end{center}
+    \caption[Single model within a single generation of the \gls{qmla} \gls{ga}.]{
+        \glsentryfull{bfeer} progression for a single candidate, $\hi$, within a single generation.
+        \textbf{a}, The \glspl{bf} between $\hi$ and some opponents, $\{\hj\}$, 
+            from the perspective where $\hi$ \emph{wins} given $\bij > 1 \Rightarrow \log_{10}\bij > 0$, 
+            and loses otherwise. 
+        \textbf{b}, $\hi$'s rating is shown (solid green line) changing according to the \glspl{bf} 
+            comparisons with 12 other models from the same generation. 
+            Before each comparison, $\hi$'s rating is shown (green cross)
+            as well as the rating of its opponent, $\hj$ (purple plus).
+            The $F_1$-scores are also shown for $\hi$ (dashed green line) and $\hj$ (purple diamond).
+        \textbf{c}, The corresponding change in $\hi$'s rating, $\Delta R_i$. 
+    }
+    \label{fig:single_models_elo_ratings}
+\end{figure}
+
+\par 
+We extend the analysis of \cref{fig:single_models_elo_ratings} to all $N_m$ models 
+    in the first generation in \cref{fig:single_generation_all_ratings}.
+The general trend is that models of higher $\fs$ have their ratings increased, 
+    at the expense of models of lower $\fs$. 
+After assessing models thus, the set of models is truncated to retain only the strongest candidates,
+    which are assigned probability of being chosen to become a parent during roulette selection, 
+    as in \cref{sec:roulette}.
+The very strongest two models are granted a position in the subsequent generation: 
+    these are the \emph{elite} models. 
+
+\begin{figure}
+    \begin{center}
+        \includegraphics{theoretical_study/figures/single_generation_all_ratings.pdf}
+    \end{center}
+    \caption[Ratings of all models in a single \gls{ga} generation.]{
+        Ratings of all models in a single \gls{ga} generation.
+        Each line represents a unique model and is coloured by the $\fs$ of that model. 
+        \textbf{Inset}, the selection probabilities resulting from the final ratings of this generation. 
+        Only a fraction of models are assigned selection probability, while the remaining poorer-performing 
+        models are truncated. 
+    }
+    \label{fig:single_generation_all_ratings}
+\end{figure}
+
+\par 
+
+\begin{figure}
+    \begin{center}
+        \includegraphics{theoretical_study/figures/gen_alg_instance.pdf}
+    \end{center}
+    \caption[\Gls{instance} of \gls{qmla} \gls{ga}.]{
+        Gene pool for an \gls{instance} of \gls{qmla} \gls{ga}. 
+        Each tile in each generation represents a model by its $\fs$. 
+    }
+    \label{fig:ga_instance}
+\end{figure}
