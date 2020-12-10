@@ -9,6 +9,7 @@ __pycache__/
 qmla_run_data/*
 other_theses/*
 feedback/*
+!figure_development/*ipynb
 
 # Unwanted large files/plots/compiled python
 *.pyc
