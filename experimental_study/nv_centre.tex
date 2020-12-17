@@ -4,62 +4,53 @@ In this chapter we devise an \gls{es} to operate in conjunction with experimenta
 In particular, we model, through Hamiltonian terms, interactions between the spin and 
     the spin bath in which it resides,
     so that \gls{qmla} is finding an effective model for the open system dynamics.
+\par
 
+Here we will first introduce a basic picture of \glspl{nvc}, 
+    using basic but nonstandard nomenclature for simplicity;
+    for thorough descriptions of the underlying physics, readers are referred to \cite{doherty2013nitrogen}.
+We next discuss the target system with respect to its modelling, 
+    determining the suitable terms which \emph{might} represent the \gls{nvc}'s interactions, 
+    to inform the starting point for the \gls{qmla}.
+Finally we describe the implementation of an \gls{es} for the examination of the \gls{nvc},
+    and the results of the \gls{qmla} procedure. 
 
 \section{\gls{nv}-centres}
-\begin{figure}
-    \label{fig:nv_centre_energy_levels}
-    \includegraphics[width=\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
-    \caption[\glsentrylong{nvc} energy levels.]{
-        \glsentrylong{nvc} energy levels. 
-        \textbf{a}, With no external field, the system simply has excited and ground-state manifolds, 
-        each of which consist of two energy levels depending on the magnetic spin, $m_s$.
-        \textbf{b}, In the presence of a magnetic field (purple, $B$), the magnetic spins have distinct energy levels, 
-        i.e. hyperfine splitting. States are denoted by their magnetic spin and subscripted by their manifold. 
-        \textbf{c},  Application of a green ($637nm$) laser excites the \gls{nvc} from any of the states in the 
-        ground state manifold to the excited manifold. 
-        The dominant decay mechanism for the excited states are shown: 
-            (i) $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ (red line) through the emission of a red photon;
-            (ii) $\ket{m_s=\pm 1}_e \rightarrow \ket{m_s=0}_g$ (dotted grey lines) via the shelving manifold which allows for non-spin-preserving transition, 
-            and does not emit a photon. 
-        \textbf{d}, Computational basis states $\ket{0}$ and $\ket{1}$ are assigned to the two lowest energy states.
-            The difference in energy between these states is such that a microwave (MW, blue) photon
-            can trigger transition from $\ket{0}$ to $\ket{1}$. 
-    }
-\end{figure}
 
 \gls{nv} centers are point defects in diamond, 
-    occuring naturally or synthetically.
-A \gls{nitrogen} isotope is embedded in a lattice of carbon atoms in diamond, 
-    specifically such that the \gls{nitrogen} is in a cluster with 
-    three \gls{carbon} isotopes as well as a lattice vacancy. 
+    occuring naturally \cite{davies1976optical} or synthetically \cite{meijer2005generation, edmonds2012production}.
+A substitutional \gls{nitrogen} isotope is embedded in a lattice of carbon atoms in diamond, 
+    adjacent to a lattice vacancy, 
+    such that it is surrounded by three \glspl{carbon} \cite{lenef1996electronic}. 
 Of the \gls{nitrogen} atom's five valence electrons, three bond with nearby \glspl{carbon};
-    the remaining two unbonded electrons form a \emph{lone pair} in the lattice.
-Such systems consisting of two spin-$\frac{1}{2}$ particles have been thoroughly studied\todo{reference}; 
-    of particular interest are the resultant triplet states, 
-    i.e. the allowed permutations of the two electrons with total quantum spin $S=1$, 
-    with magnetic spin multiplicity allowing $m_s = {-1, 0, 1}$, giving rise to distinct energy levels
-    for the system. 
-In the absence of a magnetic field, the states corresponding to $\ket{m_s=\pm1}$ are degenerate, 
-    but in the presence of a magnetic field, $B$, they have distinct energy levels, 
-    referred to as hyperfine splitting. 
-
+    the remaining two unbonded electrons for a lone pair and can be thought of as a single spin-$\frac{1}{2}$ particle. 
+The adjacent lattice vacancy has three unbonded electrons, 
+    two of which bond together leaving a single unpaired electron.
+The single electron in the lattice vacancy, together with the effective lone pair of the \gls{nitrogen}, 
+    form a a system of two spin-$\frac{1}{2}$ particles.
+Such systems have been thoroughly studied; 
+    of particular interest are the resultant \emph{triplet} states, 
+    i.e. the allowed permutations of the two particles with total quantum spin $S=1$, 
+    with magnetic spin multiplicity allowing $m_s = {-1, 0, 1}$, 
+    giving rise to three distinct energy levels for the system. 
 \par 
-
 
 A \emph{manifold} is a set of states differing only slightly, 
     for example states near the absolute ground state manifold might differ only in magnetic spin quantum number,
     and can be characterised as the ground state manifold. 
 We consider two principle manifolds of the system:
     the ground state and excited manifolds, each consisting of 
-    three states, corresponding to the magnetic spin $m_s$. 
+    three states, corresponding to the allowed values for magnetic spin $m_s$, see \cref{fig:nv_centre_energy_levels}a. 
 For brevity, we denote states with reference to their magnetic spin and manifold, 
     e.g. the state in the ground state manifold with $m_s=0$ is denoted $\ket{m_s=0}_g$. 
+In the absence of a magnetic field, the states corresponding to $\ket{m_s=\pm1}$ are degenerate, 
+    but in the presence of a magnetic field, $B$, they have distinct energy levels, 
+    referred to as the Zeeman effect, \cref{fig:nv_centre_energy_levels}b. 
 \par 
 
 We designate the state $\ket{m_s=0}_g$ as the basis state $\ket{0}=\icol{1 \\ 0}$, 
     and $\ket{m_s=-1}_g$ as $\ket{1}=\icol{0 \\ 1}$, 
-    such that we have defined a qubit and computational basis.
+    such that we have defined a qubit and computational basis, \cref{fig:nv_centre_energy_levels}d.
 By shining a laser of $637$nm (green) on the \gls{nvc}, it is excited to the excited manifold, 
     from which it decays back to the ground state manifold. 
 Importantly, the process of this decay can be exploited for the preparation of the \gls{nvc} in 
@@ -75,11 +66,46 @@ Therefore, irrespective of the initial state,
     providing us a starting point from which to perform computation.
 \par 
 
+The difference in energy between $\ket{0}$ and $\ket{1}$ is addressible optically: 
+    by shining a \gls{mw} pulse at the \gls{nvc}, we can oscillate the qubit between the two levels. 
+Likewise, having initialised the state to $\ket{0}$, we can perform a $\nicefrac{\pi}{2}$ rotation 
+    about the logical $z$-axis, by running the \gls{mw} laser for half the time, 
+    resulting in the state $\ket{+}$. 
+We can similarly devise \gls{mw} radiation to achieve quantum gates and operations on our \gls{nvc} qubit.
+We depict these cycles in \cref{fig:nv_centre_energy_levels}c. 
+\par
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
+    \end{center}
+    \caption[\glsentrylong{nvc} energy levels.]{
+        Simplified depiction of energy levels of the \glsentrylong{nvc}, corresponding to its triplet state. 
+        \textbf{a}, With no external field, the system simply has excited and ground-state manifolds, 
+        each of which consist of two energy levels depending on the magnetic spin, $m_s$.
+        \textbf{b}, In the presence of a magnetic field (purple, $B$), the magnetic spins have distinct energy levels, 
+        i.e. Zeeman splitting. 
+        States are denoted by their magnetic spin and subscripted by their manifold. 
+        \textbf{c},  Application of a green ($637nm$) laser excites the \gls{nvc} from any of the states in the 
+        ground state manifold to the excited manifold. 
+        The dominant decay mechanism for the excited states are shown: 
+            (i) $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ (red line) through the emission of a red photon;
+            (ii) $\ket{m_s=\pm 1}_e \rightarrow \ket{m_s=0}_g$ (dotted grey lines) via the shelving manifold which allows for non-spin-preserving transition, 
+            and does not emit a photon. 
+        \textbf{d}, Computational basis states $\ket{0}$ and $\ket{1}$ are assigned to the two lowest energy states.
+            The difference in energy between these states is such that a microwave (MW, blue) photon
+            can trigger transition from $\ket{0}$ to $\ket{1}$, as well as states in between such as $\ket{+}$, 
+            allowing for the implementation of quantum logic gates. 
+    }
+    \label{fig:nv_centre_energy_levels}
+\end{figure}
+
+
 We can further exploit the decay mechanism to compose a readout procedure, 
     to infer the population of $\{\ket{0}, \ket{1}\}$ at a given instant, 
     for example following the application of gates to the system. 
 We know that the excitation due to the green laser is spin-preserving, 
-    i.e. when the \gls{nvc} is in $\ket{m_s=0}_e$, 
+    i.e. when the \gls{nvc} has been excited to $\ket{m_s=0}_e$, 
     it had originated in $\ket{m_s=0}_g$.
 We also know that the decay $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ is spin preserving, with the emission of 
     a red photon: by simply counting the number of photons emitted, we quantify the population of $\ket{0}$
@@ -90,6 +116,17 @@ On the contrary, when the $\ket{m_s=-1}_g$ is excited, spin is also preserved,
     through the shelving state as outlined earlier, 
     \emph{without} the emission of a photon. 
 We can hence infer the population of $\ket{m_s=-1}_g$ at the time of query by the fraction of incidents which don't emit a photon.
+That is, say we first calibrate the system by retaining the green laser for some time: 
+    after a few $\mu s$, a steady state is achieved where the majority of the time, the triplet is in the state $\ket{0} = \ket{m_s=0}_g$. 
+Then, excitation from the same laser results in the excitation to $\ket{m_s=0}_e$, 
+    which decays back to $\ket{m_s=0}_g$ and emits a photon in the process; 
+    by counting the red photons emitted in a certain time window -- equivalently, measuring the \gls{pl} signal -- 
+    we benchmark the population of $\ket{0}$ when nothing else has happened as $p_0$. 
+Now, when we apply gates (i.e. \gls{mw} pulses) to the \gls{nvc}, 
+    we can similarly read out the population of $\ket{0}$ as $p_0^{\prime}$,
+    and infer that the likelihood that the \gls{mvc} is found in the initial state $\ket{0}$ is $\nicefrac{p_o^{\prime}}{p_0}$. 
+We can use this quantity as the \gls{likelihood} within \gls{qle}, allowing us to learn from the \gls{nvc},
+    as we will discuss in the next sections. 
 \par 
 
 In summary then, by assigning basis states $\ket{0}, \ket{1}$ to energy levels of the ground state manifold, 
@@ -99,14 +136,80 @@ We can then apply microwave radiation to achieve quantum logical gates on the sy
     and observing the emitted photons (\gls{pl}) and inferring the population level of each basis state. 
 We represent these concepts in a simplified format in \cref{fig:nv_centre_energy_levels}. 
 
+
 \section{Target system}
-Assuming the magnetic field aligns with the $z$-axis of the spin, 
-    the total interactions the spin is subject to are: 
+We take the axis of the \gls{nvc}, i.e. the axis connecting the \gls{nitrogen} with the 
+    lattice vacancy, as the $z$-axis.
+There are clearly a huge number of interactions to which the \gls{nvc} is subject:
+    we choose to focus on its interactions with the environment, 
+    i.e. with nuceli in the same diamond, which dictate its decoherence. 
+These interactions are characterised by hyperfine terms \cite{smeltzer201113c}.
+The overall Hamiltonian for such systems, where the set of nuclear sites is $\{\chi\}$,
+    is given by 
+
+\begin{equation}
+    \label{eq:nv_ham_full}
+    \hat{H}_{\mathrm{full}} 
+    = 
+    \Delta_{\textrm{gs}} \hat{S}_z^2 
+    + \mu_B g \mathbf{B} \cdot \mathbf{S} 
+    + \mathbf{S} \cdot \sum_{\chi} \left( \mathbf{A}_{\chi} \cdot \hat{I}_{\chi} \right) 
+    + P \hat{I}_z^2 
+    + \mu_n g \mathbf{B} \cdot \sum_{ \chi} \hat{I}_{\chi}.
+\end{equation}
+
+We will describe each term, as well as approximations which enable us to simplify the space considerably. 
+
 \begin{easylist}[itemize]
-    & ground state energy splitting, $\Delta_{gs}$
+    & Isolated-spin terms, i.e. describing the spin independent of the environmental nuclei
+    && $\Delta_{\textrm{gs}} \hat{S}_z^2$: 
+        the \emph{zero-field} splitting, 
+        i.e. without any external (magnetic) field, the spin oscillates rapidly, with 
+        $\Delta_{\textrm{gs}} \sim \tezxtrm{GHz}$. 
+    && $\mu_B g \mathbf{B} \cdot \mathbf{S}$: 
+        the spin's precession about the magnetic field, 
+        $\mathbf{B} = \left(B_x \  B_y \  B_z\right)$, 
+        via the total spin operator\footnotemark $\mathbf{S} = \left(\hat{S}_x \ \hat{S}_y \ \hat{S}_z \right)$, 
+        where $\mu_B$ is the Bohr magneton and $g$ is the $g$-factor 
+        ($\approx 2$, simplified from the g-factor tensor).
     
+    & Hyperfine terms
+    && $\hat{S} \cdot \sum_{\chi} \left( \mathbf{A}_{\chi} \cdot \hat{I}_{\chi} \right)$:
+        for each site, $\chi$, there is a nucleus which has total spin operator 
+        $\mathbf{I}_{\chi} = \left(\hat{I}_x \ \hat{I}_y \ \hat{I}_z \right)_{\chi}$. 
+        $\mathbf{A}$ is the hyperfine tensor, containing the hyperfine parameters of interest. 
+
+    & Bath-only terms, i.e. describing the other nuceli independent of the spin
+    && $P \hat{I}_z^2 $: the quadrupole splitting term
+    && $\mu_n g \mathbf{B} \cdot \sum_{ \chi} \hat{I}_{\chi}$:
+        $\mu_n$ is the nuclear magneton and $g$ is again the $g$-factor.
 \end{easylist}
+
+\footnotetext{
+    We invoke an inexact representation of high dimensional tensors here for ease of interpretation. 
+    For instance, the total nuclear spin operator exists in arbitrary dimension 
+    (depending on the number of sites modelled), 
+    but we present it simply as $\mathbb{I} = \left( \hat{I}_x \ \hat{I}_y  \ \hat{I}_z \right)$ at each site 
+    to convey that we can separate the terms in the construction of models. 
+}
+
+Given that we are interested in the spin and its interactions with the environment only, 
+    we can immediately drop the bath-only terms, by assuming the bath is static 
+    apart from its interactions with the \gls{nvc}. 
+This is a usual assumption in the treatment of open system dynamics, 
+    to allow for focus on the dominant interactions for the system of interest \cite{breuer2002theory}. 
+Additionally, since the zero field splitting contributes a constant shift in energy, 
+    we can safely omit it by moving to the rotating frame. 
+We are then left only with the second and third terms of \cref{eqn:nv_ham_full}. 
+
+\subsection{Mapping to model terms}
+Next we will focus on mapping the remaining terms to operators to compose the set $\termset$ to use in our \gls{es}. 
+
+
 \subsection{Short time dynamics}
+To isolate the effects of the hyperfine interactions, 
+    we run Hahn echo experiments, which are kno
+\subsection{Hahn echo measurements}
 
 
 \section{\glsentrylong{es}}
