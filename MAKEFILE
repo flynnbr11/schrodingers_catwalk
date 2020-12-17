@@ -1,4 +1,4 @@
-filename=thesis.tex
+filename=thesis
 
 mythesis: 
 	pdflatex $(filename)
