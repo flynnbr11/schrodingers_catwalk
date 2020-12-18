@@ -427,7 +427,7 @@ In particular, the final state, $\ket{\psi}_5$, is read out, effectively by proj
 That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the \gls{likelihood}), 
     and it can be used within likelihood estimation in order to refine a candidate model $\hj$, 
     effectively\footnotemark \ by changing the structure of 
-    $\hj$ until $\Pr(0 | \ho, t) \approx \Pr(0 | \hj, t) \forall t$. 
+    $\hj$ until $\Pr(0 | \ho, t) \approx \Pr(0 | \hj, t) \ \forall t$. 
 
 \footnotetext{
     Of course this is a gross simplification of \gls{qhl} which is described fully in \cref{sec:qhl}
@@ -436,8 +436,13 @@ That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the \gls{l
 
 By varying the evolution time of the Hahn-echo sequence, we can map the likelihood 
     against time, which we can view as capturing the dynamics of the \gls{nvc} spin \cref{fig:exp_raw_data}.
-We vary time up to $\sim 4 \mu s$ in the short-time-range; 
-    we will consider longer time ranges in simulation in \cref{chapter:many_qubits}. 
+We vary time up to $t = \sim 4 \mu s$ in the short-time-range in intervals of $\Delta t = 50 ns$, 
+    so we have 425 data points. 
+Importantly, the data for the studied \gls{nvc} is taken once and analysed offline, 
+    i.e. \gls{qmla} does not have complete authority to design experiments 
+    to run on the \gls{nvc}, although it can aim to choose the most informative $t$ 
+    available in the predefined set; we will discuss the consequences of this restriction 
+    later in this chapter. 
 
 \begin{figure}
     \begin{center}
