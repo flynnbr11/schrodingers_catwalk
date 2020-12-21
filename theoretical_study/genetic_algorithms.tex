@@ -546,7 +546,8 @@ In essence, we can see that the insight is largely the same
     brute-force computing as much evidence as possible, we can achieve similar results. 
 Note that the time saving reported between full and partial connectivity between models scales with $N_m$: 
     here, with $N_m=10$, the former computes 45 \glspl{bf}, while the latter computes 17;
-    for $N_m=28$, these rise to 190 and 378 respectively. 
+    for $N_m=60$, as used in full instances/runs, these rise to 600 and 1770 respectively, 
+    so the benefit of the Elo scheme is amplified. 
 This saving depends on the user's choice of graph connectivity, see \cref{sec:elo_graph}, 
     though is typically a factor between 2-3;
     in general, though, assuming we can reduce the resources used within the \gls{bf}, 
@@ -1172,7 +1173,7 @@ We will use a four-qubit model space under the Heisenberg formalism, \cref{eqn:h
     such that any pair of sites $\bkl$ can be coupled by any of $\s^x_{\bkl}, \s^y_{\bkl}m \s^z_{\bkl}$, 
     so in total there are $N_t = |\termset| = 3 \times {4 \choose 2} = 18$ terms, 
     giving a model space of $2^{18} \approx 250,000$ viable models/chromosomes. 
-For practical reasons\footnotemark, we set $N_m=28$ and $N_g=32$, although in most cases the 
+For practical reasons\footnotemark, we set $N_m=60$ and $N_g=16$, although in most cases the 
     elitism clause is triggered so the search terminates long before $N_g$ is reached. 
 \footnotetext{
     This is to ensure, with 15 available worker nodes, and accounting for some slowly-learning models, 
@@ -1272,7 +1273,7 @@ Similarly we can consider the quality of models across at each generation,
     and their ratings. 
 In \cref{fig:ga_instance} we see the trend suggested by \cref{fig:single_generation_all_ratings} continue,
     i.e. that models of higher quality overall tend to achieve higher \gls{bfeer}.
-The gene pool as a whole tends towards a homogeneous set of models, all with $f \gapprox 0.9$. 
+The gene pool as a whole tends towards a homogeneous set of models, all with $f \geq 0.85$. 
 Consequently, even in cases where the precise model, $\ho$, is not identified, the champion model
     is highly informative, in that it captures many of the same interactions, 
     therefore most-likely providing meaningul insight on the system's physics. 
@@ -1283,13 +1284,16 @@ Consequently, even in cases where the precise model, $\ho$, is not identified, t
         \includegraphics{theoretical_study/figures/gen_alg_run.pdf}
     \end{center}
     \caption[\Gls{run} of \gls{qmla} \gls{ga}.]{
-        A \gls{run} of the \gls{qmla} \gls{ga}, consisting of 50 independent \glspl{instance}.
+        A \gls{run} of the \gls{qmla} \gls{ga}, consisting of 100 independent \glspl{instance}.
         \textbf{(a)}, The model space contains $2^{18}\approx250,000$ candidate models; 
-        normally distributed around $f=0.5 \pm 0.14$. 
+            normally distributed around $f=0.5 \pm 0.14$. 
         \textbf{(b)}, The models explored during the model search of all instances combined, 
-            $\{\hat{H}_i\}$, show that \gls{qmla} tends towards stronger models overall. 
+            $\{\hat{H}_i\}$, show that \gls{qmla} tends towards stronger models overall, 
+            with $f = 0.76 \pm 0.15$ from $\sim~43,000$ chromosomes across the instances, 
+            i.e. each instance trains $\sim~430$ distinct models. 
         \textbf{(c)}, Champion models from each instance, showing \gls{qmla} finds strong models 
-            in general, and in particular finds the true model $\ho$ (with $f=1$) in $32\%$ of cases. 
+            in general, and in particular finds the true model $\ho$ (with $f=1$) in $72\%$ of cases, 
+            and $f \geq 0.88$ in all instances. 
         \textbf{(d)}, Hinton diagram showing the rate at which each term is found in the winning model. 
             The size of the blocks show the frequency with which they are found, while the colour indicates 
             whether that term was in the true model (blue) or not (red).
@@ -1302,12 +1306,15 @@ Consequently, even in cases where the precise model, $\ho$, is not identified, t
 \end{figure}
 
 Finally, to understand the performance of the \gls{qmla} algorithm overall, 
-    we run 50 independent instances in a \gls{run}, \cref{fig:ga_run}. 
+    we run 100 independent instances in a \gls{run}, \cref{fig:ga_run}. 
 We see that, while the overall model space can be characterised by the distribution 
-    of models' $\fs$, where we sample where $\overbar{f} = 0.5 \pm 0.13$, 
+    of models' $\fs$, where we sample where $\overbar{f} = 0.5 \pm 0.14$, 
     that \gls{qmla} quickly moves to the subspace of high-quality models, 
-    and ultimately nominates champion models, $\{ \hp \}$ with $f > 0.9$ in \todo{fill in final values}, 
-    and precisely identifies $\hp=\ho$ in \todo{fill in final values}$\%$ of instances. 
+    i.e. the models explored have median $f = 0.76 \pm 0.15$.
+This exploration is based on $430 \pm 45$ chromosomes per instance, 
+    i.e. \gls{qmla} trains only $0.16\%$ of the $2^{18}$ potential models. 
+Ultimately \gls{qmla} nominates champion models, $\{ \hp \}$ with $f \geq 0.88$ in all instances, 
+    and precisely identifies $\hp=\ho$ in $72\%$ of instances. 
 Considering the big picture, where the remit of \gls{qmla} is to identify the interactions 
     the target system is subject to, we show how often each term/gene is included in $\hp$ in 
     \cref{fig:ga_run}\textbf{d}. 
@@ -1317,6 +1324,7 @@ This level of analysis can be used to post-validate the outcome of \gls{qmla},
     i.e. rather than relying on $\hp$ from a single instance, 
     trusting the terms' individual frequencies as evidence that they are of importance when describing 
     the system of interest. 
+Of particular 
 
 \subsection{Device characterisation}
 This adaptive \gls{ges} may prove a useful application of \gls{qmla} in the domain of device calibration,

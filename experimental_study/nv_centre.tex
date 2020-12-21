@@ -149,7 +149,7 @@ The overall Hamiltonian for such systems, where the set of nuclear sites is $\{\
     is given by 
 
 \begin{equation}
-    \label{eq:nv_ham_full}
+    \label{eqn:nv_ham_full}
     \hat{H}_{\mathrm{full}} 
     = 
     \Delta_{\textrm{gs}} \hat{S}_z^2 
@@ -327,9 +327,9 @@ Finally, combining \cref{eqn:exp_spin_terms} and \cref{eqn:exp_hf_terms},
     \label{eqn:nv_terms_verbose}
     \termset_{NV} = \left\{
         \begin{split}
-        &\hat{S}_x,  & \hat{S}_y,  & \hat{S}_z, \\
-        &\hat{S}_x \I_x,  & \hat{S}_y\I_y, &  \hat{S}_z\I_z, \\
-        &\hat{S}_x\I_y,  & \hat{S}_x\I_z,  & \hat{S}_y\I_z 
+            &\hat{S}_x,  & \hat{S}_y,  & \hat{S}_z, \\
+            &\hat{S}_x \I_x,  & \hat{S}_y\I_y, & \hat{S}_z\I_z, \\
+            &\hat{S}_x\I_y,  & \hat{S}_x\I_z,  & \hat{S}_y\I_z \\
         \end{split}
     \right\}.
 \end{equation}
@@ -337,7 +337,7 @@ Finally, combining \cref{eqn:exp_spin_terms} and \cref{eqn:exp_hf_terms},
 
 We introduce a shorthand notation to ease model representation for the remainder of this chapter. 
 Recall that we have defined a two-qubit Hilbert space for model construction.
-Terms which affect only the spin only act on the first qubit, $\hat{S}_i = \s_i \otimes \ident$, 
+Terms which affect only the spin act only on the first qubit, $\hat{S}_i = \s_i \otimes \ident$, 
     where $\s_i$ is the Pauli operator giving rotation about the $i$-axis, and 
     $\ident$ is the one-qubit identity matrix. 
 Retaining the hyperfine notation, for the expectedly-dominant diagonal terms, we denote $\hat{A}_i = \hat{S}_i \I_i = \s_i \otimes \s_i$. 
@@ -354,6 +354,24 @@ We can hence rewrite \cref{eqn:nv_terms_verbose} as
     \right\}.
 \end{equation}
 
+We also use a succinct representation for brevity, e.g. $\hat{S}_{xy}\hat{A}_z =  \hat{S} + \hat{S}_y + \hat{A}_z$, 
+    where parameters $\alpha_x, \alpha_y$ are implicitly assumed. 
+
+\subsection{Prior knowledge}
+
+The spin-only terms, $\hat{S}_i$, are consequences of the magnetic field, which is usually assumed as aligned with $z$-axis,
+    such the $x$-, $y$-axis compoenents are negligible;
+    $\hat{S}_z$ is expected in the range $\sim 2-3 MHz$.
+Likewise, the hyperfine terms, $\hat{A}_i$ are expected in the range of $\sim MHz$ \cite{gali2008ab}, 
+    while in the \emph{secular approximation} only the $z$-component is expected to contribute substantially \cite{dutt2007quantum}. 
+The non axial hyperfine terms, i.e. the transverse terms $\hat{T}_{kl}$ are not usually included in effective models, 
+    but can be found of order $\sim\mathcal{O}(10kHz)$ \cite{hou2019experimental}. 
+We utilise this prior understanding of the system to inform the parameter range used for training candidate models: 
+    for each of the terms in \cref{eqn:nv_terms}, we will adopt a normal prior distribution of $5 \pm 2 MHz$. 
+This is sufficiently specific to ensure the training subroutine operates in a physically meaningful -- 
+    and likely appropriate -- space, whlie also broad enough to allow for significant differences between expectation and reality, 
+    as well as supporting hypotheses where each parameter is zero, 
+    such that such negligible contributions can be identified.
 
 \subsection{Experimental procedure}
 
@@ -396,7 +414,7 @@ We can hence rewrite \cref{eqn:nv_terms_verbose} as
         We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
             effectively either returning the spin to near the $\ket{0}$ axis, 
             or near the $\ket{1}$ axis. 
-        Here $\ket{\psi}_5$ is roughly half way between $\ket{0}$ and $ket{+}$, 
+        Here $\ket{\psi}_5$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
         i.e. along the $z$-axis. 
         The spin is read out from $\ket{\psi}_5$ via the \gls{nvc}'s \glsentrylong{pl}. 
         Here $\ho = 0.25 \ \s_y$ was evolved for $t=0.5$ (arbitrary units), 
@@ -436,7 +454,7 @@ That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the \gls{l
 
 By varying the evolution time of the Hahn-echo sequence, we can map the likelihood 
     against time, which we can view as capturing the dynamics of the \gls{nvc} spin \cref{fig:exp_raw_data}.
-We vary time up to $t = \sim 4 \mu s$ in the short-time-range in intervals of $\Delta t = 50 ns$, 
+We vary time up to $t \sim 4 \mu s$ in the short-time range in intervals of $\Delta t = 50 ns$, 
     so we have 425 data points. 
 Importantly, the data for the studied \gls{nvc} is taken once and analysed offline, 
     i.e. \gls{qmla} does not have complete authority to design experiments 
@@ -453,11 +471,148 @@ Importantly, the data for the studied \gls{nvc} is taken once and analysed offli
         The $y$-axis shows the \glsentrylong{pl} of the \gls{nvc}, 
         equivalently the likelihood $\Pr(0 | \ho, t)$. 
     }
+    \label{fig:nv_raw_data}
 \end{figure}
 
 
 \section{\glsentrylong{es}}
-Finally, then, we are in a position to marry the concepts of 
+Finally, then, we are in a position to describe the specific implementation details 
+    which allow \gls{qmla} to study this \gls{nvc} system. 
+Recalling the terminology of \gls{qmla} from \cref{chapter:qmla}, 
+    we design an \glsentryfull{es} specifically for the system under study. 
+The \gls{es} will account for the details listed in this chapter so far, in summary: 
+\begin{easylist}[itemize]
+    & we attempt to assign a model, $\hp$, to the \gls{nvc};
+    && we especially focus on its hyperfine interactions;
+    & in particular, we use a 2-qubit approximation;
+    && the first qubit represent the spin itself;
+    && the second qubit represents the environment in which the \gls{nvc} resides;
+    & we query the \gls{nvc} by performing Hahn echo experiments (\cref{fig:hahn_bloch_spheres});
+    & the outcome of those experiments are thought of as the system's likelihoods (\cref{fig:nv_raw_data});
+    & likelihoods are used for the training of individual candidate models;
+    & candidate models are composed of the terms defined in \cref{eqn:nv_terms}.
+\end{easylist}   
+\par 
+
+As outlined in \cref{sec:exploration_strategies}, the central role of any \gls{es} is to specify the 
+    model generation procedure, which \gls{qmla} relies upon for deciding the next set of candidate models to test. 
+In this case, we exploit some intuition and prior knowledge of how such systems work, 
+    to design a bespoke model generation subroutine:
+    we can think of this as a midway point between the completely specified \glspl{es} used 
+    for identifying the underlying lattices from a prescribed set in \cref{chapter:lattices}, 
+    and the entirely general \glsentrylong{ga} which does not restrict model generation, of \cref{chapter:ga}.
+We use the standart structure of \glspl{et} introduced in \cref{sec:exploration_strategies}, 
+    where models are placed on consecutive branches, $\mu$, with branches consolidated by complete pairwise 
+    comparisons, mediated through \glspl{bf}, resulting in the selection of a single branch champion, $\hat{H}_{C(\mu)}$. 
+\par 
+
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{experimental_study/figures/greedy_search.pdf}
+    \end{center}
+    \caption[Greedy model search]{
+        Greedy model search. 
+        Models (purple) are placed on branches, trained and consolidated (green) as in \cref{fig:qmla_overview}, 
+            with the branch champion spawning (red) candidates to place on the subsequent branch.  
+        Branches are grouped in tiers, correspdoning to levels of approximation:
+            the first tier of the model generation strategy is shown, 
+            where $\termset_1 = \{ \hat{S}_x, \hat{S}_y, \hat{S}_z\}$ is explored. 
+        The final champion from the first tier seeds the second tier. 
+    }
+    \label{fig:greedy_search}
+\end{figure}
+
+We use a \emph{greedy search rule}: 
+    terms are added one-by-one to gradually increase the complexity of candidate models until terms are exhausted \cite{russell2002artificial}.  
+We break the \gls{et} into three distinct tiers, each corresponding to an intuitive degree of complexity:
+    the first tier involves the spin-only terms, $\termset_1 = \{ \hat{S}_i \}$; 
+    the second considers the hyperfine terms, $\termset_2 = \{ \hat{A}_i \}$;
+    the final tier the transverse terms, $\termset_3 = \{ \hat{T}_i\}$.  
+Within each tier, terms are added greedily to the previous branch's champion, $\hat{H}_{C(\mu)}$.
+So, the first branch is given by $\mu = \{ \hat{S}_x, \hat{S}_y, \hat{S}_z\}$;
+    say $\hat{H}_{C(\mu)} = \hat{S}_y$, then $\mu + 1$  determines that $\hat{S}_x, \hat{S}_z$ 
+    are not yet considerd, so it constructs the models $\hat{S}_{x,y}, \hat{S}_{y,z}$, e.g. \cref{fig:greedy_search}. 
+After exhausting all tiers, we consolidate the set of branch champions, $\mathbb{H}_C = \{ \h_{C(\mu)}\}$, 
+    to determine the best model considered globally, $\hp$.  
+\par 
+Clearly, this growth rule is partially deterministic, insofar as some models are gauranteed to be considered, 
+    while others are not reachable; 
+    indeed, the space of available models are heavily constrained, in particular models in later tiers will 
+    always involve all of the tier 1 models, e.g. $\hat{S}_{x}\hat{A}_{y}$ does not occur naturally. 
+We account for this shortcoming with a final redcibility test, 
+    triggered if any of the parameters of $\hp$ are potentially negligible, 
+    i.e. are within one standard deviation of 0. 
+This test simply removes such low-parmeter terms from $\hp$, 
+    giving a reduced global champion, $\hp_r$, 
+    and computes the \gls{bf} between $\hp, \hp_r$: 
+    if the \gls{bf} indicates strong evidence in favour of the reduced version, 
+    we replace the champion model, $\hp \gets \hp_r$. 
+In effect, we thus verify the statistical significance of each term included in $\hp$. 
+\par 
+
+The total model in \cref{eqn:nv_ham_full} supports $N_t = 1 + 3 + 6 | \chi | + 3 + 3 |\chi| = 7 + 9|\chi| $ terms, 
+    which we reduced to a space of $N_t=3 + 6 |\chi| = 9$ through several approximations\footenotemark ;
+    even so, the remainng $2^9$ permitted models were reduced further by building the logic of this \gls{es} 
+    from our intuition aroud existing knowledge of typical \gls{nvc} systems,
+    such the \gls{es} will only ever consider $<20$ models per instance. 
+The described \gls{es} seems overly perscriptive, 
+    but should be viewed as a first attempt at a generalisable approach: 
+    essentially we can view the tiers of the greedy search as characterising the system 
+    at various approximations, 
+    e.g. the first tier examines one-qubit terms, while subsequent tiers inspect $2$-qubit terms. 
+We can envision future work where the greedy search is gradually extended to less rigid approximations, 
+    enabling study of more complex quantum systems.     
+This leads to some important remarks:
+
+\begin{easylist}[enumerate]
+    \ListProperties()
+    & Realistic, near-term applications of \gls{qmla} can not be thought of as a solution to black-box characterisation problems: 
+        it must be used in conjunction with domain expertise for the system under study.
+    & While this test-case yields promising results, the outcome of \gls{qmla} here may not be especially insightful, 
+        since the available model terms were so deliberately constrained -- we demonstrate a use-case in \cref{chapter:many_qubits} 
+        where a broader scope is enabled in simulation.    
+\end{easylist}   
+\par 
+
+A common charge against \gls{qmla} supposes to first write down the most complex model, 
+    train it fully, and then infer which terms are negligible, in a similar process to the champion reduction test outlined here. 
+While this may be feasible in the case described here, with $N_t=9$ and a closed term set, 
+    this would scale poorly: adding just a second nuclear site increases the model search to a space of $N_t=15$.
+Models of higher cardinality ($|\al|$) demand higher $\Ne, \Np$ to train well, so immediately trainng the most involved model would 
+    require infeasible resources\footnotemark, and risks significantly overfitting the data. 
+It seems more appropriate to work ``from the ground up'', testing terms and keeping them only when justified, 
+    instead of training all terms and attempting to decouple their effects post-hoc. 
+
+\footnotetext{
+    Note: in the case studies presented in this thesis, it was found that the same resources were sufficient for the simplest and most complex models, 
+    due to the relatively small number of terms therein.
+    We expect for larger models, e.g. $|\al|>10$, that the resources allocated ought to be proportional to the cardinality, 
+    which is an in-built option in the \gls{qmla} software. 
+}
+
+
+\par 
+
+\subsection{Test in simulation}
+Varying $\ho$, allowing arbitrary probe preparation and \gls{pgh} \gls{edh}, 
+    i.e. case (i) from \cite{gentile2020learning}. 
+
+\section{Experiment design constraints}
+\subsection{Probes}
+\subsection{Times}
+\subsection{Custom \glsentrylong{edh}}
+
+\section{\Gls{run}}
+cases (ii), (iii) from \cite{gentile2020Operating}
+
+\subsection{Results}
+\begin{easylist}
+    & parameters inferred
+    & dynamics reproduced
+    & model win rates
+    % /home/bf16951/Dropbox/QML_share_stateofart/PAPER/Figures/SuppMat/multi_instance_analysis notebook
+\end{easylist}
 
 \begin{figure}
     \label{fig:exp_qmla_analysis}
