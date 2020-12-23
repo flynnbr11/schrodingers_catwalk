@@ -72,7 +72,9 @@
 % \newcommand{\exp}[1]{ exp \left( #1 \right) }
 % \newcommand{\(}{ \left( } % adaptive brackets
 % \newcommand{\)}{ \right )} % adaptive brackets
-
+\newcommand{\khz}{\textrm{kHz}}
+\newcommand{\mhz}{\textrm{MHz}}
+\newcommand{\ghz}{\textrm{GHz}}
 
 % Example objective function values
 \newcommand{\objAICa}{28}
@@ -114,3 +116,30 @@
 }
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+
+%%%%%%%%%%% Models
+\newcommand\Sx{\hat{S}_{x}\xspace}
+\newcommand\Sy{\hat{S}_{y}\xspace}
+\newcommand\Sz{\hat{S}_{z}\xspace}
+\newcommand\Sxz{\hat{S}_{xz}\xspace}
+\newcommand\Syz{\hat{S}_{yz}\xspace}
+\newcommand\Sxyz{\hat{S}_{xyz}\xspace}
+\newcommand\Ax{\hat{A}_{x}\xspace}
+\newcommand\Ay{\hat{A}_{y}\xspace}
+\newcommand\Az{\hat{A}_{z}\xspace}
+\newcommand\Axz{\hat{A}_{xz}\xspace}
+\newcommand\Ayz{\hat{A}_{yz}\xspace}
+\newcommand\Axyz{\hat{A}_{xyz}\xspace}
+\newcommand\Txz{\hat{T}_{xz}\xspace}
+\newcommand\Tyz{\hat{T}_{yz}\xspace}
+\newcommand\Txzyz{\hat{T}_{xz,yz}\xspace}
+
+
+
+\newcommand\SxyzAz{\ensuremath{\hat{S}_{x,y,z}\hat{A}_{z}}\xspace}
+\newcommand\SxyzAxz{\ensuremath{\hat{S}_{x,y,z}\hat{A}_{x,z}}\xspace}
+\newcommand\SxyzAyz{\ensuremath{\hat{S}_{x,y,z}\hat{A}_{y,z}}\xspace}
+\newcommand\SyzAz{\ensuremath{\hat{S}_{y,z}\hat{A}_{z}}\xspace}
+\newcommand\SxyzAxyzTxyxzyx{\ensuremath{\hat{S}_{x,y,z}\hat{A}_{x,y,z}\hat{T}_{xy,xz,yz}\xspace}}
+

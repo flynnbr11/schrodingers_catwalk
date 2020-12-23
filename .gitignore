@@ -8,6 +8,7 @@ __pycache__/
 
 qmla_run_data/*
 other_theses/*
+literature/*
 feedback/*
 !figure_development/*ipynb
 
