@@ -15,7 +15,7 @@ We next discuss the target system with respect to its modelling,
 Finally we describe the implementation of an \gls{es} for the examination of the \gls{nvc},
     and the results of the \gls{qmla} procedure. 
 
-\section{\gls{nv}-centres}
+\section{\Glsentrylong{nvc}}
 \label{sec:nv_centres}
 
 \gls{nv} centers are point defects in diamond, 
@@ -78,7 +78,7 @@ We depict these cycles in \cref{fig:nv_centre_energy_levels}c.
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
+        \includegraphics[width=0.75\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
     \end{center}
     \caption[\glsentrylong{nvc} energy levels.]{
         Simplified depiction of energy levels of the \glsentrylong{nvc}, corresponding to its triplet state. 
@@ -378,27 +378,28 @@ This is sufficiently specific to ensure the training subroutine operates in a ph
 \begin{figure}
     \begin{center}
         \subfloat{
-            \includegraphics[width=0.28\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_0.pdf}
+            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_0.pdf}
         }
         \qquad
         \subfloat{
-            \includegraphics[width=0.28\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_1.pdf}
+            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_1.pdf}
         }
         \qquad
         \subfloat{
-            \includegraphics[width=0.28\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_2.pdf}
+            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_2.pdf}
+        }
+        \\
+        \qquad
+        \subfloat{
+            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_3.pdf}
         }
         \qquad
         \subfloat{
-            \includegraphics[width=0.28\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_3.pdf}
+            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_4.pdf}
         }
         \qquad
         \subfloat{
-            \includegraphics[width=0.28\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_4.pdf}
-        }
-        \qquad
-        \subfloat{
-            \includegraphics[width=0.28\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_5.pdf}
+            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_5.pdf}
         }
     \end{center}
     \caption[States of spin qubit at each stage of Hahn echo sequence]{
@@ -410,13 +411,13 @@ This is sufficiently specific to ensure the training subroutine operates in a ph
         The system is then allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
         We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
         $\ket{\psi_3} = e^{-i\pi \s_y}e^{-i\ho t}\ket{+}$.
-        Again the system evolves according to interactions with the environment, this time for $2t$.
+        Again the system evolves according to interactions with the environment, this time for $t^{\prime} = 2t$.
         We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
             effectively either returning the spin to near the $\ket{0}$ axis, 
             or near the $\ket{1}$ axis. 
-        Here $\ket{\psi}_5$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
+        Here $\ket{\psi_5}$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
         i.e. along the $z$-axis. 
-        The spin is read out from $\ket{\psi}_5$ via the \gls{nvc}'s \glsentrylong{pl}. 
+        The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \glsentrylong{pl}. 
         Here $\ho = 0.25 \ \s_y$ was evolved for $t=0.5$ (arbitrary units), 
         and the final state overlap with the initial state, 
         i.e. the likelihood of measuring the spin in $\ket{0}$ is $\Pr(0 | \ho, t) = 0.865$. 
@@ -475,7 +476,7 @@ Importantly, the data for the studied \gls{nvc} is taken once and analysed offli
 \end{figure}
 
 
-\section{\glsentrylong{es}}\label{sec:exp_es}
+\section{\Glsentrylong{es}}\label{sec:exp_es}
 Finally, then, we are in a position to describe the specific implementation details 
     which allow \gls{qmla} to study this \gls{nvc} system. 
 Recalling the terminology of \gls{qmla} from \cref{chapter:qmla}, 
@@ -613,7 +614,7 @@ Firstly, the $\nicefrac{\pi}{2}$-pulse applied to the prepared qubit ($\ket{\psi
     means that the state before evolution is always $\ket{+}$ in the computational basis;
     this is a severe limitation on model training, as we saw in \cref{sec:probes}. 
 Moreover, this puts a bias on the interactions \gls{qmla} is likely to identify:
-    we show in \cref{fig:hahn_probe_qhl} how \gls{qhl} performs in training the same model using 
+    we show in \cref{fig:hahn_bloch_spheres} how \gls{qhl} performs in training the same model using 
     (i) the probe set available experimentally; (ii) a more general (random) probe set. 
 This has a noteworthy impact on the outcome of this study, 
     since this suppression of terms means we are more likely to find some interactions
@@ -638,7 +639,7 @@ Clearly, we require a custom \gls{edh} to account for the constraints outlined,
     & We may only assume access to the probe $\ket{+}$ on the spin qubit
     && we further assume the environmental spin is polarised by the same microwave pulse, 
         such that the global probe available is $\ket{\psi} = \ket{+}\ket{+^{\prime}}$, with 
-        $\ket{+^{\prime}} = \frac{\ket{0} + e^{i \phi} \ket{1}}{\sqrt{2}}$ and $\phi$ is random. 
+        $\ket{+^{\prime}} = \frac{\ket{0} + e^{i \phi} \ket{1}}{\sqrt{2}}$ and $\phi$ is random \cite{broadway2018quantum}. 
     & We can not allow the choice of any $t$
     && Any $t > t_{\textrm{max}}$, arising from a thin parameter distribution, 
         must be mapped to some $0 < t \leq t_{\textrm{max}}$. 
@@ -786,11 +787,8 @@ Comparisons between models, $\hi, \hj$,  are shown as edges between nodes on the
     coloured by the strength of evidence of the outcome, the \gls{bf}, $\bij$. 
 Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     the set of branch champions are consolidated to determine the global champion, $\hp_C$. 
-
-
-
-
 \subsection{Analysis}\label{sec:exp_qmla_analysis}
+
 
 \begin{figure}
     \begin{center}
@@ -860,7 +858,7 @@ We see that each model faithfully captures the essential dynamics arising from t
     \centering
     \begin{tabular}{@{}c@{}}
         \centering
-        \includegraphics[width=0.7\textwidth]{experimental_study/figures/nv_params_simulation.pdf}
+        \includegraphics[width=0.7\textwidth]{experimental_study/figures/params_simulation.pdf}
     \end{tabular}
     \\ \small \textbf{a,} Simluated QMLA instances. Red dotted lines show the true parameters.
     
