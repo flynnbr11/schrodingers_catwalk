@@ -12,7 +12,7 @@ We will briefly recall some definitions for reference.
 
     \begin{table}[H]
         \centering
-        \begin{tabular}{|lr|}
+        \begin{tabular}{lr}
             \hline 
             Definition of & Representation \\
             \hline 
@@ -52,49 +52,58 @@ The inner product is often called the \textir{scalar product}, which is in gener
 \end{itemize}
 
 
-\section{Postulates of \glsentrylong{qm}}
+\section{Postulates of \glsentrylong{qm}}\label{sec:postulates}
 
 There are numerous statements of the postulates of quantum mechanics. 
 Each version of the statements aims to achieve the same foundation, so we endeavour to explain them in the simplest terms. 
 
-\begin{enumerate}
-\item Every moving particle in a conservative force field has an associated wave-function, $\ket{\psi}$. From this wave-function, it is possible to determine all physical information about the system. 
-\item All particles have physical properties called observables (denoted $q$). In order to determine a value, $q$, for a particular observable, there is an associated \emph{operator} $\hat{Q}$, which, when acting on the particles wavefunction, yields the value times the wavefunction. The observable $q$ is then the eigenvalue of the operator $\hat{Q}$.
+\begin{postulate}
+\item \label{postulate:conservative_force_field} 
+    Every moving particle in a conservative force field has an associated wave-function, $\ket{\psi}$. 
+    From this wave-function, it is possible to determine all physical information about the system. 
+\item \label{postulate:eigenvalues} 
+    All particles have physical properties called observables (denoted $q$). 
+    In order to determine a value, $q$, for a particular observable, there is an associated \emph{operator} $\hat{Q}$, which, 
+        when acting on the particles wavefunction, yields the value times the wavefunction. 
+    The observable $q$ is then the eigenvalue of the operator $\hat{Q}$.
     \begin{equation}
     \hat{Q} \ket{\psi} = q | \psi \rangle
     \end{equation}
-\item Any such operator  $\hat{Q}$ is Hermitian
+\item \label{postulate:hermiticity}
+    Any such operator  $\hat{Q}$ is Hermitian
     \begin{equation}
-    \hat{Q}^\dag = \hat{Q}
+        \hat{Q}^\dag = \hat{Q}
     \end{equation}
-\item The set of eigenfunctions for any operator $\hat{Q}$ forms a complete set of linearly independent functions.
-\item For a system with wavefunction $ | \psi \rangle$, the expectation value of an observable $q$  with respect to an operator $\hat{Q}$ is  denoted by $\la q \ra$ and is given by 
+\item \label{postulate:eigenfunction}
+    The set of eigenfunctions for any operator $\hat{Q}$ forms a complete set of linearly independent functions.
+\item \label{postulate:expectation_values}
+    For a system with wavefunction $ | \psi \rangle$, the expectation value of an observable $q$  with respect to an operator $\hat{Q}$ is  denoted by $\la q \ra$ and is given by 
     \begin{equation}
     \la q \ra = \langle \psi | \hat{Q} | \psi \rangle
     \end{equation}
-\item The time evolution of $ | \psi \rangle$ is given by the time dependent \emph{Schrodinger Equation}
+\item \label{postulate:schrodinger_eqn}
+    The time evolution of $ | \psi \rangle$ is given by the time dependent \emph{Schrodinger Equation}
     \begin{equation}
     i \hbar \frac{\partial \psi}{\partial t} = \hat{H} \psi,
     \end{equation}
     where $\hat{H}$ is the system's Hamiltonian.
-\end{enumerate}
+\end{postulate}
  
 Using these building blocks, we can begin to construct a language to describe quantum systems. 
 
-\section{States}
+\section{States}\label{sec:states}
 An orhthonormal basis consists of vectors of unit length which do not overlap, 
     e.g. $\ket{x_1} = \icol{1 \\ 0 }, \ket{x_2} = \icol{0 \\ 1} \Rightarrow \braket{x_1 | x_2} = 0$. 
 In general, if $ \{ \ket{x} \} $ are the eigenstates of a system, then the system can be written as some state vector, $\ket{\psi}$, 
     in general a superposition over the basis-vectors: 
 
 \begin{subequations}
-    \begin{equation}\label{state_vector}
+    \begin{equation}\label{apdx_state_vector}
         \ket{\psi} = \sum\limits_{x} a_x |x \rangle 
     \end{equation}
     \begin{equation}\label{vector_norm}
         \textrm{subject to} \ \ \ \sum\limits_{x} |a_x|^2 =1, \ \ \ a_x \in \mathbb{C}
     \end{equation}
-            
 \end{subequations}
 
 
@@ -131,9 +140,9 @@ We consider here a particular case, due to the significance of the resultant bas
         \\ 
         \Rightarrow \ \ \ a = \frac{1}{\sqrt{2}} \ \ \ &; \ \ \ b = \pm \frac{1}{\sqrt{2}}            
         \\ 
-        \Rightarrow \psi &= \frac{1}{\sqrt{2}} \ket{\leftrightarrow} \pm \frac{1}{\sqrt{2}} \ket{\updownarrow} 
+        \Rightarrow \ket{\psi} &= \frac{1}{\sqrt{2}} \ket{\leftrightarrow} \pm \frac{1}{\sqrt{2}} \ket{\updownarrow} 
         \\
-        \Rightarrow \psi &= \frac{1}{\sqrt{2}} \ket{0} \pm \frac{1}{\sqrt{2}} \ket{1}
+        \Rightarrow ket{\psi} &= \frac{1}{\sqrt{2}} \ket{0} \pm \frac{1}{\sqrt{2}} \ket{1}
     \end{split}
 \end{equation} 
 
@@ -219,7 +228,7 @@ These imply that either $a_1 =0$ or $b_2=0$, and also that $b_1=0$ or $a_2$=0, w
 Thus, we cannot express $ |\Phi^+ \ra=  \ket{\psi_1} \otimes \ket{\psi_2} $;
     this inability to separate the first and second qubits is what we term \emph{entanglement}. 
 
-\section{Unitary Transformations} \label{unitary}
+\section{Unitary Transformations}\label{sec:unitary}
 A fundamental concept in quantum mechanics is that of performing transformations on states. 
 \emph{Quantum transformations}, or \emph{quantum operators}, map a quantum state into a new state within the same Hilbert space. 
 There are certain restrictions on a physically possible quantum transformation: in order that $U$ is a valid transformation acting on some superposition $\ket{\psi} = a_1\ket{\psi_1} + a_2 \ket{\psi_2} + \dots a_k|\psi_k\rangle $, $U$ must be linear 
@@ -248,10 +257,10 @@ The tensor product $U_1 \otimes U_2$ acts on the space $\mathcal{H}_1 \otimes \m
 So, then, supposing a system of two separable qubits, $\ket{\psi_1} $ and $\ket{\psi_2} $ where we wish to act on $\ket{\psi_1} $ with operator $U_1$ and on $\ket{\psi_2} $ with $U_2$, 
     we perform it as
 \begin{equation}
-    \left( U_1 \otimes U_2 \right) \left(\ket{\psi_1} \otimes \ket{\psi_2} right) = \left(U_1\ket{\psi_1}\right) \otimes \left(U_2 \ket{\psi_2}\right)
+    \left( U_1 \otimes U_2 \right) \left(\ket{\psi_1} \otimes \ket{\psi_2} \right) = \left(U_1\ket{\psi_1}\right) \otimes \left(U_2 \ket{\psi_2}\right)
 \end{equation}
 
-\section{Dirac Notation}
+\section{Dirac Notation}\label{sec:dirac_notation}
 In keeping with standard practice, we employ \emph{Dirac notation} throughout this thesis. 
 Vectors are denoted by \emph{kets} of the form $|a\rangle$. 
 For example, the standard basis is represented by, 
@@ -443,7 +452,10 @@ We can similarly define any operator which acts on an $n$ qubit state as a linea
 
     And since the inner product is a scalar, we can factor terms such as $\braket{11|10}$ to the beginning of expressions, eg $ \ket{00} \bra{11} \ket{10} = \la 11\ket{10} \ket{00}$, and we also know
     \begin{equation}
-        \braket{11|10} = \braket{00|10} =  \braket{01|10} = \braket{11|01} = \braket{00|01}  = \braket{10|01} = 0 \ \textrm{and} \ \braket{10|10} = \braket{01|01} = 1 
+        \begin{split}
+        \braket{11|10} = \braket{00|10} =  \braket{01|10} = \braket{11|01} = \braket{00|01}  = \braket{10|01} = 0 
+        \\ \braket{10|10} = \braket{01|01} = 1 
+        \end{split}
     \end{equation}
     We can express the above as 
     \begin{equation}
@@ -465,5 +477,6 @@ If we briefly consider a 3 qubit system - and initialise all qubits in the stand
 - then the system is represented by $|000\ra = \ket{0} \otimes \ket{0} \otimes \ket{0} = \icol{0\\1} \otimes \icol{0\\1} \otimes \icol{0\\1}$. 
 This quantity is an 8-row vector.  To calculate the outer product $\la 000 | 000 \ra$, we would be multiplying an 8-column bra $\la000| $ by an 8-row ket $|000\ra$. 
 Clearly then we will be working with $8 \times 8$ matrices, which will become quite difficult to maintain effectively and efficiently quite fast. 
-As we move to systems of larger size, standard matrix multiplication will become unfeasible. 
-Then it is obvious that Dirac's bra/ket notation can be considered best practice for the scope of this subject and quantum mechanics in general. 
+As we move to systems of larger size, standard matrix multiplication becomes impractical for hand-written analysis, 
+    although of course remains tractable computationally up to $n\sim 10$ qubits. 
+It is obvious that Dirac's bra/ket notation is a helpful, pathematically precise tool for \gls{qm}. 

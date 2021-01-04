@@ -6,15 +6,17 @@ We elucidate some fundamental topics of linear algebra and quantum theory in \cr
     but consider them too cumbersome to include in the main text. 
 For a more complete and general introduction to \gls{qm}, the reader is referred to \cite{griffiths2018introduction}.
 
-\section{Quantum Mechanics and Information}
+\section{QM TODO}
 \begin{easylist}[itemize]
     & states
     && qubits
+    & Hilbert space
     && pure/separable and mixed
     & operators/gates
     & Pauli matrices
     & Bloch sphere
     & measurement
+    && projectors
     & expectation value
     & superposition/entanglement
     & Hamiltonian
@@ -23,6 +25,223 @@ For a more complete and general introduction to \gls{qm}, the reader is referred
     & first/second quantisation
     & quantum tech other than computation/simulation
 \end{easylist}
+
+\section{Quantum Mechanics and Information}
+
+At any time, a quantum system, $Q$, can be described by its \emph{wavefunction}, $\Psi(t)$, 
+    which contains all information about $Q$. 
+In analogy with Newton's second law of motion, 
+    which allows for the determination of a particle's position at any time, $\vec{r}(t)$, 
+    given its initial position, $\vec{r}(t_0)$, and conditions such as mass and acceleration, 
+    quantum \emph{equations of motion} can describe the evolution of $Q$ through its wavefunction \cite{dirac1981principles}. 
+One proposal\footnotemark \ for the equation of motion 
+    to describe the evolution of the wavefunction under known conditions, 
+    i.e. determining $\Psi(t)$ from $\Psi(t_0) \ \forall t$, 
+    is \emph{\schrodinger's equation}  \cite{griffiths2018introduction, mart2020introduce, nelson1966derivation}.
+\footnotetext{
+    The most noteworthy alternative formalism, due to Heisenberg \cite{heisenberg1985quantentheoretische}, 
+    was shown equivalent to the \schrodinger picture described here.
+}
+\par 
+
+Although the \schrodinger equation is a \emph{postulate} of \gls{qm} (see \cref{sec:postulates}), 
+    let us introduce it in reverse order to elucidate its meaning, following \cite{susskind2014quantum}. 
+We consider wavefunctions using \emph{Dirac notation} (\cref{sec:dirac_notation}).
+Suppose we have two such wavefunctions, $\ket{\phi(t)}, \ket{\psi(t)}$ which are functions of time $t > t_0$.
+We start with the assumption that \emph{similarity} is conserved between two wavefunctions,
+    if they undergo the same transformation 
+    (Susskind's \emph{minus first} law of classical mehcanics \cite{susskind2014quantum})
+\begin{equation}
+    \label{eqn:conservation_simularity}
+    \braket{\phi(t) | \psi(t)} = \braket{\phi(t_0) | \psi(t_0)}
+\end{equation}
+
+Then, assuming some equations of motion capture the dynamics of $Q$, 
+    there exists some evolution operator, $\hat{U}(t)$, which deterministically maps $\ket{\phi(t_o)}$ to $\ket{\psi(t)}$.
+\begin{equation}
+    \label{eqn:state_at_t}
+    \ket{\psi(t)} = \hat{U}(t) \ket{\psi(t_0)},
+\end{equation}
+    where we have not yet imposed any restrictions on $\hat{U}$. 
+Combining \crefrange{eqn:conservation_simularity}{eqn:state_at_t}, 
+\begin{equation}
+    \begin{split}
+        \braket{\phi(t) | \psi(t)} &= \braket{ \phi(t_0) | \hat{U}^{\dag} \hat{U}| \psi(t_o) }
+        \\
+        \Rightarrow \braket{ \phi(t_0) | \hat{U}^{\dag}(t) \hat{U}(t) | \psi(t_o) } &= \braket{\phi(t_0) | \psi(t_0)}
+        \\
+        \Rightarrow \hat{U}^{\dag}(t) \hat{U}(t) &= \ident \ \ \ \ \forall t,
+    \end{split}
+\end{equation}
+where the result $\hat{U}^{\dag} \hat{U} = \ident$ is the condition for \emph{unitarity} (\cref{sec:unitary}), 
+    so we can claim the quantum wavefunction evolves unitarily. 
+\par 
+
+By construction, we require
+\begin{equation}
+    \begin{split}
+        \ket{\psi(t = t_0)} = \hat{U}(t = t_0)\ket{\psi(t_0)} = \ket{\psi(t_0)}
+        \\ \Rightarrow \hat{U}(t = t_0) = \ident.
+    \end{split}
+\end{equation}
+Without loss of generality we can set $t_0 = 0$. 
+Then, let us consider an infintesimally small time increment $\epsilon = t_0 + \Delta t$, such that $\epsilon \gg \epsilon^2$. 
+
+We can say
+\begin{equation}
+    \hat{U}(\epsilon) = \ident + \mathcal{O}(\epsilon),
+\end{equation}
+which merely suggests that the time evolution operator
+    at very small time is very close to the identity, with some small displacement proportional to the time. 
+We suppose the form of the offset, so we can write
+\begin{equation}
+    \hat{U}(\epsilon) = \ident - \epsilon \left(\frac{i}{\hbar} \ho \right),
+\end{equation}
+    where the inclusion of the phase $-i$ is arbitrary, 
+    and we have named as $\nicefrac{\ho}{\hbar}$ the operator by which the time evolution differs from the identity. 
+In other words, the operator $\ho$ is generically the generator of the evolution/dynamics of $Q$;
+    so far there is no restriction on $\ho$, 
+    except that it must be of the same dimension as the Hilbert space in question. 
+Recalling the unitarity condition, however:
+\begin{equation}
+    \label{eqn:hamiltonian_hermiticity}
+    \begin{split}
+        \hat{U}^{\dag}(\epsilon) \hat{U}(\epsilon) &= \ident
+        \\ 
+        \Rightarrow 
+        \left( \ident + \frac{i}{\hbar} \epsilon \ho^\dag \right) \left( \ident - \frac{i}{\hbar} \epsilon \ho, \right)  &= \ident
+        \\
+        \Rightarrow
+        \ident +  \frac{i}{\hbar} \epsilon (\ho^{\dag} - \ho) + \mathcal{O}(\epsilon^2) &= \ident
+        \\
+        \Rightarrow
+        (\ho^{\dag} - \ho) = 0 
+        \\
+        \Rightarrow
+        \ho^{\dag} = \ho.
+    \end{split}
+\end{equation}
+\cref{eqn:hamiltonian_hermiticity} results in the condition for \emph{Hermiticity}, 
+    meaning that $\ho$ is an observable of $Q$. 
+In fact, this is the \emph{Hamiltonian} of the system, described in the next section. 
+
+\par 
+We can also use the infintesimal evolution to see 
+\begin{equation}
+    \label{eqn:derivation_schrodinger_eqn}
+    \begin{split}
+        \ket{\psi(t)} &= \hat{U}(t) \ket{\psi(t_0)}
+        \\ \Rightarrow \ket{\psi(\epsilon)} &= \hat{U}(\epsilon) \ket{\psi(t_0)}
+        \\ \Rightarrow 
+        \ket{\psi(\epsilon)} &= \left(\ident - \epsilon \frac{i}{\hbar} \ho \right) \ket{\psi(t_0)}
+        \\ \Rightarrow \ket{\psi(\epsilon)} &= \ket{\psi(t_0)} - \epsilon \frac{i}{\hbar} \ho \ket{\psi(t_0)}
+        \\ \Rightarrow \frac{\ket{\psi(\epsilon)} - \ket{\psi(t_0)} }{\epsilon}  &= - \frac{i}{\hbar} \ho \ket{\psi(t_0)}
+    \end{split}
+\end{equation}
+Taking the limit as $\epsilon \rightarrow 0 $, the left hand side of the final line of \cref{eqn:derivation_schrodinger_eqn} is the definition
+    of the derivative of the wavefunction, $\frac{d \ket{\psi(t)}}{dt}$. 
+Taken together, we have 
+\begin{equation}
+    \label{eqn:schrodinger}
+    \frac{d}{dt} \ket{\psi(t)} = \frac{-i}{\hbar} \ho \ket{\psi(0)},
+\end{equation}
+    where $\ket{\psi(t)}$ is the wavefunction at time $t$, 
+    $\ket{\psi(t_0)}$ is the wavefunction at $t$, such that $t > t_0$, 
+    $\hbar = 1.054 \times 10{-34}$ is the reduced Planck constant and 
+    $\ho$ is the \emph{Hamiltonian} of $Q$. 
+For brevity we generally refer to $t_0 = 0$, and absorb $\hbar$ into $\ho$, which will later manifest in the Hamiltonian scalar parameters. 
+\cref{eqn:schrodinger} is the most general form of \emph{\schrodinger equation}, 
+    otherwise known as the \emph{time-dependent} \schrodinger equation; 
+    we include it as \Cref{postulate:schrodinger_eqn} when describing the fundamentals of \gls{qm} (\cref{sec:postulates}), 
+    since it can be seen as an irreducible equation of motion which is essential to the description of quantum systems. 
+
+\par 
+
+
+\subsection{Hamiltonians}\label{sec:hamiltonians}
+In the previous section we introduced the Hamiltonian\footnotemark \ of $Q$ as the generator of its 
+    time evolution dynamics;
+    Hamiltonians are of primary importance in this thesis, so it is worth pausing to consider their physical meaning. 
+We saw in \cref{eqn:hamiltonian_hermiticity} that $\ho$ is Hermitian, 
+    meaning that the operator is physically observable 
+    according to \Crefrange{postulate:eigenvalues}{postulate:hermiticity}
+    of \glsentrylong{qm} (\cref{sec:postulates}). 
+The Hamiltonian operator captures the energy of $Q$: 
+    the eigenvalues of the observable $\ho$ are the permitted energy levels of the system.
+\par 
+
+The quantum Hamiltonian, $\ho$ is analogous to the classical Hamiltonian, 
+    insofar as it captures all the interactions of a given system which contribute to its (dynamics).
+Knowing the classical Hamiltonian and the initial conditions -- position and momentum -- 
+    Hamilton's equations of motion allow for the calcaultion of those quantities for the particle 
+    in question an infintesimal time later \cite{susskind2014classical}.    
+Likewise, knowledge of the initial wavefunction, $\ket{\psi(t_0)}$, and the system's quantum Hamiltonian, $\ho$, 
+    the quantum equations of motion, i.e. \schrodinger's equation \cref{eqn:schrodinger}, permits the calculation of the wavefunction
+    at later times.
+As such the Hamiltonian must consist of all processes which influence the evolution of $Q$;
+    we will later break the Hamiltonian into independent \emph{terms} which each correspond to unique physical interactions
+    $Q$ is subject to, \cref{sec:models}. 
+We can think that each process/interaction $Q$ undergoes contributes to its total energy,
+    giving intuition as to why its eigenvalues are the energy levels. 
+\par 
+\footnotetext{
+    Aside: the author shares a hometown with the mathematician for whom it is named, William Rowan Hamilton. 
+    It is hoped that, after another 150 years, the next physicist from Trim, Co. Meath, Ireland might 
+    profitably use knowledge Hamiltonians on a quantum computer. 
+}
+
+Hamiltonians describe \emph{closed} quantum systems, 
+    i.e. where \emph{all} processes and interactions which influence $Q$ are accounted for. 
+Realistic quantum systems are influenced by a myriad of proximal systems, 
+    and it is therefore infeasible to analytically account for them all. 
+Instead, \emph{open} quantum systems' dynamics are described by Lindbladian operators, which encompass the Hamiltonian form. 
+The Lindblad master equation is a generalisation of the \schrodinger equation, 
+    providing the equation of motion for open quantum systems \cite{breuer2002theory, manzano2020short}.
+In this thesis we only consider closed models for quantum systems;
+    for meaningful impact of the techniques presented here, it will be necessary to expand them to account for the open system dynamics of realistic experiments.
+We do, however, show initial progress towards this endeavour by modelling a physical system through a closed Hamiltonian, \cref{chapter:nv}.
+\par 
+
+\subsection{States and qubits}
+The wavefunction is also known as its \emph{state}, which in general can be in superposition across its eigenstates, $\ket{i}$\footnotemark.  
+The valid state space for $Q$ is its \emph{Hilbert space}, $\hilbert$,
+    which is a generalisation of Euclidean vector space, 
+    i.e. $\ket{\psi} \in \hilbert$. 
+\footnotetext{We expand on this brief description in \cref{sec:states}, 
+    and the Dirac notation emplyed throughout in \cref{sec:dirac_notation}.
+}
+
+\begin{subequations}
+    \begin{equation}\label{eqn:state_vector}
+        \ket{\psi} = \sum\limits_{i} \alpha_i \ket{i}
+    \end{equation}
+    \begin{equation}\label{vector_norm}
+        \textrm{subject to} \ \ \ \sum\limits_{i} |\alpha_i|^2 =1, \ \ \ \alpha_x \in \mathbb{C}. 
+    \end{equation}
+\end{subequations}
+
+
+
+For an ideal\footnotemark \ single particle, when the state, \cref{eqn:state_vector}, has two available eigenstates, 
+    e.g. the horizontal ($H$) and vertical ($V$) polarisation of a single photon, 
+    we can designate $Q$ as a two-level computational platform, called a \emph{qubit}, 
+    analogous to the workhorse of classical computation, the bit. 
+This is done by mapping each eigenstate to one of the orthogonal basis vectors,
+    e.g. $\left{ \ket{H} = \ket{0} = \ket{V} = \icol{1 \\ 0}, \ket{1} = \icol{0 \\ 1}\right}$. 
+\footnotetext{
+    Here we restrict to the space of ideal, \emph{logical} qubits. In reality, physical qubits are beset by errors, 
+    demanding error correction routines such that multiple particles are needed attain a single logical qubit. 
+}
+
+Then, a qubit's state can be written as 
+\begin{equation}
+    \label{eqn:qubit_state}
+    \ket{\psi} = \alpha_0 \ket{0} + \alpha_1 \ket{1}. 
+\end{equation}
+
+Qubits can then be interfaced together 
+\par 
+
 
 \section{Quantum Computation and Simulation}
 \begin{easylist}[itemize]

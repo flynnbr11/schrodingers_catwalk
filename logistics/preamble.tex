@@ -44,8 +44,13 @@
   urlcolor=black
 }
 
-\usepackage[capitalise]{cleveref}
 
+\usepackage{enumitem}
+\newlist{postulate}{enumerate}{1}     % this creates a dedicated counter named 'subtaski'
+\setlist[postulate,1]{label=\arabic*} % set form of enumeration label here
+
+\usepackage[capitalise]{cleveref}
+\crefname{postulatei}{postulate}{postulates}
 
 
 % \crefname{algocf}{alg.}{algs.}
