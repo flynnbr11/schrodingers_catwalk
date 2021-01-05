@@ -384,7 +384,7 @@ The Pauli matrices are Hermitian, meaning they are observable.
 We can see that the eigenstates of $\sz$ are the $Z$-basis states:
     $\sz \ket{0} = \ket{0}; \sz \ket{1} = - \ket{1}$.
 Recalling the earlier claim that the two-level quantum system (e.g. $H$ and $V$ polarisation of a photon)
-    can be mapped to eigenvectors\footnotemark of an obserable operator to form a qubit, 
+    can be mapped to eigenvectors\footnotemark \ of an obserable operator to form a qubit, 
     we term the $Z$-basis the \emph{computational} basis.
 By defining the computational basis, we ground abstract computational reasoning in the physical realisation:
     anywhere throughout this thesis where the basis states $\ket{0}, \ket{1}$ are referenced, 
@@ -418,11 +418,18 @@ In the computational basis, then, a qubit can be specified as
     }
     \label{fig:bloch_rotations}
 \end{figure}
-    
-
-\subsection{Multipartite systems}
-Qubits can then be interfaced together, where the resultant states are spanned by the Pauli group
 \par 
+
+The concepts of qubits representing quantum systems, as well as operators
+    altering their states and measurement collapsing those states,
+    extend straightforwardly to multipartite systems, by merging Hilbert spaces through tensor products, 
+    as we show in \cref{sec:multipartite}. 
+The cases where this is a simple mathematical exercise represent \emph{pure} states;
+    of course this leads to the more intricate topic of \emph{mixed} states and entanglement, 
+    briefly described in \cref{sec:entanglement}.
+In this thesis, however, we are concerned only with pure states, i.e. separable qubits.
+While single qubit states are spanned by the Pauli opeartors, multi-qubit states are spanned by the Pauli group, $\mathbb{G}$: 
+    $n$-qubit states are spanned by $\mathbb{G}_n = \left(\mathbb{C}^2\right)^{\otimes n}$.
 
 \subsection{Expectation value}
 The projection operator projects the state onto eigenstates. 
