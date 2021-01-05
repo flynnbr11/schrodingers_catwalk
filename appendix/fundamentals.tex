@@ -3,7 +3,7 @@ There are a number of concepts which are fundamental to any discussion of \gls{q
 We include them here for completeness\footnotemark. 
 \footnotetext{Much of this description is reproduced from my undergraduate thesis \cite{flynn2015mathematical}.}
 
-\section{Linear algebra}
+\section{Linear algebra}\label{sec:linear_algebra}
 Here we review the language of linear algebra and summarise the basic mathematical techniques used throughout this thesis.
 We will briefly recall some definitions for reference. 
 
@@ -24,8 +24,8 @@ We will briefly recall some definitions for reference.
             Adjoint & $\ket{\psi}^{\dag}  = (\ket{\psi}^{*})^{T}$\\
             \hline 
         \end{tabular}
-        \caption[Linear algebra defintions]{Linear algebra definition}
-        \label{algebra}
+        \caption[Linear algebra defintions]{Linear algebra definitions.}
+        \label{table:linear_algebra}
     \end{table}
 The dual vector of a vector (ket) $\ket{\psi} $ is given by $\bra{\psi} = \ket{\psi}^{\dag}$. 
 
@@ -41,7 +41,7 @@ The \textit{adjoint} of a matrix replaces each matrix element with its own compl
 The \textit{inner product} of two vectors, $\ket{\psi} = \icol{\psi_1 \\ \psi_2 \\ \vdots \\ \psi_n}$ and $\ket{\phi}= \icol{\phi_1 \\ \phi_2 \\ \vdots \\ \phi_n }$ is given by 
 
     \begin{equation}
-    \bra{\phi} \ket{\psi} = (\ket{\phi}^{\dag})\ket{\psi}
+    \braket{\phi | \psi} = (\ket{\phi}^{\dag})\ket{\psi}
     = (\phi_1^* \ \phi_2^* \ \hdots \ \phi_n^*) \icol{\psi_1 \\ \psi_2 \\ \vdots \\ \psi_n}
     = \phi_1^* \psi_1 + \phi_2^* \psi_2 + \dots + \phi_n^* \psi_n
     \end{equation}
@@ -120,10 +120,10 @@ These polarisations can then be thought of as standard basis vectors in linear a
 Denote $\leftrightarrow$ as the eigenstate $\ket{0} $ and $\updownarrow$ as $ \ket{1} $
 \begin{subequations}
     \begin{equation}
-        \ket{\rightarrow} = \ket{0} = \icol{1\\0} \ \ \ \ \ \  \text{A unit vector along x-axis}
+        \ket{\leftrightarrow} = \ket{0} = \icol{1\\0} \ \ \ \ \ \  \text{A unit vector along x-axis}
     \end{equation}
     \begin{equation}
-        \ket{\uparrow} = \ \ket{1} = \icol{0\\1} \ \ \ \ \ \ \text{ A unit vector along y-axis}
+        \ket{\updownarrow} = \ \ket{1} = \icol{0\\1} \ \ \ \ \ \ \text{ A unit vector along y-axis}
     \end{equation}        
 \end{subequations}
 
@@ -131,7 +131,9 @@ Now, in relation to the concept of superposition,
     we can consider, for example, a photon in an even superposition of the vertical and horizontal polarisations, evenly splitting the two basis vectors. 
 As such, we would require that, upon measurement, it is equally likely that the photon will \emph{collapse} into the polarised state along $x$ as it is to collapse along $y$. 
 That is, we want $ \Pr(\updownarrow) = \Pr(\leftrightarrow) $ so assign equal modulus amplitudes to the two possibilities: 
-    $$ \ket{\psi} = a \ket{\updownarrow} + b  \ket{\rightarrow}, \ \ \ \text{with} \ \ \ \Pr(\updownarrow) = \Pr(\leftrightarrow) \Rightarrow |a|^2 = |b|^2 $$ 
+    \begin{equation}
+        \ket{\psi} = a \ket{\leftrightarrow} + b \ket{\updownarrow}, \ \ \ \text{with} \ \ \ \Pr(\updownarrow) = \Pr(\leftrightarrow) \Rightarrow |a|^2 = |b|^2 
+    \end{equation}
 We consider here a particular case, due to the significance of the resultant basis, where $\leftrightarrow$-polarisation and $\updownarrow$-polarisation have real amplitudes $a,b \in \mathbb{R}$.
 
 \begin{equation}
@@ -142,7 +144,7 @@ We consider here a particular case, due to the significance of the resultant bas
         \\ 
         \Rightarrow \ket{\psi} &= \frac{1}{\sqrt{2}} \ket{\leftrightarrow} \pm \frac{1}{\sqrt{2}} \ket{\updownarrow} 
         \\
-        \Rightarrow ket{\psi} &= \frac{1}{\sqrt{2}} \ket{0} \pm \frac{1}{\sqrt{2}} \ket{1}
+        \Rightarrow \ket{\psi} &= \frac{1}{\sqrt{2}} \ket{0} \pm \frac{1}{\sqrt{2}} \ket{1}
     \end{split}
 \end{equation} 
 
@@ -170,7 +172,8 @@ For instance, suppose a 2-qubit system, $\ket{\psi}$ consisting of two independe
 
 Consider first a simple system of 2 qubits. Measuring in the standard basis, these qubits will have to collapse in to one of the basis states $|0,0 \rangle, |0,1 \rangle, |1,0\rangle, |1,1\rangle $. Thus, for such a 2-qubit system, we have the general superposition
 $$ \ket{\psi} = \alpha_{0,0} |0,0 \rangle + \alpha_{0,1}|0,1 \rangle + \alpha_{1,0} |1,0\rangle +\alpha_{1,1} |1,1\rangle $$ 
-where $\alpha_{i,j}$ is the amplitude for measuring the system as the state $|i,j\rangle $. This is perfectly analogous to a classical 2-bit system necessarily occupying one of the four possibilities $ (0,0), (0,1), (1,0), (1,1)$.
+where $\alpha_{i,j}$ is the amplitude for measuring the system as the state $|i,j\rangle $. 
+This is perfectly analogous to a classical 2-bit system necessarily occupying one of the four possibilities $\left\{ (0,0), (0,1), (1,0), (1,1) \right\}$.
 
 Hence, for example, if we wanted to concoct a two-qubit system composed of one qubit in the state $|+\rangle$ and one in $|-\rangle$
 
@@ -185,9 +188,10 @@ Hence, for example, if we wanted to concoct a two-qubit system composed of one q
     \end{split}
 \end{equation}
 
-That is, the system is given by a linear combination of the four basis vectors
+That is, the two qubit system -- and indeed any two qubit system -- is given by a linear combination of the four basis vectors
 \begin{equation}
-    \icol{1\\0\\0\\0}, \ \icol{0\\1\\0\\0}, \ \icol{0\\0\\1\\0}, \  \icol{0\\0\\0\\1}.
+    \left\{ \ket{00}, \ket{0,1}, \ket{10}, \ket{11} \right\} 
+    = \left\{ \icol{1\\0\\0\\0}, \ \icol{0\\1\\0\\0}, \ \icol{0\\0\\1\\0}, \  \icol{0\\0\\0\\1} \right\}.
 \end{equation}
 We can notice that a single qubit system can be described by a linear combination of two basis vectors, 
     and that a two qubit system requires four basis vectors to describe it. 
@@ -271,7 +275,7 @@ For example, the standard basis is represented by,
     \end{split}
 \end{equation}
  
-We saw above that, for every such ket $\ket{\psi}$, there exists a \textit{dual vector}: 
+We saw in \cref{table:linear_algebra} that for every such ket, $\ket{\psi}$, there exists a \textit{dual vector}: 
     its complex conjugate transpose, called the \emph{bra} of such a vector, denoted $\bra{\psi}$. 
 That is,
 \begin{equation}
