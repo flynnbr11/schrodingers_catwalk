@@ -21,7 +21,7 @@ For a more complete and general introduction to \gls{qm}, the reader is referred
     & Bloch sphere
     & measurement
     && projectors
-    & expectation value
+    & \gls{expectation value}
     & superposition/entanglement
     & first/second quantisation
     & quantum tech other than computation/simulation
@@ -62,11 +62,11 @@ We start with the assumption that \emph{similarity} is conserved between two wav
 Then, assuming some equations of motion capture the dynamics of $Q$, 
     there exists some evolution operator, $\hat{U}(t)$, which deterministically maps $\ket{\psi(t_o)}$ to $\ket{\psi(t)}$.
 \begin{equation}
-    \label{eqn:state_at_t}
+    \label{eqn:unitary_time_evolution}
     \ket{\psi(t)} = \hat{U}(t) \ket{\psi(t_0)},
 \end{equation}
     where we have not yet imposed any restrictions on $\hat{U}$. 
-Combining \crefrange{eqn:conservation_simularity}{eqn:state_at_t}, 
+Combining \crefrange{eqn:conservation_simularity}{eqn:unitary_time_evolution}, 
 \begin{equation}
     \begin{split}
         \braket{\phi(t) | \psi(t)} &= \braket{ \phi(t_0) | \hat{U}^{\dag} \hat{U}| \psi(t_o) }
@@ -160,9 +160,21 @@ For brevity we generally refer to $t_0 = 0$, and absorb $\hbar$ into $\ho$, whic
     otherwise known as the \emph{time-dependent} \schrodinger equation; 
     we include it as \Cref{postulate:schrodinger_eqn} when describing the fundamentals of \gls{qm} (\cref{sec:postulates}), 
     since it can be seen as an irreducible equation of motion which is essential to the description of quantum systems. 
-
 \par 
 
+As mentioned, we presented this argument in a nonstandard order:
+    we started with \cref{eqn:unitary_time_evolution}, which we can now consider the \emph{solution} to the \schrodinger, 
+    specifically
+\begin{equation}
+    \label{eqn:unitary_evolution}
+    \begin{split}
+        \ket{\psi(t)} = \hat{U}(t) \ket{\psi(0)}
+        \\
+        \hat{U}(t) = e^{-i \ho t} 
+    \end{split}
+\end{equation}
+    which describes the unitary evolution of the state according to the unitary evolution operator, $\hat{U}(t)$. 
+\par 
 
 \subsection{Hamiltonians}\label{sec:hamiltonians}
 In the previous section we introduced the Hamiltonian\footnotemark \ of $Q$ as the generator of its 
@@ -220,12 +232,12 @@ States are vectors\footnotemark, $\ket{\psi} \in \mathbb{C}$;
     i.e. $\ket{\psi} \in \hilbert$. 
 \footnotetext{We immediately use Dirac notation to represent the state; it is defined in \cref{sec:dirac_notation}.}
 The Hilbert space defines the overlap between any two vectors as the \emph{inner product}, $\braket{\psi | \phi}$ (\cref{sec:linear_algebra}). 
-In general\footnotemark, a state can be seen as a \emph{superposition} across its eigenstates, $\left\{\ket{i}\right\}$.  
+In general\footnotemark, a state can be seen as a \emph{superposition} across its eigenstates, $\left\{\ket{v_i}\right\}$.  
 \footnotetext{We expand on this brief description in \cref{sec:states}.}
 
 \begin{subequations}
     \begin{equation}\label{eqn:state_vector}
-        \ket{\psi} = \sum\limits_{i} \alpha_i \ket{i}
+        \ket{\psi} = \sum\limits_{i} \alpha_i \ket{v_i}
     \end{equation}
     \begin{equation}\label{vector_norm}
         \textrm{subject to} \ \ \ \sum\limits_{i} |\alpha_i|^2 =1, \ \ \ \alpha_i \in \mathbb{C}. 
@@ -235,7 +247,7 @@ In general\footnotemark, a state can be seen as a \emph{superposition} across it
 The cornerstone of \gls{qm} is the effect of \emph{measurement} on quantum systems: 
     in general $Q$ can be seen as occupying a multitude of eigenstates as in \cref{eqn:state_vector}, 
     observing the system forces $\ket{\psi}$ into a definite occupation of a single eigenstate,
-    where the \emph{probability} that it is measured in each eigenstate $\ket{i}$ is given by $\absval{\alpha_i}^2$, 
+    where the \emph{probability} that it is measured in each eigenstate $\ket{v_i}$ is given by $\absval{\alpha_i}^2$, 
     according to Born's rule \cite{born1926quantenmechanik}.
 $\alpha_i$ are hence named \emph{probability amplitudes} since they inform the probability of measuring the corresponding eigenstate. 
 \par 
@@ -374,8 +386,8 @@ Any single qubit operation can therefore be expressed as a product of
 \begin{equation}
     \label{eqn:rotation_operator}
     \begin{split}
-        \hat{R}_w\left(\theta) &= e^{i \frac{\theta}{2} \hat{\sigma}_w} 
-        = \cos\left(\nicefrac{\theta}{2}\right) \ident + i \sin \left(\nicefrac{\theta}{2}\right) \hat{\sigma}_w.
+        \hat{R}_w\left(\theta) &= e^{-i \frac{\theta}{2} \hat{\sigma}_w} 
+        = \cos\left(\nicefrac{\theta}{2}\right) \ident - i \sin \left(\nicefrac{\theta}{2}\right) \hat{\sigma}_w.
     \end{split}
 \end{equation}
     
@@ -431,28 +443,132 @@ In this thesis, however, we are concerned only with pure states, i.e. separable 
 While single qubit states are spanned by the Pauli opeartors, multi-qubit states are spanned by the Pauli group, $\mathbb{G}$: 
     $n$-qubit states are spanned by $\mathbb{G}_n = \left(\mathbb{C}^2\right)^{\otimes n}$.
 
-\subsection{Expectation value}
-The projection operator projects the state onto eigenstates. 
+\subsection{\Gls{expectation value}}\label{sec:expectation_value}
+\begin{figure}
+    \label{fig:expectation_values}
+    \begin{center}
+        \includegraphics{contextual_review/figures/expectation_values.pdf}
+    \end{center}
+    \caption[Expectation values]{
+        Expectation values of the observable $\hat{A}$ -- here the Pauli matrices --  
+            for $\ket{\psi} = \alpha_0 \ket{0} + \alpha_1 \ket{1}$.
+            Coefficients are real, varying $\alpha_1 \in \left( -1, 1\right)$, such that $\alpha_0 = \sqrt{1 - \alpha_1^2}$. 
+    }
+\end{figure}
 
-We can get the expectation value.. 
-Especially for this thesis, there is a subtlety to be aware of: 
-    in later chapters, we will make reference to the expectation value and likelihood, 
-    almost interchangeably -- these are distinct concepts that \emph{sometimes} overlap, but not in all cases. 
-Moreover, the likelihood usually refers 
+Upon measurement, the state vector of $Q$ has amplitude associated with only one eigenvector. 
+On average, however, the eigenvector to which it would collapse encodes statistical insight on the 
+    state prior to measurement. 
+In other words, if we prepared $\psi$ and measured it -- via some observable, $\hat{A}$ -- 
+    and repeat the procedure $N$ times, 
+    then as $N \rightarrow \infty$, the average outcome is the \emph{expecatation value}
+    for the system, 
+\begin{equation}
+    \label{eqn:expectation_value}
+    \braket{\hat{A}} = \braket{\psi | \hat{A} | \psi} = \sum\limits_{i} \alpha_i \braket{v_i | \hat{A} | v_i},  
+\end{equation}
+    where $\braket{\hat{A}}$ is the \gls{expectation value} (average) for the observable, $A$; 
+    $\ket{v_i}$ are the eigenvectors of $\hat{A}$, and $\alpha_i \in \mathbb{C}$ are the proability amplitudes
+    associated with each $\ket{v_i}$ when the state $\psi$ is represented as in \cref{eqn:state_vector}.
+We show some examples of \glspl{expectation value} for the observable Pauli matrices in \cref{fig:expectation_values}. 
+\par 
+
+An underlying theme of this thesis is to flip the usual logic: 
+    instead of using knowledge of the system to derive the \gls{expectation value}, per \cref{eqn:expectation_value},
+    we will \emph{estimate} \glspl{expectation value}, either through experiment or simulation, 
+    and use them to infer the structure of the observable.
+This trick enables machine learning routines to reverse engineer 
+    the processes $Q$ is subject to, as we will describe in \cref{part:algorithms}. 
+There is a subtlety to be aware of, however: 
+    in later chapters, we will make reference to the \gls{expectation value} and \emph{\gls{likelihood}} 
+    almost interchangeably -- these are distinct concepts that \emph{sometimes} overlap, but not in all cases,
+    as we explain in \cref{chapter:qhl}. 
 
 
 \section{Quantum Computation and Simulation}
 \begin{easylist}[itemize]
+    & Technology
     & Algorithms
     && advantage
     & Hardware
 \end{easylist}
 
-Supremacy proposals: \cite{harrow2017quantum}
+Relying on the premise and language of quantum information processing 
+    -- states, qubits, operators, measurements and expectation values -- 
+    the growing field of \emph{quantum technology} aims to exploit the 
+    non-classical statistics yielded by quantum systems in order to retrieve 
+    outcomes beyond the capability of their classical counterparts. 
+Applications include sensing/metrology, 
+    communication
+
+\par 
+The initial motivation for the development of quantum technologies, however, 
+    was the  observation that simulating nature at a quantum level would require 
+    exponential resources and is therefore only feasible given controllable quantum systems,
+    which can accurately emulate the true dynamics \cite{manin1980vychislimoe, benioff1980computer, benioff1982quantum, feynman1982simulating}. 
+The notion of controlling quantum systems to mimic the dynamics of real quantum systems is tantamount to 
+    \emph{quantum simulation}. 
+This led, however, to research into a wider domain of calculations called \emph{quantum computation}
+    which considers the information processing capability of controllable quantum systems beyond merely simulating quantum systems. 
+Then, \emph{universal quantum computers} (or, \emph{quantum Turing machines}), 
+    assume access to logical qubits and operations/gates for the implementation of quantum circuits \cite{deutsch1985quantum}. 
+This ignited interest in \emph{quantum algorithms} which provide some provable advantage 
+    \cite{simon1997power, bennett1997strengths, bernstein1997quantum, grover1997quantum, shor1999polynomial}.
+Indeed, it was found that the space of problems addressible by such devices
+    goes beyond the classical counterpart 
+    suggesting there exist a class of quatum algorithms which can offer significant advantage over 
+    any feasible algorithm on classical hardware \cite{watrous2008quantum}. 
 \par 
 
-Bringing together the concepts of the chapter so far, 
-    we can use qubits to represent the state of real quantum systems. 
-This allows for efficient simuation of processes at the quantum level for the first time, 
-    facilitiating novel insights of nature's most intricate details. 
+Of course, while the advances in algorithmic quantum computation promise huge impact, 
+    they are tempered by contemporary experimental constraints, 
+    which must deal with the reality that construction and control of 
+    reliable quantum devices is a significant challenge. 
+A range of platforms have emerged in attempts to fulfil the potential of quantum computation,
+    among the most popular:
 
+\begin{easylist}[itemize]
+    & Photonic qubits (linear optical quantum computers)
+    && existing infrastructure for commercial production of photonics-based technologies suggesting relatively straightforward fabrication 
+        of integrated photonic devices at the scale of millions of degrees of freedom \cite{adcock2020advances};
+    && photons do not decohere so are useful for encoding information \cite{kovac2002detection};
+    && photons do not interfere \cite{dirac1981principles, gerry2005introductory}, 
+        so information processing must be mediated by non-trivial measurement schemes \cite{raussendorf2003measurement};
+    && they are liable to a unique error mechanism -- photon loss -- 
+        necessitating novel quantum error correcting codes \cite{vigliar2020error};
+    && on-demand single photon generation has not yet been demonstrated,
+        although there is significant progress in the area of photon generation \cite{paesani2020near}.
+
+    & Superconducting qubits
+    && 
+
+    & Ion traps
+    && 
+
+    & Topological qubits
+    & 
+\end{easylist}
+\par 
+
+Following numerous proposoals \cite{harrow2017quantum},
+    recent efforts have married state-of-the-art hardware with bespoke algorithms in order to achieve quantum advantage
+    \cite{arute2019quantum, zhong2020quantum}. 
+It seems, then, that quantum computers are beginning to represent a viable information processing tool. 
+In this thesis, we do not run algorithms directly on such devices, 
+    but instead simulate the outcomes on classical hardware:
+\begin{easylist}[itemize]
+    & the results achieved are limited by the capability of classical computers in simulating quantum systems
+    && we study only up to 8-qubit systems, whereas it would be of interest to extend these methods to higher dimensions, 
+        which is expected to be feasible when reliable quantum simulators/computers are available;
+    && the remit of this thesis is therefore to robustly test the presented algorithms,
+        and provide a benchmark achieved through classical facilities, 
+        against which the same algorithm can be run in conjunction with quantum hardware. 
+    & given access to a fault-tolerant quantum computer/simulator,
+        the algorithms described would enjoy an automatic exponential speedup:
+    && the classical bottleneck is the calculation of the time evolution dynamics, 
+        \cref{eqn:unitary_evolution}, according to the matrix exponential, of dimension $2^n$, 
+        where $n$ is the dimension of the system;
+    && it is believed that the same calculation can be performed in polynomial time on a quantum computer. 
+\end{easylist}
+
+\par 
