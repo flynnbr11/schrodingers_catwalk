@@ -1,33 +1,36 @@
-The study of nature at the quantum level has been at the forefront of physics since the early $20^{\textrm{th}}$ century. 
-\dots
+\Gls{qm} -- the study of nature's fundamental processes, manifest in its smallest particles --
+    has been at the forefront of physics since the early $20^{\textrm{th}}$ century \cite{jammer1966conceptual}.
+Advances in theoretical understanding of quantum mechanical systems in the first half of the century 
+    \cite{born1926quantenmechanik, heisenberg1985quantentheoretische}
+    % TODO get references  - google scholar broken temporarily
+    % On a heuristic point of view concerning the production and transformation of light - Einstein
+    %  "An Undulatory Theory of the Mechanics of Atoms and Molecules" -  schrodinger
+    %  Mathematical Foundations of Quantum Mechanics  von Neumann
+    led to novel technologies\footnotemark \ in the second half \cite{brinkman1997history},
+    % Principles of lasers, 2010 Svelto
+    % Principles of semiconductor devices - Zeghbroeck 2004
+    which came to underpin all modern information and communications technologies.
+The $21^{\textrm{st}}$ century, on the other hand, is poised to see the development of 
+    technologies which \emph{deliberately} exploit the most intricate quantum processes in order to yield 
+    some non-classical advantage. 
+This thesis focuses on the application of \glsentrylong{ml} to the characterisation of quantum mechanical systems
+    through use of quantum simulators, 
+    so it is pertinent first to introduce the vocabulary of \gls{qm}. 
+\footnotetext{Colloquially referred to as \emph{Quantum 1.0}.}
+\par 
 
-Here we will only introduce concepts utilised in this thesis.
+\Gls{qm} is central to the topics described in this thesis, 
+    however it is impossible to succinctly capture the entire discipline; 
+    in this chapter we will only introduce concepts utilised throughout.
 For completeness, we elucidate some fundamental topics of linear algebra and quantum theory in \cref{apdx:fundamentals},
     but consider them too cumbersome to include in the main text. 
 For a more complete and general introduction to \gls{qm}, the reader is referred to \cite{griffiths2018introduction, susskind2014quantum}.
+Likewise, in this chapter we quickly summarise the key aspects of quantum computation, 
+    but for further details, we recommend unfamiliar readers to consult \cite{rieffel2011quantum}, 
+    while a more complete discussion is presented in \cite{nielsen2002quantum}.
 
-\section{QM TODO}
-\begin{easylist}[itemize]
-    & Hamiltonian
-    & Schrodinger equation
-    & Unitary evolution
-
-    & states
-    && qubits
-    & Hilbert space
-    && pure/separable and mixed
-    & operators/gates
-    & Pauli matrices
-    & Bloch sphere
-    & measurement
-    && projectors
-    & \gls{expectation value}
-    & superposition/entanglement
-    & first/second quantisation
-    & quantum tech other than computation/simulation
-\end{easylist}
-
-\section{\glsentrylong{qm}}\label{sec:qm}
+%%%%%%%%%%%%%%%% QUANTUM MECHANICS %%%%%%%%%%%%%%%%%
+\section{Quantum Mechanics}\label{sec:qm}
 
 At any time, a quantum system, $Q$, can be described by its \emph{wavefunction}, $\Psi(t)$, 
     which contains all information about $Q$. 
@@ -205,7 +208,7 @@ We can think that each process/interaction $Q$ undergoes contributes to its tota
 \footnotetext{
     Aside: the author shares a hometown with the mathematician for whom it is named, William Rowan Hamilton. 
     It is hoped that, after another 150 years, the next physicist from Trim, Co. Meath, Ireland might 
-    profitably use knowledge of Hamiltonians on a quantum computer. 
+    profitably use knowledge of Hamiltonians on a \gls{qc}. 
 }
 
 Hamiltonians describe \emph{closed} quantum systems, 
@@ -485,7 +488,9 @@ There is a subtlety to be aware of, however:
     as we explain in \cref{chapter:qhl}. 
 
 
-\section{Quantum Computation and Simulation}
+%%%%%%%%%%%%%%% QUANTUM COMPUTING %%%%%%%%%%%%%%%%%%
+
+\section{Quantum Simulation and Computation}
 
 Relying on the premise and language of quantum information processing 
     -- states, qubits, operators, measurements and expectation values -- 
@@ -506,9 +511,9 @@ In particular, simulating quantum systems is believed to be of interest for quan
     for example leading to advances in the simulation of molecular dynamics \cite{aspuru2005simulated, sparrow2018simulating}.
 More generally, however, this led to research into a wider domain of calculations called \emph{quantum computation}
     which considers the information processing capability of controllable quantum systems beyond merely simulating quantum systems. 
-Then, \emph{universal quantum computers} (or, \emph{quantum Turing machines}), 
+Then, \emph{universal \glsentrylongpl{qc}} (or, \emph{quantum Turing machines}), 
     assume access to \emph{logical} qubits and operations (or \emph{gates}) for the implementation of quantum circuits \cite{deutsch1985quantum}. 
-This ignited interest in \emph{quantum algorithms} which provide some provable advantage 
+This ignited interest in \emph{quantum algorithms}, which aim to provide some provable advantage 
     \cite{simon1997power, bennett1997strengths, bernstein1997quantum, grover1997quantum, shor1999polynomial}.
 Indeed, it was found that the space of problems addressible by such devices
     goes beyond the classical counterpart,
@@ -520,18 +525,18 @@ Of course, while the advances in algorithmic quantum computation promise huge im
     they are tempered by contemporary experimental constraints, 
     which must deal with the reality that construction and control of 
     quantum devices is a significant challenge.
-In constructing quantum computers and dealing with their output, 
+In constructing \glspl{qc} and dealing with their output, 
     we must account for physical effects which lead to errors, 
     requiring expensive error mitigation schemes to be reliable \cite{shor1996fault, aharonov2008fault}.
-Furthermore, there are a number of criteria required before a quantum computer can be deemed functional \cite{divincenzo2000physical}. 
+Furthermore, there are a number of criteria a \gls{qc} must meet before it can be deemed reliable \cite{divincenzo2000physical}. 
 \par 
 
 Any two-level quantum system can be used as a qubit;
     a range of platforms have emerged in attempts to fulfil the potential of quantum computation \cite{humble2019quantum},
-    among the most popular\footnote{listed with their primary advantages and limitations}:
+    among the most popular\footnote{An incomplete list of quantum architectures together with their primary advantages and limitations.}:
 
 \begin{easylist}[itemize]
-    & Photonic qubits (linear optical quantum computers) \cite{kok2007linear}
+    & Photonic qubits (linear optical \glspl{qc}) \cite{kok2007linear}
     && existing infrastructure for commercial production of photonics-based technologies suggests the relatively straightforward fabrication 
         of integrated photonic devices at the scale of millions of degrees of freedom \cite{adcock2020advances};
     && photons do not decohere so are useful for encoding information \cite{kovac2002detection};
@@ -577,12 +582,12 @@ In principle, however, any quantum simulator -- universal or otherwise -- capabl
 
 Our restriction to classical resrouces leads to a few remarks:
 \begin{easylist}[itemize]
-    & given access to a fault-tolerant quantum computer/simulator,
+    & given access to a fault-tolerant \gls{qc}/simulator,
         the algorithms described would enjoy an automatic exponential speedup:
     && the classical bottleneck is the calculation of the time evolution dynamics, 
         \cref{eqn:unitary_evolution}, according to the matrix exponential, of dimension $2^n$, 
         where $n$ is the dimension of the system;
-    && it is believed that the same calculation can be performed in polynomial time on a quantum computer \cite{lloyd1996universal}. 
+    && it is believed that the same calculation can be performed in polynomial time on a \gls{qc} \cite{lloyd1996universal}. 
 
     & the results achieved in this thesis are limited by the capability of classical computers in simulating quantum systems
     && we study only up to 8-qubit systems, whereas it would be of interest to extend these methods to higher dimensions, 

@@ -1,4 +1,24 @@
-\gls{ml} is the application of statistics, algorithms and computing power to discover meaning and/or devise actions from data.
+\Gls{ml} is the application of statistics, algorithms and computing power to discover meaning and/or devise actions from data.
+\gls{ml} has become an umbrella term, encompassing the family of algorithms
+    which aim to leverage computaters to learn without being explicitly programmed,
+    as opposed to the more general \gls{ai}, which seeks to make computers behave intelligently,
+    admitting explicit programs to achieve tasks \cite{MLvAI}.
+Its history is therefore imprecise since a number of early, apparently unrelated algorithms were proposed independently, 
+    which now constitute \gls{ml} routines \cite{mcculloch1943logical, turing2009computing}. 
+Nevertheless, the field of \gls{ml} has been advancing rapidly since the second half of the $20^{\textrm{th}}$ century \cite{russell2002artificial}, 
+    especially recently due to the availability of advanced hardware such as \glspl{gpu}, 
+    facilitating significant progress through an ever-increasing aresnal of powerful open source software \cite{pedregosa2011scikit, abadi2016tensorflow, paszke2019pytorch}. 
+\par 
+
+Throughout this thesis, we endeavour to combine known methods from the \gls{ml} literature with capabilities of \glspl{qc}\footnotemark. 
+Typical \gls{ml} algorithms, which rely on \glspl{cpu} or \glspl{gpu}, are deemed \emph{classical} \glsentrylong{ml},
+    in contrast with \gls{qml}, where \glspl{qc} are central to processing the data.
+Similarly to the remit of \cref{chapter:qm}, here we do not provide an exhaustive account of \gls{ml} algorithms:
+    rather, we describe only the algorithms which are used in later chapters, 
+    referring readers to standard texts for a wider discussion \cite{russell2002artificial, hastie2009elements}
+
+\footnotetext{Or simulated \glspl{qc}, in this thesis.}
+
 
 \section{Classical \glsentrylong{ml}}\label{sec:classical_ml}
 \begin{easylist}[itemize]
@@ -23,3 +43,4 @@
     && i.e. using data from quantum system and/or hardware but in conjunction with classical co-processor, 
         for the study of quantum systems
 \end{easylist}
+\cite{dunjko2018machine}
