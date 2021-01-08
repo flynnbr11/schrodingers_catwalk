@@ -90,7 +90,7 @@ By construction, we require that after zero time, i.e. $t = t_0$, the wavefuncti
         \\ \Rightarrow \hat{U}(t = t_0) = \ident.
     \end{split}
 \end{equation}
-Without loss of generality we can set $t_0 = 0$, giving $\hat{H}(0) = \ident$. 
+Without loss of generality we can set $t_0 = 0$, giving $\hat{U}(0) = \ident$. 
 Then, let us consider an infintesimally small time increment $t_0 + \epsilon$:
     again, take $t_0 = 0$ so $t = \epsilon$,  where $\epsilon \gg \epsilon^2$. 
 
@@ -191,7 +191,7 @@ The Hamiltonian operator captures the energy of $Q$:
     the eigenvalues of the observable $\ho$ are the permitted energy levels of the system.
 \par 
 
-The quantum Hamiltonian, $\ho$ is analogous to the classical Hamiltonian, 
+The quantum Hamiltonian, $\ho$, is analogous to the classical Hamiltonian, 
     insofar as it captures all the interactions of a given system which contribute to its time evolution.
 Knowing the classical Hamiltonian and the initial conditions -- position and momentum -- 
     Hamilton's equations of motion allow for the calcaultion of those quantities for the particle 
@@ -248,7 +248,7 @@ In general\footnotemark, a state can be seen as a \emph{superposition} across it
 \end{subequations}
 
 The cornerstone of \gls{qm} is the effect of \emph{measurement} on quantum systems: 
-    in general $Q$ can be seen as occupying a multitude of eigenstates as in \cref{eqn:state_vector}, 
+    in general $Q$ can be seen as occupying a multitude of eigenstates as in \cref{eqn:state_vector};
     observing the system forces $\ket{\psi}$ into a definite occupation of a single eigenstate,
     where the \emph{probability} that it is measured in each eigenstate $\ket{v_i}$ is given by $\absval{\alpha_i}^2$, 
     according to Born's rule \cite{born1926quantenmechanik}.
@@ -349,9 +349,12 @@ We can make two remarks about basis states for a single qubit:
 As we alluded to in \cref{sec:qm}:
     by imposing mathematical structure on quantum systems' states, 
     i.e. representing $Q$ as a state vector at any time, 
-    then operations which alter the state of the system must be matrices. 
+    then operations which alter the state of the system must be matrices, 
+    which we will call \emph{operators}. 
 In general an $n$-dimensional vector is rotated by an $n \times n$ matrix;
-    here one-qubit oeprators have the effect of rotating the state vector, 
+    therefore to rotate the one-qubit state, given by a two-dimensional vector, 
+    we require a $2\times2$ operator.
+One-qubit operators have the effect of rotating the state vector, 
     which we can again visualise on the Bloch sphere.
 By thinking of qubits generically with respect to any basis, we can encode information in the qubit's amplitudes,
     by performing operations (or \emhp{gates}) upon the qubit, we change the information, 
@@ -385,7 +388,7 @@ The Pauli matrices are used to define rotation operators about
     their respective axes, and hence are very useful:
     we can break \emph{any} rotation of a qubit into rotations of various angles, $\theta$, about the three axes of the Bloch sphere.
 Any single qubit operation can therefore be expressed as a product of
-    the \emph{rotation operators}, $\hat{R}_x, \hat{R}_y, \hat{R}_z$, exemplified in \cref{fig:bloch_rotations} and defined as
+    the \emph{rotation operators}, $\hat{R}_x, \hat{R}_y, \hat{R}_z$, exemplified in \cref{fig:bloch_rotations} and defined for $w \in \{ x,y,z\}$ as
 \begin{equation}
     \label{eqn:rotation_operator}
     \begin{split}
@@ -448,7 +451,6 @@ While single qubit states are spanned by the Pauli opeartors, multi-qubit states
 
 \subsection{\Gls{expectation value}}\label{sec:expectation_value}
 \begin{figure}
-    \label{fig:expectation_values}
     \begin{center}
         \includegraphics{contextual_review/figures/expectation_values.pdf}
     \end{center}
@@ -457,22 +459,23 @@ While single qubit states are spanned by the Pauli opeartors, multi-qubit states
             for $\ket{\psi} = \alpha_0 \ket{0} + \alpha_1 \ket{1}$.
             Coefficients are real, varying $\alpha_1 \in \left( -1, 1\right)$, such that $\alpha_0 = \sqrt{1 - \alpha_1^2}$. 
     }
+    \label{fig:expectation_values}
 \end{figure}
 
 Upon measurement, the state vector of $Q$ has amplitude associated with only one eigenvector. 
 On average, however, the eigenvector to which it would collapse encodes statistical insight on the 
     state prior to measurement. 
-In other words, if we prepared $\psi$ and measured it -- via some observable, $\hat{A}$ -- 
+In other words, if we prepared $\ket{\psi}$ and measured it -- via some observable, $\hat{A}$ -- 
     and repeat the procedure $N$ times, 
     then as $N \rightarrow \infty$, the average outcome is the \emph{expecatation value}
-    for the system, 
+    for the system is given by 
 \begin{equation}
     \label{eqn:expectation_value}
     \braket{\hat{A}} = \braket{\psi | \hat{A} | \psi} = \sum\limits_{i} \alpha_i \braket{v_i | \hat{A} | v_i},  
 \end{equation}
-    where $\braket{\hat{A}}$ is the \gls{expectation value} (average) for the observable, $A$; 
+    where $\braket{\hat{A}}$ is the \gls{expectation value} (average) for the observable, $\hat{A}$; 
     $\ket{v_i}$ are the eigenvectors of $\hat{A}$, and $\alpha_i \in \mathbb{C}$ are the proability amplitudes
-    associated with each $\ket{v_i}$ when the state $\psi$ is represented as in \cref{eqn:state_vector}.
+    associated with each $\ket{v_i}$ when the state $\ket{psi}$ is represented as in \cref{eqn:state_vector}.
 We show some examples of \glspl{expectation value} for the observable Pauli matrices in \cref{fig:expectation_values}. 
 \par 
 
@@ -580,7 +583,7 @@ In principle, however, any quantum simulator -- universal or otherwise -- capabl
     operator, \cref{eqn:unitary_evolution}, can be called upon as a co-processor by the algorithms presented. 
 \par 
 
-Our restriction to classical resrouces leads to a few remarks:
+Our restriction to classical resources leads to a few remarks:
 \begin{easylist}[itemize]
     & given access to a fault-tolerant \gls{qc}/simulator,
         the algorithms described would enjoy an automatic exponential speedup:
