@@ -11,6 +11,7 @@ other_theses/*
 literature/*
 feedback/*
 !figure_development/*ipynb
+!thesis.pdf
 
 # Unwanted large files/plots/compiled python
 *.pyc
