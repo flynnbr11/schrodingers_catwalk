@@ -1,6 +1,6 @@
 \Gls{ml} is the application of statistics, algorithms and computing power to discover meaning and/or devise actions from data.
 \gls{ml} has become an umbrella term, encompassing the family of algorithms
-    which aim to leverage computaters to learn without being explicitly programmed,
+    which aim to leverage computers to learn without being explicitly programmed,
     as opposed to the more general \gls{ai}, which seeks to make computers behave intelligently,
     admitting explicit programs to achieve tasks \cite{MLvAI}.
 Its history is therefore imprecise since a number of early, apparently unrelated algorithms were proposed independently, 
@@ -15,19 +15,83 @@ Typical \gls{ml} algorithms, which rely on \glspl{cpu} or \glspl{gpu}, are deeme
     in contrast with \gls{qml}, where \glspl{qc} are central to processing the data.
 Similarly to the remit of \cref{chapter:qm}, here we do not provide an exhaustive account of \gls{ml} algorithms:
     rather, we describe only the algorithms which are used in later chapters, 
-    referring readers to standard texts for a wider discussion \cite{russell2002artificial, hastie2009elements}
+    referring readers to standard texts for a wider discussion \cite{russell2002artificial, hastie2009elements}.
 
 \footnotetext{Or simulated \glspl{qc}, in this thesis.}
 
 
 \section{Classical \glsentrylong{ml}}\label{sec:classical_ml}
-\begin{easylist}[itemize]
-    & definition and aim(s)
-    & supervised
-    & unsupervised
-    & example algorithms and applications
-\end{easylist}
 
+Of course the first step in any \gls{ml} application is to consider the types of available data,
+    with respect to the ensemble of known algorithms. 
+Classical \gls{ml} is usually described in three categories,
+    broadly based on the format of data on which the insight can be built;
+    we will briefly describe each to provide context to discussions throughout this thesis. 
+Later in this thesis we will use the word \emph{model} for descriptions of quantum systems, 
+    but here \emph{model} refers to the mapping between inputs and outputs which the \gls{ml} algorithm devises.
+\par 
+
+\subsection{Supervised \glsentrylong{ml}}
+Models are trained using \emph{labelled} data, 
+    i.e. each training sample has a known label $y_i$;
+    or, a set of \emph{feature vectors} $\left\{\vec{x}_i\right\}$ are associated with the set of 
+    corresponding \emph{classes} $\left\{ y_i \right\}$ \cite{caruana2006empirical}. 
+The output is a predictive tool which aims to reconstruct the classes of unseen feature vectors:
+    in general, we can view the role of \gls{ml} in this setting as distilling the function $f$ such that 
+\begin{equation}
+    \label{eqn:supervised_ml_target}
+    f : \vec{x}_i \longmapsto y_i \ \ \ \  \forall (\vec{x}_i, y_i).
+\end{equation}
+\par 
+
+\par 
+
+For an incomplete list of common supervised algorithms, 
+    we list examples in \cref{table:supervised_examples},
+    with definitions:
+\begin{easylist}
+    & \emph{Classification}: models which can assign unseen instances the most appropriate 
+        label from a fixed set of available labels  \cite{kotsiantis2007supervised};
+    & \emph{Linear regression}: models capture the linear relationship between numerical features and the target scalar, 
+        by determining linear coefficients for each feature. 
+    & \emph{Neural networks}\footnote{including {deep learning} networks}: \emph{universal function approximators}.
+        By invoking a set of linear and non-linear transformations on input data, 
+        where the network is a function of some paramterisation $w$, 
+        finding the optimal network such that \cref{eqn:supervised_ml_target} is satisfied, 
+        $f(\vec{x}_i | w) = y_i$. 
+\end{easylist}
+\par 
+
+\begin{table}
+    \begin{center}
+    \begin{tabular}{llcc}
+        Algorithm & Output $y$ & Input $\vec{x}$ \\
+        \hline
+        Classification & Category: animal & $ \left( \textrm{height, weight, # legs}\right) $ \\
+        Linear regression & Number: salary & $\left( \textrm{age, seniority, years\_experience}\right) $ \\
+        Neural network & Number: salary & $\left( \textrm{age, seniority, years\_experience}\right) $ \\
+        Support Vector Machine & & \\ 
+    \end{tabular}
+    \end{center}
+    \caption[Supervsied learning algorithm examples]{Supervsied learning algorithm examples}
+    \label{table:supervised_examples}
+\end{table}
+
+Supervised \gls{ml} rely on the existence of a body of labelled samples -- the dataset $\mathcal{D}$ -- upon which the model can be trained.
+An important aspect of these algorithms is assessment, i.e. judging their performance. 
+By definition of the data format, this is a straightforward task for supervised routines:
+    the classes assigned to feature vectors can be quantitatively assessed. 
+The task of the machine is then to learn the configuration, $w$, for which this is satisifed in the highest proportion of cases. 
+
+
+\subsection{Unsupervised \glsentrylong{ml}}
+
+An example of supervised \gls{ml} is
+
+\subsection{\Glsentrylong{rl}}
+
+An example of \gls{rl} is self driving cars. 
+Agency...
 
 \section{Quantum \glsentrylong{ml}}
 \begin{easylist}[itemize]
@@ -46,19 +110,20 @@ Similarly to the remit of \cref{chapter:qm}, here we do not provide an exhaustiv
 \cite{dunjko2018machine}
 
 \section{\glsentrylongpl{ga}}\label{sec:genetic_algorithms}
-In later chapters we will use a class of optimisation techniques known as \emph{evolutionary algorithms}:
-    in particular, emph{\glsentryfullpl{ga}} are central to our primary applications, 
+In later chapters we will use a class of optimisation techniques known as \emph{evolutionary algorithms} \cite{back1996evolutionary, de2020evolutionary}.
+In particular, \emph{\glsentryfullpl{ga}} are central to our primary applications, 
     specifically in \cref{chapter:ga}.
 Here we describe \glspl{ga} in general terms for reference in later chapters. 
 \par 
 \glspl{ga} work by assuming a given problem can be optimised, if not solved, by a single candidate 
     among a fixed, closed space of candidates, called the population, $\population$. 
 A number of candidates are sampled at random from $\population$ into a single \emph{generation}, 
-    and evaluated through some \gls{of}, which assesses the fitness of the candidates at solving the problem of interest. 
+    and evaluated through some \glsentryfull{of}, which assesses the fitness of the candidates at solving the problem of interest. 
 Candidates from the generation are then mixed together to produce the next generation's candidates: 
     this \emph{crossover} process aims to combine only relatively strong candidates, such that the average 
     candidates' fitness improve at each successive generation, 
-    mimicing the biological mechanism whereby the genetic makeup of offspring is an even mixture of both parents. 
+    mimicing the biological mechanism whereby the genetic makeup of offspring is an even mixture of both parents
+    through the philosophy of \emph{survival of the fittest}. 
 The selection of strong candidates as parents for future generations is therefore imperative; 
     in general parents are chosen according to their fitness as determined by the \gls{of}. 
 Buidling on this biological motivation, much of the power of \glspl{ga} comes from the concept of \emph{mutation}: 
@@ -75,20 +140,20 @@ Given access to the population, $\population$,
     \ListProperties(Numbers2=l, Numbers3=r)
     & Sample $N_m$ candidates from the population at random
     && call this group of candidates the first generation, $\mu$. 
-    & \label{ga:loop} Evaluate each candidate $\gamma_j \in \mu$. 
-    && each $\gamma_j$ is assigned a fitness, $g_j$
-    && the fitness is computed through an objective function acting on the candidate, $g(\gamma_j)$. 
+    & \label{ga:loop} Evaluate each candidate $\gamma_j \in \mu$
+    && each $\gamma_j$ is assigned a fitness, $g_j$;
+    && the fitness is computed through an objective function acting on the candidate, i.e. $g_j = g(\gamma_j)$. 
     & Map the fitnesses of each candidate, $\{g_j\}$, to selection probabilities for each candidate, $\{s_j\}$
     && e.g. by normalising the fitnesses, or by removing some poorly-performing candidates and then normalising. 
     & Generate the next generation of candidates
-    && Reset $\mu = \{ \}$
-    && \label{ga:select} Select pairs of parents, $p_1, p_2$, from $\mu$
-    &&& Each candidate's probability of being chosen is given by their $s_j$
-    && Cross over $p_1,p_2$ to produce children candidates, $c_1,c_2$. 
-    &&& mutate $c_1, c_2$ according to some random probabilistic process
-    &&& keep $c_i$ only if it is not already in $\mu$, to ensure $N_m$ unique candidates are tested at each generation.
-    && until $| \mu| = N_m$, iterate to step (\ref{ga:select}.
-    & Until the $N_g^{th}$ generation is reached, iterate to step \ref{ga:loop}.
+    && Reset $\mu = \{ \}$;
+    && \label{ga:select} Select pairs of parents, $\left\{\gamma_{p_1}, \gamma_{p_2}\right\}$, from $\mu$
+    &&& Each candidate's probability of being chosen is given by their $s_j$.
+    && Cross over $\left\{\gamma_{p_1}, \gamma_{p_2}\right\}$ to produce children candidates, $\left\{\gamma_{c_1}, \gamma_{c_2}\right\}$
+    &&& mutate $\gamma_{c_1}, \gamma_{c_2}$ according to some random probabilistic process;
+    &&& keep $\gamma_{c_i}$ only if it is not already in $\mu$, to ensure $N_m$ unique candidates are tested at each generation.
+    && until $|\mu| = N_m$, iterate to step (\ref{ga:select}.
+    & Until the $N_g^{th}$ generation is reached, iterate to step \ref{ga:loop};
     & The strongest candidate on the final generation is deemed the solution to the posed problem. 
 \end{easylist}
 
@@ -202,29 +267,33 @@ recalling $\gamma_j = \ttt{100001}$, say,
 We can hence assess the fitness of $\gamma_j$ as $63$ and deem it a valid candidate since it does not exceed the weight threshold.
 We can likewise compute the total weight and value of a series of randomly generated candidates, 
     and deem them valid or not. 
+\cref{table:knapsack_candidates} shows a set of 12 randomly generated candidates, 
+    of which ten are valid.
 
 \begin{table}[H]
     \begin{center}
         \input{figure_development/knapsack.tex}
         \caption[Candidate solutions to knapsack problem]{
-            Candidate solutions to the knapsack problem. 
+            Candidate solutions to the knapsack problem for randomly generated chromosomes. 
         }
         \label{table:knapsack_candidates}
     \end{center}
 \end{table}
 
 The strongest (valid) candidates from \cref{table:knapsack_candidates} are \ttt{101010}, \ttt{011110}. 
-By spawning from these candidates through a one-point crossover at the midpoint, 
+By spawning from these candidates through a one-point crossover at the midpoint\footnotemark, 
     we get $\gamma_{c_1} = \ttt{101110}, \gamma_{c_2} = \ttt{011010}$, 
     from which we can see $v_{c_1} = 132, w_{c_1} = 50$, i.e. by combining two strong candidates we produce 
-    the strongest-yet-seen valid candidate. \par 
+    the strongest-yet-seen valid candidate. 
+\footnotetext{One-point crossovers are detailed in \cref{sec:reproduction} with this example shown in \cref{fig:gen_alg_reproduction}.}
+\par 
 
 By repeating this procedure, it is expected to uncover candidates which optimise $v_j$ while maintining $w_j \leq w_{max}$, 
     or at least to produce near-optimal solutions, using far less time/resources than brute-force evaluation of all candidates, 
     which is usually sufficient. 
 For instance, with $n=100$ objects to consider, there are $2^{100} \approx 10^{30}$ candidates to consider; 
     the most powerful supercomputers in the world currently claim on the order of Exa-FLOPs, 
-    i.e. $10^{18}$ operations per second, of which say $\sim1000$ operations are required to test each candidate, 
+    i.e. $10^{18}$ operations per second, of which say $\mathcal{O}(1000)$ operations are required to test each candidate, 
     meaning $10^{15}$ candidates can be checked per second in a generous example. 
 This would still require $10^{12}$ seconds to solve absolutely, 
     so it is reasonable in cases like this to accept 
@@ -257,23 +326,25 @@ All mechanisms have in common that they act on a set of candidates from the prev
 Among the viable schemes for selecting individual parents from the set of candidates, $\mu$  are
 \begin{easylist}[itemize]
     & Rank selection: candidates are selected with probabilty proportional to their ranking relative to 
-        the fitness of contemporary candidates in the same generation. 
+        the fitness of contemporary candidates in the same generation;
     & Tournament selection: a subset of $k$ candidates are chosen at random from $\mu$, 
-        of which the candidate with the highest fitness is taken as the parent. 
+        of which the candidate with the highest fitness is taken as the parent;
     & Stochastic universal sampling: candidates are sampled proportional to their fitness, 
         but the sampling algorithm is biased to ensure high-fitness candidates are chosen at least once 
         within the generation. 
 \end{easylist}
 
-We will only detail the mechanism used later within \gls{qmla}, 
-    the common fitness proportional selection, known as \emph{roulette selection} \cite{luke11}. 
+We will only detail the mechanism used in later applications within this thesis: 
+    fitness proportional selection, known as \emph{roulette selection} \cite{luke11}. 
 This is a straightforward strategy where we directly map candidates' fitness, $g_i$ to a selection probability, $s_i$,
     simply by normalising $\{g_i\}$, 
-    allowing us to visualise a roulette wheel of uneven wedges, eachh of which correspond to a candidate. 
+    allowing us to visualise a roulette wheel of uneven wedges, each of which correspond to a candidate. 
 Then we need only conceptually spin the roulette wheel to select the first parent, $\gamma_{p_1}$. 
 We then remove $\gamma_{p_1}$ from the set of potential parents, renormalise the remaining $\{s_i\}$, 
     and spin the wheel again to choose the second parent, $\gamma_{p_2}$. 
+The roulette selection is shown in \cref{fig:knapsack_roulette}.
 \par 
+
 Practically, we repeat the process outlined until the next generation is filled, 
     usually we have $|\mu| = N_m$, and desire that every generation should contain the same 
     $N_m$ candidates, so we repeat the roulette selection $\nicefrac{N_m}{2}$ times per generation, 
@@ -283,7 +354,7 @@ It is important that meaningful differences in fitness are reflected by the sele
     a marginally more probable parent than the worst -- this effect is amplified for larger $N_m$. 
 We therefore wish to reduce the set of potential parents to ensure high quality offspring:
     we truncate $\mu$ and retain only the highest-fitness $\frac{N_m}{2}$ models as selectable parents. 
-The roulette selection is shown in \cref{fig:knapsack_roulette}.
+\par 
 
 \subsection{Reproduction}
 \label{sec:reproduction}
@@ -293,9 +364,9 @@ The roulette selection is shown in \cref{fig:knapsack_roulette}.
     \end{center}
     \caption[Crossover and mutation of chromosomes.]{
         Crossover and mutation of chromosomes.
-        Two parents, $\gamma_{p_1}, \gamma_{p_2}$, are nominated from the process in \cref{fig:knapsack_roulette}. 
+        Two parents, $\left\{\gamma_{p_1}, \gamma_{p_2}\right\}$, are nominated from the process in \cref{fig:knapsack_roulette}. 
         They are then crossed-over via a one-point crossover with crossing point $\kappa=3$, 
-        resulting in children candidates $\gamma_{c_1}, \gamma_{c_2}$. 
+        resulting in children candidates $\left\{\gamma_{c_1}, \gamma_{c_2}\right\}$. 
         One child chromosome is mutated to yield a new candidate, $\gamma_{c_2}^{\prime}$. 
         The candidates added to the next generation are then $\{ \gamma_{c_1}, \gamma_{c_2}^{\prime} \}$.
     }
@@ -319,7 +390,7 @@ By allowing $\kappa$ other than the midpoint, we drastically increase the number
 Finally, then, parent selection is done by constructing a database of pairs of potentital parents with all available crossover points, 
     with selection probability given by the product of their individual fitnesses. 
 This is conceptually equivalent to selection via roulette wheel as above. 
-Recalling the fitnesses (values) of \cref{table:knapsack_candidates}, for example: 
+Recalling the fitnesses (values) of \cref{table:knapsack_candidates}, we generate the parent selection database:
 
 \begin{table}[H]
     \begin{center}
@@ -369,27 +440,15 @@ $r_m$ is a \emph{hyperparameter} of the \gls{ga}:
 Within every generation of the \gls{ga}, each candidate must be evaluated, 
     so that the relative strength of candidates can be exploited in constructing 
     candidates for the next generation.
-In the example of the knapsack problem used above, candidates were evaluated by the value of their contennts, 
+In the example of the knapsack problem used above, candidates were evaluated by the value of their contents, 
     but also by whether they would fit in the knapsack. 
 Idenitfiyng the appropriate method by which to evaluate candidates is arguably the most important aspect of designing a \gls{ga}:
     while the choice of hyperperameters ($N_g, N_m, r_m$) dictate the efficacy of the search, 
     the lack of an effective metric by which to distinguish candidates would render the procedure pointless.
-Considerations are hence usually built into the \glsentryfull{of}. 
+Considerations are hence usually built into the \glsentryfull{of};
+    \glspl{ga} implementations later in this thesis therefore demand we design \glspl{of} 
+    with respect to the individual application. 
 \par 
-Unlike previous aspects of generic \glspl{ga}, in the context of \gls{qmla}, here we must deviate from default mechanisms. 
-Recalling the overarching goal of \gls{qmla}, to characterise some black box quantum system, $Q$, we do not have access to a natural \gls{of}.
-We wish to optimise the modelling of $\hp$, but assume we do not know the target $\ho$, 
-    so we can not simply invoke some loss function, for example. 
-Instead, we must devise schemes which exploit the knowledge we \emph{do} have about each candidate $\hj$, 
-    which is the primary challenge in building an \gls{es} based on a \gls{ga}.  
-We propose and discuss a number of options in \cref{sec:objective_functions}. 
-\par 
-
-Common to all proposed \glspl{of}, however, is that candidates should first be trained before evaluation, 
-    so that their assessment is based on their actual power in explaining the target system, 
-    rather than some initial paramterisation which may not capture their potential. 
-This is a tenet of \gls{qmla}: for each candidate $\hj ( \al_j )$, we use a subroutine to optimise $\al_j$, 
-    again for this study we rely on \gls{qhl}. 
 
 
 

@@ -10,6 +10,23 @@ We describe the concepts of \glspl{ga} in \cref{sec:genetic_algorithms},
 \par 
 
 \section{Adaptation to QMLA framework}\label{sec:ga_adaptation_to_qmla}
+Unlike the generic aspects of \glspl{ga} described in \cref{sec:genetic_algorithms}, 
+    in the context of \gls{qmla}, here we must deviate from default mechanisms. 
+Recalling the overarching goal of \gls{qmla}, to characterise some black box quantum system, 
+    $Q$, we do not have access to a natural \gls{of}.
+We wish to optimise the modelling of $\hp$, but assume we do not know the target $\ho$, 
+    so we can not simply invoke some loss function, for example. 
+Instead, we must devise schemes which exploit the knowledge we \emph{do} have about each candidate $\hj$, 
+    which is the primary challenge in building an \gls{es} based on a \gls{ga}.  
+We propose and discuss a number of options in \cref{sec:objective_functions}. 
+\par 
+
+Common to all proposed \glspl{of}, however, is that candidates should first be trained before evaluation, 
+    so that their assessment is based on their actual power in explaining the target system, 
+    rather than some initial paramterisation which may not capture their potential. 
+This is a tenet of \gls{qmla}: for each candidate $\hj ( \al_j )$, we use a subroutine to optimise $\al_j$, 
+    again for this study we rely on \gls{qhl}. 
+
 Ultimately, the conceived role of a \gls{ga} within \gls{qmla} is to generate the sets of models to place 
     on successive branches of the \glspl{et} in \cref{fig:qmla_overview}.
 The apparatus for this is to implement an \glsentryfull{es} whose model generation subroutine 
