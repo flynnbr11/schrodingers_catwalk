@@ -46,52 +46,226 @@ The output is a predictive tool which aims to reconstruct the classes of unseen 
 
 \par 
 
-For an incomplete list of common supervised algorithms, 
-    we list examples in \cref{table:supervised_examples},
-    with definitions:
+There are a number of families of algorithms even within the broad category of supervised \gls{ml},
+    we define them as 
 \begin{easylist}
-    & \emph{Classification}: models which can assign unseen instances the most appropriate 
-        label from a fixed set of available labels  \cite{kotsiantis2007supervised};
-    & \emph{Linear regression}: models capture the linear relationship between numerical features and the target scalar, 
-        by determining linear coefficients for each feature. 
-    & \emph{Neural networks}\footnote{including {deep learning} networks}: \emph{universal function approximators}.
+    & \emph{Classification}: aim to produce models which can assign unseen instances to the most appropriate label,
+        from a fixed set of available labels  \cite{kotsiantis2007supervised};
+        && e.g. labels indicate animals' species, and the feature vector for each sample (data point) 
+        encodes the animals' height, weight, number of legs, etc. 
+    & \emph{Regression}: models capture the formulaic relationship -- which can be either linear or polynamial -- 
+        between numerical features a the target scalar value, 
+        by determining coefficients for each feature. 
+    && e.g. $y$ is the salary of employees in a company, and the feature vector consists of 
+        the individual employees' age, seniority, experience in years, etc. 
+    & \emph{Neural networks}\footnote{Including {deep learning} networks \cite{hinton2006fast}.}: \emph{universal function approximators}.
         By invoking a set of linear and non-linear transformations on input data, 
-        where the network is a function of some paramterisation $w$, 
-        finding the optimal network such that \cref{eqn:supervised_ml_target} is satisfied, 
-        $f(\vec{x}_i | w) = y_i$. 
+        the \emph{network} is a function of some paramterisation $w$;
+        neural networks aim to find the optimal network, $w^{\prime}$, such that \cref{eqn:supervised_ml_target} is satisfied, 
+        $f(w^{\prime}): \vec{x}_i \longmapsto y_i$. 
+    && Usually used for classification.
+    && e.g. input \emph{neurons}\footnotemark \ encode the pixel values of images. 
+        The neural network can be used to classify the objects it detects within the image. 
+    & \emph{\Gls{svm}}: distinguishes similar data points by projecitng data into higher dimensional space,
+        and therein finding the hypersurface which separates classes \cite{boser1992training}.
+        && Usually used for classification tasks.
+        && For data $\mathcal{D} \in \mathbb{R}^n$, a hypersurface in $\mathbb{R}^{n-1}$, 
+            can be drawn arbitrarilily through the space (e.g. a 2D plane in a 3D space).
+        && Unseen data can then classified by which partition they are reside in when projected into the $n$-dimensional space.
+        && The task of the \glspl{svm} is to orient the hypersurface in such a way as to separate distinct classes. 
 \end{easylist}
+
+\footnotetext{
+    The term \emph{neuron}, also known as \emph{node} or \emph{unit}, 
+    derives from the motivation for this class of algorithm: the cells in the brain used for processing information. 
+}
 \par 
 
-\begin{table}
+Supervised \gls{ml} algorithms rely on the existence of a body of labelled samples 
+    -- the dataset $\mathcal{D}$ -- upon which the model can be trained.
+Training is typically performed on a subset of the data, $\mathcal{D}_t$, usually 80\% of samples chosen at random. 
+The remaining (20\%) of samples, $\mathcal{D}_v$, are retained for the evaluation of the resultant model: 
+    $d \in \mathcal{D}_v$ are not trained upon, so do not contribute to the structure of $f$ as returned by the algorithm.
+    The model therefore can not \emph{overfit}, i.e. simply recognise particular samples and label them correctly,
+    without any meaningful inference. 
+The evalutation thus captures how the model can be expected to perform on future, unlabelled data. 
+\par 
+
+\subsection{Performance metrics}
+An important step is the fair assessment of algorithms, then, 
+    which is achieved through a number of \emph{performance metrics}.
+In each supervised \gls{ml}, the machine attempts to learn the structure of $f$ that optimises some internal \gls{of}, 
+    e.g. minimising the average distance between predicted and target labels for regression, $\sum\limits_{d \in \mathcal{D}_t} y_d - y^{\prime}_d$.
+To assess the resultant model, we introduce a number of \emph{performance metrics}, 
+    which aim to measure serveral perspectives of the model's efficacy, by considering the model's predictions with respect to $\mathcal{D}_v$. 
+\par 
+
+By definition of the data format, it is relatively straightforward to define metrics for supervised routines:
+    the classes assigned to feature vectors, $y_i^{\prime}$, can be quantitatively assessed with respect to their true class, $y_i$. 
+For example, in \emph{binary classification}, the output of the model is either correct or incorrect, 
+    allowing us to meaningfully assess its average performance. 
+Likewise, for numerical targets, the difference $\absval{y_i - y_i^{\prime}}$ between the output, $y_i^{\prime}$, 
+    and the target, $y_i$ for each sample cumulatively indicate the strength of the model. 
+\par 
+
+There are a large number of quantities and performance metrics against which to judge models' outputs.
+In binary classification, we care about whether the model predicts that a given feature is present,
+    and whether it predicts features incorrectly. 
+For example, the model aims to classify whether or not a dog is present in an image. 
+These type of binary predictions have four outcomes:
+
+\begin{table}[h!]
     \begin{center}
-    \begin{tabular}{llcc}
-        Algorithm & Output $y$ & Input $\vec{x}$ \\
+    \begin{tabular}{lcc}
+        & $y$ has feature & $y^{\prime}$ has feature \\
         \hline
-        Classification & Category: animal & $ \left( \textrm{height, weight, # legs}\right) $ \\
-        Linear regression & Number: salary & $\left( \textrm{age, seniority, years\_experience}\right) $ \\
-        Neural network & Number: salary & $\left( \textrm{age, seniority, years\_experience}\right) $ \\
-        Support Vector Machine & & \\ 
+        \Gls{tp} & \tick & \tick \\
+        \Gls{fp} & \cross & \tick \\
+        \Gls{tn} & \cross & \cross \\
+        \Gls{fn} & \tick & \cross\\
     \end{tabular}
     \end{center}
-    \caption[Supervsied learning algorithm examples]{Supervsied learning algorithm examples}
-    \label{table:supervised_examples}
+    \caption[Classification metrics]{
+        Classification metrics. 
+        We define classification outcomes based on whether the considered feature was present and/or predicted. 
+    }
+    \label{table:classification_metrics}
 \end{table}
+\par 
+    
+We can use the concepts of \cref{table:classification_metrics} to define a series of \emph{rates} 
+    which characterise the model's predictions. 
+    
+\begin{description}\label{metrics_description}
+    \begin{subequations}
+    \item[Accuracy] The overall rate at which the algorithm predicts the correct result. 
+    \begin{equation}\label{accuracy_eqn}
+        \frac{TP + TN}{TP + TN + FN + FP}
+    \end{equation}
+    
+    \item[Precision] Positive predicitve rate. Of those \emph{predicted to have} the feature of interest, what percentage \emph{actually have} the feature. 
+    \begin{equation}\label{precision_eqn}
+        \frac{TP}{TP+FP}
+    \end{equation}
+    
+    \item[Sensitivity] True positive rate (also known as \emph{recall}). Of those which \emph{actually have} the feature, what percentage are \emph{predicted to have} the feature.
+    \begin{equation}\label{sensitivity_eqn}
+        \frac{TP}{TP+FN}
+    \end{equation}
+    
+    \item[Specificity] True negative rate. Of those which  \emph{do not actually have} the feature of interest, how many are \emph{predicted not to} have the feature.
+    \begin{equation}\label{specificity_eqn}
+        \frac{TN}{TN+FP}
+    \end{equation}
+    \end{subequations}
+\end{description}
+    
+Each metric has clear advantages, but consider also their drawbacks:
+\begin{easylist}
+    & Accuracy can be extremely misleading. 
+        for example, in a dataset with only 100 instances of the feature of interest,
+        a model predicting 9,900 true negatives and 1,100 false negatives will give 99\% accuracy, despite not having found a single positive sample. 
+        This is clearly of no use in identifying the minority of cases which are of actual interest. 
+    & Sensitivity can be inflated by over-fitting to positive cases. 
+        That is, by predicting the feature as present in all cases, all true instances of the feature will be found, however all false instances will be labelled as having the feature, 
+        so the model has not helped separate the data.
+        The model willl yield a high rate of \gls{tp} but also a high rate of \gls{fp}. 
+    & Precision can be high for extremely selective models, i.e. those which are conservative in predicting the presence of the feature.
+        By predicting relatively few positive instances, it can ensure that a high proportion of its predictions are correct. 
+        The absolute number of instances identified, however, is relatively low, as a proportion of the total number in the dataset. 
+    & Specificity, similar to sensitivity, can easily mislead by identifying very few instances as having the target feature. 
+        Then, it will correctly predict most non-present instances as false, but will not identify the few instance of interest.  
+\end{easylist}
 
-Supervised \gls{ml} rely on the existence of a body of labelled samples -- the dataset $\mathcal{D}$ -- upon which the model can be trained.
-An important aspect of these algorithms is assessment, i.e. judging their performance. 
-By definition of the data format, this is a straightforward task for supervised routines:
-    the classes assigned to feature vectors can be quantitatively assessed. 
-The task of the machine is then to learn the configuration, $w$, for which this is satisifed in the highest proportion of cases. 
+Clearly, the performance metric must be chosen with due consideration for the application;
+    e.g. in testing for a medical condition, rather than incorrectly telling a patient they do not have the condition because the 
+    model predicted they were feature-negative, it is preferable to incorrectly identify some patients as feature-positive (since they can be retested). 
+In this case, high accuracy is crucial, at the expense of precision. 
+It is clearly appropriate to blend together the usual metrics, in order to derive performance metrics which balance the priorities of the outcomes.
+In general -- including in this thesis -- the most important aspects of a \gls{ml} are precision and sensitivity: 
+    a model which performs well with respect to \emph{both} of these is sensitive to the feature, but precise in its predictions. 
+A quantity which captures both of these is the $F_{\beta}$-score, 
+\begin{equation}
+    f_{\beta} = \left( 1 + \beta^2 \right) \frac{
+        \textrm{precision} \times \textrm{sensitivity} }{
+        \left(\beta^2\times\textrm{precision}\right) + \textrm{sensitivity}},
+\end{equation}
+where $\beta \in \mathbb{R}$ is the relative weight of importance between sensitivity and precision. 
+In particular, considering precision and sensitivity as equally important, i.e. $\beta=1$, 
+    we have the $\fs$, 
+\begin{equation}
+    \label{eqn:f_score_def}
+    f_1 = \frac{2 \times \textrm{precision} \times \textrm{sensitivity} }{\textrm{precision} + \textrm{sensitivity}}.
+\end{equation}
+For examples of how $\fs$ balances these considerations, see \cref{table:f1_example}.
+\par
+
+\begin{table}
+    \centering
+    \begin{tabular}{|ccc|cc|c|}
+        \hline
+        \Glsentrylong{tp} & \Glsentrylong{fn} & \Glsentrylong{fp} & Precision & Sensitivity & $\fs$  \\
+        \hline
+        \rule{0pt}{3ex} 500 & 500 & 1000 & 33 & 50 & $ (\frac{2 \times 33 \times 50 }{33 + 50 }) = 37 $ \\
+        \rule{0pt}{3ex} 500 & 500 & 500 & 50 & 50 & $( \frac{2 \times 50 \times 50 }{50 + 50 } ) = 50 $ \\
+        \rule{0pt}{3ex} 1000 & 0 & 1000 & 50 & 100 & $ (\frac{2 \times 50 \times 100} { 50 + 100 }) = 67 $ \\
+        \rule{0pt}{3ex} 1000  & 0 & 0 & 100 & 100 & $ (\frac{2 \times 100 \times 100}{100 + 100}) = 100 $ \\
+        \hline
+    \end{tabular}
+    \caption{$\fs$ examples.}
+    \label{table:f1_example}
+\end{table}
 
 
 \subsection{Unsupervised \glsentrylong{ml}}
 
-An example of supervised \gls{ml} is
+Contrary to supervised algorithms, unsupervised methods operate on \emph{unlabelled} data, $\mathcal{D}$. 
+This is often summarised as finding structure within unstructured data.
+Again we can further compartmentalise methods under this umbrella as follows \cite{geron2019hands}. 
+
+\begin{easylist}
+    & \emph{Clustering}: finding datapoints which are similar to each other, according to some distance metric.
+    && e.g. online retailers grouping together customers with similar preferences, in order to tailor advertising campaigns. 
+    & \emph{Dimensionality reduction}: reducing the feature vector of each sample in a dataset to essential components,
+        which may be amalgamations of original features, while retaining structure within the data.
+    && this can be used for visualisation to allow for inspection of complex datasets, 
+        e.g. plotting users of a social network as nodes on a 2D map, where distinct social groups
+        are kept distant. 
+    & \emph{Association learning}: discover correlations among data. 
+    && For instance, a supermarket may find that purchasers of certain products are likely also to buy others, 
+        providing actionable insight 
+        e.g. purchases involving bread also include butter in $50\%$ of cases, 
+        so positioning these nearby may increase sales by reminding consumers of their compatibility. 
+    & \emph{Semi-supervised learning}: combine elements of supervised and unsupervised algorithms, 
+        to achieve a task beyond the remit of either alone. 
+        This often means classifying data where only occur a small subset of the total dataset is labelled. 
+    && e.g. in facial recognition, a clustering algorithm finds similarities between individual people in photos, 
+        and identifies a single person present across a number of photos, and associates those photos together. 
+        It combines this with a small set of photos for which people have been tagged, 
+            locates the same person and automatically tags them in the wider set of photos. 
+\end{easylist}
+\par 
 
 \subsection{\Glsentrylong{rl}}
-
-An example of \gls{rl} is self driving cars. 
-Agency...
+A third category of \gls{ml} algorithms are \glsentryfull{rl}. 
+These are methods where an \emph{agent} interacts with some environment, 
+    and refines a \emph{policy} for reacting to different stimuli. 
+As such, the agent can, in principle, deal with a wide array of situations. 
+These methods underly technologies such as self-driving cars, 
+    which inspect their surroundings through \emph{sensors};
+    compute an \emph{action} according to the policy; 
+    implement that action through \emph{actuators}.
+Following an action, the agent senses whether that action was beneficial or detrimental, 
+    and receives a \emph{reward} or \emph{punishment} accordingly. 
+Highly rewarded actions are likely to be repeated in future, allowing the agent to learn what response is 
+    appropriate to situational parameters, 
+    e.g. a self-driving car braking at a red light is rewarded, 
+    while braking at a green light is punished. 
+\par 
+The concept of a machine's \emph{agency} is an ongoing discussion in the \gls{ml} community \cite{franklin1996agent, wooldridge2009introduction}, 
+    and is important in this thesis also, when we define our model learning protocol as an agent, 
+    since it designs models by interacting with the envinroment of the target quantum systems. 
+We will revisit the concept in \cref{sec:agency}.
 
 \section{Quantum \glsentrylong{ml}}
 \begin{easylist}[itemize]
@@ -132,6 +306,10 @@ Mutation is crucial in avoiding local optima of the \gls{of} landscape
     by maintaining diversity in the examined subspace of the population.
 \par 
 
+\glspl{ga} are not defined either as supervised or unspervised methods;
+    this designation depends on the \gls{of}. 
+If candidates are evaluated with respect to labelled data, we can consider that \gls{ga} supervised, 
+    otherwise unsupervised. 
 Pseudocode for a generic \gls{ga} is given in \cref{alg:ga},
     but we can also informally define the procedure as follows. 
 Given access to the population, $\population$, 
