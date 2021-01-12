@@ -1,0 +1,29 @@
+In this Part, we examine a series of theoretical quantum systems, 
+    to assess the usefulness of the \gls{qmla} protocol described in \cref{part:algorithms}. 
+\par 
+\vspace{1cm}
+
+We begin in \cref{chapter:lattices} with ideal systems described by lattice models 
+    under standard formalisms, i.e. Ising, Heisenberg and Hubbard models. 
+This serves as a first test of the \gls{qmla} framework under reasonably straightforward
+    conditions, where a small number of candidate models are proposed in advance, 
+    with the true model gauranteed to be among them. 
+The initial idea for this chapter was proposed by Dr. Rafaelle Santagati, 
+    and refined together with Dr. Andreas Gentile and myself. 
+I modified the \gls{qmla} software for this application, 
+    ran the instances and analysed the data. 
+The figures presented are my own.
+
+\par 
+\vspace{1cm}
+In \cref{chapter:ga} we consider more general application of the \gls{qmla} protocol, 
+    in significant model spaces comprising up to 250,000 valid candidate models. 
+We explore these spaces efficiently by incorporating a \glsentryfull{ga} in \gls{qmla}. 
+I proposed \glspl{ga} for the study of large model spaces, 
+    and performed the initial hyperparameter tuning. 
+I devised the numerous \glsentryfullpl{of} considered, 
+    and in particular the combination of \glsentrylongpl{bf}
+    with Elo ratings for a bespoke \gls{of} which takes advantage of \gls{qmla}'s core strengths. 
+I built \gls{ga} infrastructure into the \gls{qmla} software, 
+    ran the instances presented, and analysed the data.
+The figures presented are my own. 
