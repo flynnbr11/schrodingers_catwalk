@@ -48,32 +48,44 @@ The output is a predictive tool which aims to reconstruct the classes of unseen 
 
 There are a number of families of algorithms even within the broad category of supervised \gls{ml},
     we define them as 
-\begin{easylist}
-    & \emph{Classification}: aim to produce models which can assign unseen instances to the most appropriate label,
+\begin{description}
+    \item[Classification] 
+        models aim to produce models which can assign unseen instances to the most appropriate label,
         from a fixed set of available labels  \cite{kotsiantis2007supervised};
-        && e.g. labels indicate animals' species, and the feature vector for each sample (data point) 
-        encodes the animals' height, weight, number of legs, etc. 
-    & \emph{Regression}: models capture the formulaic relationship -- which can be either linear or polynamial -- 
+        \begin{easylist}
+            & e.g. labels indicate animals' species, and the feature vector for each sample (data point) 
+            encodes the animals' height, weight, number of legs, etc. 
+        \end{easylist}
+    \item[Regression] models capture the formulaic relationship -- which can be either linear or polynamial -- 
         between numerical features a the target scalar value, 
         by determining coefficients for each feature. 
-    && e.g. $y$ is the salary of employees in a company, and the feature vector consists of 
-        the individual employees' age, seniority, experience in years, etc. 
-    & \emph{Neural networks}\footnote{Including {deep learning} networks \cite{hinton2006fast}.}: \emph{universal function approximators}.
+        \begin{easylist} e.g. $y$ is the salary of employees in a company, and the feature vector consists of 
+            the individual employees' age, seniority, experience in years, etc. 
+        \end{easylist}
+
+    \item[Neural networks]
+        \emph{Universal function approximators}\footnotemark.
+        \footnotetext{Including {deep learning} networks \cite{hinton2006fast}.}
         By invoking a set of linear and non-linear transformations on input data, 
         the \emph{network} is a function of some paramterisation $w$;
         neural networks aim to find the optimal network, $w^{\prime}$, such that \cref{eqn:supervised_ml_target} is satisfied, 
         $f(w^{\prime}): \vec{x}_i \longmapsto y_i$. 
-    && Usually used for classification.
-    && e.g. input \emph{neurons}\footnotemark \ encode the pixel values of images. 
-        The neural network can be used to classify the objects it detects within the image. 
-    & \emph{\Gls{svm}}: distinguishes similar data points by projecitng data into higher dimensional space,
+        \begin{easylist}
+            & Usually used for classification.
+            & e.g. input \emph{neurons}\footnotemark \ encode the pixel values of images. 
+            The neural network can be used to classify the objects it detects within the image. 
+        \end{easylist}
+    \item[ \Gls{svm} ]
+        Distinguish similar data points by projecitng data into higher dimensional space,
         and therein finding the hypersurface which separates classes \cite{boser1992training}.
-        && Usually used for classification tasks.
-        && For data $\mathcal{D} \in \mathbb{R}^n$, a hypersurface in $\mathbb{R}^{n-1}$, 
-            can be drawn arbitrarilily through the space (e.g. a 2D plane in a 3D space).
-        && Unseen data can then classified by which partition they are reside in when projected into the $n$-dimensional space.
-        && The task of the \glspl{svm} is to orient the hypersurface in such a way as to separate distinct classes. 
-\end{easylist}
+        \begin{easylist}
+            & Usually used for classification tasks.
+            & For data $\mathcal{D} \in \mathbb{R}^n$, a hypersurface in $\mathbb{R}^{n-1}$, 
+                can be drawn arbitrarilily through the space (e.g. a 2D plane in a 3D space).
+            & Unseen data can then classified by which partition they are reside in when projected into the $n$-dimensional space.
+            & The task of the \glspl{svm} is to orient the hypersurface in such a way as to separate distinct classes.                 
+        \end{easylist}
+\end{description}
 
 \footnotetext{
     The term \emph{neuron}, also known as \emph{node} or \emph{unit}, 
@@ -92,6 +104,15 @@ The evalutation thus captures how the model can be expected to perform on future
 \par 
 
 \subsection{Performance metrics}
+\begin{figure}
+    \begin{center}
+        \includegraphics{contextual_review/figures/confusion_matrix.pdf}
+    \end{center}
+    \caption[Confusion matrix]{
+        Confusion matrix showing the meaning of \glsentrylong{tp}, \glsentrylong{tn}, \glsentrylong{fp}, \glsentrylong{fn}.
+    }
+    \label{fig:confusion_matrix}
+\end{figure}
 An important step is the fair assessment of algorithms, then, 
     which is achieved through a number of \emph{performance metrics}.
 In each supervised \gls{ml}, the machine attempts to learn the structure of $f$ that optimises some internal \gls{of}, 
@@ -112,17 +133,18 @@ There are a large number of quantities and performance metrics against which to 
 In binary classification, we care about whether the model predicts that a given feature is present,
     and whether it predicts features incorrectly. 
 For example, the model aims to classify whether or not a dog is present in an image. 
-These type of binary predictions have four outcomes:
+These type of binary predictions have four outcomes, which can be summarised in a \emph{confusion matrix} (\cref{fig:confusion_matrix}), 
+    defined as in \cref{table:classification_metrics}.
 
-\begin{table}[h!]
+\begin{table}[H]
     \begin{center}
     \begin{tabular}{lcc}
         & $y$ has feature & $y^{\prime}$ has feature \\
         \hline
-        \Gls{tp} & \tick & \tick \\
-        \Gls{fp} & \cross & \tick \\
-        \Gls{tn} & \cross & \cross \\
-        \Gls{fn} & \tick & \cross\\
+        \Glsentryfull{tp} & \tick & \tick \\
+        \Glsentryfull{fp} & \cross & \tick \\
+        \Glsentryfull{tn} & \cross & \cross \\
+        \Glsentryfull{fn} & \tick & \cross\\
     \end{tabular}
     \end{center}
     \caption[Classification metrics]{
@@ -221,29 +243,38 @@ For examples of how $\fs$ balances these considerations, see \cref{table:f1_exam
 
 Contrary to supervised algorithms, unsupervised methods operate on \emph{unlabelled} data, $\mathcal{D}$. 
 This is often summarised as finding structure within unstructured data.
-Again we can further compartmentalise methods under this umbrella as follows \cite{geron2019hands}. 
+Again, we can further compartmentalise methods under this umbrella \cite{geron2019hands}. 
+Although we do not utilise these methods in this thesis, we briefly summarise them here for completeness.
 
-\begin{easylist}
-    & \emph{Clustering}: finding datapoints which are similar to each other, according to some distance metric.
-    && e.g. online retailers grouping together customers with similar preferences, in order to tailor advertising campaigns. 
-    & \emph{Dimensionality reduction}: reducing the feature vector of each sample in a dataset to essential components,
+\begin{description}
+    \item[Clustering] Finding datapoints which are similar to each other, according to some distance metric.
+    \begin{easylist}
+        & e.g. online retailers grouping together customers with similar preferences, in order to tailor advertising campaigns. 
+    \end{easylist}
+    \item[Dimensionality reduction] Reducing the feature vector of each sample in a dataset to essential components,
         which may be amalgamations of original features, while retaining structure within the data.
-    && this can be used for visualisation to allow for inspection of complex datasets, 
+    \begin{easylist}
+        & this can be used for visualisation to allow for inspection of complex datasets, 
         e.g. plotting users of a social network as nodes on a 2D map, where distinct social groups
         are kept distant. 
-    & \emph{Association learning}: discover correlations among data. 
-    && For instance, a supermarket may find that purchasers of certain products are likely also to buy others, 
+    \end{easylist}
+    \item[Association learning] Discover correlations among data. 
+    \begin{easylist}
+    & For instance, a supermarket may find that purchasers of certain products are likely also to buy others, 
         providing actionable insight 
         e.g. purchases involving bread also include butter in $50\%$ of cases, 
         so positioning these nearby may increase sales by reminding consumers of their compatibility. 
-    & \emph{Semi-supervised learning}: combine elements of supervised and unsupervised algorithms, 
+    \end{easylist}
+    \item[Semi-supervised learning] Combine elements of supervised and unsupervised algorithms, 
         to achieve a task beyond the remit of either alone. 
         This often means classifying data where only occur a small subset of the total dataset is labelled. 
-    && e.g. in facial recognition, a clustering algorithm finds similarities between individual people in photos, 
+    \begin{easylist}
+    & e.g. in facial recognition, a clustering algorithm finds similarities between individual people in photos, 
         and identifies a single person present across a number of photos, and associates those photos together. 
         It combines this with a small set of photos for which people have been tagged, 
             locates the same person and automatically tags them in the wider set of photos. 
-\end{easylist}
+    \end{easylist}
+\end{description}
 \par 
 
 \subsection{\Glsentrylong{rl}}
@@ -268,22 +299,54 @@ The concept of a machine's \emph{agency} is an ongoing discussion in the \gls{ml
 We will revisit the concept in \cref{sec:agency}.
 
 \section{Quantum \glsentrylong{ml}}
-\begin{easylist}[itemize]
-    & distinctions
-    && q data q hardware $\rightarrow$ pure QML
-    && q data classical hardware $\rightarrow$ ml for q physics
-    && classical data q hardware $\rightarrow$ q enhanced ml
-    && classical data c hardware $\rightarrow$ wrong thesis (\cref{sec:classical_ml})
+\begin{figure}
+    \begin{center}
+        \includegraphics{contextual_review/figures/qml_types.pdf}
+    \end{center}
+    \caption[Types of \glsentrylong{qml}]{Types of \glsentrylong{qml}.}
+    \label{fig:qml_types}
+\end{figure}
+A growing domain is the development of \gls{ml} algorithms which run on quantum hardware, 
+    or exploit data from quantum systems; generally referred to as \gls{qml} \cite{biamonte2017quantum, adcock2015advances}. 
+There are a number of metehodologies which are referred to as \gls{qml};
+    for clarity, we define the main branches here, as shown in \cref{fig:qml_types}. 
 
-    & examples/applications of QML 
-    && QNN, q svm, 
-    & Remit of this thesis $\rightarrow$ ml for q physics
-    && i.e. using data from quantum system and/or hardware but in conjunction with classical co-processor, 
-        for the study of quantum systems
-\end{easylist}
-\cite{dunjko2018machine}
+\begin{description}\label{description:qml}
+    \item[Classical machine learning] 
+        refers to standard \gls{ml} as described in \cref{sec:classical_ml}, i.e. where the processors are \glspl{cpu} or \glspl{gpu}, 
+            and the applications are not of specific interest to problems in the quantum domain. 
+        Recently, this branch has encompassed quantum \emph{inspired} \gls{ml}, which still target classical problems, 
+            but use subroutines which were orginally found in the context of \gls{qml} \cite{tang2019quantum}.
 
-\section{\glsentrylongpl{ga}}\label{sec:genetic_algorithms}
+    \item[Quantum enhanced machine learning] 
+        A quantum co-processor is leveraged on classical data for some provable speedup,
+        i.e. data that could otherwise be processed purely classically, is encoded, loaded onto and processed by quantum hardware.
+        The quantum counterparts of classical \gls{ml} algorithms aim to solve the same problems, 
+            e.g. as \glspl{nn} \cite{schuld2014quest, cao2017quantum} and principle component analysis \cite{lloyd2014quantum}. 
+
+    \item[Classical learning for quantum systems] 
+        Classical processors are employed to extract insight on problems arising from quantum systems, 
+            e.g. data is taken from a quantum system and analysed via purely classical methods.
+            For instance, methods which aim to represent quantum states efficiently by leveraging 
+            \glspl{nn} \cite{carleo2017solving, torlai2018neural}. 
+
+    \item[Complete quantum machine learning] 
+        Data of a quantum nature is processed -- at least partially -- by quantum processors. 
+        The most common technique here is \gls{vqe}, which simulates quanutm systems on \glspl{qc}, 
+        in order to retrieve quantum systems' ground states \cite{peruzzo2014variational}.
+        The algorithm relies on a classical optimisation routine, but was devised explicitly for implementation on quantum hardware. 
+\end{description}
+\par 
+
+The algorithms described in \cref{part:algorithms} and the applications in \crefrange{part:experimental_study}{part:theoretical_study} 
+    can be described as classical learning for quantum systems. 
+This is because the data upon which the applications are built represent quantum systems, 
+    but are processed through classical \gls{ml} algorithms in order to derive insight about those systems.
+We caveat that it is feasible, and indeed the long term intention of such algorithms, 
+    to run in conjunction with a quantum co-processor, which would represent and evolve quantum systems, 
+    but all processing presented here are through strictly classical architecture.
+
+\section{\Glsentrylongpl{ga}}\label{sec:genetic_algorithms}
 In later chapters we will use a class of optimisation techniques known as \emph{evolutionary algorithms} \cite{back1996evolutionary, de2020evolutionary}.
 In particular, \emph{\glsentryfullpl{ga}} are central to our primary applications, 
     specifically in \cref{chapter:ga}.
