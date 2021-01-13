@@ -1,14 +1,28 @@
-|    |   Label | Exploration                                 | Algorithm   |   Plot level | Plot method            | Comment   | Data folder   |
-|---:|--------:|:--------------------------------------------|:------------|-------------:|:-----------------------|:----------|:--------------|
-|  0 |     4.2 | AnalyticalLikelihood                        | QHL         |            4 | _plot_learning_summary |           | Nov_16/14_28  |
-|  1 |     7.2 | DemoIsing                                   | QHL         |            6 | _plot_learning_summary |           | Nov_18/13_56  |
-|  2 |     7.3 | DemoIsing                                   | QHL         |            6 | _plot_learning_summary |           | Nov_18/13_56  |
-|  3 |     7.4 | DemoIsing                                   | QHL         |            6 | _plot_dynamics         |           | Nov_18/13_56  |
-|  4 |     7.5 | IsingLatticeSet                             | QMLA        |            6 | N/A                    |           | Nov_19/12_04  |
-|  5 |     7.6 | IsingLatticeSet                             | QMLA        |            2 | N/A                    |           | Sep_30/22_40  |
-|  6 |     7.6 | HeisenbergLatticeSet                        | QMLA        |            2 | N/A                    |           | Oct_22/20_45  |
-|  7 |     7.6 | FermiHubbardLatticeSet                      | QMLA        |            2 | N/A                    |           | Oct_02/00_09  |
-|  8 |     9.2 | DemoBayesFactorsByFscore                    | QMLA        |            2 | N/A                    |           | Dec_09/12_29  |
-|  9 |     9.2 | DemoFractionalResourcesBayesFactorsByFscore | QMLA        |            2 | N/A                    |           | Dec_09/12_31  |
-| 10 |     9.2 | DemoBayesFactorsByFscore                    | QMLA        |            2 | N/A                    |           | Dec_09/12_33  |
-| 11 |     9.2 | DemoBayesFactorsByFscoreEloGraphs           | QMLA        |            2 | N/A                    |           | Dec_09/12_32  |
+|   Figure label | Exploration                                 | Algorithm   |   Experiments |   Particles |   Plot level | Plot method                           | Comment                                     | Data folder   |
+|---------------:|:--------------------------------------------|:------------|--------------:|------------:|-------------:|:--------------------------------------|:--------------------------------------------|:--------------|
+|            4.2 | AnalyticalLikelihood                        | QHL         |           500 |        2000 |            4 | _plot_learning_summary                |                                             | Nov_16/14_28  |
+|            4.3 | DemoHeuristicRandom                         | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | Random                                      | Nov_27/19_47  |
+|            4.3 | DemoHeuristicPGH                            | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | PGH                                         | Nov_27/19_39  |
+|            4.3 | DemoHeuristicNineEighths                    | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | (9/8)^k heuristic                           | Nov_27/19_40  |
+|            4.3 | DemoHeuristicTimeList                       | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | Time list                                   | Nov_27/19_42  |
+|            4.4 | DemoProbesPlus                              | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | |+> probe                                   | Nov_27/14_43  |
+|            4.4 | DemoProbesZero                              | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | |0> probe                                   | Nov_27/14_45  |
+|            4.4 | DemoProbesTomographic                       | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | tomographic probes                          | Nov_27/14_46  |
+|            4.4 | DemoProbes                                  | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | random probes                               | Nov_27/14_47  |
+|            4.5 | DemoProbesPlus                              | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | |+> probe                                   | Nov_27/14_43  |
+|            4.5 | DemoProbesZero                              | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | |0> probe                                   | Nov_27/14_45  |
+|            4.5 | DemoProbesTomographic                       | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | tomographic probes                          | Nov_27/14_46  |
+|            4.5 | DemoProbes                                  | QHL         |          1000 |        3000 |            4 | _plot_heuristic_attributes            | random probes                               | Nov_27/14_47  |
+|            7.2 | DemoIsing                                   | QHL         |           500 |        5000 |            6 | _plot_learning_summary                |                                             | Nov_18/13_56  |
+|            7.3 | DemoIsing                                   | QHL         |          1000 |        5000 |            6 | _plot_learning_summary                |                                             | Nov_18/13_56  |
+|            7.4 | DemoIsing                                   | QHL         |          1000 |        5000 |            6 | _plot_dynamics                        |                                             | Nov_18/13_56  |
+|            7.5 | IsingLatticeSet                             | QMLA        |          1000 |        4000 |            1 | N/A                                   | Overall figure combines default plots below | Nov_19/12_04  |
+|            7.5 | IsingLatticeSet                             | QMLA        |          1000 |        4000 |            2 | _plot_dynamics_all_models_on_branches | Subfigures (c),(d)                          | Nov_19/12_04  |
+|            7.5 | IsingLatticeSet                             | QMLA        |          1000 |        4000 |            3 | _plot_bayes_factors                   | Subfigure (e)                               | Nov_19/12_04  |
+|            7.6 | IsingLatticeSet                             | QMLA        |          1000 |        4000 |            1 | plot_scores                           | Ising                                       | Sep_30/22_40  |
+|            7.6 | HeisenbergLatticeSet                        | QMLA        |          1000 |        4000 |            1 | plot_scores                           | Heisenberg                                  | Oct_22/20_45  |
+|            7.6 | FermiHubbardLatticeSet                      | QMLA        |          1000 |        4000 |            1 | plot_scores                           | Hubbard                                     | Oct_02/00_09  |
+|            9.2 | DemoBayesFactorsByFscore                    | QMLA        |           500 |        2500 |            1 | N/A                                   | Subfigure (a)                               | Dec_09/12_29  |
+|            9.2 | DemoFractionalResourcesBayesFactorsByFscore | QMLA        |           500 |        2500 |            1 | N/A                                   | Subfigure (b)                               | Dec_09/12_31  |
+|            9.2 | DemoBayesFactorsByFscore                    | QMLA        |          1000 |        5000 |            1 | N/A                                   | Subfigure (c)                               | Dec_09/12_33  |
+|            9.2 | DemoBayesFactorsByFscoreEloGraphs           | QMLA        |           500 |        2500 |            1 | N/A                                   | Subfigure (d)                               | Dec_09/12_32  |

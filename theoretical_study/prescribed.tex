@@ -120,7 +120,7 @@ We can then summarise the set of candidate models through the descriptions of la
             \caption{}
         \end{subfigure}
     \end{center}
-    \caption[Lattices for prescribed QMLA]{
+    \caption[Lattices for prescribed \gls{qmla} \glsentrylong{es}]{
         Lattices used for prescribed models test for \gls{qmla}.
         Lattices are characterised by the connectivity of their sites; 
             dotted lines show connection between pairs of sites.                 
@@ -278,8 +278,8 @@ We summarise these cases in \cref{table:ising_models}.
         \QMLAfig{Nov_18/13_56/standard_ising_qhl.pdf}
     \end{center}
 
-    \caption[\gls{qhl} for Ising model]{
-        \gls{qhl} for Ising model where terms are grouped by their functionality, 
+    \caption[\Glsentrylong{qhl} for standard Ising model]{
+        \Glsentrylong{qhl} for standard Ising model, where terms are grouped by their functionality, 
         as in \cref{eqn:ising_standard_form}. 
         (a,b) show the parameter estimates progression against 
         epochs (experiments), with the corresponding term written on top of the plot; 
@@ -294,7 +294,7 @@ We summarise these cases in \cref{table:ising_models}.
     \begin{center}
         \QMLAfig{Nov_18/13_56/fully_param_ising_qhl.pdf}        
     \end{center}
-    \caption[\gls{qhl} for Ising model]{
+    \caption[\Glsentrylong{qhl} for fully parameterised Ising model]{
         \gls{qhl} for fully parameterised Ising model, 
             where every interaction between pairs of sites are assigned unique parameters, 
             here neglecting the transverse field, 
@@ -312,7 +312,7 @@ We summarise these cases in \cref{table:ising_models}.
     \begin{center}
         \QMLAfig{Nov_18/13_56/dynamics.pdf}
     \end{center}
-    \caption[Ising model types' dynamics.]{
+    \caption[Ising model types' dynamics]{
         Dynamics reproduced by Ising models under standard and fully parameterised formalisms, 
         compared with dynamics for the true system.
         \figtableref
@@ -657,8 +657,8 @@ We can then devise a simple \gls{es} which only tests the models corresponding t
 
 \begin{figure}
     \QMLAfig{Nov_19/12_04/lattice_qmla_summary.pdf}
-    \caption[\gls{qmla} for set of lattices under Ising formalism]{
-        \gls{qmla} for set of lattices under Ising formalism. 
+    \caption[\gls{qmla} for prescribed set of lattices under Ising formalism]{
+        \gls{qmla} for prescribed set of lattices under Ising formalism. 
         The lattice indices correspond to those in \cref{fig:lattices}, 
             and the true system is given by lattice $d$. 
         (a,b) show the decrease in \gls{volume} for each model's training phase. (spread over two plots for readibility) 
@@ -717,7 +717,7 @@ In the ideal case, where it is mostly believed the device works,
     \begin{center}
         \includegraphics{theoretical_study/figures/lattices/lattice_successes_two_column.pdf}
     \end{center}
-    \caption[\gls{qmla} Success rates for lattices]{
+    \caption[\gls{qmla} success rates for lattices]{
         Rates of success for \gls{qmla} under various conditions. 
         Each lattice is set as the true model $\ho$ for ten independent instances. 
         In each instance, the \gls{es} considers the available lattices 
