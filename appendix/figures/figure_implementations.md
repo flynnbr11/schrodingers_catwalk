@@ -1,14 +1,14 @@
-|                                                                                       | Algorithm   |   $N_E$ |   $N_P$ | Data           |
-|:--------------------------------------------------------------------------------------|:------------|--------:|--------:|:---------------|
-| ('\\cref{fig:param_learning_vary_particles}', '\\texttt{AnalyticalLikelihood}')       | QHL         |     500 |    2000 | Nov\_16/14\_28 |
-| ('\\cref{fig:ising_two_param_learning}', '\\texttt{DemoIsing}')                       | QHL         |     500 |    5000 | Nov\_18/13\_56 |
-| ('\\cref{fig:ising_fully_parameterised}', '\\texttt{DemoIsing}')                      | QHL         |    1000 |    5000 | Nov\_18/13\_56 |
-| ('\\cref{fig:ising_model_types_dynamics}', '\\texttt{DemoIsing}')                     | QHL         |    1000 |    5000 | Nov\_18/13\_56 |
-| ('\\cref{fig:lattice_qmla_eg}', '\\texttt{IsingLatticeSet}')                          | QMLA        |    1000 |    4000 | Nov\_19/12\_04 |
-| ('\\cref{fig:lattice_success_rates}', '\\texttt{IsingLatticeSet}')                    | QMLA        |    1000 |    4000 | Sep\_30/22\_40 |
-| ('\\cref{fig:lattice_success_rates}', '\\texttt{HeisenbergLatticeSet}')               | QMLA        |    1000 |    4000 | Oct\_22/20\_45 |
-| ('\\cref{fig:lattice_success_rates}', '\\texttt{FermiHubbardLatticeSet}')             | QMLA        |    1000 |    4000 | Oct\_02/00\_09 |
-| ('\\cref{fig:bf_by_fscore}', '\\texttt{DemoBayesFactorsByFscore}')                    | QMLA        |     500 |    2500 | Dec\_09/12\_29 |
-| ('\\cref{fig:bf_by_fscore}', '\\texttt{DemoFractionalResourcesBayesFactorsByFscore}') | QMLA        |     500 |    2500 | Dec\_09/12\_31 |
-| ('\\cref{fig:bf_by_fscore}', '\\texttt{DemoBayesFactorsByFscore}')                    | QMLA        |    1000 |    5000 | Dec\_09/12\_33 |
-| ('\\cref{fig:bf_by_fscore}', '\\texttt{DemoBayesFactorsByFscoreEloGraphs}')           | QMLA        |     500 |    2500 | Dec\_09/12\_32 |
+|    |   Label | Exploration                                 | Algorithm   |   Plot level | Plot method            | Comment   | Data folder   |
+|---:|--------:|:--------------------------------------------|:------------|-------------:|:-----------------------|:----------|:--------------|
+|  0 |     4.2 | AnalyticalLikelihood                        | QHL         |            4 | _plot_learning_summary |           | Nov_16/14_28  |
+|  1 |     7.2 | DemoIsing                                   | QHL         |            6 | _plot_learning_summary |           | Nov_18/13_56  |
+|  2 |     7.3 | DemoIsing                                   | QHL         |            6 | _plot_learning_summary |           | Nov_18/13_56  |
+|  3 |     7.4 | DemoIsing                                   | QHL         |            6 | _plot_dynamics         |           | Nov_18/13_56  |
+|  4 |     7.5 | IsingLatticeSet                             | QMLA        |            6 | N/A                    |           | Nov_19/12_04  |
+|  5 |     7.6 | IsingLatticeSet                             | QMLA        |            2 | N/A                    |           | Sep_30/22_40  |
+|  6 |     7.6 | HeisenbergLatticeSet                        | QMLA        |            2 | N/A                    |           | Oct_22/20_45  |
+|  7 |     7.6 | FermiHubbardLatticeSet                      | QMLA        |            2 | N/A                    |           | Oct_02/00_09  |
+|  8 |     9.2 | DemoBayesFactorsByFscore                    | QMLA        |            2 | N/A                    |           | Dec_09/12_29  |
+|  9 |     9.2 | DemoFractionalResourcesBayesFactorsByFscore | QMLA        |            2 | N/A                    |           | Dec_09/12_31  |
+| 10 |     9.2 | DemoBayesFactorsByFscore                    | QMLA        |            2 | N/A                    |           | Dec_09/12_33  |
+| 11 |     9.2 | DemoBayesFactorsByFscoreEloGraphs           | QMLA        |            2 | N/A                    |           | Dec_09/12_32  |
