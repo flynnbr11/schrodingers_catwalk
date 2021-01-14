@@ -70,14 +70,28 @@ exploration_strategy='AnalyticalLikelihood'
 
 \end{lstlisting}
 
+
+\renewcommand{\arraystretch}{1.25} % space between rows
+\setlength{\tabcolsep}{5pt}
+
 \clearpage
 \begin{table}[h!]
 % \begin{sidewaystable}
     \begin{center}
-        \input{appendix/figures/figure_implementations.tex}
+        \input{appendix/figures/figure_implementations_top.tex}
     \end{center}
     \caption[Figure implementation details]{Implementation details for figures used in the main text.}
     \label{table:figure_reproduction}
 % \end{sidewaystable}
 \end{table}
+
+\clearpage
+\begin{table}[h!]
+        \begin{center}
+            \input{appendix/figures/figure_implementations_bottom.tex}
+        \end{center}
+        \caption[Figure implementation details continued]{[Continued from \cref{table:figure_reproduction}] Implementation details for figures used in the main text.}
+        \label{table:figure_reproduction_contd}
+\end{table}
+    
 \clearpage
