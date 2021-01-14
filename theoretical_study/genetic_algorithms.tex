@@ -739,8 +739,8 @@ One disadvantage is that it does not explicitly punish models based
 \begin{figure}
     \centering
     \includegraphics[width=0.95\textwidth]{theoretical_study/figures/objective_fnc_comparison.pdf}
-    \caption[Comparison between proposed \glspl{of}.]{
-        Comparison between proposed \glspl{of}. 
+    \caption[Comparison between proposed \glsentrylongpl{of}.]{
+        Comparison between proposed \glsentryfullpl{of}. 
         Each \gls{of} trains the same initial generation of $N_m=28$ models with resources
         $N_E=500, N_P=2000$, and then design a new set of $N_m$ models through 
         the same roulette strategy, such that the only difference between \gls{of}'s output 
@@ -878,8 +878,8 @@ We will analyse the \gls{ges} from four perspectives:
     \begin{center}
         \includegraphics{theoretical_study/figures/single_generation_ratings_progression.pdf}
     \end{center}
-    \caption[Single model within a single generation of the \gls{qmla} \gls{ga}.]{
-        \glsentryfull{bfeer} progression for a single candidate, $\hi$, within a single generation.
+    \caption[Single model within a single generation of the \gls{qmla} \glsentrylong{ga}.]{
+        \glsentrylong{bfeer} progression for a single candidate, $\hi$, within a single generation.
         \textbf{a}, The \glspl{bf} between $\hi$ and some opponents, $\{\hj\}$, 
             from the perspective where $\hi$ \emph{wins} given $\bij > 1 \Rightarrow \log_{10}\bij > 0$, 
             and loses otherwise. 
@@ -909,8 +909,8 @@ We see that $\hi$'s rating is effected by whether it wins a given comparison,
     \begin{center}
         \includegraphics{theoretical_study/figures/single_generation_all_ratings.pdf}
     \end{center}
-    \caption[Ratings of all models in a single \gls{ga} generation.]{
-        Ratings of all models in a single \gls{ga} generation.
+    \caption[Ratings of all models in a single \glsentrylong{ga} generation.]{
+        Ratings of all models in a single \glsentrylong{ga} generation.
         Each line represents a unique model and is coloured by the $\fs$ of that model. 
         \textbf{Inset}, the selection probabilities resulting from the final ratings of this generation. 
         Only a fraction of models are assigned selection probability, while the remaining poorer-performing 
@@ -934,8 +934,8 @@ The very strongest two models are granted a position in the subsequent generatio
     \begin{center}
         \includegraphics{theoretical_study/figures/gen_alg_instance_combined.pdf}
     \end{center}
-    \caption[\Gls{instance} of \gls{qmla} \gls{ga}.]{
-        A single \gls{instance} of the \gls{qmla} \gls{ga}.
+    \caption[\Gls{instance} of \gls{qmla} \glsentrylong{ga}.]{
+        A single \gls{instance} of the \gls{qmla} \glsentrylong{}{ga}.
         \textbf{a}, Ratings of all models for the first five generations. 
         Each line in each generation represents a model by its $\fs$. 
         Horizontal dotted lines show the starting rating at that generation. 
@@ -959,8 +959,8 @@ Consequently, even in cases where the precise model, $\ho$, is not identified, t
     \begin{center}
         \includegraphics{theoretical_study/figures/gen_alg_run.pdf}
     \end{center}
-    \caption[\Gls{run} of \gls{qmla} \gls{ga}.]{
-        A \gls{run} of the \gls{qmla} \gls{ga}, consisting of 100 independent \glspl{instance}.
+    \caption[\Gls{run} of \gls{qmla} \glsentrylong{ga}.]{
+        A \gls{run} of the \gls{qmla} \glsentryfull{ga}, consisting of 100 independent \glspl{instance}.
         \textbf{(a)}, The model space contains $2^{18}\approx250,000$ candidate models; 
             normally distributed around $f=0.5 \pm 0.14$. 
         \textbf{(b)}, The models explored during the model search of all instances combined, 

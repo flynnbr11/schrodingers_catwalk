@@ -254,7 +254,7 @@ For an ideal\footnotemark \ single particle, when the state, \cref{eqn:state_vec
     we can designate $Q$ as a two-level computational platform, called a \emph{qubit}, 
     analogous to the workhorse of classical computation, the bit. 
 A qubit's state vector can then be written as a sum over the two available eigenstates, 
-    where we assign vectors to the eigenstates as $\left{ \ket{H} = \ket{v_1}, \ket{V} = \ket{v_2}$. 
+    where we assign vectors to the eigenstates as $\left\{ \ket{H} = \ket{v_1}, \ket{V} = \ket{v_2} \right\}$. 
 \footnotetext{
     Here we restrict to the space of ideal, \emph{logical} qubits. In reality, physical qubits are beset by errors, 
     demanding error correction routines such that multiple particles are needed attain a single logical qubit. 
@@ -351,7 +351,7 @@ In general an $n$-dimensional vector is rotated by an $n \times n$ matrix;
 One-qubit operators have the effect of rotating the state vector, 
     which we can again visualise on the Bloch sphere.
 By thinking of qubits generically with respect to any basis, we can encode information in the qubit's amplitudes,
-    by performing operations (or \emhp{gates}) upon the qubit, we change the information, 
+    by performing operations (or \emph{gates}) upon the qubit, we change the information, 
     i.e. we can design information processing techniques leveraging the infrastructure -- states, operators and measurement -- of \gls{qm}. 
 \par 
 
@@ -386,7 +386,7 @@ Any single qubit operation can therefore be expressed as a product of
 \begin{equation}
     \label{eqn:rotation_operator}
     \begin{split}
-        \hat{R}_w\left(\theta) &= e^{-i \frac{\theta}{2} \hat{\sigma}_w} 
+        \hat{R}_w\left(\theta\right) &= e^{-i \frac{\theta}{2} \hat{\sigma}_w} 
         = \cos\left(\nicefrac{\theta}{2}\right) \ident - i \sin \left(\nicefrac{\theta}{2}\right) \hat{\sigma}_w.
     \end{split}
 \end{equation}
