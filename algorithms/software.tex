@@ -254,7 +254,7 @@ The implementation of \gls{qmla} seeks to separate the organisation of the \gls{
 We can offload those calculations to a compute cluster (server) to run \emph{in parallel},
     allowing for significant speedup of the entire \gls{qmla} procedure, 
     limited by Amdahl's law. % TODO reference/explain Amdahls law (do we need it here? somewhere else?) 
-\gls{qmla} distributes jobs to \epmh{worker} processes in a server, 
+\gls{qmla} distributes jobs to \emph{worker} processes in a server, 
     i.e. we assume that \gls{qmla} is run on a machine with $N_c$ available parallel \emph{processes}\footnotemark. 
 Then, the expensive calculations, namely training and comparing models, are not performed 
     directly within the \gls{qmla} class, but instead are farmed out across the server.
