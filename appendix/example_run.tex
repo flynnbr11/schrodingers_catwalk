@@ -4,7 +4,7 @@ A complete example of how to run the \glsentryfull{qmla} framework,
 \par 
 
 First, \emph{fork} the \gls{qmla} codebase from \cite{flynn2021QMLA}\footnotemark.
-\footnotecite{This will require a Github account.} 
+\footnotetext{This will require a Github account.} 
 Now, we must download the code base and ensure it runs properly;
     these instructions are implemented via the command line\footnotemark. 
 \footnotetext{
@@ -302,10 +302,43 @@ For model searches across large model spaces and/or considering many candidates,
 
 We have just run \glsentryfull{qhl} for the model in \cref{eqn:example_es_true_ham} for a single instance, 
     using a reasonable number of particles and experiments, so we expect to have trained the model well. 
-To inspect the instance level results held (e.g. for the instance with \ttt{qmla\_id=1}) in \ttt{Jan\_01/01\_23/single\_instance\_plots/qmla\_1}.
-Individual models' insights can be found in \ttt{model\_training}.
-% TODO - run instance of QHL and include a few figures to show built-in model-level analysis 
-% TODO also show instance level analysis, and run level for QHL from 10 instances (BC Jan_15/23_23)
+Instance-level results are stored (e.g. for the instance with \ttt{qmla\_id=1}) in \ttt{Jan\_01/01\_23/instances/qmla\_1}.
+Individual models' insights can be found in \ttt{model\_training}, 
+    e.g. the training is summarised as in \cref{fig:qmla_learning_summary}, with the resultant dynamics in \cref{fig:qmla_model_dynamics}.
+\par 
+\begin{figure}
+    \begin{center}
+        \includegraphics{qmla_run_data/Jan_15/23_23/single_instance_plots/qmla_2/model_training/learning_summary_1.png}
+    \end{center}
+    \caption[ \gls{qmla} plot: learning\_summary]{
+        \gls{qmla} plot: \ttt{model\_trainings/learning\_summary}. 
+        Displays the outcome of \gls{qhl} for the given model:
+        \textbf{(a)}-\textbf{c} show the estaimates of the parameters; 
+        \textbf{(d)} shows the total parameterisation volume against experiments trained upon, 
+        along with the evolution times used for those experiments. 
+    }
+    \label{fig:qmla_learning_summary}
+\end{figure}
+\begin{figure}
+    \begin{center}
+        \includegraphics{qmla_run_data/Jan_15/23_23/single_instance_plots/qmla_2/model_training/dynamics_1.pdf}
+    \end{center}
+    \caption[ \gls{qmla} plot: dynamics]{
+        \gls{qmla} plot: \ttt{model\_trainings/dynamics}. 
+        Displays the outcome of \gls{qhl} for the given model:
+        its attempt at reproducing data from $\ho$. 
+    }
+    \label{fig:qmla_model_dynamics}
+\end{figure}
+
+In this case, because we are running \gls{qhl}, there is little analysis of interest besides the single model's training, 
+    as shown already. 
+It is of interest, however, to consider analysis on the \gls{run} level, i.e. the average result of the training 
+    of the true model over several instances. 
+This can be achieved by settig \ttt{num\_instances} in \ttt{local\_launch.sh}. 
+For example, set \ttt{num\_instances=10}, \ttt{prt=50}, \ttt{exp=10}, then launch and analyse the results (\cref{listing:results_directory}). 
+In this case, since we are using few resources, the training will be ineffective, 
+    but ensure run-level analyses are generated in the results directory, e.g. in subdirectories \ttt{performance} and \ttt{champion\_models}. 
 \par 
 
 
