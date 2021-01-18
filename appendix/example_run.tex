@@ -1,20 +1,29 @@
-A complete example of how to run the \glsentryfull{qmla} framework, 
+Here we provide a complete example of how to run the \glsentryfull{qmla} framework, 
     including how to implement a custom \glsentryfull{es}, 
-    and generate/interpret analysis, is given.
+    and generate/interpret analysis.
 \par 
 
-First, \emph{fork} the \gls{qmla} codebase from \cite{flynn2021QMLA}\footnotemark.
-\footnotetext{This will require a Github account.} 
+First, \emph{fork} the \gls{qmla} codebase from \cite{flynn2021QMLA}
+    to a Github user account (referred to as \ttt{username} in \cref{listing:qmla_setup}).
 Now, we must download the code base and ensure it runs properly;
     these instructions are implemented via the command line\footnotemark. 
 \footnotetext{
     Note: these instructions are tested for Linux and presumed to work on Mac, but untested on Windows. 
-    It is likely some of the underlying software (redis servers) can not be installed on Windows. 
+    It is likely some of the underlying software (redis servers) can not be installed on Windows,
+    so running on \emph{Windows Subsystem for Linux} is advised. 
 }
+
     
 \begin{lstlisting}[
     label=listing:qmla_setup,
-    caption={QMLA codebase setup},
+    caption={QMLA codebase setup. 
+    (i) install \ttt{redis};
+    (ii) creaet a virtual Python environment for installing \gls{qmla} dependencies without damaging other parts of 
+    the user's environment;
+    (iii) download the \gls{qmla} codebase from 
+        the forked Github repository;
+    (iv) install packages upon which \gls{qmla} depends. 
+    },
     language=Bash
 ]
 # Install redis (database broker)
@@ -45,7 +54,7 @@ a single call to \ttt{pip install}.
 Ensure these are all installed before proceeding. 
 \par 
 
-When all of the requirements are installed, test the framework runs. 
+When all of the requirements are installed, test that the framework runs. 
 \gls{qmla} uses \ttt{redis} databases to store intermittent data:
     we must manually initialise the database. 
 Run the following 
@@ -71,7 +80,7 @@ which should give something like \cref{fig:terminal_redis}.
 
 In a text editor, open \ttt{qmla\_test/QMLA/launch/local\_launch.sh}; 
     here we will ensure that we are running the \gls{qhl} algorithm, 
-    with 5 experiments and 20 particles, on the \gls{es} named \ttt{ExampleBasic}.
+    with 5 experiments and 20 particles, on the \gls{es} named \ttt{TestInstall}.
 Ensure the first few lines of \ttt{local\_launch.sh} read:
 
 \begin{lstlisting}[
@@ -79,41 +88,24 @@ Ensure the first few lines of \ttt{local\_launch.sh} read:
     caption={\ttt{local\_launch} script},
     language=Bash
 ]
-    
 #!/bin/bash
 
-###############
+##### -------------------------------------------------- #####
 # QMLA run configuration
-###############
-num_instances=1
-run_qhl=1 # perform QHL on known (true) model
-run_qhl_multi_model=0 # perform QHL for defined list of models.
-exp=5 # number of experiments
-prt=20 # number of particles
-
-###############
-# QMLA settings - user
-###############
+##### -------------------------------------------------- #####
+num_instances=2 # number of instances in run
+run_qhl=0 # perform QHL on known (true) model
+run_qhl_multi_model=0 # perform QHL for defined list of models
+experiments=2 # number of experiments
+particles=10 # number of particles
 plot_level=5
-debug_mode=0
 
-###############
-# QMLA settings - default
-###############
-do_further_qhl=0 # QHL refinement to best performing models 
-q_id=0 # isntance ID can start from other ID if desired
-use_rq=0
-further_qhl_factor=1
-further_qhl_num_runs=$num_instances
-plots=0
-number_best_models_further_qhl=5
 
-###############
+##### -------------------------------------------------- #####
 # Choose an exploration strategy 
 # This will determine how QMLA proceeds. 
-###############
-
-exploration_strategy="ExampleBasic"
+##### -------------------------------------------------- #####
+exploration_strategy="TestInstall"
 \end{lstlisting}    
 
 Now we can run 
@@ -152,8 +144,8 @@ For example, if the run was initialised on January $1^{st}$ at 01:23, navigate t
 cd results/Jan_01/01_23
 \end{lstlisting}
 
-For now it is sufficient to notice that the code has sun successfully and the analysis has generated several new files and directores; 
-    in the following sections we will describe the outputs. 
+For now it is sufficient to notice that the code has run successfully:
+    it should have generated (in \ttt{results/Jan\_01/01\_23}) files like \ttt{storage\_001.p} and \ttt{results\_001.p}.
 
 \section{Custom \glsentrylong{es}}
 
@@ -216,13 +208,13 @@ So the target model in \cref{eqn:example_es_true_ham} will be given by
 $$ \ttt{pauliSet\_1J2\_zJz\_d4+pauliSet\_2J3\_zJz\_d4+pauliSet\_3J4\_zJz\_d4}. $$
 
 Adapting the template \gls{es} slightly, we can define a model generation strategy with a small number of hard coded 
-    candidate models introduced at the first of the \glsentrylong{et}. 
+    candidate models introduced at the first branch of the \glsentrylong{et}. 
 We will also set the parameters of the terms which are present in $\ho$, as well as the range in which to search parameters.
 Keeping the \ttt{import}s at the top of the \ttt{example.py}, rewrite the \gls{es} as: 
 
 \begin{lstlisting}[
     label=listing:basic_es,
-    caption={QMLA ExampleBasic explorattion strategy},
+    caption={ExampleBasic exploration strategy.},
     language=Python
 ]
 class ExampleBasic(
@@ -292,10 +284,13 @@ Run locally again as in \cref{listing:launch_example};
     than those presented in the figures of this section.
 }
 \par 
-\gls{qmla} stores results, and generates plots, 
+
+
+\section{Analysis}
+\gls{qmla} stores results and generates plots
     over the entire range of the algorithm\footnotemark, i.e. the \gls{run}, \gls{instance} and models. 
 \footnotetext{Recall that a single implementation of \gls{qmla} is called an \gls{instance},    
-    while a series of instances which share the same target model is called the \gls{run}.}
+    while a series of instances -- which share the same target model -- is called the \gls{run}.}
 The depth of analysis performed automatically is set by the user control \ttt{plot\_level} in \ttt{local\_launch.sh};
     for \ttt{plot\_level=1}, only the most crucial figures are generated, while \ttt{\plot\_level=6} generates plots for every individual 
     model considered. 
@@ -326,8 +321,8 @@ Individual models' insights can be found in \ttt{model\_training},
         \label{fig:qmla_model_dynamics}
     }
     \end{center}
-    \caption[ Instance plots]{
-        Instance plots, stored in (for example) \ttt{Jan\_01/01\_23/instances/qmla\_1/model\_training}. 
+    \caption[Model analysis plots]{
+        Model analysis plots, stored in (for example) \ttt{Jan\_01/01\_23/instances/qmla\_1/model\_training}. 
         \textbf{a} \ttt{learning\_summary\_1}. 
         Displays the outcome of \gls{qhl} for the given model:
         Subfigures (a)-(c) show the estimates of the parameters; 
@@ -341,12 +336,12 @@ Individual models' insights can be found in \ttt{model\_training},
 \subsection{\Gls{instance} analysis}
 Now we can run the full \gls{qmla} algorithm, i.e. train several models 
     and determine the most suitable. 
-\gls{qmla} will call the \ttt{generate\_models} method of the \ttt{ExampleBasic} \gls{es}, 
-    which tells it to construct three models. 
-Note here we need to train and compare all models, so for the purpose of testing, 
-    reduce the resources so the entire algorithm takes considerably longer to run. 
-For testing purposes, here we recommend a small number of experiments and particles;
-    some applications will require significantly more resources to learn effectively.
+\gls{qmla} will call the \ttt{generate\_models} method of the \ttt{ExampleBasic} \gls{es},
+    set in \cref{listing:basic_es}, which tells \gls{qmla} to construct three models
+    on the first branch, then terminate the search.
+Here we need to train and compare all models so it takes considerably longer to run:
+    the purpose of testing, we reduce the resources so the entire algorithm runs in about 15 minutes.
+Some applications will require significantly more resources to learn effectively.
 In realistic cases, these processes are run in parallel, as we will cover in \cref{apdx:paralllel_processing}.
 \par 
 
@@ -382,50 +377,55 @@ Individual model comparisons -- i.e. \glsentryfull{bf} --
 The probes used during the training of all candidates are also plotted  (\cref{fig:qmla_training_probes}).
 
 \begin{figure}[H]
-    % TODO use Jan_17//21_53 without rescaling images
+    % TODO use Jan_18/13_15 without rescaling images
     \begin{center}
         \subfloat[]{
-            \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/composition_of_models.pdf}
+            \includegraphics{qmla_run_data/Jan_18/14_36/instances/qmla_10/composition_of_models.pdf}
             \label{fig:qmla_model_composition}
         }
         \qquad
         \subfloat[]{
-            \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/bayes_factors.pdf}
+            \includegraphics{qmla_run_data/Jan_18/14_36/instances/qmla_10/bayes_factors.pdf}
             \label{fig:qmla_bayes_factors}
         }
         \qquad
         \subfloat[]{
-            \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/comparisons/BF_1_2.pdf}
+            \includegraphics{qmla_run_data/Jan_18/14_36/instances/qmla_10/comparisons/BF_1_3.pdf}
             \label{fig:qmla_bayes_factor_comparison}
         }
         \qquad
         \subfloat[]{
-            \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/branches/dynamics_branch_1.pdf}
+            \includegraphics{qmla_run_data/Jan_18/14_36/instances/qmla_10/branches/dynamics_branch_1.pdf}
             \label{fig:qmla_branch_dynamics}
         }
         \qquad
         \subfloat[]{
-            \includegraphics[width=0.25\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/probes_bloch_sphere.pdf}
+            \includegraphics[width=0.25\textwidth]{qmla_run_data/Jan_18/14_36/instances/qmla_10/probes_bloch_sphere.pdf}
             \label{fig:qmla_training_probes}
         }
     \end{center}
     \caption[Instance plots]{
-        \gls{qmla} plots; found within instance directory e.g. \ttt{Jan\_01/01\_23/instances/qmla\_1}. 
+        \gls{qmla} plots; found within instance directory e.g. \ttt{Jan\_01/01\_23/instances/qmla\_1}, 
+        and its subdirectories. 
         \textbf{(a)} \ttt{composition\_of\_models}: constituent terms of all considered models, indexed by their model IDs.
-        \textbf{(b)} \ttt{bayes\_factors}: \glsentrylong{bf} comparisons between all models. 
-        \gls{bf} are read as $B_{a,b}$ where $a$ is the model with lower ID, 
-            e.g. $B_{1,2}$ rather than $B_{2,1}$. Thus $B > 0 (<0)$ indicates $a$ ($b$) is the stronger model.
-        \textbf{(c)} \ttt{comparisons/BF\_1\_2}: direct comparison between models with IDs 1 and 2, 
-            showing their reproduction of the system dynamics, 
+        Here model 3 is $\ho$. 
+        \textbf{(b)} \ttt{bayes\_factors}: \glsentryfull{bf} comparisons between all models. 
+        \glspl{bf} are read as $B_{i,j}$ where $i$ is the model with lower ID, 
+            e.g. $B_{1,2}$ rather than $B_{2,1}$. 
+            Thus $B_{ij} > 0 \ (<0)$ indicates $\hat{H}_i$ \ ($\hat{H}_j$), i.e. the model on the $y$-axis ($x$-axis) 
+            is the stronger model.
+        \textbf{(c)} \ttt{comparisons/BF\_1\_3}: direct comparison between models with IDs 1 and 3, 
+            showing their reproduction of the system dynamics (red dots, $Q$), 
             as well as the times (experiments) against which the \gls{bf} was calculated. 
-        \textbf{(d)} \ttt{branches/dynamics\_branch\_1}: dynamics of all models considered on the branch. 
+        \textbf{(d)} \ttt{branches/dynamics\_branch\_1}: dynamics of all models considered on the branch
+        compared with system dynamics (red dots, $Q$). 
         \textbf{(e)} \ttt{probes\_bloch\_sphere}: probes used for training models in this instance (only showing 1-qubit versions).
     }
     \label{fig:instance_plots}
 \end{figure}
 
 \subsection{\Gls{run} analysis}
-Considering a number of \glspl{instance} together is a \gls{run}. 
+Considering a number of \glspl{instance} together is a \emph{\gls{run}}. 
 In general, this is the level of analysis of most interest: 
     an individual instance is liable to errors due to the probabilistic nature of 
     the model training and generation subroutines. 
@@ -449,7 +449,7 @@ The results will therefore be meaningless, but allow fo elucidation of the resul
 First, reconfigure some settings of \cref{listing:local_launch} and launch again.
 \begin{lstlisting}[
     label=listing:example_es_qhl_run,
-    caption={\ttt{local\_launch} configuration for QMLA.},
+    caption={\ttt{local\_launch} configuration for QMLA run.},
     language=Bash
 ]
 num_instances=10
@@ -462,7 +462,9 @@ exploration_strategy=ExampleBasic
 
 Some of the generated analysis are shown in \crefrange{fig:run_plots}{fig:run_dynamics}. 
 The number of instances for each model, i.e. their \emph{\glspl{win rate}} are given in \cref{fig:qmla_win_rates}.
-Quantitative comparisons between candidate models, i.e. \glspl{bf} are in \cref{fig:qmla_bayes_factors}.
+The \emph{top models}, i.e. those with highest win rates, analysed further: 
+    the average parameter estimation progression for $\ho$ -- including only the instances where $\ho$ was deemed champion --
+    are shown in \cref{fig:champ_param_progression}.
 Irrespecitve of the champion models, the rate with which each term is found in the champion model ($\hat{t} \in \hp$)
     indicates the likelihood that the term is really present;
     these rates -- along with the parameter values learned -- are shown in \cref{fig:qmla_branch_dynamics}.
@@ -478,7 +480,7 @@ The champion model from each instance can attempt to reproduce system dynamics:
         \qquad
         \subfloat[]{
             \includegraphics{qmla_run_data/Jan_17/22_27/champion_models/params_pauliSet_1J2_zJz_d4+pauliSet_2J3_zJz_d4+pauliSet_3J4_zJz_d4.pdf}
-            \label{fig:qmla_bayes_factors}
+            \label{fig:champ_param_progression}
         }
         \qquad
         \subfloat[]{
@@ -493,7 +495,7 @@ The champion model from each instance can attempt to reproduce system dynamics:
             parameter estimation progression for the true model, only for the instances where it was deemed champion. 
         \textbf{(c)} \ttt{champion\_models/terms\_and\_params}: 
             histogram of parameter values found for each term which appears in any champion model,
-            with the true parameter ($\alpha_0$) in red and the median learned parameter ($\alpha^{\prime}$) in blue.
+            with the true parameter ($\alpha_0$) in red and the median learned parameter ($\bar{\alpha}^{\prime}$) in blue.
     }
     \label{fig:run_plots}
 \end{figure}
@@ -502,7 +504,7 @@ The champion model from each instance can attempt to reproduce system dynamics:
     \begin{center}
         \includegraphics{qmla_run_data/Jan_17/22_27/performance/dynamics.pdf}
     \end{center}
-    \caption{
+    \caption[Run plot: dynamics]{
         Run plot \ttt{performace/dynamics}: median dynamics of the champion models. 
         The models which won most instances are shown together in the top panel, 
         and individually in the lower panels. 
@@ -515,7 +517,462 @@ The champion model from each instance can attempt to reproduce system dynamics:
 
 
 \section{Parallel implementation}
+We provide utility to run \gls{qmla} on parallel processes. 
+Individual models' training can run in parallel, as well as the calculation of \gls{bf} between models. 
+The provided script is designed for \gls{pbs} job scheduler running on a compute cluster. 
+It will require a few adjustments to match the system being used. 
+Overall, though, it has mostly a similar structure as the \ttt{local\_launch.sh} script used above. 
+\par 
+
+\gls{qmla} must be downloaded on the compute cluster as in \cref{listing:qmla_setup};
+    this can be a new fork of the repository, 
+    though it is sensible to test installation locally as described in this chapter so far, 
+    then \emph{push} that version, including the new \gls{es}, to Github, 
+    and cloning the latest version.
+It is again advisable to create a Python virtual environment in order to isolate \gls{qmla} 
+    and its dependencies\footnote{Indeed it is sensible to do this for any Python development project.}.
+Open the parallel launch script, \ttt{QMLA/launch/parallel\_launch.sh}, and prepare the first few lines as 
+
+\begin{lstlisting}[
+    label=listing:parallel_launch,
+    caption={\ttt{parallel\_launch} script},
+    language=Bash
+]
+#!/bin/bash
+
+##### -------------------------------------------------- #####
+# QMLA run configuration
+##### -------------------------------------------------- #####
+num_instances=10 # number of instances in run
+run_qhl=0 # perform QHL on known (true) model
+run_qhl_multi_model=0 # perform QHL for defined list of models
+experiments=250
+particles=1000
+plot_level=5
 
 
-% TODO use backslash package
+##### -------------------------------------------------- #####
+# Choose an exploration strategy 
+# This will determine how QMLA proceeds. 
+##### -------------------------------------------------- #####
+exploration_strategy="ExampleBasic"
+\end{lstlisting}    
+
+\par 
+
+When submitting jobs to schedulers like \gls{pbs}, we must specify the time required, 
+    so that it can determine a fair distribution of resources among users. 
+We must therefore \emph{estimate} the time it will take for an instance to complete:
+    clearly this is strongly dependent on the numbers of experiments ($\Ne$) and particles ($\Np$), 
+    and the number of models which must be trained. 
+\gls{qmla} attempts to determine a reasonable time to request based on the \ttt{max\_num\_models\_by\_shape}
+    attribute of the \gls{es}, by calling \ttt{QMLA/scripts/time\_required\_calculation.py}. 
+In practice, this can be difficult to set perfectly,
+    so the \ttt{timing\_insurance\_factor} attribute of the \gls{es} can be used to correct 
+    for heavily over- or under-estimated time requests. 
+Instances are run in parallel, and each instance trains/compares models in parallel. 
+The number of processes to request, $N_c$ for each instance is set as \ttt{num\_processes\_to\_parallelise\_over} 
+        in the \gls{es}.
+Then, if there are $N_r$ instances in the run, we will be requesting the job scheduler to admit 
+    $N_r$ distinct jobs, each requiring $N_c$ processes, for the time specified. 
+
+\par 
+
+The \ttt{parallel\_launch} script works together with \ttt{launch/run\_single\_qmla\_instance.sh}, 
+    though note a number of steps in the latter are configured to the cluster and may need to be adapted. 
+In particular, the first command is used to load the redis utility, and later lines are used to initialise a 
+redis server. 
+These commands will probably not work with most machines, so must be configured to achieve those steps. 
+
+
+\begin{lstlisting}[
+    label=listing:instace_script,
+    caption={\ttt{run\_single\_qmla\_instance} script},
+    language=Bash
+]
+
+module load tools/redis-4.0.8
+
+... 
+
+SERVER_HOST=$(head -1 "$PBS_NODEFILE")
+let REDIS_PORT="6300 + $QMLA_ID"
+
+cd $LIBRARY_DIR
+redis-server RedisDatabaseConfig.conf --protected-mode no --port $REDIS_PORT & 
+redis-cli -p $REDIS_PORT flushall
+
+\end{lstlisting}
+
+When the modifications are finished, 
+    \gls{qmla} can be launched in parallel similarly to the local version: 
+
+\begin{lstlisting}[
+    label=listing:instace_script,
+    caption={\ttt{run\_single\_qmla\_instance} script},
+    language=Bash
+]
+source qmla_test/qmla-env/bin/activate
+
+cd qmla_test/QMLA/launch
+./parallel_launch.sh
+
+\end{lstlisting}
+\par 
+
+Jobs are likely to queue for some time, depending on the demands on the job scheduler. 
+When all jobs have finished, results are stored as in the local case, 
+    in \ttt{QMLA/launch/results/Jan\_01/01\_23},
+    where \ttt{analyse.sh} can be used to generate a series of automatic analyses. 
+\par 
+
+\section{Customising \glsentrylongpl{es}}
+User interaction with the \gls{qmla} codebase should be achieveable primarily through the \glsentryfull{es} framework. 
+Throughout the algorithm(s) available, \gls{qmla} calls upon the \gls{es} before determining how to proceed. 
+The usual mechanism through which the actions of \gls{qmla} are directed, 
+    is to set attributes of the \gls{es} class:
+    the complete set of influential attributes are available at \cite{qmla_docs}. 
+
+\par 
+\gls{qmla} directly uses several methods of the \gls{es} class, 
+    all of which can be overwritten in the course of customising an \gls{es}. 
+Most such methods need not be replaced, however, with the exception of \ttt{generate\_models}, 
+    which is the most important aspect of any \gls{es}: 
+    it determines which models are built and tested by \gls{qmla}. 
+This method allows the user to impose any logic desired in constructing models;
+    it is called after the completion of every branch of the  \glsentrylong{et} on the \gls{es}. 
+\par 
+
+\subsection{Greedy search}sec:greedy_search
+
+A first non-trivial \gls{es} is to build models greedily from a set of \emph{primitive} terms, $\termset = \{ \hat{t} \} $. 
+New models are constructed by combining the previous branch champion with each of the remaining, unused terms. 
+The process is repeated until no terms remain. 
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.75]{appendix/figures/greedy_exploration_strategy.pdf}
+    \end{center}
+    \caption[
+        Greedy \glsentrylong{es}]{Greedy \glsentrylong{es}.
+        \textbf{Left}, a set of primitive terms, $\termset$, are defined in advance. 
+        \textbf{Right}, models are constructed from $\termset$. 
+        On the first branch, the primitve terms alone constitute models. 
+        Thereafter, the strongest model (marked in green) from the previous branch is combined with all the unused terms. 
+    }
+    \label{fig:greedy_exploration_strategy}
+\end{figure}
+
+We can compose an \gls{es} using these rules, say for 
+\begin{equation*}
+    \termset = \left\{ \sx^1, \sy^1, \sx^1 \otimes \sx^2, \sy^1 \otimes \sy^2 \right\}
+\end{equation*}
+
+as follows.
+Note the termination criteria must work in conjunction with the model generation routine. 
+Users can overwrite the method \ttt{check\_tree\_completed} for custom logic, 
+    although a straightforward mechanism is to use the \ttt{spawn\_stage} attribute of the \gls{es} class: 
+    when the final element of this list is \ttt{Complete}, \gls{qmla} will terminate the search by default. 
+Also note that the default termination test checks whether the number of branches (\ttt{spawn\_step}) exceeds the 
+    limit \ttt{max\_spawn\_depth}, which must be set artifically high to avoid ceasing the search too early, 
+    if relying solely on \ttt{spawn\_stage}. 
+Here we demonstrate how to impose custom logic to terminate the seach also. 
+
+\begin{lstlisting}[
+    label=listing:greedy_exploration_strategy,
+    caption={\ttt{ExampleGreedySearch} exploration stategy},
+    language=Bash
+]
+class ExampleGreedySearch(
+    exploration_strategy.ExplorationStrategy
+):
+    r"""
+    From a fixed set of terms, construct models iteratively, 
+    greedily adding all unused terms to separate models at each call to the generate_models. 
+
+    """
+
+    def __init__(
+        self,
+        exploration_rules,
+        **kwargs
+    ):
+        
+        super().__init__(
+            exploration_rules=exploration_rules,
+            **kwargs
+        )
+        self.true_model = 'pauliSet_1_x_d3+pauliSet_1J2_yJy_d3+pauliSet_1J2J3_zJzJz_d3'
+        self.initial_models = None
+        self.available_terms = [
+            'pauliSet_1_x_d3', 'pauliSet_1_y_d3', 
+            'pauliSet_1J2_xJx_d3', 'pauliSet_1J2_yJy_d3'
+        ]
+        self.branch_champions = []
+        self.prune_completed_initially = True
+        self.check_champion_reducibility = False
+
+    def generate_models(
+        self,
+        model_list,
+        **kwargs
+    ):
+        self.log_print([
+            "Generating models in tiered greedy search at spawn step {}.".format(
+                self.spawn_step, 
+            )
+        ])
+        try:
+            previous_branch_champ = model_list[0]
+            self.branch_champions.append(previous_branch_champ)
+        except:
+            previous_branch_champ = ""
+
+        if self.spawn_step == 0 :
+            new_models = self.available_terms
+        else:
+            new_models = greedy_add(
+                current_model = previous_branch_champ, 
+                terms = self.available_terms
+            )
+
+        if len(new_models) == 0:
+            # Greedy search has exhausted the available models;
+            # send back the list of branch champions and terminate search.
+            new_models = self.branch_champions
+            self.spawn_stage.append('Complete')
+
+        return new_models
+
+    def check_tree_completed(
+        self,
+        spawn_step,
+        **kwargs
+    ):
+        r"""
+        QMLA asks the exploration tree whether it has finished growing; 
+        the exploration tree queries the exploration strategy through this method
+        """
+        if self.tree_completed_initially:
+            return True
+        elif self.spawn_stage[-1] == "Complete":
+            return True
+        else:
+            return False
+def greedy_add(
+    current_model, 
+    terms,
+):
+    r""" 
+    Combines given model with all terms from a set.
+    
+    Determines which terms are not yet present in the model, 
+    and adds them each separately to the current model. 
+
+    :param str current_model: base model
+    :param list terms: list of strings of terms which are to be added greedily. 
+    """
+
+    try:
+        present_terms = current_model.split('+')
+    except:
+        present_terms = []
+    nonpresent_terms = list(set(terms) - set(present_terms))
+    
+    term_sets = [
+        present_terms+[t] for t in nonpresent_terms
+    ]
+
+    new_models = ["+".join(term_set) for term_set in term_sets]
+    
+    return new_models
+\end{lstlisting}
+
+
+This \gls{run} can be implemented locally or in parallel as described above\footnotemark,
+    and analysed as in \cref{listing:analysing_run},
+    generating figures in accordance with the \ttt{plot\_level} set by the user in the launch script. 
+\footnotext{We advise reducing \ttt{plot\_level} to 3 to avoid excessive/slow figure generation.}
+Outputs can again be found in the instances subdirectory, including a map of the models generated, 
+    as well as the branches they reside on, and the \glspl{bf} between candidates. 
+
+\begin{figure}[H]
+    \begin{center}
+    \subfloat[]{
+        \includegraphics{qmla_run_data/Jan_18/18_04/instances/qmla_1/composition_of_models.pdf}
+    }
+    \qquad
+    \subfloat[]{
+        \includegraphics{qmla_run_data/Jan_18/18_04/instances/qmla_1/graphs_of_branches_ExampleGreedySearch.pdf}
+    }
+    \end{center}
+    \caption[Greedy \glsentrylong{es}]{
+        Greedy \glsentrylong{es}. 
+        \textbf{(a)}, model compostion. 
+        \textbf{b}, graph of branches on the \glsentrylong{et}. 
+        Models are coloured by their $\fs$, and edges represent the \gls{bf} between models. 
+        The first four branches are equivalent to those in \cref{fig:greedy_exploration_strategy} ,
+        while the final branch considers the set of branch champions, in order to determine the overall champion. 
+    }
+    \label{fig:example_es_greedy}
+\end{figure}
+
+
+\subsection{Tiered greedy search}
+We provide one final example of a non-trivial \gls{es}: 
+    tiered greedy search. 
+Similar to the idea of \cref{sec:greedy_search}, 
+    except terms are introduced hierarchically:
+    sets of terms $\termset_1, \termset_2, \dots \termset_n$ 
+    are each examined greedily, where the overall strongest model of one tier 
+    forms the seed model for the subsequent tier. 
+This is depicted in the main text in \cref{fig:greedy_search}. 
+A corresponding \gls{es} is given as follows. 
+
+\begin{lstlisting}[
+    label=listing:tiered_greedy_exploration_strategy,
+    caption={\ttt{ExampleGreedySearchTiered} exploration stategy},
+    language=Bash
+]
+
+class ExampleGreedySearchTiered(
+    exploration_strategy.ExplorationStrategy
+):
+    r"""
+    Greedy search in tiers.
+
+    Terms are batched together in tiers; 
+    tiers are searched greedily; 
+    a single tier champion is elevated to the subsequent tier. 
+
+    """
+
+    def __init__(
+        self,
+        exploration_rules,
+        **kwargs
+    ):
+        super().__init__(
+            exploration_rules=exploration_rules,
+            **kwargs
+        )
+        self.true_model = 'pauliSet_1_x_d3+pauliSet_1J2_yJy_d3+pauliSet_1J2J3_zJzJz_d3'
+        self.initial_models = None
+        self.term_tiers = {
+            1 : ['pauliSet_1_x_d3', 'pauliSet_1_y_d3', 'pauliSet_1_z_d3' ],
+            2 : ['pauliSet_1J2_xJx_d3', 'pauliSet_1J2_yJy_d3', 'pauliSet_1J2_zJz_d3'],
+            3 : ['pauliSet_1J2J3_xJxJx_d3', 'pauliSet_1J2J3_yJyJy_d3', 'pauliSet_1J2J3_zJzJz_d3'],
+        }
+        self.tier = 1
+        self.max_tier = max(self.term_tiers)
+        self.tier_branch_champs = {k : [] for k in self.term_tiers} 
+        self.tier_champs = {}
+        self.prune_completed_initially = True
+        self.check_champion_reducibility = True
+
+    def generate_models(
+        self,
+        model_list,
+        **kwargs
+    ):
+        self.log_print([
+            "Generating models in tiered greedy search at spawn step {}.".format(
+                self.spawn_step, 
+            )
+        ])
+
+        if self.spawn_stage[-1] is None:
+            try:
+                previous_branch_champ = model_list[0]
+                self.tier_branch_champs[self.tier].append(previous_branch_champ)
+            except:
+                previous_branch_champ = None
+
+        elif "getting_tier_champ" in self.spawn_stage[-1]:
+            previous_branch_champ = model_list[0]
+            self.log_print([
+                "Tier champ for {} is {}".format(self.tier, model_list[0])
+            ])
+            self.tier_champs[self.tier] = model_list[0]
+            self.tier += 1
+            self.log_print(["Tier now = ", self.tier])
+            self.spawn_stage.append(None) # normal processing
+
+            if self.tier > self.max_tier:
+                self.log_print(["Completed tree for ES"])
+                self.spawn_stage.append('Complete')
+                return list(self.tier_champs.values())
+        else:
+            self.log_print([
+                "Spawn stage:", self.spawn_stage
+            ])
+
+        new_models = greedy_add(
+            current_model = previous_branch_champ, 
+            terms = self.term_tiers[self.tier]
+        )
+        self.log_print([
+            "tiered search new_models=", new_models
+        ])
+
+        if len(new_models) == 0:
+            # no models left to find - get champions of branches from this tier
+            new_models = self.tier_branch_champs[self.tier]
+            self.log_print([
+                "tier champions: {}".format(new_models)
+            ])
+            self.spawn_stage.append("getting_tier_champ_{}".format(self.tier))
+        return new_models
+
+def greedy_add(
+    current_model, 
+    terms,
+):
+    r""" 
+    Combines given model with all terms from a set.
+    
+    Determines which terms are not yet present in the model, 
+    and adds them each separately to the current model. 
+
+    :param str current_model: base model
+    :param list terms: list of strings of terms which are to be added greedily. 
+    """
+
+    try:
+        present_terms = current_model.split('+')
+    except:
+        present_terms = []
+    nonpresent_terms = list(set(terms) - set(present_terms))
+    
+    term_sets = [
+        present_terms+[t] for t in nonpresent_terms
+    ]
+
+    new_models = ["+".join(term_set) for term_set in term_sets]
+    
+    return new_models
+\end{lstlisting}
+
+with corresponding results in \cref{fig:example_es_tiered_greedy}. 
+\begin{figure}[H]
+    \begin{center}
+    \subfloat[]{
+        \includegraphics{qmla_run_data/Jan_18/19_06/instances/qmla_1/composition_of_models.pdf}
+    }
+    \qquad
+    \subfloat[]{
+        \includegraphics{qmla_run_data/Jan_18/19_06/instances/qmla_1/graphs_of_branches_ExampleGreedySearchTiered.pdf}
+    }
+    \end{center}
+    \caption[Tiered greedy \glsentrylong{es}]{
+        Tiered greedy \glsentrylong{es}. 
+        \textbf{(a)}, \ttt{composition_of_models}. 
+        \textbf{b}, \ttt{graphs_of_branches_ExampleGreedySearchTiered}: graph of branches on the \glsentrylong{et}. 
+        Models are coloured by their $\fs$, and edges represent the \gls{bf} between models. 
+        In each tier, three branches greedily add terms, and a fourth branch considers the champions of the first three branches
+        in order to nominate a tier champion. 
+        The final branch consists only of the tier champions, to nominate the global champion, $\hp$.  
+    }
+    \label{fig:example_es_tiered_greedy}
+\end{figure}
 
