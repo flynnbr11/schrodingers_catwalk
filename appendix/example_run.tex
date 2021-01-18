@@ -37,8 +37,13 @@ git clone --depth 1 https://github.com/username/QMLA.git # REPLACE username
 
 # Install dependencies
 cd QMLA 
-pip install -r requirements.txt  # note there may be a problem with matplotlib version; just pip install it directly
+pip install -r requirements.txt 
 \end{lstlisting}
+
+Note there may be a problem with some packages in the \ttt{requirements.txt} arising from the attempt to install them all through
+a single call to \ttt{pip install}. 
+Ensure these are all installed before proceeding. 
+\par 
 
 When all of the requirements are installed, test the framework runs. 
 \gls{qmla} uses \ttt{redis} databases to store intermittent data:
@@ -55,12 +60,12 @@ Run the following
 \end{lstlisting}
 
 which should give something like \cref{fig:terminal_redis}.
-\begin{figure}
+\begin{figure}[h!]
     \begin{center}
         \includegraphics[width=0.9\textwidth]{appendix/figures/terminal_redis.png}
     \end{center}
-    \label{fig:terminal_redis}
     \caption[Terminal running redis-server]{Terminal running \ttt{redis-server}.}
+    \label{fig:terminal_redis}
 \end{figure}
 \par 
 
@@ -137,9 +142,7 @@ There may be numerous warnings, but they should not affect whether \gls{qmla} ha
     \gls{qmla} will \ttt{raise} any significant error. 
 Assuming the run has completed successfully, \gls{qmla} stores the run's results in a subdirectory
     named by the date and time it was started.  
-Plots/analysis are generated at the \gls{instance} and \gls{model} level;
-    each results directory has an \ttt{analyse.sh} script to generate plots at the \gls{run} level. 
-For examples, if the run was initialised on January $1^{st}$ at 01:23 navigate to that directory and analyse it by
+For example, if the run was initialised on January $1^{st}$ at 01:23, navigate to the corresponding directory by
 
 \begin{lstlisting}[
     label=listing:results_directory,
@@ -147,7 +150,6 @@ For examples, if the run was initialised on January $1^{st}$ at 01:23 navigate t
     language=Bash
 ]
 cd results/Jan_01/01_23
-./analyse.sh
 \end{lstlisting}
 
 For now it is sufficient to notice that the code has sun successfully and the analysis has generated several new files and directores; 
@@ -183,8 +185,8 @@ To add any further \glspl{es} inside the directory \ttt{custom\_es}, include the
     and they will automatically be available to \gls{qmla}.
 
 \begin{lstlisting}[
-    label=listing:athlete_class,
-    caption={QMLA codebase setup},
+    label=listing:importing_es,
+    caption={Providing custom exploration strategy to QMLA},
     language=Python
 ]
 
@@ -214,13 +216,13 @@ So the target model in \cref{eqn:example_es_true_ham} will be given by
 $$ \ttt{pauliSet\_1J2\_zJz\_d4+pauliSet\_2J3\_zJz\_d4+pauliSet\_3J4\_zJz\_d4}. $$
 
 Adapting the template \gls{es} slightly, we can define a model generation strategy with a small number of hard coded 
-    candidate models introduced at the first and second branch of the \glsentrylong{et}. 
+    candidate models introduced at the first of the \glsentrylong{et}. 
 We will also set the parameters of the terms which are present in $\ho$, as well as the range in which to search parameters.
 Keeping the \ttt{import}s at the top of the \ttt{example.py}, rewrite the \gls{es} as: 
 
 \begin{lstlisting}[
-    label=listing:athlete_class,
-    caption={QMLA codebase setup},
+    label=listing:basic_es,
+    caption={QMLA ExampleBasic explorattion strategy},
     language=Python
 ]
 class ExampleBasic(
@@ -241,12 +243,12 @@ class ExampleBasic(
         )
 
         self.initial_models = None
-        self.max_spawn_depth = 1
         self.true_model_terms_params = {
-            'pauliSet_1J2_zJz_d3' : 2.5,
-            'pauliSet_2J3_zJz_d3' : 7.5,
-            'pauliSet_4J5_zJz_d3' : 3.5,
+            'pauliSet_1J2_zJz_d4' : 2.5,
+            'pauliSet_2J3_zJz_d4' : 7.5,
+            'pauliSet_3J4_zJz_d4' : 3.5,
         }
+        self.tree_completed_initially = True
         self.min_param = 0
         self.max_param = 10
 
@@ -260,23 +262,19 @@ class ExampleBasic(
                 'pauliSet_1J2_zJz_d4+pauliSet_2J3_zJz_d4',
                 'pauliSet_1J2_zJz_d4+pauliSet_2J3_zJz_d4+pauliSet_3J4_zJz_d4',
             ]
-            
-        elif self.spawn_step == 1:
-            new_models = [
-                'pauliSet_1J2_zJz_d4+pauliSet_1J4_zJz_d4+pauliSet_2J3_zJz_d4+pauliSet_3J4_zJz_d4', # ring
-                'pauliSet_1J2_zJz_d4+pauliSet_1J3_zJz_d4+pauliSet_2J4_zJz_d4+pauliSet_3J4_zJz_d4', # square
-            ]
+            self.spawn_stage.append('Complete')
 
         return new_models
 
 \end{lstlisting}
 
 
-To run\footnotemark \ the example \gls{es}, return to the \ttt{local\_launch} of \cref{listing:local_launch}, 
+To run\footnotemark \ the example \gls{es} for a meaningful tests, 
+    return to the \ttt{local\_launch} of \cref{listing:local_launch}, 
     but change some of the settings:
 \begin{lstlisting}[
     label=listing:example_es_qhl_run,
-    caption={\ttt{local\_launch} configuration for QHL},
+    caption={\ttt{local\_launch} configuration for QHL.},
     language=Bash
 ]
 prt=2000
@@ -285,61 +283,239 @@ run_qhl=1
 exploration_strategy=ExampleBasic
 \end{lstlisting}
 
-Run locally again as in \cref{listing:launch_example}, move to the results directory and analyse its contents as in \cref{listing:results_directory}. 
-\footnotetext{Note this will take up to 20 minutes to run.}
+Run locally again as in \cref{listing:launch_example};
+    then move to the results directory as in \cref{listing:results_directory}. 
+\footnotetext{
+    Note this will take up to 15 minutes to run. 
+    This can be reduced by lowering the values of \ttt{prt}, \ttt{exp}, 
+    which is sufficient for testing but note that the outcomes will be less effective 
+    than those presented in the figures of this section.
+}
 \par 
 \gls{qmla} stores results, and generates plots, 
-    over the entire range of the algorithm, i.e. the \gls{run}\footnotemark, \gls{instance} and models. 
+    over the entire range of the algorithm\footnotemark, i.e. the \gls{run}, \gls{instance} and models. 
 \footnotetext{Recall that a single implementation of \gls{qmla} is called an \gls{instance},    
-    and a series of instances which share the same target model is called the \gls{run}.}
-The depth of analysis performed automatically is the user control \ttt{plot\_level} in \ttt{local\_launch.sh};
-    for \ttt{\plot\_level=1}, only the most basic figures are generated, while \ttt{\plot\_level=6} generates plots for every individual 
+    while a series of instances which share the same target model is called the \gls{run}.}
+The depth of analysis performed automatically is set by the user control \ttt{plot\_level} in \ttt{local\_launch.sh};
+    for \ttt{plot\_level=1}, only the most crucial figures are generated, while \ttt{\plot\_level=6} generates plots for every individual 
     model considered. 
 For model searches across large model spaces and/or considering many candidates,
     excessive plotting can cause considerable slow-down, so users should be careful to generate plots only 
     to the degree they will be useful. 
+Next we show some examples of the available plots. 
 \par 
+
+\subsection{Model analysis}
 
 We have just run \glsentryfull{qhl} for the model in \cref{eqn:example_es_true_ham} for a single instance, 
     using a reasonable number of particles and experiments, so we expect to have trained the model well. 
 Instance-level results are stored (e.g. for the instance with \ttt{qmla\_id=1}) in \ttt{Jan\_01/01\_23/instances/qmla\_1}.
 Individual models' insights can be found in \ttt{model\_training}, 
-    e.g. the training is summarised as in \cref{fig:qmla_learning_summary}, with the resultant dynamics in \cref{fig:qmla_model_dynamics}.
+    e.g. the model's \ttt{learning\_summary} \cref{fig:qmla_learning_summary}, and \ttt{dynamics} in \cref{fig:qmla_model_dynamics}.
 \par 
-\begin{figure}
+
+\begin{figure}[H]
     \begin{center}
-        \includegraphics{qmla_run_data/Jan_15/23_23/single_instance_plots/qmla_2/model_training/learning_summary_1.png}
+    \subfloat[]{
+        \includegraphics[width=0.75\textwidth]{qmla_run_data/Jan_17/18_04/instances/qmla_1/model_training/learning_summary_1.pdf}
+        \label{fig:qmla_learning_summary}
+    }
+    \qquad
+    \subfloat[]{
+        \includegraphics[width=0.75\textwidth]{qmla_run_data/Jan_17/18_04/instances/qmla_1/model_training/dynamics_1.pdf}
+        \label{fig:qmla_model_dynamics}
+    }
     \end{center}
-    \caption[ \gls{qmla} plot: learning\_summary]{
-        \gls{qmla} plot: \ttt{model\_trainings/learning\_summary}. 
+    \caption[ Instance plots]{
+        Instance plots, stored in (for example) \ttt{Jan\_01/01\_23/instances/qmla\_1/model\_training}. 
+        \textbf{a} \ttt{learning\_summary\_1}. 
         Displays the outcome of \gls{qhl} for the given model:
-        \textbf{(a)}-\textbf{c} show the estaimates of the parameters; 
-        \textbf{(d)} shows the total parameterisation volume against experiments trained upon, 
+        Subfigures (a)-(c) show the estimates of the parameters; 
+        (d) shows the total parameterisation volume against experiments trained upon, 
         along with the evolution times used for those experiments. 
+        \textbf{(b)} \ttt{dynamics\_1} The model's attempt at reproducing dynamics from $\ho$. 
     }
-    \label{fig:qmla_learning_summary}
-\end{figure}
-\begin{figure}
-    \begin{center}
-        \includegraphics{qmla_run_data/Jan_15/23_23/single_instance_plots/qmla_2/model_training/dynamics_1.pdf}
-    \end{center}
-    \caption[ \gls{qmla} plot: dynamics]{
-        \gls{qmla} plot: \ttt{model\_trainings/dynamics}. 
-        Displays the outcome of \gls{qhl} for the given model:
-        its attempt at reproducing data from $\ho$. 
-    }
-    \label{fig:qmla_model_dynamics}
+    \label{fig:model_analysis}
 \end{figure}
 
-In this case, because we are running \gls{qhl}, there is little analysis of interest besides the single model's training, 
-    as shown already. 
-It is of interest, however, to consider analysis on the \gls{run} level, i.e. the average result of the training 
-    of the true model over several instances. 
-This can be achieved by settig \ttt{num\_instances} in \ttt{local\_launch.sh}. 
-For example, set \ttt{num\_instances=10}, \ttt{prt=50}, \ttt{exp=10}, then launch and analyse the results (\cref{listing:results_directory}). 
-In this case, since we are using few resources, the training will be ineffective, 
-    but ensure run-level analyses are generated in the results directory, e.g. in subdirectories \ttt{performance} and \ttt{champion\_models}. 
+\subsection{\Gls{instance} analysis}
+Now we can run the full \gls{qmla} algorithm, i.e. train several models 
+    and determine the most suitable. 
+\gls{qmla} will call the \ttt{generate\_models} method of the \ttt{ExampleBasic} \gls{es}, 
+    which tells it to construct three models. 
+Note here we need to train and compare all models, so for the purpose of testing, 
+    reduce the resources so the entire algorithm takes considerably longer to run. 
+For testing purposes, here we recommend a small number of experiments and particles;
+    some applications will require significantly more resources to learn effectively.
+In realistic cases, these processes are run in parallel, as we will cover in \cref{apdx:paralllel_processing}.
 \par 
 
+Reconfigure a subset of the settings in the \ttt{local\_launch.sh} script (\cref{listing:local_launch}) and run it again:
+\begin{lstlisting}[
+    label=listing:example_es_qhl_run,
+    caption={\ttt{local\_launch} configuration for QMLA.},
+    language=Bash
+]
+exp=250
+prt=1000
+run_qhl=0
+exploration_strategy=ExampleBasic
+\end{lstlisting}
 
+\par 
+
+In the corresponding results directory, navigate to \ttt{instances/qmla\_1}, where instance level analysis are available. 
+
+\begin{lstlisting}[
+    label=listing:instance_results,
+    caption={Navigating to instance results.},
+    language=Bash
+]
+cd results/Jan_01/01_23/instances/qmla_1
+\end{lstlisting}
+
+Figures of interest here show the composition of the models (\cref{fig:qmla_model_composition}), 
+    as well as the \glsentrylongpl{bf} between candidates (\cref{fig:qmla_bayes_factors}). 
+Individual model comparisons -- i.e. \glsentryfull{bf} -- 
+    are shown in \cref{fig:qmla_bayes_factor_comparison}, 
+    with the dynamics of all candidates shown in \cref{fig:qmla_branch_dynamics}. 
+The probes used during the training of all candidates are also plotted  (\cref{fig:qmla_training_probes}).
+
+\begin{figure}[H]
+    % TODO use Jan_17//21_53 without rescaling images
+    \begin{center}
+        \subfloat[]{
+            \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/composition_of_models.pdf}
+            \label{fig:qmla_model_composition}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/bayes_factors.pdf}
+            \label{fig:qmla_bayes_factors}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/comparisons/BF_1_2.pdf}
+            \label{fig:qmla_bayes_factor_comparison}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/branches/dynamics_branch_1.pdf}
+            \label{fig:qmla_branch_dynamics}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{qmla_run_data/Jan_17//21_53/instances/qmla_1/probes_bloch_sphere.pdf}
+            \label{fig:qmla_training_probes}
+        }
+    \end{center}
+    \caption[Instance plots]{
+        \gls{qmla} plots; found within instance directory e.g. \ttt{Jan\_01/01\_23/instances/qmla\_1}. 
+        \textbf{(a)} \ttt{composition\_of\_models}: constituent terms of all considered models, indexed by their model IDs.
+        \textbf{(b)} \ttt{bayes\_factors}: \glsentrylong{bf} comparisons between all models. 
+        \gls{bf} are read as $B_{a,b}$ where $a$ is the model with lower ID, 
+            e.g. $B_{1,2}$ rather than $B_{2,1}$. Thus $B > 0 (<0)$ indicates $a$ ($b$) is the stronger model.
+        \textbf{(c)} \ttt{comparisons/BF\_1\_2}: direct comparison between models with IDs 1 and 2, 
+            showing their reproduction of the system dynamics, 
+            as well as the times (experiments) against which the \gls{bf} was calculated. 
+        \textbf{(d)} \ttt{branches/dynamics\_branch\_1}: dynamics of all models considered on the branch. 
+        \textbf{(e)} \ttt{probes\_bloch\_sphere}: probes used for training models in this instance (only showing 1-qubit versions).
+    }
+    \label{fig:instance_plots}
+\end{figure}
+
+\subsection{\Gls{run} analysis}
+Considering a number of \glspl{instance} together is a \gls{run}. 
+In general, this is the level of analysis of most interest: 
+    an individual instance is liable to errors due to the probabilistic nature of 
+    the model training and generation subroutines. 
+On average, however, we expect those elements to perform well, 
+    so across a significant number of instances, we expect the average outcomes to be meaningful. 
+\par 
+
+Each results directory has an \ttt{analyse.sh} script to generate plots at the \gls{run} level. 
+\begin{lstlisting}[
+    label=listing:analysing_run,
+    caption={Analysing QMLA run.},
+    language=Bash
+]
+cd results/Jan_01/01_23
+./analyse.sh
+\end{lstlisting}
+
+Run level analysis are held in the main results directory and several sub-directories created by the \ttt{analyse} script. 
+Here, we recommend running a number of instances with very few resources so that the test finishes quickly\footnote{This run will take about ten minutes}. 
+The results will therefore be meaningless, but allow fo elucidation of the resultant plots. 
+First, reconfigure some settings of \cref{listing:local_launch} and launch again.
+\begin{lstlisting}[
+    label=listing:example_es_qhl_run,
+    caption={\ttt{local\_launch} configuration for QMLA.},
+    language=Bash
+]
+num_instances=10
+exp=20
+prt=100
+run_qhl=0
+exploration_strategy=ExampleBasic
+\end{lstlisting}
+\par 
+
+Some of the generated analysis are shown in \crefrange{fig:run_plots}{fig:run_dynamics}. 
+The number of instances for each model, i.e. their \emph{\glspl{win rate}} are given in \cref{fig:qmla_win_rates}.
+Quantitative comparisons between candidate models, i.e. \glspl{bf} are in \cref{fig:qmla_bayes_factors}.
+Irrespecitve of the champion models, the rate with which each term is found in the champion model ($\hat{t} \in \hp$)
+    indicates the likelihood that the term is really present;
+    these rates -- along with the parameter values learned -- are shown in \cref{fig:qmla_branch_dynamics}.
+The champion model from each instance can attempt to reproduce system dynamics: 
+    we group together these reproductions for each model in \cref{fig:run_dynamics}. 
+
+\begin{figure}[H]
+    \begin{center}
+        \subfloat[]{
+            \includegraphics{qmla_run_data/Jan_17/22_27/performance/model_wins.pdf}
+            \label{fig:qmla_win_rates}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics{qmla_run_data/Jan_17/22_27/champion_models/params_pauliSet_1J2_zJz_d4+pauliSet_2J3_zJz_d4+pauliSet_3J4_zJz_d4.pdf}
+            \label{fig:qmla_bayes_factors}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics{qmla_run_data/Jan_17/22_27/champion_models/terms_and_params.pdf}
+            \label{fig:qmla_branch_dynamics}
+        }
+    \end{center}
+    \caption[Run plots]{
+        \gls{qmla} run plots; found within run directory e.g. \ttt{Jan\_01/01\_23/}. 
+        \textbf{(a)} \ttt{performace/model\_wins}: number of instance wins achieved by each model. 
+        \textbf{(b)} \ttt{champion\_models/params\_params\_pauliSet\_1J2\_zJz\_d4+pauliSet\_2J3\_zJz\_d4+pauliSet\_3J4\_zJz\_d4}: 
+            parameter estimation progression for the true model, only for the instances where it was deemed champion. 
+        \textbf{(c)} \ttt{champion\_models/terms\_and\_params}: 
+            histogram of parameter values found for each term which appears in any champion model,
+            with the true parameter ($\alpha_0$) in red and the median learned parameter ($\alpha^{\prime}$) in blue.
+    }
+    \label{fig:run_plots}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics{qmla_run_data/Jan_17/22_27/performance/dynamics.pdf}
+    \end{center}
+    \caption{
+        Run plot \ttt{performace/dynamics}: median dynamics of the champion models. 
+        The models which won most instances are shown together in the top panel, 
+        and individually in the lower panels. 
+        The median dynamics from the models' learnings in its winning instances are shown, 
+        with the shaded region indicating the 66\% confidence region. 
+    }
+    \label{fig:run_dynamics}
+\end{figure}
+
+
+
+\section{Parallel implementation}
+
+
+% TODO use backslash package
 
