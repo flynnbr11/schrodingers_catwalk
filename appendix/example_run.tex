@@ -13,17 +13,18 @@ Now, we must download the code base and ensure it runs properly;
     so running on \emph{Windows Subsystem for Linux} is advised. 
 }
 
+The steps of preparing the codebase are 
+(i) install \ttt{redis};
+(ii) create a virtual Python environment for installing \gls{qmla} dependencies without damaging other parts of 
+the user's environment;
+(iii) download the \gls{qmla} codebase from 
+    the forked Github repository;
+(iv) install packages upon which \gls{qmla} depends. 
+
     
 \begin{lstlisting}[
     label=listing:qmla_setup,
-    caption={QMLA codebase setup. 
-    (i) install \ttt{redis};
-    (ii) creaet a virtual Python environment for installing \gls{qmla} dependencies without damaging other parts of 
-    the user's environment;
-    (iii) download the \gls{qmla} codebase from 
-        the forked Github repository;
-    (iv) install packages upon which \gls{qmla} depends. 
-    },
+    caption={QMLA codebase setup}
     language=Bash
 ]
 # Install redis (database broker)
@@ -61,7 +62,7 @@ Run the following
     (note: here we list \ttt{redis-4.0.8}, but this must be corrected to reflect the 
     version installed on the user's machine in the above setup section):
 \begin{lstlisting}[
-    label=listing:athlete_class,
+    label=listing:launch_redis,
     caption={Launch redis database},
     language=Bash
 ]
@@ -312,12 +313,12 @@ Individual models' insights can be found in \ttt{model\_training},
 \begin{figure}[H]
     \begin{center}
     \subfloat[]{
-        \includegraphics[width=0.75\textwidth]{qmla_run_data/Jan_17/18_04/instances/qmla_1/model_training/learning_summary_1.pdf}
+        \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17/18_04/instances/qmla_1/model_training/learning_summary_1.pdf}
         \label{fig:qmla_learning_summary}
     }
     \qquad
     \subfloat[]{
-        \includegraphics[width=0.75\textwidth]{qmla_run_data/Jan_17/18_04/instances/qmla_1/model_training/dynamics_1.pdf}
+        \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17/18_04/instances/qmla_1/model_training/dynamics_1.pdf}
         \label{fig:qmla_model_dynamics}
     }
     \end{center}
@@ -643,7 +644,7 @@ This method allows the user to impose any logic desired in constructing models;
     it is called after the completion of every branch of the  \glsentrylong{et} on the \gls{es}. 
 \par 
 
-\subsection{Greedy search}sec:greedy_search
+\subsection{Greedy search}\label{sec:greedy_search}
 
 A first non-trivial \gls{es} is to build models greedily from a set of \emph{primitive} terms, $\termset = \{ \hat{t} \} $. 
 New models are constructed by combining the previous branch champion with each of the remaining, unused terms. 
@@ -653,8 +654,8 @@ The process is repeated until no terms remain.
     \begin{center}
         \includegraphics[scale=0.75]{appendix/figures/greedy_exploration_strategy.pdf}
     \end{center}
-    \caption[
-        Greedy \glsentrylong{es}]{Greedy \glsentrylong{es}.
+    \caption[Greedy search mechanism]{
+        Greedy search mechanism.
         \textbf{Left}, a set of primitive terms, $\termset$, are defined in advance. 
         \textbf{Right}, models are constructed from $\termset$. 
         On the first branch, the primitve terms alone constitute models. 
@@ -665,7 +666,7 @@ The process is repeated until no terms remain.
 
 We can compose an \gls{es} using these rules, say for 
 \begin{equation*}
-    \termset = \left\{ \sx^1, \sy^1, \sx^1 \otimes \sx^2, \sy^1 \otimes \sy^2 \right\}
+    \termset = \left\{ \sx^1, \ \sy^1, \ \sx^1 \otimes \sx^2, \ \sy^1 \otimes \sy^2 \right\}
 \end{equation*}
 
 as follows.
@@ -744,21 +745,6 @@ class ExampleGreedySearch(
 
         return new_models
 
-    def check_tree_completed(
-        self,
-        spawn_step,
-        **kwargs
-    ):
-        r"""
-        QMLA asks the exploration tree whether it has finished growing; 
-        the exploration tree queries the exploration strategy through this method
-        """
-        if self.tree_completed_initially:
-            return True
-        elif self.spawn_stage[-1] == "Complete":
-            return True
-        else:
-            return False
 def greedy_add(
     current_model, 
     terms,
@@ -794,22 +780,22 @@ This \gls{run} can be implemented locally or in parallel as described above\foot
     generating figures in accordance with the \ttt{plot\_level} set by the user in the launch script. 
 \footnotext{We advise reducing \ttt{plot\_level} to 3 to avoid excessive/slow figure generation.}
 Outputs can again be found in the instances subdirectory, including a map of the models generated, 
-    as well as the branches they reside on, and the \glspl{bf} between candidates. 
+    as well as the branches they reside on, and the \glspl{bf} between candidates, \cref{fig:example_es_greedy}. 
 
 \begin{figure}[H]
     \begin{center}
     \subfloat[]{
-        \includegraphics{qmla_run_data/Jan_18/18_04/instances/qmla_1/composition_of_models.pdf}
+        \includegraphics[scale=0.75]{qmla_run_data/Jan_18/18_04/instances/qmla_1/composition_of_models.pdf}
     }
     \qquad
     \subfloat[]{
-        \includegraphics{qmla_run_data/Jan_18/18_04/instances/qmla_1/graphs_of_branches_ExampleGreedySearch.pdf}
+        \includegraphics[scale=0.75]{qmla_run_data/Jan_18/18_04/instances/qmla_1/graphs_of_branches_ExampleGreedySearch.pdf}
     }
     \end{center}
     \caption[Greedy \glsentrylong{es}]{
         Greedy \glsentrylong{es}. 
-        \textbf{(a)}, model compostion. 
-        \textbf{b}, graph of branches on the \glsentrylong{et}. 
+        \textbf{(a)}, \ttt{composition\_of\_models}. 
+        \textbf{b}, \ttt{graphs\_of\_branches\_ExampleGreedySearch}: shows which models reside on each branches of the \glsentrylong{et}. 
         Models are coloured by their $\fs$, and edges represent the \gls{bf} between models. 
         The first four branches are equivalent to those in \cref{fig:greedy_exploration_strategy} ,
         while the final branch considers the set of branch champions, in order to determine the overall champion. 
@@ -924,6 +910,23 @@ class ExampleGreedySearchTiered(
             self.spawn_stage.append("getting_tier_champ_{}".format(self.tier))
         return new_models
 
+    def check_tree_completed(
+        self,
+        spawn_step,
+        **kwargs
+    ):
+        r"""
+        QMLA asks the exploration tree whether it has finished growing; 
+        the exploration tree queries the exploration strategy through this method
+        """
+        if self.tree_completed_initially:
+            return True
+        elif self.spawn_stage[-1] == "Complete":
+            return True
+        else:
+            return False
+    
+
 def greedy_add(
     current_model, 
     terms,
@@ -966,8 +969,8 @@ with corresponding results in \cref{fig:example_es_tiered_greedy}.
     \end{center}
     \caption[Tiered greedy \glsentrylong{es}]{
         Tiered greedy \glsentrylong{es}. 
-        \textbf{(a)}, \ttt{composition_of_models}. 
-        \textbf{b}, \ttt{graphs_of_branches_ExampleGreedySearchTiered}: graph of branches on the \glsentrylong{et}. 
+        \textbf{(a)}, \ttt{composition\_of\_models}. 
+        \textbf{b}, \ttt{graphs\_of\_branches\_ExampleGreedySearchTiered}: shows which models reside on each branches of the \glsentrylong{et}. 
         Models are coloured by their $\fs$, and edges represent the \gls{bf} between models. 
         In each tier, three branches greedily add terms, and a fourth branch considers the champions of the first three branches
         in order to nominate a tier champion. 
