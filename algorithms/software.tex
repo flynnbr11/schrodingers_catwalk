@@ -170,7 +170,7 @@ In short, users need only specify the elements of the framework in the \emph{app
 
 \subsection{Application}\label{sec:application}
 The application of \gls{qmla} refers to the choice of target system, \gls{q}, and how \gls{qmla} searches the 
-    \gls{ms} in attempt to discover its model. 
+     \gls{model search}  in attempt to discover its model. 
 As outlined in \cref{sec:exploration_strategies}, \glspl{es} play the role of 
     defining \gls{qmla}'s objectives, guiding the steps it takes, and designing the models to be tested. 
 We facilitate the study of any system by providing a robust \ttt{ExplorationStrategy} base class,
@@ -193,13 +193,13 @@ Our base \gls{es} class uses sensbile defaults for this modular functionality,
 }
 
 \begin{easylist}[itemize]
-    & Likelihood function. By default, \gls{qhl} calls a subroutine to compute \cref{eqn:likelihood}. 
-        This can be replaced by any function which, given a Hamiltonian, evolution time and probe state, 
+    &\gls{likelihood} function. By default, \gls{qhl} calls a subroutine to compute \cref{eqn:likelihood}. 
+        This can be replaced by any function which, given a Hamiltonian, evolution time and \gls{probe} state, 
         returns the likelihood, according to the experiment you wish to simulate. 
         For example, in \cref{chapter:nv}, the data on which models are trained comes from experimental measurements, 
-            so we replace the likelihood function with a calculation corresponding to the experimental procedure. 
+            so we replace the\gls{likelihood} function with a calculation corresponding to the experimental procedure. 
         Importantly, QInfer requires the quantity $\Pr(0)$, see \cref{eqn:pr0}, so that is the output of these functions. 
-    & Probe generation. The training phase requires a set of probes against which to optimise individual models. 
+    & \Gls{probe} generation. The training phase requires a set of probes against which to optimise individual models. 
         Users may wish to specify the design of such probes, for example to match experimental constraints 
         which restrict the realisible probes in the performance of the experiment. 
         Alternatively, it may be feasible to design probes which increase the information gained per experiment, 
@@ -214,7 +214,7 @@ Our base \gls{es} class uses sensbile defaults for this modular functionality,
 \end{easylist}
 
 Additionally, applications require a series of settings for the model training phase, 
-    such as the hyperparameters required by the resampling algorithm, \cite{liu2001combined}, 
+    such as the \glspl{hyperparameter} required by the resampling algorithm, \cite{liu2001combined}, 
     as well as detailing the true (target) model, $\ho$, in the case where \gls{q} is a simulated quantum system.
 We can also specify some \gls{es}-specific analyses to examine its internal performance, 
     although this is generally required during development/testing, and less useful thereafter. 
@@ -249,7 +249,7 @@ The core \gls{qmla} class manages the database of models and their comparisons,
     \label{fig:parallel}
 \end{figure}
 
-The implementation of \gls{qmla} seeks to separate the organisation of the \gls{ms} from the 
+The implementation of \gls{qmla} seeks to separate the organisation of the  \gls{model search}  from the 
     cumbersome calculations which enable the search. 
 We can offload those calculations to a compute cluster (server) to run \emph{in parallel},
     allowing for significant speedup of the entire \gls{qmla} procedure, 
@@ -349,10 +349,10 @@ To achieve this separation between calculation and analysis, we use a redis data
 \section{Usage}
 
 Several aspects of \gls{qmla} are \emph{probabilistic}.
-Firstly, the Bayesian updates within model training of \gls{qhl} relies on Likelihoods which 
+Firstly, the Bayesian updates within model training of \gls{qhl} relies on \glspl{likelihood}  which 
     implicitly depend on the measurement datum of a quantum system; 
     in the case where the the measurement collapses \gls{q} into the less-likely basis, 
-    the likelihoods will reflect that accurate hypotheses were poor, 
+    the \glspl{likelihood}  will reflect that accurate hypotheses were poor, 
     resulting in misguided posterior distributions. 
 It is thus \emph{possible} that the parameter learning will converge on incorrect values. 
 Moreover, the model design subroutine is not gauranteed to exploit the aspects of favoured models which are 
@@ -365,12 +365,12 @@ Overall, then, it is pertinent to run \gls{qmla} many times and gather statistic
 We say that a \gls{qmla} \emph{\gls{run}} consists of $N_r$ independent \emph{\glspl{instance}},
     which can be run in parallel, such that we are primarily concerned with the performance of the run 
     instead of any individual instance. 
-For example, with $N_r=100$, we can interpret the \emph{\gls{win rate}} of every model in the model space
+For example, with $N_r=100$, we can interpret the \emph{ \gls{win rate} } of every model in the model space
     as evidence for that model being $\ho$.
 For the sake of evaluating \gls{qmla} itself, as in \cref{part:theoretical_study}, 
-    we can use the \gls{win rate} of $\ho$ as indication of the \emph{\gls{success rate}}, 
+    we can use the  \gls{win rate}  of $\ho$ as indication of the \emph{\gls{success rate}}, 
     i.e. the fraction of \glspl{instance} within a run where \gls{qmla} identifies precisely $\hp = \ho$. 
-Note, however, that neither the \gls{win rate} nor \gls{success rate} are singularly informative 
+Note, however, that neither the  \gls{win rate}  nor \gls{success rate} are singularly informative 
     of \gls{qmla}'s performance: in some cases, we can deem \gls{qmla} successful even if it does not 
     identify $\ho$ exactly, e.g. if it finds the majority of terms present in $\termset_0$ from a large space, 
     i.e. a high $\fs$, see \cref{sec:f_score}. 
@@ -382,7 +382,7 @@ When a \gls{run} is launched, \gls{qmla} generates a \emph{\gls{results director
     in which all the pertinent information for that \gls{run}, including raw data and figures, are stored. 
 It includes an \ttt{analyse.sh} script to generate analysis after all \glspl{instance} have completed\footnotemark. 
 \gls{qmla} provides a large amount of anaytics to assess the performance of the protocol. 
-These range from \emph{big picture} perspectives such as the \gls{win rate} across the entire \gls{run}, 
+These range from \emph{big picture} perspectives such as the  \gls{win rate}  across the entire \gls{run}, 
     to zooming in on the internal metrics for training individual models.
 Some of these analyses are generated by default, while others are optional depending on the 
     level of detail the user requires. 
@@ -400,8 +400,8 @@ The user has control on which plots are generated, in order that the appropriate
 Results are categorised across the levels of the framework, for example:
 \begin{easylist}
     & Run: results across a number of instances.
-    && the number of \gls{instance} wins for champion models.
-    && average dynamics reproduced by champion models.
+    && the number of \gls{instance} wins for \glspl{champion model}.
+    && average dynamics reproduced by \glspl{champion model}.
     & \Gls{instance}: performance of a single insance.
     && models generated and the branches on which they reside
     & Model: Individual model performance within an instance.

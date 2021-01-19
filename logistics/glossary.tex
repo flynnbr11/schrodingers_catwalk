@@ -48,16 +48,15 @@
 \newacronym{fp}{FP}{false positives}
 \newacronym{fn}{FN}{false negatives}
 \newacronym{svm}{SVM}{support vector machine}
-\newacronym{iqle}{IQLE}{interactive quantum likelihood estimation}
-\newacronym{qle}{QLE}{quantum likelihood estimation}
-\newacronym{cle}{CLE}{classical likelihood estimation}
+\newacronym{iqle}{IQLE}{interactive quantum\gls{likelihood} estimation}
+\newacronym{qle}{QLE}{quantum\gls{likelihood} estimation}
+\newacronym{cle}{CLE}{classical\gls{likelihood} estimation}
 \newacronym{hpd}{HPD}{high particle density}
-\newacronym{mvee}{MVEE}{minimum volume enclosing ellipsoid}
+\newacronym{mvee}{MVEE}{minimum \gls{volume} enclosing ellipsoid}
 \newacronym{edh}{EDH}{experiment design heuristic}
 \newacronym{pgh}{PGH}{particle guess heuristic}
 \newacronym{et}{ET}{exploration tree}
 \newacronym{es}{ES}{exploration strategy}
-\newacronym{ms}{MS}{model search}
 \newacronym{of}{OF}{objective function}
 \newacronym{carbon}{$^{13}C$}{carbon-13}
 \newacronym{nitrogen}{$^{14}N$}{nitrogen-14}
@@ -89,31 +88,17 @@
     particular software program that implements that API. 
 }
 
-% \newdefinedabbreviation{le}{LE}{Loschmidt echo}{
-%     Quantum chaotic effect described. 
-% }
-% \newdefinedabbreviation{es}{ES}{Exploration Strategy}{
-%     Set of rules which guide the model search on one of the exploration trees wtihin \gls{qmla}. 
-% }
-
-% \newdefinedabbreviation{ms}{MS}{model search}{
-%     A model search
-% }
-
-% \newdefinedabbreviation{jwt}{JWT}{Jordan Wigner transformation}{
-%     Jordan Wigner transformation
-% }
-
-% \newdefinedabbreviation{of}{OF}{objective funtion}{
-%     Function which acts on a candidate in a \gls{ga} to assess the fitness of the candidate at 
-%         solving the problem of interest.
-% }
-
 %%%%%%%%%%% TERMS %%%%%%%%%%%
 \newglossaryentry{expectation value}
 {
     name=expectation value,
     description={Average outcome expected by measuring an observable of a quantum system many times, \cref{sec:expectation_value}}
+}
+
+\newglossaryentry{model search}
+{
+    name=model search,
+    description={Exploration through the \gls{model space} performed by \gls{qmla}, where the direction of the search is determined by the \gls{es}}
 }
 
 \newglossaryentry{spawn}
@@ -130,7 +115,7 @@
 \newglossaryentry{probe}
 {
     name=probe,
-    description={Input probe state, $\ket{\psi}$, which the target system is initialised to, before unitary evolution},
+    description={Input \gls{probe} state, $\ket{\psi}$, which the target system is initialised to, before unitary evolution},
     plural={probes},
 }
 \newglossaryentry{volume}
@@ -161,11 +146,11 @@
 \newglossaryentry{success rate}
 {
     name=success rate,
-    description={Fraction of \glspl{instance} within a \gls{run} where \gls{qmla} nominates the true model as \gls{champion}}
+    description={Fraction of \glspl{instance} within a \gls{run} where \gls{qmla} nominates the \gls{true model} as \gls{champion}}
 }
 \newglossaryentry{true model}
 {
-    name=true model,
+    name={true model} ,
     description={$\ho$, the model which correctly describes the target system, \gls{q}. $\ho$ is known for simulated \gls{q} 
     but not known precisely for experimental systems.}
 }
@@ -198,8 +183,6 @@
     description={Quantum system which is the target of \glsentrylong{qmla}, i.e. the system to be characterised}
 }
 
-
-
 \newglossaryentry{term}
 {
     name=term,
@@ -210,7 +193,7 @@
 
 \newglossaryentry{results directory}
 {
-    name=results directory,
+    name={results directory},
     description={
         Directory to which the data and analysis for a given \gls{run} of \gls{qmla} are stored
     }

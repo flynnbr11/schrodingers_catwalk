@@ -1,5 +1,5 @@
 \cref{chapter:nv} concerned a two-qubit approximation of the short-time dynamics of an \gls{nvc}. 
-It is valid criticism of this analysis that the model space searched was reduced substantially from prior knowledge,
+It is valid criticism of this analysis that the \gls{model space} searched was reduced substantially from prior knowledge,
     and it therefore remains to test \gls{qmla} in a large model space, on physically meaningful data. 
 In this chapter, we extend \gls{qmla}, to consider appoximations of \gls{nvc} sytems using more qubits, 
     representing several nuclear sites, which aim to capture the interactions between the 
@@ -114,7 +114,7 @@ In summary, irrespective of the underlying physics we are simulating,
     while searching the space of 33 permissible terms. 
 Without imposing any restrictions on which combinations of terms are allowed, 
     each term is simply either in $\hp$ or not, so can be thought of as binary variables:
-    the total model space is therefore of size $2^{33} \approx 10^{10}$. 
+    the total \gls{model space} is therefore of size $2^{33} \approx 10^{10}$. 
 
 \section{Genetic algorithm}
 \glspl{ga} provide a robust and thoroughly tested paradigm for searching large candidate spaces; 
@@ -142,7 +142,7 @@ This \glsentryfull{of} relies on the definition of a validation dataset, $\expse
     \end{center}
     \caption[Evaluation dataset for \glsentrylong{nvc} \glsentrylong{ga}]{
         Evaluation dataset, $\expset_v$, for \glsentrylong{nvc} \glsentrylong{ga}. 
-        \textbf{Left}, Probe state the \gls{nvc}  qubit is prepared in, on the Bloch sphere, 
+        \textbf{Left}, \Gls{probe} state the \gls{nvc}  qubit is prepared in, on the Bloch sphere, 
             i.e. $\Psi_v$ is close to the tomographic basis. 
         \textbf{Right}, Time comb evaluated against, i.e. uniformly distributed times up to $t_{max} = 100 \mu \textrm{s}$ 
             are used for experiments in $\expset_v$. 
@@ -198,7 +198,7 @@ The improvement in modelling is reflected in the branch champions' predictive po
 \par 
 
 Considering the overall \gls{run}, 
-    we see that \gls{qmla} is searching in a vast model space where randomly sampled models
+    we see that \gls{qmla} is searching in a vast \gls{model space} where randomly sampled models
     have poor $\fs$ on average, \cref{fig:nv_ga_run_models}\textbf{a}. 
 \gls{qmla} efficiently explores the space by quickly moving into a 
     subspace of high $\fs$, nominating $\hp = \ho$ precisely in $85\%$ of instances,
@@ -210,7 +210,7 @@ The number of times each of the terms considered, \cref{eqn:nv_ga_terms},
 Here, $\hat{t} \in \termset_0$ are found in $\geq 94\%$ of instances, 
     while $\hat{t} \notin \termset_0$ are found in $\leq 11\%$, 
     shown in \cref{fig:nv_ga_hinton} and listed in \cref{table:nv_ga_term_counts}.
-Such a discrepency, as well as the win rates for the models, 
+Such a discrepency, as well as the \glspl{win rate} for the models, 
     allows for the clear declaration of the model $\ho$ as the favoured representation 
     for the quantum system. 
 
@@ -221,14 +221,14 @@ Such a discrepency, as well as the win rates for the models,
     \caption[\Glsentrylong{nvc} \glsentrylong{ga} \gls{run}]{
         \Glsentrylong{nvc} \glsentrylong{ga} \gls{run}.
         \textbf{(a)}, 
-            $\fs$ of $10^6$ samples from the model space of $2^{33}\approx10^{10}$ candidate models,
+            $\fs$ of $10^6$ samples from the \gls{model space} of $2^{33}\approx10^{10}$ candidate models,
             normally distributed around $f=0.44 \pm 0.12$. 
         \textbf{(b)}, The models explored during the model search of all \glspl{instance} combined, 
             $\{\hat{H}_i\}$, show that \gls{qmla} tends towards stronger models overall, 
             with $f = 0.79 \pm 0.16$ from $\sim 140,000$ chromosomes across the 100 instances, 
             i.e. each \gls{instance} tests $\sim 1400$ distinct models. 
         \textbf{(c)}, Champion models from each instance, showing \gls{qmla} finds strong models 
-            in general, and in particular finds the true model ($\ho$, with $f=1$) in $85\%$ of cases.
+            in general, and in particular finds the \gls{true model} ($\ho$, with $f=1$) in $85\%$ of cases.
         }
     \label{fig:nv_ga_run_models}
 \end{figure}

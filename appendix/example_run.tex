@@ -133,24 +133,24 @@ cd launch
 
 There may be numerous warnings, but they should not affect whether \gls{qmla} has succeeded; 
     \gls{qmla} will \ttt{raise} any significant error. 
-Assuming the run has completed successfully, \gls{qmla} stores the run's results in a subdirectory
+Assuming the \gls{run} has completed successfully, \gls{qmla} stores the run's results in a subdirectory
     named by the date and time it was started.  
-For example, if the run was initialised on January $1^{st}$ at 01:23, navigate to the corresponding directory by
+For example, if the \gls{run} was initialised on January $1^{st}$ at 01:23, navigate to the corresponding directory by
 
 \begin{lstlisting}[
     label=listing:results_directory,
-    caption={QMLA results directory},
+    caption={QMLA \gls{results directory}},
     language=Bash
 ]
 cd results/Jan_01/01_23
 \end{lstlisting}
 
-For now it is sufficient to notice that the code has run successfully:
+For now it is sufficient to notice that the code has \gls{run} successfully:
     it should have generated (in \ttt{results/Jan\_01/01\_23}) files like \ttt{storage\_001.p} and \ttt{results\_001.p}.
 
 \section{Custom \glsentrylong{es}}
 
-Next, we design a basic \gls{es}, for the purpose of demonstrating how to run the algorithm.
+Next, we design a basic \gls{es}, for the purpose of demonstrating how to \gls{run} the algorithm.
 \glspl{es} are placed in the directory \ttt{qmla/exploration\_strategies}. 
 To make a new one, navigate to the exploration strategies directory, 
 make a new subdirectory, and copy the template file. 
@@ -194,7 +194,7 @@ from qmla.exploration_strategies.custom_es import *
 \end{lstlisting}
 
 Now, change the structure (and name) of the \gls{es} inside \ttt{custom\_es/example.py}. 
-Say we wish to target the true model 
+Say we wish to target the \gls{true model} 
 \begin{equation}
     \label{eqn:example_es_true_ham}
     \begin{split}
@@ -277,7 +277,7 @@ exploration_strategy=ExampleBasic
 \end{lstlisting}
 
 Run locally again as in \cref{listing:launch_example};
-    then move to the results directory as in \cref{listing:results_directory}. 
+    then move to the \gls{results directory} as in \cref{listing:results_directory}. 
 \footnotetext{
     Note this will take up to 15 minutes to run. 
     This can be reduced by lowering the values of \ttt{prt}, \ttt{exp}, 
@@ -327,7 +327,7 @@ Individual models' insights can be found in \ttt{model\_training},
         \textbf{a} \ttt{learning\_summary\_1}. 
         Displays the outcome of \gls{qhl} for the given model:
         Subfigures (a)-(c) show the estimates of the parameters; 
-        (d) shows the total parameterisation volume against experiments trained upon, 
+        (d) shows the total parameterisation \gls{volume} against experiments trained upon, 
         along with the evolution times used for those experiments. 
         \textbf{(b)} \ttt{dynamics\_1} The model's attempt at reproducing dynamics from $\ho$. 
     }
@@ -360,7 +360,7 @@ exploration_strategy=ExampleBasic
 
 \par 
 
-In the corresponding results directory, navigate to \ttt{instances/qmla\_1}, where instance level analysis are available. 
+In the corresponding \gls{results directory}, navigate to \ttt{instances/qmla\_1}, where instance level analysis are available. 
 
 \begin{lstlisting}[
     label=listing:instance_results,
@@ -434,7 +434,7 @@ On average, however, we expect those elements to perform well,
     so across a significant number of instances, we expect the average outcomes to be meaningful. 
 \par 
 
-Each results directory has an \ttt{analyse.sh} script to generate plots at the \gls{run} level. 
+Each \gls{results directory} has an \ttt{analyse.sh} script to generate plots at the \gls{run} level. 
 \begin{lstlisting}[
     label=listing:analysing_run,
     caption={Analysing QMLA run.},
@@ -444,8 +444,8 @@ cd results/Jan_01/01_23
 ./analyse.sh
 \end{lstlisting}
 
-Run level analysis are held in the main results directory and several sub-directories created by the \ttt{analyse} script. 
-Here, we recommend running a number of \glspl{instance} with very few resources so that the test finishes quickly\footnote{This run will take about ten minutes}. 
+Run level analysis are held in the main \gls{results directory} and several sub-directories created by the \ttt{analyse} script. 
+Here, we recommend running a number of \glspl{instance} with very few resources so that the test finishes quickly\footnote{This \gls{run} will take about ten minutes}. 
 The results will therefore be meaningless, but allow fo elucidation of the resultant plots. 
 First, reconfigure some settings of \cref{listing:local_launch} and launch again.
 \begin{lstlisting}[
@@ -463,13 +463,13 @@ exploration_strategy=ExampleBasic
 
 Some of the generated analysis are shown in \crefrange{fig:run_plots}{fig:run_dynamics}. 
 The number of \glspl{instance} for each model, i.e. their \emph{\glspl{win rate}} are given in \cref{fig:qmla_win_rates}.
-The \emph{top models}, i.e. those with highest win rates, analysed further: 
+The \emph{top models}, i.e. those with highest \glspl{win rate}, analysed further: 
     the average parameter estimation progression for $\ho$ -- including only the \glspl{instance} where $\ho$ was deemed champion --
     are shown in \cref{fig:champ_param_progression}.
-Irrespecitve of the champion models, the rate with which each term is found in the champion model ($\hat{t} \in \hp$)
-    indicates the likelihood that the term is really present;
+Irrespecitve of the \glspl{champion model}, the rate with which each term is found in the \gls{champion model} ($\hat{t} \in \hp$)
+    indicates the\gls{likelihood} that the term is really present;
     these rates -- along with the parameter values learned -- are shown in \cref{fig:qmla_branch_dynamics}.
-The champion model from each \gls{instance} can attempt to reproduce system dynamics: 
+The \gls{champion model} from each \gls{instance} can attempt to reproduce system dynamics: 
     we group together these reproductions for each model in \cref{fig:run_dynamics}. 
 
 \begin{figure}[H]
@@ -490,12 +490,12 @@ The champion model from each \gls{instance} can attempt to reproduce system dyna
         }
     \end{center}
     \caption[Run plots]{
-        \gls{qmla} run plots; found within run directory e.g. \ttt{Jan\_01/01\_23/}. 
+        \gls{qmla} \gls{run} plots; found within \gls{run} directory e.g. \ttt{Jan\_01/01\_23/}. 
         \textbf{(a)} \ttt{performace/model\_wins}: number of \gls{instance} wins achieved by each model. 
         \textbf{(b)} \ttt{champion\_models/params\_params\_pauliSet\_1J2\_zJz\_d4+pauliSet\_2J3\_zJz\_d4+pauliSet\_3J4\_zJz\_d4}: 
-            parameter estimation progression for the true model, only for the \glspl{instance} where it was deemed champion. 
+            parameter estimation progression for the  \gls{true model} , only for the \glspl{instance} where it was deemed champion. 
         \textbf{(c)} \ttt{champion\_models/terms\_and\_params}: 
-            histogram of parameter values found for each term which appears in any champion model,
+            histogram of parameter values found for each term which appears in any \gls{champion model},
             with the true parameter ($\alpha_0$) in red and the median learned parameter ($\bar{\alpha}^{\prime}$) in blue.
     }
     \label{fig:run_plots}
@@ -506,7 +506,7 @@ The champion model from each \gls{instance} can attempt to reproduce system dyna
         \includegraphics{qmla_run_data/Jan_17/22_27/performance/dynamics.pdf}
     \end{center}
     \caption[Run plot: dynamics]{
-        Run plot \ttt{performace/dynamics}: median dynamics of the champion models. 
+        Run plot \ttt{performace/dynamics}: median dynamics of the \glspl{champion model}. 
         The models which won most \glspl{instance} are shown together in the top panel, 
         and individually in the lower panels. 
         The median dynamics from the models' learnings in its winning \glspl{instance} are shown, 

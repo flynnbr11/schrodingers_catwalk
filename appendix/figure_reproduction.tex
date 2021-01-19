@@ -2,14 +2,14 @@ Most of the figures presented in the main text are generated directly by the \gl
 Here we list the implementation details of each figure so they may be reproduced
     by ensuring the configuration in \cref{table:figure_reproduction} are set in the launch script. 
 The default behaviour of \gls{qmla} is to generate a results folder uniquely identified by the date and time 
-    the \gls{run} was launched, e.g. results can be found at the \emph{results directory} \ttt{qmla/Launch/Jan\_01/12\_34}. 
-Given the large number of plots available, ranging from high-level run perspective 
+    the \gls{run} was launched, e.g. results can be found at the \emph{\gls{results directory}} \ttt{qmla/Launch/Jan\_01/12\_34}. 
+Given the large number of plots available, ranging from high-level \gls{run} perspective 
     down to the training of individual models, 
     we introduce a \ttt{plot\_level} $\in \{1, ..., 6\}$  for each \gls{run} of \gls{qmla}:
     higher \ttt{plot\_level} informs \gls{qmla} to generate more plots.  
 \par  
 
-Within the results directory, the outcome of the run's \glspl{instance} are stored, 
+Within the \gls{results directory}, the outcome of the run's \glspl{instance} are stored, 
     with analysis plots broadly grouped as
 \begin{easylist}
     & \ttt{evaluation}: plots of probes and times used as the evaluation dataset. 
@@ -25,7 +25,7 @@ Within the results directory, the outcome of the run's \glspl{instance} are stor
     & \ttt{champion\_models}: analysis of the models deemed champions by at least one \gls{instance} in the \gls{run}, 
         e.g. average parameter estimation for a model which wins multiple instances. 
     & \ttt{performance}: evaluation of the \gls{qmla} \gls{run}, 
-        e.g. the win rate of each model and the number of times each term is found in champion models. 
+        e.g. the  \gls{win rate}  of each model and the number of times each term is found in \glspl{champion model}. 
     & \ttt{meta} analysis of the algorithm' implementation, e.g. timing of jobs on each process in a cluster; 
         generally users need not be concerned with these. 
 \end{easylist}    

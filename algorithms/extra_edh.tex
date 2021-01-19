@@ -41,9 +41,9 @@ While \gls{pgh} uses the Euclidean distance, we can instead consider, for exampl
 \subsubsection{Volume adaptive \gls{pgh}}
 Where it is suspected that \gls{pgh} is performing poorly, it is feasible to force the \gls{edh} to consider orders of magnitude 
     greater or smaller than the distance $d(\al_i, \al_j)$.
-We include a heuristic which tracks the change in volume across experiments, 
-    given by $\Delta V = 1 - \nicefrac{V^{\prime}}{V}$, where $V$ is the volume of the prior
-    and $V^{\prime}$ is the volume of the posterior, 
+We include a heuristic which tracks the change in \gls{volume} across experiments, 
+    given by $\Delta V = 1 - \nicefrac{V^{\prime}}{V}$, where $V$ is the \gls{volume} of the prior
+    and $V^{\prime}$ is the \gls{volume} of the posterior, 
     noting that several experiments may elapse between measuring $V, V^{\prime}$,
     such that we can interpret
 \begin{align}
@@ -55,8 +55,8 @@ We include a heuristic which tracks the change in volume across experiments,
     \end{cases}
 \end{align}
 
-\cref{eqn:volume_adaptive_cases} allows us to set acceptable levels for the learning via the volume reduction: 
-    when the change in volume is deemed inappropriate, we force the experimental times into another order of magnitude, 
+\cref{eqn:volume_adaptive_cases} allows us to set acceptable levels for the learning via the \gls{volume} reduction: 
+    when the change in \gls{volume} is deemed inappropriate, we force the experimental times into another order of magnitude, 
     by imposing a scalar factor on the \gls{pgh} chosen time, again facilitating any distance metric, $d$, 
 \begin{equation}
     \label{eqn:volume_adaptive_pgh}
@@ -64,7 +64,7 @@ We include a heuristic which tracks the change in volume across experiments,
 \end{equation}
     where $\kappa_k$ is a scalar set for each experiment $k$, initially set as $\kappa_0=1$.
 For example, if $\Delta V > 0.2$ across a small number of experiments (say 10), 
-    we see that the volume has reduced by $20\%$ over 10 experiments, which is a strong rate of learning, 
+    we see that the \gls{volume} has reduced by $20\%$ over 10 experiments, which is a strong rate of learning, 
     so we retain $\kappa_k = \kappa_{k-1}$. 
 Conversely, $\Delta V = 0.01$ indicates that the learning has stalled, 
     to compensate, we set $\kappa_{k} = 10 \kappa_{k-1}$, 

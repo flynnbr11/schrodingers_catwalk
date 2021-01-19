@@ -9,7 +9,7 @@ In particular, an experiment is designed, consisting of an input state, $\ket{\p
 This experiment is performed on \gls{q}, whereupon its measurement yields the datum $d \in \{0, 1\}$, 
     according to the expectation value $\left| \bra{\psi} e^{-i \ho t} \ket{\psi} \right|^2$. 
 Then on a trusted (quantum) simulator, proposed parameters $\vec{\alpha}_p$ are encoded to the 
-    known Hamiltonian, and the same probe state is evolved for the chosen $t$ and projected on to $d$, 
+    known Hamiltonian, and the same \gls{probe} state is evolved for the chosen $t$ and projected on to $d$, 
     i.e. $\left| \bra{d} e^{-i \hat{H}(\vec{\alpha}_p) t } \ket{\psi} \right|^2 $ is computed.
 The task for \gls{qhl} is then to find $\vec{\alpha}^{\prime}$ for which this quantity 
     is close to 1 for all values of $(\ket{\psi}, t)$, 
@@ -42,7 +42,7 @@ A given set of $(\ket{\psi}, t)$ is called an experiment, since it corresponds t
 once\footnote{experimentally, this may involve repeating a measurement many times to determine a majority result and to mitigate noise}. 
 \gls{qhl} iterates for $\Ne$ experiments. 
 The parameter vectors sampled are called \emph{particles}: there are $\Np$ particles used per experiment. 
-Each particle used incurs one further calculation of the likelihood function -- 
+Each particle used incurs one further calculation of the\gls{likelihood} function -- 
     this calculation, on a classical computer, is exponential in the number of qubits of the model under consideration
     (because each unitary evolution relies on the exponential of the $2^n \times 2^n$ Hamiltonian matrix of $n$ qubits). 
 Likewise, each additional experiment incurs the cost of calculation of $\Np$ particles, 
@@ -80,12 +80,12 @@ We can then discretise \cref{eqn:qhl_bayes_rule} to the level of single particle
 
 where 
 \begin{easylist}[itemize]
-    & $e$ are the experimental controls of a single experiment, e.g. evolution time and input probe state;
+    & $e$ are the experimental controls of a single experiment, e.g. evolution time and input \gls{probe} state;
     & $d$ is the datum, i.e. the binary outcome of measuring \gls{q} under conditions $e$;  
     & $\al_p$ is the \emph{hypothesis}, i.e. a single parameter vector, called a particle, sampled from $\Pr(\al)$;
     & $\Pr(\al_p | d; e)$ is the \emph{updated} probability of this particle following the experiment $e$, 
         i.e. accounting for new datum $d$, the probability that $\al=\al_0$;
-    & $\Pr(d |\al_p ; e)$ is the likelihood function, 
+    & $\Pr(d |\al_p ; e)$ is the\gls{likelihood} function, 
         i.e how likely it is to have measured the datum $d$ from the system assuming $\al_p$ are the true parameters
         and the experiment $e$ was performed; 
     & $\Pr(\al_p)$ is the probability that $\al_p=\al_0$ according to the prior distribution $\Pr(\al)$, 
@@ -93,7 +93,7 @@ where
     & $\Pr(d|e)$ is a normalisation factor, the chance of observing $d$ from experiment $e$ irrespective of the underlying hypothesis.
 \end{easylist}
 
-In order to compute the updated probability for a given particle, then, all that is required is a value for the likelihood function.
+In order to compute the updated probability for a given particle, then, all that is required is a value for the\gls{likelihood} function.
 This is equivalent to the expectation value of projecting $\ket{\psi}$ onto $d$, after evolving $\hat{H}(\al_p)$ for $t$, i.e. 
 \begin{equation}
     \label{eqn:likelihood}
@@ -104,7 +104,7 @@ It is necessary first to know the datum $d$ (either 0 or 1) which was projected 
 Therefore we first perform the experiment $e$ on \gls{q} 
     (preparing the state $\ket{\psi}$ evolving for $t$ and projecting again onto $\bra{\psi}$)
     to retrieve the datum $d$. 
-$d$ is then used for the calculation of the likelihood for each particle sampled from $Pr({\al})$. 
+$d$ is then used for the calculation of the\gls{likelihood} for each particle sampled from $Pr({\al})$. 
 Each particle's probability can be updated by \cref{eqn:particle_bayes_rule}, 
     allowing us to redraw the entire probability distribution -- i.e. we compute a \emph{posterior} probability distribution
     by performing this routine on $\Np$ particles. 
@@ -148,12 +148,12 @@ Each particle's probability can be updated by \cref{eqn:particle_bayes_rule},
     Both parameters are assigned a uniform probability distribution $\mathcal{U}(0,1)$, representing our prior knowledge of the system. 
     \textbf{(a), }\gls{smc} samples $\Np$ particles from the initial joint probability distribution, 
         with particles uniformly spread across the unit square, each assigned the starting \emph{weight} $w_0$. 
-        At each experiment $e$, each of these particles' likelihood is computed according to \cref{eqn:particle_bayes_rule}
+        At each experiment $e$, each of these particles'\gls{likelihood} is computed according to \cref{eqn:particle_bayes_rule}
         and its weight is updated by \cref{eqn:qhl_weights}.
     \textbf{(b),} after 9 experiments, the weights of the sampled particles are sufficintly informative that we know we can 
         discard some particles while most likely retaining the true parameters. 
     \textbf{(c),} \gls{smc} resamples according the current $\Pr(\al)$, 
-        i.e. having accounted for the experiments and likelihoods observed to date, 
+        i.e. having accounted for the experiments and \glspl{likelihood}  observed to date, 
         a new batch of $\Np$ particles are drawn, and each reassigned weight $w_0$, 
         irrespective of their weight prior to resampling.  
     \textbf{(d, e),} Afer further experiments and resamplings, \gls{smc} narrows $\Pr(\al)$ to a region around the true parameters. 
@@ -179,7 +179,7 @@ Within a single experiment, the weights of all $\Np$ particles are updated thus:
 This iterates for the following experiment, using the \emph{same} particles: 
     we do \emph{not} redraw $\Np$ particles for every experiment.
 Eventually, the weights of most particles fall below a threshold, $r_t$, 
-    meaning that only that fraction of particles have reasonable likelihood of being $\al_0$.
+    meaning that only that fraction of particles have reasonable\gls{likelihood} of being $\al_0$.
 At this stage, \gls{smc} \emph{resamples}, i.e. selects new particles, according to the updated $\Pr(\al)$,
     according to the Liu-West resampling algorithm \cite{liu2001combined}.
 Then, the new particles are in the range of parameters which is known to be more likely, 
@@ -194,14 +194,14 @@ This procedure is easiest understood through the example presented in \cref{fig:
 \section{Likelihood}\label{sec:likelihood}
 The fundamental step within \gls{qhl} is the calculation of \gls{likelihood} in \cref{eqn:particle_bayes_rule}. 
 The core of this learning algorithm is that this \gls{likelihood} can be retrieved from the Born rule, 
-    although in principle \emph{any} valid likelihood function can fulfil this equation, 
-    provided the calculation of the likelihood captures the probabilty that the present hypothesis produced the present datum.
+    although in principle \emph{any} valid\gls{likelihood} function can fulfil this equation, 
+    provided the calculation of the\gls{likelihood} captures the probabilty that the present hypothesis produced the present datum.
 
 In general, it is not always possible to derive the analytical likelihood, 
     especially in cases where we wish to vary the \gls{probe}.
 When \cref{eqn:likelihood} can be computed classically, 
     \gls{qhl} relies on \gls{cle}, i.e. involving the exponential calculation of \cref{eqn:likelihood}, 
-    whereas \gls{qle} uses the same likelihood function computed on a quantum simulator; 
+    whereas \gls{qle} uses the same\gls{likelihood} function computed on a quantum simulator; 
     this is the sole application of quantum simulators in this protocol and indeed the remainder of this thesis. 
 Access to such hardware, operating perfectly, would provide exponential speedup in the calculation of this term, 
     rendering both \gls{qhl} and the wider \gls{qmla} formalism scalable,
@@ -209,7 +209,7 @@ Access to such hardware, operating perfectly, would provide exponential speedup 
 \gls{qle} was implemented in \cite{wang2017experimental}. 
 \par 
 
-We adopt notation used by QInfer, which \gls{qmla} for the likelihood estimation stage \cite{qinfer-1_0}. 
+We adopt notation used by QInfer, which \gls{qmla} for the\gls{likelihood} estimation stage \cite{qinfer-1_0}. 
 The expectation value for a the unitary operator is given by
 \begin{equation}\label{eqn:pr0}
     \Pr(0) =  |\bra{\psi} e^{-i \hat{H}_p t} \ket{\psi}|^2  = l(d=0 | \hat{H}_p; e), 
@@ -218,7 +218,7 @@ The expectation value for a the unitary operator is given by
     of measuring $d=0$, i.e. measuring the same state as input. 
 However, we assume a binary outcome model, 
     i.e. that the system is measured either in $\ket{\psi}$ (labelled $d=0$), or it is not ($d=1$);
-    the likelihood for the latter case is
+    the\gls{likelihood} for the latter case is
 \begin{equation}\label{eqn:pr1}
     \Pr(1) = l(d=1 | \hat{H}_p; e) = \sum_{\{\ket{\psi_{\perp}}\}} | \bra{\psi_{\perp}} e^{-i \hat{H}_p t} \ket{\psi}  |^2 = 1 - \Pr(0).
 \end{equation}
@@ -228,16 +228,16 @@ Usually we will refer to the case where \gls{q} is projeced onto the input state
     unless otherwise stated. 
 
 
-\subsection{Interactive Quantum Likelihood Estimation}\label{sec:iqle}
+\subsection{Interactive Quantum\gls{likelihood} Estimation}\label{sec:iqle}
 An important extension to \gls{qle} is \gls{iqle}, 
     which follows \gls{smc} but uses an alternative \gls{likelihood} function in order to 
     overcome some of its inherent challenges \cite{Wiebe:2014qhl}. 
 Two almost identical Hamiltonians will diverge after exponentially small evolution time \cite{jalabert2001environment}.
-This is problematic for \gls{qhl} because it relies on the likelihood function which is built on the assumption 
+This is problematic for \gls{qhl} because it relies on the\gls{likelihood} function which is built on the assumption 
     that increasing accuracy of $\ha$ approximating $\ho$ should result in rising likelihood;
     this result indicates that even extremely accurate approximations become unreliable after very short evolution times. 
 Coupled with the result that small time experiments are uninformative \cite{wiebe2015quantum}, 
-    this observation demands exponentially many measurements to approximate the exponentially small likelihoods, 
+    this observation demands exponentially many measurements to approximate the exponentially small \glspl{likelihood} , 
     rendering the approach inefficient. 
 \par 
 The \gls{le} is the measure of the revival resulting from an imperfect time-reversal operation implemented after the standard time evolution. 
@@ -262,7 +262,7 @@ In effect, the \gls{le} gaurantees that if $\hat{H}_{-} \not\approx \hat{H}_{+}$
 This can be exploited for learning: 
     by taking $\hat{H}_{+}$ as either $\ho$ (true) or $\ha$ (particle or hypothesis), 
     and sampling $\hat{H}_{-}$ from $\pra$, 
-    we can adopt \cref{eqn:loschmidt_echo} as the likelihood function in \cref{eqn:likelihood}, 
+    we can adopt \cref{eqn:loschmidt_echo} as the\gls{likelihood} function in \cref{eqn:likelihood}, 
     in the knowledge that this will disinguish between hypotheses based on their similarity to $\ho$.
 \par 
 
@@ -277,7 +277,7 @@ The remaining application for \gls{iqle}, and correspondingly \gls{qhl},
     which can realise such coherent channels \cite{wang2017experimental}. 
 
 \subsection{Analytical likelihood}    
-In some cases, analytical likelihood functions can be derived to describe the dynamics of simple quantum systems 
+In some cases, analytical\gls{likelihood} functions can be derived to describe the dynamics of simple quantum systems 
     \cite{sergeevich2011characterization, ferrie2013best},
     for instance encoding the Rabi frequency $\omega$ of an oscillating electron spin in an \gls{nvc},
     \begin{equation}
@@ -313,23 +313,23 @@ By initialising and projecting into the same state, say $\ket{\psi_0} = \ket{\ps
     \end{split}
 \end{align}
     i.e. if the system measures in $\ket{+}$, we set the datum $d=1$, otherwise $d=0$. 
-Then, from Born's rule, and in analogy with \cref{eqn:likelihood}, we can formulate the likelihood function, 
+Then, from Born's rule, and in analogy with \cref{eqn:likelihood}, we can formulate the\gls{likelihood} function, 
     where the hypothesis is the single parameter $\omega$, and the sole experimental control is $t$, 
 \begin{equation}
     \label{eqn:analytical_likleihood}
     \Pr(d=1 | \omega; t) = \left| \braket{\psi_1 |  U | \psi_0} \right|^2 = \cos^2\bk{\frac{\omega t}{2}}
 \end{equation}
-This analytical likelihood will underly the simulations used in the following introductions, except where explicitly mentioned. 
+This analytical\gls{likelihood} will underly the simulations used in the following introductions, except where explicitly mentioned. 
 
 \section{Total log total likelihood}\label{sec:total_log_total_likelihood}
 We have already used the concept of \gls{likelihood} to update our parameter distribution during \gls{smc}; 
-    we can consolidate the likelihoods of all particles with respect to a single datum, $d$, from a single experiment $e$,  
+    we can consolidate the \glspl{likelihood}  of all particles with respect to a single datum, $d$, from a single experiment $e$,  
     in the \emph{total likelihood}, 
     \begin{equation}
         \label{eqn:total_likelihood}
         \lk_{e} = \sum\limits_{p \in \{p\}} \Pr(d | \al_p ; e) \times w_p^{old}.
     \end{equation}
-For each experiment, we use total likelihood as a measure of how well the distribution performed,
+For each experiment, we use total\gls{likelihood} as a measure of how well the distribution performed,
     i.e. we care about how well all particles, $\{p\}$, perform as a collective, representative of how well $\Pr(\al)$ approximates the system,
     equivalent to the noramlisation factor in \cref{eqn:qhl_weights}, \cite{granade2015characterizationp92}. 
 
@@ -389,7 +389,7 @@ Then, in all cases \cref{eqn:log_total_likelihood} is negative,
     \centering
     \includegraphics{algorithms/figures/params.pdf}
     \caption[Parameter learning varying number of particles]{
-        Parameter learning for the analyitcal likelihood \cref{eqn:analytical_likleihood}
+        Parameter learning for the analyitcal\gls{likelihood} \cref{eqn:analytical_likleihood}
         for varying numbers of particles $\Np$, for $\Ne=500$. 
         For $\Np=2000$, we show the resampler threshold set to $r=0.5$ and $r=0.9$. 
         (a) the parameter estimate, i.e. $\bar{\omega}$, the mean of the posterior distribution after each experiment, 
@@ -427,7 +427,7 @@ We also care about the range of parameters supported by $\Pr(\al)$ at each exper
     that the approximation $\mean\bk{\Pr(\al)} $ is accurate. 
 For example, for a single parameter $\omega$, our best knowledge of the parameter is $\mean\bk{ \Pr(\omega) }$, 
     and our belief in that approximation is the standard deviation of $\Pr(\omega)$; 
-    we can think of volume as an $n$-dimensional generalisation of this intuition \cite{qinfer-1_0, ferrie2014high}. 
+    we can think of \gls{volume} as an $n$-dimensional generalisation of this intuition \cite{qinfer-1_0, ferrie2014high}. 
 \par 
 In general, a confidence region, defined by its confidence level $\kappa$, is drawn by grouping particles 
     of \gls{hpd}, $\mathcal{P}$, such that $\sum\limits_{p \in \mathcal{P}} w_{p} \geq \kappa$.
@@ -441,16 +441,16 @@ We use the concept \todo{do we use MVEE or the posterior directly as the credibl
     where $\Gamma$ is the Gamma function, and $|\al|$ is the cardinality of the parameterisation. 
 This quantity allows us to meaningfully compare distributions of different dimension, 
     but we must be cautious of drawing strong comparisons between models based on 
-    their volume alone, for instance because they may have started from vastly different prior distributions. 
+    their \gls{volume} alone, for instance because they may have started from vastly different prior distributions. 
 \par 
 
 Within \gls{smc}, we assume the credible region is simply the posterior distribution, 
     such that we can take $\Sigma = \textrm{cov}(\Pr(\al))$ after each experiment, 
     and hence track the uncertainty in our parameters across the training experiments \cite{Granade:2012kj}.
-We use volume as a measure of the learning procedure's progress: 
-    slowly decreasing or static volume indicates poor learning, possibly highlighting poor experiment design, 
-    while fast or exponentially decreasing volume indicates that the parameters are being learned well. 
-When the volume has converged, the learning has saturated and there is little benefit to running further experiments. 
+We use \gls{volume} as a measure of the learning procedure's progress: 
+    slowly decreasing or static \gls{volume} indicates poor learning, possibly highlighting poor experiment design, 
+    while fast or exponentially decreasing \gls{volume} indicates that the parameters are being learned well. 
+When the \gls{volume} has converged, the learning has saturated and there is little benefit to running further experiments. 
 
 \section{Experiment design heuristic}
 \label{sec:heuristic}
@@ -489,7 +489,7 @@ For example, consider \cref{eqn:analytical_hamiltonian} with a single parameter 
 It is sensible, then, to use $t \sim t_{max}$ for two reasons: 
     (i) smaller times are already well explained by the posterior, so offer little opportunity to learn;
     (ii) $t_{max}$ is at or near the threshold the posterior can comfortably explain, 
-        so it will expose the relative difference in likelihood between the posterior's particles, 
+        so it will expose the relative difference in\gls{likelihood} between the posterior's particles, 
         providing a strong capacity to learn. 
 Informally, as the uncertainty in the posterior shrinks, \gls{pgh} selects larger times 
     to ensure the training is based on informative eperiments simulataneously with increasing 
@@ -515,7 +515,7 @@ The experimental evolution time for experiment $k$ is then given by
 The \gls{edh} can be used to suit the requirements of the target system; 
     we test four such examples against a series of models. 
 Here the \gls{edh} must only design the evolution time for the experiment, 
-    with probe design discussed in the next section. 
+    with \gls{probe} design discussed in the next section. 
 The heuristics tested are:
 
 \begin{easylist}
@@ -528,7 +528,7 @@ The heuristics tested are:
         We test uniformly spaced times between 0 and $t_{max}$, and train on the list twice.
         Again this \gls{edh} fails to account for the performance of the trainer so far, so may use times either 
         far above or below the ability of the parameterisation. 
-    & $(\nicefrac{9}{8})^k$: An early attempt to match the expected exponential decrease in volume from the training, 
+    & $(\nicefrac{9}{8})^k$: An early attempt to match the expected exponential decrease in \gls{volume} from the training, 
         was to set $t = (\nicefrac{9}{8})^k$ \cite{Granade:2012kj}.
         Note we increment $k$ after 10 experiments in the training regime, 
         rather than after each experiment, which would result in extremely high times which flood memory.
@@ -565,7 +565,7 @@ Each $\hi$ have randomly chosen parameters implicitly assigned to each term.
         \QMLAfig{Nov_27/heuristic_comparisons.pdf}
     \end{center}
     \caption[Training with different heuristics]{
-        The volume of various models when trained through \gls{qhl} using different \glspl{edh}.
+        The \gls{volume} of various models when trained through \gls{qhl} using different \glspl{edh}.
         We show models of various complexity and dimension, each trained using four heuristics, 
         outlined in the main text.
         \figtableref
@@ -582,14 +582,14 @@ We will have cause to use alternative \glspl{edh} in paricular circumstances,
 \section{Probe selection}
 
 A final consideration for experiments within \gls{qhl} is the choice of input \gls{probe} state, $\ket{\psi}$,
-    which is evolved in the course of finding the likelihood used during the Bayesian update. 
-We can consider the choice of probe as an output of the \gls{edh},  
+    which is evolved in the course of finding the\gls{likelihood} used during the Bayesian update. 
+We can consider the choice of \gls{probe} as an output of the \gls{edh},  
     although previous work has usually not considered optimising the \gls{probe}, 
     instead usually setting $\ket{\psi} = \ket{+}^{\otimes n}$ for $n$ qubits \cite{wang2017experimental, ferrie2013best}.
 In principle it is possible for the \gls{edh} to design a new \gls{probe} at each experiment, 
     although a more straightforward approach is to compose a set of probes offline, $\Psi = \{ \ket{\psi} \}$,
     of size $\Npsi = \absval{\Psi}$.
-Then, a probe is chosen at each experiment from $\Psi$, 
+Then, a \gls{probe} is chosen at each experiment from $\Psi$, 
     allowing for the same $\ket{\psi}$ to be used for the multiple experiments within the training, e.g. by iterating over $\Psi$. 
 $\Psi$ can be generated with respect to the individual learning problem as we will examine later, 
     but it is usually sufficient to use generic strategies which should work for all models;
@@ -638,7 +638,7 @@ We show the 1-qubit probes within $\Psi$ under each of these strategies on the B
         \QMLAfig{Nov_27/training_probes.pdf}
     \end{center}
     \caption[Training with different probes]{
-        The volume of various models when trained through \gls{qhl} using different initial \gls{probe} sets. 
+        The \gls{volume} of various models when trained through \gls{qhl} using different initial \gls{probe} sets. 
         We show models of various complexity and dimension, each trained using random probes, $\ket{r}$, 
         tomographic basis set probes, $\ket{t}$, as well as $\ket{0}$ and $\ket{+}$ probes. 
         In each case the probes are generated for arbitrary numbers of qubits; 
@@ -654,34 +654,34 @@ We test the same set of models as \cref{eqn:qhl_test_models} and test each of th
 We can draw a number of useful observations from these simple tests: 
 \begin{easylist}[itemize]
     & Training on an eigenstate, $\ket{0}$, of the model yields no information gain. 
-        This is because all particles give likelihoods $l=1$, 
+        This is because all particles give \glspl{likelihood}  $l=1$, 
     so no weight update can occur, meaning the parameter distribution does not change when presented new evidence. 
     & Training on an even superposition of the model's eigenstates, $\ket{+}$, is maximally informative: 
         any deviations from the true parameterisation are registered most dramatically in this basis,
-        providing the optimal training probe for this case.     
+        providing the optimal training \gls{probe} for this case.     
     & These observations are reinforced by \cref{fig:probes_test}\textbf{c}, where a 5-qubit Ising model also 
         fails to learn from one of its eigenstates, $\ket{0}^{\otimes 5}$.
-        Of note, however, is that $\ket{+}^{\otimes 5}$ is not the strongest probe here: the much larger Hilbert space here 
+        Of note, however, is that $\ket{+}^{\otimes 5}$ is not the strongest \gls{probe} here: the much larger Hilbert space here 
         can not be scanned sufficiently using a single probe; 
         using a larger number of probes is more effective, even if those are randomly chosen. 
-    & In general the tomographic and random probe sets perform reliably. 
+    & In general the tomographic and random \gls{probe} sets perform reliably. 
 \end{easylist}
 
-It is an open challenge to identify the optimal probe for training any given model, 
+It is an open challenge to identify the optimal \gls{probe} for training any given model, 
     and the choice of such informative probes could be built into the \gls{edh} in general, 
-    for example by computing the eigenstates of the candidate, and generating a probe set
+    for example by computing the eigenstates of the candidate, and generating a \gls{probe} set
     from superposition between those eigenstates. 
 However, a further consideration is that, for model comparison purposes, 
     it is helpful to have a universal set of probes, upon which all models are learned. 
 This would minimise bias towards particlar models, which might arise from probes which are favourable bases 
     for a subset of models, for example $\ket{+}$ in \cref{fig:probes_test}\textbf{a}. 
-Careful consideration should be given to $N_{\psi}$ in the choice of the probe generator, 
+Careful consideration should be given to $N_{\psi}$ in the choice of the \gls{probe} generator, 
     since it is important to ensure probes test the parameterisation across the Hilbert space robustly, 
 However this must be balanced by ensuring \gls{smc} has sufficient opportunity to learn within a subspace before moving to the next; 
-    we can mitigate this concern by instructing the \gls{edh} to repeatedly select a probe from $\Psi$ for a batch of experiments, 
+    we can mitigate this concern by instructing the \gls{edh} to repeatedly select a \gls{probe} from $\Psi$ for a batch of experiments, 
     say five, before moving to the next available probe. 
 \par 
 
 As standard for the remainder of this thesis, unless otherwise stated, 
-    we adopt the random probe generator as the defualt mechanism for selecting probes,
+    we adopt the random \gls{probe} generator as the defualt mechanism for selecting probes,
     only iterating between probes after batches of 5 experiments.

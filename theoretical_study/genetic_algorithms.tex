@@ -36,7 +36,7 @@ Recall from \cref{sec:model_generation}, that we capture the space of available 
     with $N_t = | \termset |$ the number of terms considered. 
 \gls{qmla} is then an optimisation algorithm, attempting to find the set $\termset^{\prime}$
     which \emph{best} represents the true terms $\termset_0$.
-Note, this does not require idenitifcation of the precise true model to be successful, 
+Note, this does not require idenitifcation of the precise \gls{true model} to be successful, 
     as insight can be gained from approximate models which capture the physics of the target system. 
 We introduce metrics for success in \cref{sec:f_score}. 
 We recognise the limitations this structure imposes: we can only identify terms which were conceived in advance; 
@@ -183,7 +183,7 @@ Our search for an effective \gls{of} can then be guided by seeking the
     \caption[Classification concepts]{
         Concepts used for classification. 
         \textbf{a}, the set of available terms $\termset$ containing individual terms $\hat{t}_1$ to $\hat{t}_{10}$. 
-        The true model $\ho$ is constructed from the set $\termset_0$. 
+        The \gls{true model} $\ho$ is constructed from the set $\termset_0$. 
         Suppose a candidate $\hp$ has the set $\termset^{\prime}$. 
         \textbf{b}, the confusion matrix for $\hp$. Correctly classified terms are \glsentrylong{tp} and \glsentrylong{tn} (green), 
             and incorrectly classified terms are \glsentrylong{fp} and \glsentrylong{tn} (red). 
@@ -271,7 +271,7 @@ Firstly we will validate our reasoning that $\fs$ is a sensible figure of merit,
 That is, we first implement a \gls{ga}, using the mapping between models and chromosomes outlined above,
     where we fix the numbers of sites $d=4$, and assume full connectivity between the sites, with $x-$, $y-$ and $z-$ couplings available,
         such that there are $N_t = 3 \times {4 \choose 2} = 18$ terms in $\termset$, so that the total population is of size $2^{18}$ chromosomes.
-We can then sweep over the \gls{ga} hyperparameters to find a suitable configuration:
+We can then sweep over the \gls{ga} \glspl{hyperparameter} to find a suitable configuration:
     in \cref{fig:ga_param_sweep} we show how the choice of parameters affect the success rate of preciesly identifying the 
     target chromosome, which is chosen at random for each instance, and we run 20 \glspl{instance} of each configuration. 
 The studied hyperparameters\footnotemark \ are
@@ -283,14 +283,14 @@ The studied hyperparameters\footnotemark \ are
     & number of generation a candidate must reign as the strongest observed, before the search terminates, the \emph{cutoff}. 
 \end{easylist}
 \footnotetext{  
-    These and further hyperparameters can be swept using code given in the \gls{qmla} codebase, 
+    These and further \glspl{hyperparameter} can be swept using code given in the \gls{qmla} codebase, 
     in the directory \ttt{scripts/genetic\_alg\_param\_sweep}.  
 }
 Naturally, we expect that running for more generations with more models per generation will result in a more effective search in the model space, 
     having examined $N_gN_m$ models. 
 We must also consider, however, that -- in realistic cases of \gls{qmla} -- the total computation time scales badly with these, 
     since training and comparing models are such expensive subroutines. 
-Our goal is therefore to identify the set of hyperparameters which best searches the model space with minmial $N_g, N_m$.  
+Our goal is therefore to identify the set of \glspl{hyperparameter} which best searches the \gls{model space} with minmial $N_g, N_m$.  
 We see that, unsurprisingly, the \gls{ga} performs poorly when run with few resources, 
     but broadly the performances are similiar provided it is run with sufficient resources.
 We can bound the parameters $r_m \geq 0.1, cutoff \geq 5, N_m \geq 16, N_g \geq 16$ to ensure a reasonable 
@@ -342,10 +342,10 @@ In \cref{table:objective_functions},
             assign selection probability (denoted \%) to the same set of candidate models, $\{\hi\}$, 
             when attempting to learn data from $\ho$, listed in \cref{eqn:obj_fnc_eg_models}. 
         For each model we first summarise its
-            average likelihood $\lk_{e}$ (Eqn. \ref{eqn:log_likelihood}),     
+            average\gls{likelihood} $\lk_{e}$ (Eqn. \ref{eqn:log_likelihood}),     
             total log-likelihood $\tll_{i}$ (Eqn. \ref{eqn:log_total_likelihood}), 
             as well as $\fs$ and number of terms $k$.
-        We use $n=250$ samples, i.e. $\tll_{i}$ is a sum of $n$ likelihoods.  
+        We use $n=250$ samples, i.e. $\tll_{i}$ is a sum of $n$ \glspl{likelihood} .  
         The set of models is truncated so that only the strongest four are assigned selection probability. 
     }
     \label{table:objective_functions}
@@ -470,7 +470,7 @@ Note that this is computationally expensive:
     in order to train $\hi$ on $\expset_j$ requires a further $\left| \expset_j \right|$ experiments, 
     each requiring $N_P$ particles\footnote{Caveat the reduction in overhead outlined in \cref{sec:experiments_for_bf}.}, 
     where each particle corresponds to a unitary evolution and therefore the caluclation of a matrix exponential. 
-The combinatorial scaling of the model space is then quite a heavy disadvantage. 
+The combinatorial scaling of the \gls{model space} is then quite a heavy disadvantage. 
 However, in the case where all pairwise \gls{bf} are performed, 
     we can assign a point to $\hi$ for every comparison which favours it. 
 \begin{equation}
@@ -517,12 +517,12 @@ Typically, $\Pr_Q(0) = \left| \bra{\psi} e^{-i\ho t} \ket{\psi} \right|^2$,
 By definition, the datum $d$ is the binary outcome of the measurement on the system under experimental conditions $e$.
 That is, $d$ encodes the answer to the question: 
     after time $t$ under Hamiltonian evolution, did \gls{q} project onto 
-    the basis we have labelled $0$ (usually the same as the input probe state $\ket{\psi}$)?
+    the basis we have labelled $0$ (usually the same as the input \gls{probe} state $\ket{\psi}$)?
 However, in practice we often have access also to the \gls{likelihood} , 
     i.e. rather than a binary value, a number representing the probability that 
     \gls{q} will project on to $0$ for a given experiment $e$, $\Pr_Q(0 | e)$. 
 Likewise, we can simulate this quantity for each particle, $\Pr_p(0 | e)$. 
-This allows us to calculate the \emph{residual} between the system and individual particles' likelihoods, 
+This allows us to calculate the \emph{residual} between the system and individual particles' \glspl{likelihood} , 
     $r_p^e$, as well as the mean residual across all particles in a single experiment $r^e$:
 \begin{align}
     \label{eqn:particle_residual}
@@ -549,7 +549,7 @@ $g_i^r$ encapsulates how well a candidate model can reproduce dynamics
     from the target system, as a proxy for whether that candidate describes the system. 
 This is not always a safe figure of merit: 
     in most cases, we do not expect parameter learning to perfectly optimise $\al_i$. 
-Reproduced dynamics alone can not capture the likelihood that $\hi=\ho$. 
+Reproduced dynamics alone can not capture the\gls{likelihood} that $\hi=\ho$. 
 However, this \gls{of} provides a useful test for \gls{qmla}'s \gls{ga}:
     by simulating the case where parameters \emph{are} learned perfectly, 
     such that we know that $g_i^r$ truly represents the ability of $\hi$ to 
@@ -807,7 +807,7 @@ We retain \gls{bfeer}, however, for generality and novelty,
     each \gls{q} will bring its own unique considerations which can result in 
     significantly stronger or weaker performance. 
 In particular, we will later use the \gls{of} based on residuals, \cref{sec:residuals}, 
-    to study a much larger model space under assumptions of perfect parameter learning, \cref{chapter:many_qubits}.
+    to study a much larger \gls{model space} under assumptions of perfect parameter learning, \cref{chapter:many_qubits}.
 
 
 
@@ -845,10 +845,10 @@ In summary of this chapter so far, we use the following settings.
     e.g. device calibration. 
 }
 
-We will use a four-qubit model space under the Heisenberg formalism, \cref{eqn:heisenberg_model_general}, 
+We will use a four-qubit \gls{model space} under the Heisenberg formalism, \cref{eqn:heisenberg_model_general}, 
     such that any pair of sites $\bkl$ can be coupled by any of $\s^x_{\bkl}, \s^y_{\bkl}m \s^z_{\bkl}$, 
     so in total there are $N_t = |\termset| = 3 \times {4 \choose 2} = 18$ terms, 
-    giving a model space of $2^{18} \approx 250,000$ viable models/chromosomes. 
+    giving a \gls{model space} of $2^{18} \approx 250,000$ viable models/chromosomes. 
 For practical reasons\footnotemark, we set $N_m=60$ and $N_g=16$, although in most cases the 
     elitism clause is triggered so the search terminates long before $N_g$ is reached. 
 \footnotetext{
@@ -950,7 +950,7 @@ Similarly we can consider the quality of models across at each generation,
 In \cref{fig:ga_instance} we see the trend suggested by \cref{fig:single_generation_all_ratings} continue,
     i.e. that models of higher quality overall tend to achieve higher \gls{bfeer}.
 The gene pool as a whole tends towards a homogeneous set of models, all with $f \geq 0.85$. 
-Consequently, even in cases where the precise model, $\ho$, is not identified, the champion model
+Consequently, even in cases where the precise model, $\ho$, is not identified, the \gls{champion model}
     is highly informative, in that it captures many of the same interactions, 
     therefore most-likely providing meaningul insight on the system's physics. 
 
@@ -961,18 +961,18 @@ Consequently, even in cases where the precise model, $\ho$, is not identified, t
     \end{center}
     \caption[\Gls{run} of \gls{qmla} \glsentrylong{ga}]{
         A \gls{run} of the \gls{qmla} \glsentryfull{ga}, consisting of 100 independent \glspl{instance}.
-        \textbf{(a)}, The model space contains $2^{18}\approx250,000$ candidate models; 
+        \textbf{(a)}, The \gls{model space} contains $2^{18}\approx250,000$ candidate models; 
             normally distributed around $f=0.5 \pm 0.14$. 
         \textbf{(b)}, The models explored during the model search of all \glspl{instance} combined, 
             $\{\hat{H}_i\}$, show that \gls{qmla} tends towards stronger models overall, 
             with $f = 0.76 \pm 0.15$ from $\sim~43,000$ chromosomes across the instances, 
             i.e. each \gls{instance} trains $\sim~430$ distinct models. 
         \textbf{(c)}, Champion models from each instance, showing \gls{qmla} finds strong models 
-            in general, and in particular finds the true model $\ho$ (with $f=1$) in $72\%$ of cases, 
+            in general, and in particular finds the \gls{true model} $\ho$ (with $f=1$) in $72\%$ of cases, 
             and $f \geq 0.88$ in all instances. 
         \textbf{(d)}, Hinton diagram showing the rate at which each term is found in the winning model. 
             The size of the blocks show the frequency with which they are found, while the colour indicates 
-            whether that term was in the true model (blue) or not (red).
+            whether that term was in the \gls{true model} (blue) or not (red).
             Terms are couplings between two qubits, e.g $\hat{\sigma}_{(1, 3)}^{x}$ 
                 couples the first and third qubits along the $x$-axis. 
             We test four qubits with full connectivity, resulting in 18 unique terms 
@@ -983,13 +983,13 @@ Consequently, even in cases where the precise model, $\ho$, is not identified, t
 
 Finally, to understand the performance of the \gls{qmla} algorithm overall, 
     we run 100 independent \glspl{instance} in a \gls{run}, \cref{fig:ga_run}. 
-We see that, while the overall model space can be characterised by the distribution 
+We see that, while the overall \gls{model space} can be characterised by the distribution 
     of models' $\fs$, where we sample where $\bar{f} = 0.5 \pm 0.14$, 
     that \gls{qmla} quickly moves to the subspace of high-quality models, 
     i.e. the models explored have median $f = 0.76 \pm 0.15$.
 This exploration is based on $430 \pm 45$ chromosomes per instance, 
     i.e. \gls{qmla} trains only $0.16\%$ of the $2^{18}$ potential models. 
-Ultimately \gls{qmla} nominates champion models, $\{ \hp \}$ with $f \geq 0.88$ in all instances, 
+Ultimately \gls{qmla} nominates \glspl{champion model}, $\{ \hp \}$ with $f \geq 0.88$ in all instances, 
     and precisely identifies $\hp=\ho$ in $72\%$ of instances. 
 Considering the big picture, where the remit of \gls{qmla} is to identify the interactions 
     the target system is subject to, we show how often each term/gene is included in $\hp$ in 
