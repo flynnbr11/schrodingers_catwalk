@@ -53,7 +53,7 @@ There are a number of families of algorithms even within the broad category of s
         models aim to produce models which can assign unseen instances to the most appropriate label,
         from a fixed set of available labels  \cite{kotsiantis2007supervised};
         \begin{easylist}
-            & e.g. labels indicate animals' species, and the feature vector for each sample (data point) 
+            && e.g. labels indicate animals' species, and the feature vector for each sample (data point) 
             encodes the animals' height, weight, number of legs, etc. 
         \end{easylist}
     \item[Regression] models capture the formulaic relationship -- which can be either linear or polynamial -- 
@@ -71,19 +71,19 @@ There are a number of families of algorithms even within the broad category of s
         neural networks aim to find the optimal network, $w^{\prime}$, such that \cref{eqn:supervised_ml_target} is satisfied, 
         $f(w^{\prime}): \vec{x}_i \longmapsto y_i$. 
         \begin{easylist}
-            & Usually used for classification.
-            & e.g. input \emph{neurons}\footnotemark \ encode the pixel values of images. 
+            && Usually used for classification.
+            && e.g. input \emph{neurons}\footnotemark \ encode the pixel values of images. 
             The neural network can be used to classify the objects it detects within the image. 
         \end{easylist}
     \item[ \Gls{svm} ]
         Distinguish similar data points by projecitng data into higher dimensional space,
         and therein finding the hypersurface which separates classes \cite{boser1992training}.
         \begin{easylist}
-            & Usually used for classification tasks.
-            & For data $\mathcal{D} \in \mathbb{R}^n$, a hypersurface in $\mathbb{R}^{n-1}$, 
+            && Usually used for classification tasks.
+            && For data $\mathcal{D} \in \mathbb{R}^n$, a hypersurface in $\mathbb{R}^{n-1}$, 
                 can be drawn arbitrarilily through the space (e.g. a 2D plane in a 3D space).
-            & Unseen data can then classified by which partition they are reside in when projected into the $n$-dimensional space.
-            & The task of the \glspl{svm} is to orient the hypersurface in such a way as to separate distinct classes.                 
+            && Unseen data can then classified by which partition they are reside in when projected into the $n$-dimensional space.
+            && The task of the \glspl{svm} is to orient the hypersurface in such a way as to separate distinct classes.                 
         \end{easylist}
 \end{description}
 
@@ -249,30 +249,30 @@ Although we do not utilise these methods in this thesis, we briefly summarise th
 \begin{description}
     \item[Clustering] Finding datapoints which are similar to each other, according to some distance metric.
     \begin{easylist}
-        & e.g. online retailers grouping together customers with similar preferences, in order to tailor advertising campaigns. 
+        && e.g. online retailers grouping together customers with similar preferences, in order to tailor advertising campaigns. 
     \end{easylist}
     \item[Dimensionality reduction] Reducing the feature vector of each sample in a dataset to essential components,
         which may be amalgamations of original features, while retaining structure within the data.
     \begin{easylist}
-        & this can be used for visualisation to allow for inspection of complex datasets, 
+        && this can be used for visualisation to allow for inspection of complex datasets, 
         e.g. plotting users of a social network as nodes on a 2D map, where distinct social groups
         are kept distant. 
     \end{easylist}
     \item[Association learning] Discover correlations among data. 
     \begin{easylist}
-    & For instance, a supermarket may find that purchasers of certain products are likely also to buy others, 
-        providing actionable insight 
-        e.g. purchases involving bread also include butter in $50\%$ of cases, 
-        so positioning these nearby may increase sales by reminding consumers of their compatibility. 
+        && For instance, a supermarket may find that purchasers of certain products are likely also to buy others, 
+            providing actionable insight 
+            e.g. purchases involving bread also include butter in $50\%$ of cases, 
+            so positioning these nearby may increase sales by reminding consumers of their compatibility. 
     \end{easylist}
     \item[Semi-supervised learning] Combine elements of supervised and unsupervised algorithms, 
         to achieve a task beyond the remit of either alone. 
         This often means classifying data where only occur a small subset of the total dataset is labelled. 
     \begin{easylist}
-    & e.g. in facial recognition, a clustering algorithm finds similarities between individual people in photos, 
-        and identifies a single person present across a number of photos, and associates those photos together. 
-        It combines this with a small set of photos for which people have been tagged, 
-            locates the same person and automatically tags them in the wider set of photos. 
+        && e.g. in facial recognition, a clustering algorithm finds similarities between individual people in photos, 
+            and identifies a single person present across a number of photos, and associates those photos together. 
+            It combines this with a small set of photos for which people have been tagged, 
+                locates the same person and automatically tags them in the wider set of photos. 
     \end{easylist}
 \end{description}
 \par 

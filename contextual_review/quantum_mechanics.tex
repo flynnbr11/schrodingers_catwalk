@@ -532,20 +532,23 @@ Any two-level quantum system can be used as a qubit;
     a range of platforms have emerged in attempts to fulfil the potential of quantum computation \cite{humble2019quantum},
     among the most popular\footnote{An incomplete list of quantum architectures together with their primary advantages and limitations.}:
 
-\begin{easylist}[itemize]
-    & Photonic qubits (linear optical \glspl{qc}) \cite{kok2007linear}
-    && existing infrastructure for commercial production of photonics-based technologies suggests the relatively straightforward fabrication 
+\begin{description}
+    \item[Photonic qubits] (linear optical \glspl{qc}) \cite{kok2007linear}.
+    \begin{easylist}
+        && existing infrastructure for commercial production of photonics-based technologies suggests the relatively straightforward fabrication 
         of integrated photonic devices at the scale of millions of degrees of freedom \cite{adcock2020advances};
-    && photons do not decohere so are useful for encoding information \cite{kovac2002detection};
-    && photons do not interfere \cite{dirac1981principles, gerry2005introductory}, 
-        so information processing must be mediated by non-trivial measurement schemes \cite{raussendorf2003measurement};
-    && they are liable to a unique error mechanism -- photon loss -- 
-        necessitating novel quantum error correcting codes \cite{vigliar2020error};
-    && on-demand single photon generation has not yet been demonstrated,
-        although there is significant progress in the area of photon generation \cite{paesani2020near}.
+        && photons do not decohere so are useful for encoding information \cite{kovac2002detection};
+        && photons do not interfere \cite{dirac1981principles, gerry2005introductory}, 
+            so information processing must be mediated by non-trivial measurement schemes \cite{raussendorf2003measurement};
+        && they are liable to a unique error mechanism -- photon loss -- 
+            necessitating novel quantum error correcting codes \cite{vigliar2020error};
+        && on-demand single photon generation has not yet been demonstrated,
+            although there is significant progress in the area of photon generation \cite{paesani2020near}.
+        \end{easylist}
 
-    & Superconducting qubits \cite{devoret2004superconducting, kjaergaard2020superconducting}
-    && relatively straightforward to control and couple with each other, enabling high-fidelity two-qubit gates,
+    \item[Superconducting qubits] \cite{devoret2004superconducting, kjaergaard2020superconducting}
+    \begin{easylist}
+        && relatively straightforward to control and couple with each other, enabling high-fidelity two-qubit gates,
         e.g. $99.7 \%$ reached in \cite{kjaergaard2020quantum};
     && difficult to engineer substantial coherence times, although there has been significant recent progress 
         \cite{martinis2014ucsb, wendin2017quantum},
@@ -553,16 +556,19 @@ Any two-level quantum system can be used as a qubit;
     && require cryogenic temperatures \cite{devoret2004superconducting};
     && arbitrary qubit connectivity at scale is yet to be demonstrated \cite{kjaergaard2020superconducting};
     && methods for the fabrication of medium-to-large scale devices required for fault tolerant 
-        quantum computation are not yet known \cite{gambetta2017building}.
+        quantum computation are not yet known \cite{gambetta2017building}.        
+    \end{easylist}
 
-    & Ion traps \cite{kielpinski2002architecture, monroe2013scaling}
-    && high two qubit gate fidelities, e.g. $99.9\%$ in \cite{gaebler2016high};
+    \item[Ion traps] \cite{kielpinski2002architecture, monroe2013scaling}
+    \begin{easylist}
+        && high two qubit gate fidelities, e.g. $99.9\%$ in \cite{gaebler2016high};
     && very high coherence times, e.g. $\mathcal{O}(10 \ \textrm{min})$ in \cite{wang2017single};
     && straightforward state preparation and readout, e.g. $99.99\%$ readout fidelity in \cite{myerson2008high};
     && long gate-times, e.g. $\mathcal{O}(\mu \textrm{s})$ in \cite{schafer2018fast};
     && uncertain scalability \cite{bruzewicz2019trapped}.
+    \end{easylist}
 
-\end{easylist}
+\end{description}
 \par 
 
 The ever-increasing space of contenders has led to a growing eco-system for quantum software \cite{larose2019overview},

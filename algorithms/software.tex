@@ -193,7 +193,7 @@ Our base \gls{es} class uses sensbile defaults for this modular functionality,
 }
 
 \begin{easylist}[itemize]
-    &\gls{likelihood} function. By default, \gls{qhl} calls a subroutine to compute \cref{eqn:likelihood}. 
+    & \gls{likelihood} function. By default, \gls{qhl} calls a subroutine to compute \cref{eqn:likelihood}. 
         This can be replaced by any function which, given a Hamiltonian, evolution time and \gls{probe} state, 
         returns the likelihood, according to the experiment you wish to simulate. 
         For example, in \cref{chapter:nv}, the data on which models are trained comes from experimental measurements, 
@@ -397,20 +397,34 @@ A number of sub-directories are produced in the \gls{results directory},
 
 The user has control on which plots are generated, in order that the appropriate level of degree is 
     presented, without producing an excessive number of images which can slow the protocol down. 
-Results are categorised across the levels of the framework, for example:
-\begin{easylist}
-    & Run: results across a number of instances.
-    && the number of \gls{instance} wins for \glspl{champion model}.
-    && average dynamics reproduced by \glspl{champion model}.
-    & \Gls{instance}: performance of a single insance.
-    && models generated and the branches on which they reside
-    & Model: Individual model performance within an instance.
-    && parameter estimation through QHL.
-    & Comparisons Pairwise comparison of models’ performance.
-    && dynamics of both candidates (with respect to a single basis).
-    & Exploration strategy: figures specific to the \gls{es}
-    && model generation metrics
-\end{easylist}
+Results are categorised across the levels of the framework, defined as:
+\begin{description}
+    \item[\Gls{run}]: results across a number of instances.
+    \begin{easylist}
+        && the number of \gls{instance} wins for \glspl{champion model}.
+        && average dynamics reproduced by \glspl{champion model}.
+    \end{easylist}
+    
+    \item[\Gls{instance}] performance of a single insance.
+    \begin{easylist}
+        && models generated and the branches on which they reside
+    \end{easylist}
+
+    \item{\Gls{model}] Individual model performance within an instance.
+    \begin{easylist}
+        && parameter estimation through QHL.
+    \end{easylist}
+
+    \item[Pairwise Comparisons] direct comparison of models’ performance.
+    \begin{easylist}
+        && dynamics of both candidates (with respect to a single basis).
+    \end{easylist}
+
+    \item[\Glsentrylong{es}] figures specific to the \gls{es}
+    \begin{easylist}
+        && model generation metrics
+    \end{easylist}
+\end{description}
 \par 
 
 Most plots used in this thesis are generated directly by the \gls{qmla} framework\footnotemark; 

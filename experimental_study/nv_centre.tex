@@ -161,8 +161,9 @@ The overall Hamiltonian for such systems, where the set of nuclear sites is $\{\
 
 We will describe each term, as well as approximations which enable us to simplify the space considerably. 
 
-\begin{easylist}[itemize]
-    & Isolated-spin terms, i.e. describing the spin independent of the environmental nuclei
+\begin{description}
+    \item[Isolated-spin terms] describe the spin independent of the environmental nuclei
+    \begin{easylist}
     && $\Delta_{\textrm{gs}} \hat{S}_z^2$: 
         the \emph{zero-field} splitting, 
         i.e. without any external (magnetic) field, the spin oscillates rapidly, with 
@@ -173,21 +174,27 @@ We will describe each term, as well as approximations which enable us to simplif
         via the total spin operator\footnotemark \ $\mathbf{S} = \left(\hat{S}_x \ \hat{S}_y \ \hat{S}_z \right)$, 
         where $\mu_B$ is the Bohr magneton and $g$ is the $g$-factor 
         ($\approx 2$, simplified from the g-factor tensor).
+    \end{easylist}
     
-    & Hyperfine terms
+    \item[Hyperfine terms] \ 
+    \begin{easylist}
     && $\hat{S} \cdot \sum_{\chi} \left( \mathbf{A}_{\chi} \cdot \hat{I}_{\chi} \right)$:
         The \gls{nvc} total spin operator $\mathbb{S}$ couples with each site, $\chi$.
         At each site there is a nucleus which has total spin operator 
         $\mathbf{I}_{\chi} = \left(\hat{I}_x \ \hat{I}_y \ \hat{I}_z \right)_{\chi}$. 
         $\mathbf{A}$ is the hyperfine tensor, containing the hyperfine parameters of interest. 
+    \end{easylist}
 
-    & Bath-only terms, i.e. describing the other nuceli independent of the spin
+    \item[Bath-only terms] describe the other nuceli independent of the spin
+    \begin{easylist}        
     && $P \hat{I}_z^2 $: the quadrupole splitting, i.e. this term gives the splitting 
         of the \gls{nitrogen}'s hyperfine splitting, which does not meaningfully
         contribute to the short-decay processes in the experiments described in the next section. 
     && $\mu_n g \mathbf{B} \cdot \sum_{ \chi} \hat{I}_{\chi}$:
         $\mu_n$ is the nuclear magneton and $g$ is again the $g$-factor.
-\end{easylist}
+    \end{easylist}
+
+\end{description}
 
 \footnotetext{
     We invoke an inexact representation of high dimensional tensors here for ease of interpretation. 

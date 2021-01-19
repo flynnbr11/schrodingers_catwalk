@@ -330,25 +330,35 @@ At several junctions within Algs. \cref{alg:qmla}, \cref{alg:model_search},
     \gls{qmla} queries the \gls{es} in order to decide what happens next.
 Here we list the important cases of this behaviour. 
 
-\begin{easylist}[enumerate]
-    % \ListProperties(Numbers=r, Start=1)
-    \ListProperties(Numbers=r)
-    & Parameter-learning settings
+\begin{description}
+
+    \item[Parameter-learning settings] \
+    
+    \begin{easylist}[itemize]
     && such as the prior distribution to assign each parameter during \gls{qhl}, and the parameters needed to run \gls{smc}.
     && the time scale on which to examine \gls{q}.
     && the input probes to train upon. 
-    & Branch comparison strategy
-    && How to compare models within a branch (or \gls{qmla} layer). 
-        Some examples used in this work are
-        (a) a points-ranking where each points are assigned according to Eqn. \cref{eqn:bf_cases}
-        (b) ranking reflecting each model's log-likelihood after training. 
-        All methods in \S\cref{sm:objective_fncs} can be thought of as branch comparison strategies. 
-    &  \gls{model search}  termination criteria
-    && e.g. instruction to stop after a fixed number of iterations, or when a certain fitness has been reached.
-    & Champion nomination
+    \end{easylist}
+    
+    \item[Branch comparison strategy] \
+    \begin{easylist}
+    && How to compare models within a branch (or \gls{qmla} layer). Some examples used in this work are
+        &&& a points-ranking where each points are assigned according to Eqn. \cref{eqn:bf_cases};
+        &&& ranking reflecting each model's log-likelihood after training;
+        &&& models are ranked according to some \glsentrylong{of}.
+    \end{easylist}
+
+    \item[\gls{model search} termination criteria] \
+    \begin{easylist}    
+    && e.g. instruction to stop after a fixed number of iterations, or when a certain fitness has been reached.        
+    \end{easylist}
+    
+    \item[Champion nomination] \
+    \begin{easylist}    
     && when a single tree is explored, identify a single champion from the branch champions
     && if multiple trees are explored, how to compare champions across trees. 
-\end{easylist}
+    \end{easylist}
+\end{description}
 
 \subsection{True model specification}
 It is necessary also to specify details about the \gls{true model} $\ho$, 
@@ -366,32 +376,39 @@ Finally, there are a number of fundamenetal subroutines which are called upon th
 These are written independently such that each subroutine has a number of available implementations. 
 These can be chosen to match the requirements of the user, and are set via the \gls{es}. 
 
-\begin{easylist}[enumerate]
-    % \ListProperties(Numbers=r, Numbers2=l,Start=1,)
-    \ListProperties(Numbers=r, Numbers2=l,)
-    & Model training procedure
-    && i.e. whether to use \gls{qhl} or quantum process tomography, etc. 
-    && In this work we always used \gls{qhl}. 
-    &\gls{likelihood} function: the method used to estimate the\gls{likelihood} 
+\begin{description}
+    \item[Model training procedure] \
+    \begin{easylist}
+        && i.e. whether to use \gls{qhl} or quantum process tomography, etc. 
+        && In this work we always used \gls{qhl}.     
+    \end{easylist}
+
+    \item[\Gls{likelihood} function] the method used to estimate the\gls{likelihood} 
         for use during \gls{qle} within \gls{qhl}, 
         which ultimately depends on the measurement scheme. 
-    && By default, here we use projective measurement back onto the input \gls{probe} state, 
-        $\left| \bra{\psi} e^{-i\hat{H}t} \ket{\psi} \right|^2$.        
-    && The role of these functions is to compute $\Pr(0)$ to be used by QInfer, 
-        which is not always the same as computing the likelihood,
-        although these are equiavelent when we measure $d=0$, see .
-    &&& Generically, without referring to the likelihood, these functions are to compute the expectation value
-            of the unitary operator corresponding to the model of the system.        
-    && It is possible to change this to implement any measurement procedure, 
-        for example an experimental procedure where the environment is traced out.
-                
-    & \label{item:probes} Probes: defining the input probes to be used during training. 
+    \begin{easylist}
+        && By default, here we use projective measurement back onto the input \gls{probe} state, 
+            $\left| \bra{\psi} e^{-i\hat{H}t} \ket{\psi} \right|^2$.        
+        && The role of these functions is to compute $\Pr(0)$ to be used by QInfer, 
+            which is not always the same as computing the likelihood,
+            although these are equiavelent when we measure $d=0$, see .
+        &&& Generically, without referring to the likelihood, these functions are to compute the expectation value
+                of the unitary operator corresponding to the model of the system.        
+        && It is possible to change this to implement any measurement procedure, 
+            for example an experimental procedure where the environment is traced out.
+    \end{easylist}
+            
+    & \item[\Gls{probe}] defining the input probes to be used during training. 
+    \begin{easylist}   
         && In general it is preferable to use numerous probes in order to avoid biasing particular terms. 
         && In some cases we are restricted to a small number available input probes, e.g. to match experimental constraints.
-    & Experiment design heuristic: bespoke experiments to maximise the information 
+    \end{easylist}
+
+    \item[Experiment design heuristic] bespoke experiments to maximise the information 
         on which models are individually trained.
+    \begin{easylist}
         && In particular, in this work the experimental controls consist solely of $\{ \ket{\psi}, t \}$. 
-        && Currently, probes are generated once according to \cref{item:probes}, 
+        && Currently, probes are generated once according to the previous point, 
             but in principle it is feasible to choose optimal probes based on available or hypothetical information. 
             For example, probes can be chosen as a normalised sum of the candidate model's eigenvectors.
         && Choice of $t$ has a large effect on how well the model can train. 
@@ -402,7 +419,14 @@ These can be chosen to match the requirements of the user, and are set via the \
             reproduce the dynamics within those times' scale. 
             For instance, if a small amount of experimental data is available offline, 
             it is sensible to train all candidate models against the entire dataset.  
-    & Model training prior: change the prior distribution, e.g. Fig. \cref{fig:qhl_smc}(a)
+    \end{easylist}
+
+    \item[Model training prior] change the prior distribution, e.g. Fig. \cref{fig:qhl_smc}(a)
+
+\end{description}
+
+\begin{easylist}
+    
 \end{easylist}
 
 \subsection{Exploration strategy examples}
@@ -492,13 +516,13 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
 \begin{description}
     \item[\Gls{model}] can mean any description of a quantum system which captures the interactions it is subject to. 
     \begin{easylist}[itemize]
-        & Here we exclusively consider Hamiltonian models, but Lindbladian models can also be considered as generators of quantum dynamics. 
+        && Here we exclusively consider Hamiltonian models, but Lindbladian models can also be considered as generators of quantum dynamics. 
     \end{easylist}
     \item[Model training] is any subroutine which can train a given model, i.e. optimise a given parameterisation 
         under the assumption that represents the target system. 
     \begin{easylist}[itemize]
-        & Currently only \gls{qhl} has been used, but tomography is valid in principle, albeit slower. 
-        & \Gls{qhl} relies on the calculation of a characteristic \gls{likelihood} function; 
+        && Currently only \gls{qhl} has been used, but tomography is valid in principle, albeit slower. 
+        && \Gls{qhl} relies on the calculation of a characteristic \gls{likelihood} function; 
             this too is not restricted to the generic form of \cref{eqn:likelihood} and can be replaced by 
             any form which represents the\gls{likelihood} that experimental conditions $e$ result in measurement datum $d$. 
             We will see examples of this in \cref{chapter:nv} where we trace out part of the system in order 
@@ -506,9 +530,9 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
     \end{easylist}
     \item[Model selection] or \emph{consolidation} can be as rigourous as desired by the user. 
     \begin{easylist}[itemize]
-    & Consolidation occurs at the branch level of each \gls{et}, but also in finding the tree champion, 
+    && Consolidation occurs at the branch level of each \gls{et}, but also in finding the tree champion, 
         and ultimately the global champion. 
-    & In practice, we use either \gls{bf} or a related concept such as \gls{tltl} which are statistically signicative. 
+    && In practice, we use either \gls{bf} or a related concept such as \gls{tltl} which are statistically signicative. 
         However, in \cref{sec:ga} we will consider a number of alternative schemes for discerning the strongest models. 
     \end{easylist}
 \end{description}
