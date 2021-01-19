@@ -2,18 +2,18 @@ First suggested in \cite{Granade:2012kj} and since developed \cite{wiebe2014qhlp
     and implemented \cite{wang2017experimental,gentile2020learning}, 
 \gls{qhl} is a machine learning algorithm for the optimisation of a given Hamiltonian parameterisation 
     against a quantum system whose model is known apriori. 
-Given a target quantum system $Q$ known to be described by some Hamiltonian $\hat{H}(\vec{\alpha})$, 
+Given a target quantum system \gls{q} known to be described by some Hamiltonian $\hat{H}(\vec{\alpha})$, 
     \gls{qhl} optimises $\vec{\alpha}$.
-This is achieved by interrogating $Q$ and comparing its outputs against proposals $\vec{\alpha}_p$. 
+This is achieved by interrogating \gls{q} and comparing its outputs against proposals $\vec{\alpha}_p$. 
 In particular, an experiment is designed, consisting of an input state, $\ket{\psi}$, and an evolution time, $t$.
-This experiment is performed on $Q$, whereupon its measurement yields the datum $d \in \{0, 1\}$, 
+This experiment is performed on \gls{q}, whereupon its measurement yields the datum $d \in \{0, 1\}$, 
     according to the expectation value $\left| \bra{\psi} e^{-i \ho t} \ket{\psi} \right|^2$. 
 Then on a trusted (quantum) simulator, proposed parameters $\vec{\alpha}_p$ are encoded to the 
     known Hamiltonian, and the same probe state is evolved for the chosen $t$ and projected on to $d$, 
     i.e. $\left| \bra{d} e^{-i \hat{H}(\vec{\alpha}_p) t } \ket{\psi} \right|^2 $ is computed.
 The task for \gls{qhl} is then to find $\vec{\alpha}^{\prime}$ for which this quantity 
     is close to 1 for all values of $(\ket{\psi}, t)$, 
-    i.e. the parameters input to the simulation produce dynamics consistenst with those measured from $Q$.
+    i.e. the parameters input to the simulation produce dynamics consistenst with those measured from \gls{q}.
 \par 
 
 The procedure is as follows. 
@@ -30,7 +30,7 @@ An example of imposing such domain-specific prior knowledge is,
     to select $GHz$ parameters for the electron spin's rotation terms, and $MHz$ terms 
     for the spin's coupling to nuclei, as proposed in literature. 
 It is important to understand, then, that \gls{qhl} removes the prior knowledge 
-    of precisely the parameter representing an interaction in $Q$, but does rely on a ball-park estimate thereof from which to start. 
+    of precisely the parameter representing an interaction in \gls{q}, but does rely on a ball-park estimate thereof from which to start. 
 \par 
 
 In short, \gls{qhl} samples parameter vectors $\al_p$ from $\pra$, 
@@ -38,7 +38,7 @@ In short, \gls{qhl} samples parameter vectors $\al_p$ from $\pra$,
     for experiments ($\ket{\psi}, t)$ designed by a \gls{qhl} heuristic subroutine, 
     and iteratively improves the probability distribution of the parameterisation $\pra$ 
     through standard \emph{Bayesian inference}. 
-A given set of $(\ket{\psi}, t)$ is called an experiment, since it corresponds to preparing, evolving and measuring $Q$ 
+A given set of $(\ket{\psi}, t)$ is called an experiment, since it corresponds to preparing, evolving and measuring \gls{q} 
 once\footnote{experimentally, this may involve repeating a measurement many times to determine a majority result and to mitigate noise}. 
 \gls{qhl} iterates for $\Ne$ experiments. 
 The parameter vectors sampled are called \emph{particles}: there are $\Np$ particles used per experiment. 
@@ -81,7 +81,7 @@ We can then discretise \cref{eqn:qhl_bayes_rule} to the level of single particle
 where 
 \begin{easylist}[itemize]
     & $e$ are the experimental controls of a single experiment, e.g. evolution time and input probe state;
-    & $d$ is the datum, i.e. the binary outcome of measuring $Q$ under conditions $e$;  
+    & $d$ is the datum, i.e. the binary outcome of measuring \gls{q} under conditions $e$;  
     & $\al_p$ is the \emph{hypothesis}, i.e. a single parameter vector, called a particle, sampled from $\Pr(\al)$;
     & $\Pr(\al_p | d; e)$ is the \emph{updated} probability of this particle following the experiment $e$, 
         i.e. accounting for new datum $d$, the probability that $\al=\al_0$;
@@ -100,8 +100,8 @@ This is equivalent to the expectation value of projecting $\ket{\psi}$ onto $d$,
     \Pr(d | \al; e) = \left| \bra{d} e^{-i \hat{H}(\al_p)t} \ket{\psi} \right|^2,   
 \end{equation}
     which can be simulated clasically or using a quantum simulator (see \cref{sec:likelihood}). 
-It is necessary first to know the datum $d$ (either 0 or 1) which was projected by $Q$ under real experimental conditions. 
-Therefore we first perform the experiment $e$ on $Q$ 
+It is necessary first to know the datum $d$ (either 0 or 1) which was projected by \gls{q} under real experimental conditions. 
+Therefore we first perform the experiment $e$ on \gls{q} 
     (preparing the state $\ket{\psi}$ evolving for $t$ and projecting again onto $\bra{\psi}$)
     to retrieve the datum $d$. 
 $d$ is then used for the calculation of the likelihood for each particle sampled from $Pr({\al})$. 
@@ -223,7 +223,7 @@ However, we assume a binary outcome model,
     \Pr(1) = l(d=1 | \hat{H}_p; e) = \sum_{\{\ket{\psi_{\perp}}\}} | \bra{\psi_{\perp}} e^{-i \hat{H}_p t} \ket{\psi}  |^2 = 1 - \Pr(0).
 \end{equation}
 \par 
-Usually we will refer to the case where $Q$ is projeced onto the input state $\ket{\psi}$, 
+Usually we will refer to the case where \gls{q} is projeced onto the input state $\ket{\psi}$, 
     so the terms \emph{likelihood}, \emph{expectation value} and \emph{$\Pr(0)$} are synonymous, 
     unless otherwise stated. 
 

@@ -6,8 +6,14 @@
     \listoftables
     \listoffigures
     \lstlistoflistings
-    \printglossary[type=\acronymtype]
-    \printglossary
+    \printglossary[
+        type=\acronymtype, 
+        % style=altlist
+        style=long
+    ]
+    \printglossary[
+        style=long
+    ]
     \newpage
     \setcounter{page}{1}
     \pagenumbering{arabic}    

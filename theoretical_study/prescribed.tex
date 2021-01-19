@@ -5,7 +5,7 @@ This application can be useful, for example, for expedited device calibration;
     suppose we wish to characterise a new, \emph{untrustued} quantum simulator/device, $S_u$, 
     and we have access to a \emph{trusted}\footnotemark \  simulator, $S_t$. 
 In order to perform this calibration, 
-    we treat $S_u$ as the system, $Q$, i.e. we call upon it to retrieve the datum $d$ in \cref{eqn:likelihood}, 
+    we treat $S_u$ as the system, \gls{q}, i.e. we call upon it to retrieve the datum $d$ in \cref{eqn:likelihood}, 
     where the calculation of the likelihoods for each particle are computed through $S_t$. 
 If $S_u$ is reliable, the data from its calculations will be consistent with some $\ho$ of our choosing, 
     while miscalibrations will mainfest as imperfectly implemented gates/steps in the calculation of the system's likelihood, 
@@ -22,7 +22,7 @@ For example, by encoding connections between every pair of device qubits in $\ho
 
 
 \section{Lattices}\label{sec:lattices}
-We first consider $Q$ as some lattice, where \gls{qmla} attempts to identify the structure of the lattice. 
+We first consider \gls{q} as some lattice, where \gls{qmla} attempts to identify the structure of the lattice. 
 The set of viable models then comprises alternative lattices.
 Due to simluation constraints, because we train models through exact unitary evolution, 
     we are restricted to $\sim~8$-qubit Hamiltonians, so we only consider lattices which can 
@@ -179,10 +179,10 @@ Then, for a single pair of spins $\bkl$, we have
 \begin{equation}
     \label{eqn:ising_spin_cases}
     \begin{split}
-        \bra{+_k \ +_l } \sz_k \ \sz_l  \ket{+_k \ +_l } =  \bra{+_k \ +_l } (+1)(+1) \ket{+_k \ +_l } = +1, \\
-        \bra{+_k \ -_l } \sz_k \ \sz_l \ket{+_k \ -_l } = \bra{+_k \ -_l } (+1)(-1) \ket{+_k \ -_l } = -1 , \\
-        \bra{-_k \ +_l } \sz_k \ \sz_l \ket{-_k \ +_l } = \bra{-_k \ +_l } (-1)(+1) \ket{-_k \ +_l } = -1, \\
-        \bra{-_k \ -_l } \sz_k \ \sz_l \ket{-_k \ -_l } = \bra{-_k \ +_l } (-1)(1) \ket{-_k \ -_l } = +1. \\
+        \bra{+_{k} \ +_{l} } \hat{\sigma}^{z}_{k} \ \hat{\sigma}^z_{l}  \ket{+_{k} \ +_{l} } =  \bra{+_{k} \ +_{l} } (+1)(+1) \ket{+_{k} \ +_{l} } = +1, \\
+        \bra{+_{k} \ -_{l} } \hat{\sigma}^{z}_{k} \ \hat{\sigma}^z_{l} \ket{+_{k} \ -_{l} } = \bra{+_{k} \ -_{l} } (+1)(-1) \ket{+_{k} \ -_{l} } = -1 , \\
+        \bra{-_{k} \ +_{l} } \hat{\sigma}^{z}_{k} \ \hat{\sigma}^z_{l} \ket{-_{k} \ +_{l} } = \bra{-_{k} \ +_{l} } (-1)(+1) \ket{-_{k} \ +_{l} } = -1, \\
+        \bra{-_{k} \ -_{l} } \hat{\sigma}^{z}_{k} \ \hat{\sigma}^z_{l} \ket{-_{k} \ -_{l} } = \bra{-_{k} \ +_{l} } (-1)(1) \ket{-_{k} \ -_{l} } = +1. \\
     \end{split}
 \end{equation}
 So, by restricting the individual spins to $\ket{\psi_k} \in \{\ket{+}, \ket{-}\}$, 
@@ -211,7 +211,7 @@ This mapping underlies ongoing research into quantum annealing as a computationa
     advantage for a specific family of problems \cite{santoro2006optimization, bapst2013quantum, johnson2011quantum}. 
 \par
 
-Crucially, our goal is \emph{not} to find the ground state of $Q$, 
+Crucially, our goal is \emph{not} to find the ground state of \gls{q}, 
     but instead to find the generator of its dynamics.
 Therefore, we treat the Ising \emph{quantum mechanically}:
     instead of treating \cref{eqn:ising_standard_form} as the underlying mechanism for a cost function 
@@ -235,7 +235,7 @@ In the first case, we can represent the Ising model for a given lattice configur
 \begin{subequations}
     \label{eqn:ising_terms}
     \begin{equation}
-        \vec{\alpha}_I = \irow{ J & h }
+        \vec{\alpha}_{I} = \irow{ J & h }
     \end{equation}
     \begin{equation}
         \terms_I = \icol{ 
@@ -251,7 +251,7 @@ In the more general second case, termed the \emph{fully parameterised} Ising mod
     \termset_I = \left\{ 
         \s^{z}_{k} \s_{l}^{z}, \ \
         \sum\limits_{k=1}^{N} \s^{x}_{k}
-    \right\}\limits_{\bkl \in \cc}. 
+    \right\}_{\bkl \in \cc}. 
 \end{equation}
     with unique parameters $J_{kl}$ associated with each interaction term $\s_k^z \s_l^z$. 
 We summarise these cases in \cref{table:ising_models}.
@@ -358,11 +358,11 @@ It builds on the Ising model by additionally considering the spins' rotations ab
 We can consider a number of formulations of the Heisenberg model, by considering whether the interaction
     parameters are completely unique for each pair of spins in each axis, 
     or  are shared by pairs of spins;
-    we list the instances within the family of Heisenberg models in \cref{table:heisenberg_models}. 
+    we list the \glspl{instance} within the family of Heisenberg models in \cref{table:heisenberg_models}. 
 \begin{table}[H]
     \begin{center}
         \begin{tabular}{crrrr}
-             & $J^x_{kl}$ & $J^y_{kl}$ & $J^z_{kl}$ & $h_k$ \\
+             & $J^{x}_{kl}$ & $J^{y}_{kl}$ & $J^{z}_{kl}$ & $h_{k}$ \\
             \hline
             XXX & $J^x$ & $J^x$ & $J^x$ & $h$ \\
             XXZ & $J^x$ & $J^x$ & $J^z$ & $h$ \\
@@ -388,11 +388,11 @@ In this chapter we will refer to the Heisenberg-XYZ model,
 
 \begin{subequations}
     \begin{equation}
-        \al_H = \irow{ J^x & J^y & J^z & h}    
+        \al_{H} = \irow{ J^x & J^y & J^z & h}    
     \end{equation}
 
     \begin{equation}
-        \terms_H = \icol{
+        \terms_{H} = \icol{
             \sum\limits_{\bkl \in \cc} \ \s^x_k \s^x_l \\
             \sum\limits_{\bkl \in \cc} \ \s^y_k \s^y_l \\
             \sum\limits_{\bkl \in \cc} \ \s^z_k \s^z_l \\
@@ -418,8 +418,8 @@ The Hubbard model is generally stated in second quantisation as
     \label{eqn:hubbard}
     \hat{H}_{FH}(\cc) = 
     \sum_{s \in \{\uparrow, \downarrow\}} \sum_{ \bkl \in \mathcal{C}} t^{s}_{\bkl} \left( \hat{c}^{\dagger}_{ks} c_{ls} + \hat{c}^{\dagger}_{ls} c_{ks} \right) 
-    + \sum_{k}^{N} U_k \hat{n}\limits_{k\uparrow}\hat{n}_{k\downarrow} 
-    + \sum_{k}^{N} \mu_k \left( \hat{n}\limits_{k\uparrow} + \hat{n}_{k\downarrow} \right)     
+    + \sum_{k}^{N} U_k \hat{n}{k\uparrow}\hat{n}_{k\downarrow} 
+    + \sum_{k}^{N} \mu_k \left( \hat{n}_{k\uparrow} + \hat{n}_{k\downarrow} \right)     
 \end{equation}
     where 
 \begin{easylist}[itemize]
@@ -691,7 +691,7 @@ In order to test \gls{qmla} robustly,
 Moreover, we can extend this test to the Heisenberg and Hubbard formalisms; 
     note that due to the overhead given by the \gls{jwt} (\cref{sec:jordan_wigner}), i.e. the requirement of two qubits per site, 
     we restrict study of the Hubbard model to lattices $a-e$ for practicality. 
-By running 10 independent \gls{qmla} instances for each lattice under each formalism,
+By running 10 independent \gls{qmla} \glspl{instance} for each lattice under each formalism,
     we can gauge the success rate of the algorithm for distinguishing basic lattices from each other. 
 We present the result of these tests in \cref{fig:lattice_success_rates},   
     finding in all cases that \gls{qmla} identifies $\ho$ with success rates at least $70\%$. 

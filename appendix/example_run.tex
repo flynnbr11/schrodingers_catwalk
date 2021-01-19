@@ -291,9 +291,9 @@ Run locally again as in \cref{listing:launch_example};
 \gls{qmla} stores results and generates plots
     over the entire range of the algorithm\footnotemark, i.e. the \gls{run}, \gls{instance} and models. 
 \footnotetext{Recall that a single implementation of \gls{qmla} is called an \gls{instance},    
-    while a series of instances -- which share the same target model -- is called the \gls{run}.}
+    while a series of \glspl{instance} -- which share the same target model -- is called the \gls{run}.}
 The depth of analysis performed automatically is set by the user control \ttt{plot\_level} in \ttt{local\_launch.sh};
-    for \ttt{plot\_level=1}, only the most crucial figures are generated, while \ttt{\plot\_level=6} generates plots for every individual 
+    for \ttt{plot\_level=1}, only the most crucial figures are generated, while \ttt{plot\_level=6} generates plots for every individual 
     model considered. 
 For model searches across large model spaces and/or considering many candidates,
     excessive plotting can cause considerable slow-down, so users should be careful to generate plots only 
@@ -305,7 +305,7 @@ Next we show some examples of the available plots.
 
 We have just run \glsentryfull{qhl} for the model in \cref{eqn:example_es_true_ham} for a single instance, 
     using a reasonable number of particles and experiments, so we expect to have trained the model well. 
-Instance-level results are stored (e.g. for the instance with \ttt{qmla\_id=1}) in \ttt{Jan\_01/01\_23/instances/qmla\_1}.
+\Gls{instance}-level results are stored (e.g. for the instance with \ttt{qmla\_id=1}) in \ttt{Jan\_01/01\_23/instances/qmla\_1}.
 Individual models' insights can be found in \ttt{model\_training}, 
     e.g. the model's \ttt{learning\_summary} \cref{fig:qmla_learning_summary}, and \ttt{dynamics} in \cref{fig:qmla_model_dynamics}.
 \par 
@@ -405,7 +405,7 @@ The probes used during the training of all candidates are also plotted  (\cref{f
             \label{fig:qmla_training_probes}
         }
     \end{center}
-    \caption[Instance plots]{
+    \caption[\Gls{instance} plots]{
         \gls{qmla} plots; found within instance directory e.g. \ttt{Jan\_01/01\_23/instances/qmla\_1}, 
         and its subdirectories. 
         \textbf{(a)} \ttt{composition\_of\_models}: constituent terms of all considered models, indexed by their model IDs.
@@ -416,11 +416,11 @@ The probes used during the training of all candidates are also plotted  (\cref{f
             Thus $B_{ij} > 0 \ (<0)$ indicates $\hat{H}_i$ \ ($\hat{H}_j$), i.e. the model on the $y$-axis ($x$-axis) 
             is the stronger model.
         \textbf{(c)} \ttt{comparisons/BF\_1\_3}: direct comparison between models with IDs 1 and 3, 
-            showing their reproduction of the system dynamics (red dots, $Q$), 
+            showing their reproduction of the system dynamics (red dots, \gls{q}), 
             as well as the times (experiments) against which the \gls{bf} was calculated. 
         \textbf{(d)} \ttt{branches/dynamics\_branch\_1}: dynamics of all models considered on the branch
-        compared with system dynamics (red dots, $Q$). 
-        \textbf{(e)} \ttt{probes\_bloch\_sphere}: probes used for training models in this instance (only showing 1-qubit versions).
+        compared with system dynamics (red dots, \gls{q}). 
+        \textbf{(e)} \ttt{probes\_bloch\_sphere}: probes used for training models in this \gls{instance} (only showing 1-qubit versions).
     }
     \label{fig:instance_plots}
 \end{figure}
@@ -445,7 +445,7 @@ cd results/Jan_01/01_23
 \end{lstlisting}
 
 Run level analysis are held in the main results directory and several sub-directories created by the \ttt{analyse} script. 
-Here, we recommend running a number of instances with very few resources so that the test finishes quickly\footnote{This run will take about ten minutes}. 
+Here, we recommend running a number of \glspl{instance} with very few resources so that the test finishes quickly\footnote{This run will take about ten minutes}. 
 The results will therefore be meaningless, but allow fo elucidation of the resultant plots. 
 First, reconfigure some settings of \cref{listing:local_launch} and launch again.
 \begin{lstlisting}[
@@ -462,14 +462,14 @@ exploration_strategy=ExampleBasic
 \par 
 
 Some of the generated analysis are shown in \crefrange{fig:run_plots}{fig:run_dynamics}. 
-The number of instances for each model, i.e. their \emph{\glspl{win rate}} are given in \cref{fig:qmla_win_rates}.
+The number of \glspl{instance} for each model, i.e. their \emph{\glspl{win rate}} are given in \cref{fig:qmla_win_rates}.
 The \emph{top models}, i.e. those with highest win rates, analysed further: 
-    the average parameter estimation progression for $\ho$ -- including only the instances where $\ho$ was deemed champion --
+    the average parameter estimation progression for $\ho$ -- including only the \glspl{instance} where $\ho$ was deemed champion --
     are shown in \cref{fig:champ_param_progression}.
 Irrespecitve of the champion models, the rate with which each term is found in the champion model ($\hat{t} \in \hp$)
     indicates the likelihood that the term is really present;
     these rates -- along with the parameter values learned -- are shown in \cref{fig:qmla_branch_dynamics}.
-The champion model from each instance can attempt to reproduce system dynamics: 
+The champion model from each \gls{instance} can attempt to reproduce system dynamics: 
     we group together these reproductions for each model in \cref{fig:run_dynamics}. 
 
 \begin{figure}[H]
@@ -491,9 +491,9 @@ The champion model from each instance can attempt to reproduce system dynamics:
     \end{center}
     \caption[Run plots]{
         \gls{qmla} run plots; found within run directory e.g. \ttt{Jan\_01/01\_23/}. 
-        \textbf{(a)} \ttt{performace/model\_wins}: number of instance wins achieved by each model. 
+        \textbf{(a)} \ttt{performace/model\_wins}: number of \gls{instance} wins achieved by each model. 
         \textbf{(b)} \ttt{champion\_models/params\_params\_pauliSet\_1J2\_zJz\_d4+pauliSet\_2J3\_zJz\_d4+pauliSet\_3J4\_zJz\_d4}: 
-            parameter estimation progression for the true model, only for the instances where it was deemed champion. 
+            parameter estimation progression for the true model, only for the \glspl{instance} where it was deemed champion. 
         \textbf{(c)} \ttt{champion\_models/terms\_and\_params}: 
             histogram of parameter values found for each term which appears in any champion model,
             with the true parameter ($\alpha_0$) in red and the median learned parameter ($\bar{\alpha}^{\prime}$) in blue.
@@ -507,9 +507,9 @@ The champion model from each instance can attempt to reproduce system dynamics:
     \end{center}
     \caption[Run plot: dynamics]{
         Run plot \ttt{performace/dynamics}: median dynamics of the champion models. 
-        The models which won most instances are shown together in the top panel, 
+        The models which won most \glspl{instance} are shown together in the top panel, 
         and individually in the lower panels. 
-        The median dynamics from the models' learnings in its winning instances are shown, 
+        The median dynamics from the models' learnings in its winning \glspl{instance} are shown, 
         with the shaded region indicating the 66\% confidence region. 
     }
     \label{fig:run_dynamics}
@@ -544,7 +544,7 @@ Open the parallel launch script, \ttt{QMLA/launch/parallel\_launch.sh}, and prep
 ##### -------------------------------------------------- #####
 # QMLA run configuration
 ##### -------------------------------------------------- #####
-num_instances=10 # number of instances in run
+num_instances=10 # number of \glspl{instance} in run
 run_qhl=0 # perform QHL on known (true) model
 run_qhl_multi_model=0 # perform QHL for defined list of models
 experiments=250
@@ -563,7 +563,7 @@ exploration_strategy="ExampleBasic"
 
 When submitting jobs to schedulers like \gls{pbs}, we must specify the time required, 
     so that it can determine a fair distribution of resources among users. 
-We must therefore \emph{estimate} the time it will take for an instance to complete:
+We must therefore \emph{estimate} the time it will take for an \gls{instance} to complete:
     clearly this is strongly dependent on the numbers of experiments ($\Ne$) and particles ($\Np$), 
     and the number of models which must be trained. 
 \gls{qmla} attempts to determine a reasonable time to request based on the \ttt{max\_num\_models\_by\_shape}
@@ -571,10 +571,10 @@ We must therefore \emph{estimate} the time it will take for an instance to compl
 In practice, this can be difficult to set perfectly,
     so the \ttt{timing\_insurance\_factor} attribute of the \gls{es} can be used to correct 
     for heavily over- or under-estimated time requests. 
-Instances are run in parallel, and each instance trains/compares models in parallel. 
-The number of processes to request, $N_c$ for each instance is set as \ttt{num\_processes\_to\_parallelise\_over} 
+Instances are run in parallel, and each \gls{instance} trains/compares models in parallel. 
+The number of processes to request, $N_c$ for each \gls{instance} is set as \ttt{num\_processes\_to\_parallelise\_over} 
         in the \gls{es}.
-Then, if there are $N_r$ instances in the run, we will be requesting the job scheduler to admit 
+Then, if there are $N_r$ \glspl{instance} in the run, we will be requesting the job scheduler to admit 
     $N_r$ distinct jobs, each requiring $N_c$ processes, for the time specified. 
 
 \par 
@@ -778,8 +778,8 @@ def greedy_add(
 This \gls{run} can be implemented locally or in parallel as described above\footnotemark,
     and analysed as in \cref{listing:analysing_run},
     generating figures in accordance with the \ttt{plot\_level} set by the user in the launch script. 
-\footnotext{We advise reducing \ttt{plot\_level} to 3 to avoid excessive/slow figure generation.}
-Outputs can again be found in the instances subdirectory, including a map of the models generated, 
+\footnotetext{We advise reducing \ttt{plot\_level} to 3 to avoid excessive/slow figure generation.}
+Outputs can again be found in the \glspl{instance} subdirectory, including a map of the models generated, 
     as well as the branches they reside on, and the \glspl{bf} between candidates, \cref{fig:example_es_greedy}. 
 
 \begin{figure}[H]

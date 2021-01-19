@@ -169,7 +169,7 @@ In short, users need only specify the elements of the framework in the \emph{app
 
 
 \subsection{Application}\label{sec:application}
-The application of \gls{qmla} refers to the choice of target system, $Q$, and how \gls{qmla} searches the 
+The application of \gls{qmla} refers to the choice of target system, \gls{q}, and how \gls{qmla} searches the 
     \gls{ms} in attempt to discover its model. 
 As outlined in \cref{sec:exploration_strategies}, \glspl{es} play the role of 
     defining \gls{qmla}'s objectives, guiding the steps it takes, and designing the models to be tested. 
@@ -215,7 +215,7 @@ Our base \gls{es} class uses sensbile defaults for this modular functionality,
 
 Additionally, applications require a series of settings for the model training phase, 
     such as the hyperparameters required by the resampling algorithm, \cite{liu2001combined}, 
-    as well as detailing the true (target) model, $\ho$, in the case where $Q$ is a simulated quantum system.
+    as well as detailing the true (target) model, $\ho$, in the case where \gls{q} is a simulated quantum system.
 We can also specify some \gls{es}-specific analyses to examine its internal performance, 
     although this is generally required during development/testing, and less useful thereafter. 
 
@@ -263,7 +263,7 @@ The role of \gls{qmla} then is to collate the outcome of those calculations in c
     \gls{et} champions, ultimately setting the global champion, $\hp$. 
 Thereafter it can perform some analysis, e.g. to generate a series of plots which demonstrate how the 
     model search progressed, as well as the evidence in favour of $\hp$, including for example 
-    the reproduction of $Q$'s dynamics by $\hp$. 
+    the reproduction of \gls{q}'s dynamics by $\hp$. 
 See \cref{sec:qmla_analysis} for further details. 
 
 \footnotetext{Note when running in \emph{serial} (e.g. running locally on a personal machine), it is valid to simply set $N_c=1$.}
@@ -351,7 +351,7 @@ To achieve this separation between calculation and analysis, we use a redis data
 Several aspects of \gls{qmla} are \emph{probabilistic}.
 Firstly, the Bayesian updates within model training of \gls{qhl} relies on Likelihoods which 
     implicitly depend on the measurement datum of a quantum system; 
-    in the case where the the measurement collapses $Q$ into the less-likely basis, 
+    in the case where the the measurement collapses \gls{q} into the less-likely basis, 
     the likelihoods will reflect that accurate hypotheses were poor, 
     resulting in misguided posterior distributions. 
 It is thus \emph{possible} that the parameter learning will converge on incorrect values. 
@@ -361,7 +361,7 @@ Moreover, the model design subroutine is not gauranteed to exploit the aspects o
     which constituent terms are helpful and which aren't. 
 \par 
 Overall, then, it is pertinent to run \gls{qmla} many times and gather statistics about its performance, 
-    rather than making overly-strong claims about $Q$ based on a single \emph{instance} of the algorithm. 
+    rather than making overly-strong claims about \gls{q} based on a single \emph{instance} of the algorithm. 
 We say that a \gls{qmla} \emph{\gls{run}} consists of $N_r$ independent \emph{\glspl{instance}},
     which can be run in parallel, such that we are primarily concerned with the performance of the run 
     instead of any individual instance. 
@@ -369,7 +369,7 @@ For example, with $N_r=100$, we can interpret the \emph{\gls{win rate}} of every
     as evidence for that model being $\ho$.
 For the sake of evaluating \gls{qmla} itself, as in \cref{part:theoretical_study}, 
     we can use the \gls{win rate} of $\ho$ as indication of the \emph{\gls{success rate}}, 
-    i.e. the fraction of instances within a run where \gls{qmla} identifies precisely $\hp = \ho$. 
+    i.e. the fraction of \glspl{instance} within a run where \gls{qmla} identifies precisely $\hp = \ho$. 
 Note, however, that neither the \gls{win rate} nor \gls{success rate} are singularly informative 
     of \gls{qmla}'s performance: in some cases, we can deem \gls{qmla} successful even if it does not 
     identify $\ho$ exactly, e.g. if it finds the majority of terms present in $\termset_0$ from a large space, 
@@ -380,7 +380,7 @@ Note, however, that neither the \gls{win rate} nor \gls{success rate} are singul
 When a \gls{run} is launched, \gls{qmla} generates a \emph{\gls{results directory}} unique to that \gls{run}, 
     identified by the time and date of its launch,
     in which all the pertinent information for that \gls{run}, including raw data and figures, are stored. 
-It includes an \ttt{analyse.sh} script to generate analysis after all instances have completed\footnotemark. 
+It includes an \ttt{analyse.sh} script to generate analysis after all \glspl{instance} have completed\footnotemark. 
 \gls{qmla} provides a large amount of anaytics to assess the performance of the protocol. 
 These range from \emph{big picture} perspectives such as the \gls{win rate} across the entire \gls{run}, 
     to zooming in on the internal metrics for training individual models.
@@ -390,7 +390,7 @@ A number of sub-directories are produced in the \gls{results directory},
     each containing data/figures from a different view of the \gls{run};
     these are listed in \cref{apdx:figure_repoduction}.
 \footnotetext{
-    Note this script is not run automatically since, on remote servers, instances finish independently without any central process
+    Note this script is not run automatically since, on remote servers, \glspl{instance} finish independently without any central process
     noticing. Therefore this script must be run by the user when the run is complete.
 }
 \par 
@@ -400,9 +400,9 @@ The user has control on which plots are generated, in order that the appropriate
 Results are categorised across the levels of the framework, for example:
 \begin{easylist}
     & Run: results across a number of instances.
-    && the number of instance wins for champion models.
+    && the number of \gls{instance} wins for champion models.
     && average dynamics reproduced by champion models.
-    & Instance: performance of a single insance.
+    & \Gls{instance}: performance of a single insance.
     && models generated and the branches on which they reside
     & Model: Individual model performance within an instance.
     && parameter estimation through QHL.

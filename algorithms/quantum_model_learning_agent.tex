@@ -1,6 +1,4 @@
-\glsreset{qmla}
-% TODO references about learning representations e.g. Renner's group; Briegel, HendrikPoulsen-Nautrup
-\gls{qmla} is an algorithm that extends the concept of applying machine learning to the 
+\glsentryfull{qmla} is an algorithm that extends the concept of applying machine learning to the 
     characterisation of Hamiltonians we've seen so far. 
 The extension, and central question of \gls{qmla} is:
     if we do not even have the structure of the model which describes a target quantum system, 
@@ -15,14 +13,12 @@ Throughout this thesis, we are concerned solely with Hamiltonian models.
 \par 
 
 For the remainder of this thesis, our objective is to learn the model underlying 
-    some target system $Q$. 
+    some target system \gls{q}. 
 We will first introduce some concepts which will prove useful when discussing \gls{qmla}, 
     before describing the protocol in detail in \cref{sec:qmla_protocol}.
 
 
-    
-
-%%%%%%%%%%% MODELS %%%%%%%%%%% 
+% %%%%%%%%%%% MODELS %%%%%%%%%%% 
 \section{Models}\label{sec:models}
 \Glspl{model} are simply the mathematical objects which can be used to predict the behaviour of a system. 
 In this thesis, \glspl{model} are synonymous with Hamiltonians,
@@ -55,8 +51,8 @@ For example, a model which is the sum of the (non-identity) Pauli operators is g
 
 Through this formalism, we can say that the sole task of \gls{qhl} was to optimise $\al$, given $\terms$. 
 The principle task of \gls{qmla} is to identify $\terms$ with the most statistical evidence 
-    for describing the target system $Q$. 
-In short, \gls{qmla} proposes candidate models $\hi$ as hypoteses to explain $Q$; 
+    for describing the target system \gls{q}. 
+In short, \gls{qmla} proposes candidate models $\hi$ as hypoteses to explain \gls{q}; 
     we \emph{train} each model independently through a parameter learning routine, 
     and finally nominate the model with the best performance after training. 
 In particular, \gls{qmla} uses \gls{qhl} as the parameter learning subroutine, 
@@ -64,10 +60,10 @@ In particular, \gls{qmla} uses \gls{qhl} as the parameter learning subroutine,
     \cite{wang2015hamiltonian, krastanov2019stochastic, flurin2020using, niu2019learning, 
     greplova2017quantum,lokhov2018optimal, acampora2019evolutionary, burgarth2017evolution}. 
 While discussing a model $\hi$, their \emph{training} then simply means the implementation 
-    of \gls{qhl}, where $\hi$ is assumed to represent $Q$, 
+    of \gls{qhl}, where $\hi$ is assumed to represent \gls{q}, 
     such that $\al_i$ is optimised as well as it can be, even if $\hi$ is entirely inaccurate. 
 
-%%%%%%%%%%% BAYES FACTORS %%%%%%%%%%% 
+% %%%%%%%%%%% BAYES FACTORS %%%%%%%%%%% 
 \section{Bayes factors}\label{sec:bayes_factors}
 We can use the tools introduced in \cref{sec:total_log_total_likelihood} to \emph{compare} models. 
 Of course it is first necessary to ensure that each model has  
@@ -210,15 +206,15 @@ This approach would be favoured in principle, in the case where such constraints
     e.g. an experiment repeated in a laboratory where the available 
     probe states are limited and the timescale achievable is understood. 
      
-%%%%%%%%%%% PROTOCOL %%%%%%%%%%%     
+% %%%%%%%%%%% PROTOCOL %%%%%%%%%%%     
 \section{Quantum Model Learning Agent Protocol}\label{sec:qmla_protocol}
-Given a target quantum system, $Q$, described by some \emph{true} model $\ho$, 
+Given a target quantum system, \gls{q}, described by some \emph{true} model $\ho$, 
     \gls{qmla} distills a model $\hp \approx \ho$.
 We can think of \gls{qmla} as a forest search algorithm\footnotemark:
     consisting of a number of trees, each of which can have an arbitrary number of branches, 
     where each leaf on each branch is an individual model, 
     \gls{qmla} is the search for the leaf in the forest with the 
-    strongest statistical evidence of representing $Q$. 
+    strongest statistical evidence of representing \gls{q}. 
 \footnotetext{
     Note \gls{qmla} is not a random forest, where decision trees are added at random, 
     because in \gls{qmla} trees are highly structured and included manually. 
@@ -263,7 +259,7 @@ In short, the \gls{ms} proceeds by grouping models in \emph{layers},
     \label{fig:qmla_overview}
 \end{figure}
 
-%%%%%%%%%%% EXPLORATION STRATEGIES %%%%%%%%%%% 
+% %%%%%%%%%%% EXPLORATION STRATEGIES %%%%%%%%%%% 
 \section{Exploration Strategies}\label{sec:exploration_strategies}
 \gls{qmla} is implemented by running $\Nt$ \glspl{et} concurrently, 
     where each \gls{et} corresponds to  a unique \gls{ms} and ultimately nominates a single 
@@ -279,7 +275,7 @@ We elucidate the responsibilities of \glspl{es} in the remainder of this section
         instructions for how \gls{qmla} should respond at predefined junctions, 
         e.g. whether to cease the \gls{ms} after a branch has completed;
     & true model specification:
-        detailing the terms and parameters which constitute $\ho$ (in the case where $Q$ is simulated);
+        detailing the terms and parameters which constitute $\ho$ (in the case where \gls{q} is simulated);
     & modular functionality: 
         subroutines called throughout \gls{qmla} are interchangeable such that each \gls{es} specifies the 
         set of functions to achieve its goals.
@@ -312,7 +308,7 @@ This alludes to the central design choice in composing an \gls{es}:
 The \gls{ms} occurs within some \emph{\gls{model space}}, the size of which can usually be easily found 
     by assuming that terms are binary -- either the interaction they represent is present or not. 
 If all possible terms are accounted for, and the total set of terms is $\termset$,
-    then there are $2^\absval{\termset}$ available candidates in the model space. 
+    then there are $2^{\absval{\termset}}$ available candidates in the model space. 
 The model space encompasses the closed\footnotemark set of models construable by the set of terms considered by an \gls{es}. 
 Because training models is slow in general,
     a central aim of \gls{qmla} is to search this space efficiently,
@@ -339,7 +335,7 @@ Here we list the important cases of this behaviour.
     \ListProperties(Numbers=r)
     & Parameter-learning settings
     && such as the prior distribution to assign each parameter during \gls{qhl}, and the parameters needed to run \gls{smc}.
-    && the time scale on which to examine $Q$.
+    && the time scale on which to examine \gls{q}.
     && the input probes to train upon. 
     & Branch comparison strategy
     && How to compare models within a branch (or \gls{qmla} layer). 
@@ -488,29 +484,34 @@ These types of evolutionary algorithms ensure that newly proposed candidates inh
     some of the structure which rendered previous candidates (relatively) successful, 
     in the expectation that this will yield ever-stronger candidates. 
 
-%%%%%%%%%%% GENERALITY %%%%%%%%%%% 
+% %%%%%%%%%%% GENERALITY %%%%%%%%%%% 
 
 \section{Generality}
 Several aspects of \gls{qmla} are deliberately vague in order to facilitate generality. 
-\begin{easylist}[itemize]
-    & \emph{Model} can mean any description of a quantum system which captures the interactions it is subject to. 
-    && Here we exclusively consider Hamiltonian models, but Lindbladian models can also be considered as generators of quantum dynamics. 
-    & \emph{Model training} is any subroutine which can train a given model, i.e. optimise a given parameterisation 
-        under the assumption that represents the target system. 
-    && Currently only \gls{qhl} has been used, but tomography is valid in principle, albeit slower. 
-    && \Gls{qhl} relies on the calculation of a characteristic \gls{likelihood} function; 
-        this too is not restricted to the generic form of \cref{eqn:likelihood} and can be replaced by 
-        any form which represents the likelihood that experimental conditions $e$ result in measurement datum $d$. 
-        We will see examples of this in \cref{chapter:nv} where we trace out part of the system in order 
-        to represent open systems. 
-    & \emph{Model selection}, or \emph{consoldation} can be as rigourous as desired by the user. 
-    && Consolidation occurs at the branch level of each \gls{et}, but also in finding the tree champion, 
-        and ultimately the global champion. 
-    && In practice, we use either \gls{bf} or a related concept such as \gls{tltl} which are statistically signicative. 
-        However, in \cref{sec:ga} we will consider a number of alternative schemes for discerning the strongest models. 
-    
 
-\end{easylist}
+\begin{description}
+    \item[\Gls{model}] can mean any description of a quantum system which captures the interactions it is subject to. 
+    \begin{easylist}[itemize]
+        & Here we exclusively consider Hamiltonian models, but Lindbladian models can also be considered as generators of quantum dynamics. 
+    \end{easylist}
+    \item[Model training] is any subroutine which can train a given model, i.e. optimise a given parameterisation 
+        under the assumption that represents the target system. 
+    \begin{easylist}[itemize]
+        & Currently only \gls{qhl} has been used, but tomography is valid in principle, albeit slower. 
+        & \Gls{qhl} relies on the calculation of a characteristic \gls{likelihood} function; 
+            this too is not restricted to the generic form of \cref{eqn:likelihood} and can be replaced by 
+            any form which represents the likelihood that experimental conditions $e$ result in measurement datum $d$. 
+            We will see examples of this in \cref{chapter:nv} where we trace out part of the system in order 
+            to represent open systems. 
+    \end{easylist}
+    \item[Model selection] or \emph{consolidation} can be as rigourous as desired by the user. 
+    \begin{easylist}[itemize]
+    & Consolidation occurs at the branch level of each \gls{et}, but also in finding the tree champion, 
+        and ultimately the global champion. 
+    & In practice, we use either \gls{bf} or a related concept such as \gls{tltl} which are statistically signicative. 
+        However, in \cref{sec:ga} we will consider a number of alternative schemes for discerning the strongest models. 
+    \end{easylist}
+\end{description}
 
 \subsection{Agency}\label{sec:agency}
 While the concept of \emph{agency} is contentious \cite{franklin1996agent}, 

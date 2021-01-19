@@ -15,7 +15,7 @@ We next discuss the target system with respect to its modelling,
 Finally we describe the implementation of an \gls{es} for the examination of the \gls{nvc},
     and the results of the \gls{qmla} procedure. 
 
-\section{\Glsentrylong{nvc}}
+\section{Nitrogen-Vacancy centre}
 \label{sec:nv_centres}
 
 \gls{nv} centers are point defects in diamond, 
@@ -125,7 +125,7 @@ Then, excitation from the same laser results in the excitation to $\ket{m_s=0}_e
     we benchmark the population of $\ket{0}$ when nothing else has happened as $p_0$. 
 Now, when we apply gates (i.e. \gls{mw} pulses) to the \gls{nvc}, 
     we can similarly read out the population of $\ket{0}$ as $p_0^{\prime}$,
-    and infer that the likelihood that the \gls{mvc} is found in the initial state $\ket{0}$ is $\nicefrac{p_o^{\prime}}{p_0}$. 
+    and infer that the likelihood that the \gls{nvc} is found in the initial state $\ket{0}$ is $\nicefrac{p_o^{\prime}}{p_0}$. 
 We can use this quantity as the \gls{likelihood} within \gls{qle}, allowing us to learn from the \gls{nvc},
     as we will discuss in the next sections. 
 \par 
@@ -553,7 +553,7 @@ In effect, we thus verify the statistical significance of each term included in 
 \par 
 
 The total model in \cref{eqn:nv_ham_full} supports $N_t = 1 + 3 + 6 | \chi | + 3 + 3 |\chi| = 7 + 9|\chi| $ terms, 
-    which we reduced to a space of $N_t=3 + 6 |\chi| = 9$ through several approximations\footenotemark ;
+    which we reduced to a space of $N_t=3 + 6 |\chi| = 9$ through several approximations\footnotemark ;
     even so, the remainng $2^9$ permitted models were reduced further by building the logic of this \gls{es} 
     from our intuition aroud existing knowledge of typical \gls{nvc} systems,
     such the \gls{es} will only ever consider $<20$ models per instance. 
@@ -688,7 +688,7 @@ That is, with each model trained for $\Ne$ experiments,
         \gls{qmla} win rates and $R^2$ for models based on experimental data and simulations. 
     ]{
         \gls{qmla} win rates and $R^2$ for models based on experimental data and simulations. 
-        We state the number of \gls{qmla} instances won by each model and the average $R^2$ for those instances as an indication of the
+        We state the number of \gls{qmla} \glspl{instance} won by each model and the average $R^2$ for those \glspl{instance} as an indication of the
         predictive power of winning models.
     }
     \label{table:win_rates_r_squareds}
@@ -701,10 +701,10 @@ We apply the \gls{es} described in \cref{sec:exp_es} to the raw data of \cref{fi
 We first focus on the overall outcomes:
     the most blunt figure of merit of interest is simply whether \gls{qmla}
     overfits or underits the true parameterisation. 
-In preliminary analysis we run 500 instances with varying $\ho$, 
+In preliminary analysis we run 500 \glspl{instance} with varying $\ho$, 
     and where the cardinality of $\ho$ ranges,
     so we can broadly gauge the tendency towards over- and under-fitting:
-    we see that in $\sim~50\%$ of instances the correct cardinality is found,  
+    we see that in $\sim~50\%$ of \glspl{instance} the correct cardinality is found,  
     rising to $\sim~86\%$ by allowing one fewer (additional) terms, \cref{fig:exp_qmla_analysis}\textbf{(b)}. 
 Moreover, the champion models' are highly predictive: 
     the median coefficient of determination between the systems' and corresponding champion models' data is 
@@ -740,7 +740,7 @@ Moreover, the champion models' are highly predictive:
                 red-dots, extracted from the observed \gls{pl} of the first Hahn-echo decay). 
         Error bars smaller than the dots (see Methods).
         \textbf{f}, 
-        A single QMLA instance against experimental data in \textbf{e}, depicted as a \gls{dag}.
+        A single QMLA \gls{instance} against experimental data in \textbf{e}, depicted as a \gls{dag}.
         The thin end of each edge points to the favoured model; 
         the colour of the edges maps $\log_{10}\mathcal{B}$ as in the bar legend at the bottom. 
         Layer champions \huc are in light brown, whereas the global champion $\hp$  is in orange.    
@@ -748,7 +748,7 @@ Moreover, the champion models' are highly predictive:
     \label{fig:exp_qmla_analysis}
 \end{figure}
 Then, considering the performance of the algorithm on whole, 
-    we perform \glspl{run} of 100 instances on the exerpimental data as well as simulated data,
+    we perform \glspl{run} of 100 \glspl{instance} on the exerpimental data as well as simulated data,
     where the simulation assumes\footnotemark \ $\ho = \hat{S}_{xyz} \hat{A}_z$, 
     The set of models selected most frequently are shown in \cref{fig:exp_qmla_analysis}\textbf{(c)},
     and each model is trained with $\Ne=1000, \Np=3000$,
@@ -759,7 +759,7 @@ Then, considering the performance of the algorithm on whole,
     merely aiding in analysing the performance of the algorithm with respect to a concrete example.
 }
 In particular, the most prominent models, $\{ \SxyzAz, \SxyzAyz, \SxyzAxz, \SyzAz \}$ are found collectively in 74\% (87\%)
-    of instances on the experimental (simulated) data;
+    of \glspl{instance} on the experimental (simulated) data;
     the win rates and $R^2$ of all models (which won at least one instance) are reported in \cref{table:win_rates_r_squareds}. 
 It is noteworthy that even in the simulated case, the same models mislead \gls{qmla}:
     this suggests that the resultant physics from these models is substantially similar to that of the true model\footnotemark. 
@@ -799,7 +799,7 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
         Models considered by \gls{qmla} for simulated/experimental \glsentrylong{nvc} data, and their win rates
     ]{
     \textbf{Left}: map of the various Hamiltonian terms included in each of the possible 40 candidate models explored by \gls{qmla}
-    during any of the 100 instances on either simulated or experimental data.
+    during any of the 100 \glspl{instance} on either simulated or experimental data.
     The explicit form of each operator can be inferred from \cref{win_rates_r_squareds}.
     IDs of candidate models are on the vertical axis, and labels for the terms on the horizontal axis.
     The true model $\hat{H}_0$ for the simulated case is highlighted in green and a subset of credible models in blue, 
@@ -838,9 +838,8 @@ We highlight a number of \emph{credible} models which we deem especially valid a
         Dynamics reproduced by various \gls{qmla} champion models for simulated/experimental data. 
         Expectation values are shown on $y$--axis with time on $x$--axis. 
         Red dots give the true dynamics of $\ho$, while the blue lines show the median reconstruction by $\hp$
-        from all the instance where that model was deemed $\hp$, with light blue showing the standard deviation of those likelihoods.   
-        $\hp$ \ is listed on top of each plot; the number of instances won by each model can be read from \cref{table:win_rates_r_squareds}. 
-    
+        from all the \glspl{instance} where that model was deemed $\hp$, with light blue showing the standard deviation of those likelihoods.   
+        $\hp$ \ is listed on top of each plot; the number of \glspl{instance} won by each model can be read from \cref{table:win_rates_r_squareds}. 
     }
     \label{fig:nv_model_dynamics}
     % figure_development/nv_dynamics_reproduction.ipynb
@@ -894,7 +893,7 @@ The inaccurate terms found most often are seen to have (almost) negligible param
     in conjunction with domain expertise, users can determine whether the inclusion of these terms 
     are meaningful or simply artefacts of slight overfitting.
 In the experimental \gls{run}, on the other hand, we see a similar gulf in frequency between some terms.
-Namely, $\{ \hat{S}_x, \hat{S}_y, \hat{S}_z, \hat{A}_z \}$ are found in $50+$ more instances than all others:
+Namely, $\{ \hat{S}_x, \hat{S}_y, \hat{S}_z, \hat{A}_z \}$ are found in $50+$ more \glspl{instance} than all others:
     we therefore conclude that those terms contribute most strongly to the \gls{nvc}.
 The parameters found for these terms are of the same order of magnitude as we would have predicted originally, 
     but disagreee in the precise value. 

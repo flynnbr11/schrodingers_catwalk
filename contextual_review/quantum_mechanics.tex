@@ -26,12 +26,12 @@ Likewise, in this chapter we quickly summarise the key aspects of quantum comput
 %%%%%%%%%%%%%%%% QUANTUM MECHANICS %%%%%%%%%%%%%%%%%
 \section{Quantum Mechanics}\label{sec:qm}
 
-At any time, a quantum system, $Q$, can be described by its \emph{wavefunction}, $\Psi(t)$, 
-    which contains all information about $Q$. 
+At any time, a quantum system, \gls{q}, can be described by its \emph{wavefunction}, $\Psi(t)$, 
+    which contains all information about \gls{q}. 
 In analogy with Newton's second law of motion, 
     which allows for the determination of a particle's position at any time, $\vec{r}(t)$, 
     given its conditions such as mass and acceleration as well as its initial position, $\vec{r}(t_0)$,  
-    quantum \emph{equations of motion} can describe the evolution of $Q$ through its wavefunction \cite{dirac1981principles}. 
+    quantum \emph{equations of motion} can describe the evolution of \gls{q} through its wavefunction \cite{dirac1981principles}. 
 One proposal\footnotemark \ for the equation of motion 
     to describe the evolution of the wavefunction under known conditions, 
     i.e. determining $\Psi(t)$ from $\Psi(t_0) \ \forall t > t_0$, 
@@ -56,7 +56,7 @@ We start with the assumption that \emph{similarity} is conserved between two wav
     \braket{\phi(t) | \psi(t)} = \braket{\phi(t_0) | \psi(t_0)}
 \end{equation}
 
-Then, assuming some equations of motion capture the dynamics of $Q$, 
+Then, assuming some equations of motion capture the dynamics of \gls{q}, 
     there exists some evolution operator, $\hat{U}(t)$, which deterministically maps $\ket{\psi(t_o)}$ to $\ket{\psi(t)}$.
 \begin{equation}
     \label{eqn:unitary_time_evolution}
@@ -101,7 +101,7 @@ We suppose the form of the offset, so we can write
 \end{equation}
     where the inclusion of the phase $-i$ is arbitrary, 
     and we have named as $\nicefrac{\ho}{\hbar}$ the operator by which the time evolution differs from the identity. 
-In other words, the operator $\ho$ is generically the generator of the evolution/dynamics of $Q$:
+In other words, the operator $\ho$ is generically the generator of the evolution/dynamics of \gls{q}:
     any difference between $\ket{\psi(t_0)}$ and $\ket{\psi(t)}$ arises solely due to $\ho$. 
 So far there is no restriction on $\ho$, 
     except that it must be of the same dimension as the Hilbert space in question. 
@@ -125,7 +125,7 @@ Recalling the unitarity condition, however:
     \end{split}
 \end{equation}
 \cref{eqn:hamiltonian_hermiticity} results in the condition for \emph{Hermiticity}, 
-    meaning that $\ho$ is an observable of $Q$. 
+    meaning that $\ho$ is an observable of \gls{q}. 
 In fact, this is the \emph{Hamiltonian} of the system, described in the next section. 
 
 \par 
@@ -151,7 +151,7 @@ Taken together, we have
     where $\ket{\psi(t)}$ is the wavefunction at time $t$, 
     $\ket{\psi(t_0)}$ is the wavefunction at $t_0$, such that $t > t_0$, 
     $\hbar = 1.054 \times 10^{-34}$ is the reduced Planck constant and 
-    $\ho$ is the \emph{Hamiltonian} of $Q$. 
+    $\ho$ is the \emph{Hamiltonian} of \gls{q}. 
 For brevity we generally refer to $t_0 = 0$, and absorb $\hbar$ into $\ho$, which will later manifest in the Hamiltonian scalar parameters. 
 \cref{eqn:schrodinger} is the most general form of \emph{\schrodinger equation}, 
     otherwise known as the \emph{time-dependent} \schrodinger equation; 
@@ -174,14 +174,14 @@ As mentioned, we presented this argument in a nonstandard order:
 \par 
 
 \subsection{Hamiltonians}\label{sec:hamiltonians}
-In the previous section we introduced the Hamiltonian\footnotemark \ of $Q$ as the generator of its 
+In the previous section we introduced the Hamiltonian\footnotemark \ of \gls{q} as the generator of its 
     time evolution dynamics;
     Hamiltonians are of primary importance in this thesis, so it is worth pausing to consider their physical meaning. 
 We saw in \cref{eqn:hamiltonian_hermiticity} that $\ho$ is Hermitian, 
     meaning that the operator is physically observable 
     according to \Crefrange{postulate:eigenvalues}{postulate:hermiticity}
     of \glsentrylong{qm} (\cref{sec:postulates}). 
-The Hamiltonian operator captures the energy of $Q$: 
+The Hamiltonian operator captures the energy of \gls{q}: 
     the eigenvalues of the observable $\ho$ are the permitted energy levels of the system.
 \par 
 
@@ -193,10 +193,10 @@ Knowing the classical Hamiltonian and the initial conditions -- position and mom
 Likewise, knowledge of the initial wavefunction, $\ket{\psi(t_0)}$, and the system's quantum Hamiltonian, $\ho$, 
     the quantum equations of motion -- \schrodinger's equation, \cref{eqn:schrodinger} -- 
     permits the calculation of the wavefunction at later times.
-As such the Hamiltonian must consist of all processes which influence the evolution of $Q$;
+As such the Hamiltonian must consist of all processes which influence the evolution of \gls{q};
     we will later break the Hamiltonian into independent \emph{terms} which each correspond to unique physical interactions
-    $Q$ is subject to, \cref{sec:models}. 
-We can think that each process/interaction $Q$ undergoes contributes to its total energy,
+    \gls{q} is subject to, \cref{sec:models}. 
+We can think that each process/interaction \gls{q} undergoes contributes to its total energy,
     giving intuition as to why its eigenvalues are the energy levels. 
 \par 
 \footnotetext{
@@ -206,7 +206,7 @@ We can think that each process/interaction $Q$ undergoes contributes to its tota
 }
 
 Hamiltonians describe \emph{closed} quantum systems, 
-    i.e. where \emph{all} processes and interactions which influence $Q$ are accounted for. 
+    i.e. where \emph{all} processes and interactions which influence \gls{q} are accounted for. 
 Realistic quantum systems are influenced by a myriad of proximal systems, 
     and it is therefore infeasible to analytically account for them all. 
 Instead, \emph{open} quantum systems' dynamics are described by Lindbladian operators, which encompass the Hamiltonian form. 
@@ -221,10 +221,10 @@ We do, however, show initial progress towards this endeavour by modelling a phys
 \section{Quantum Information}\label{sec:quantum_info}
 We have not yet described the structure of the wavefunction, 
     instead performing the previous analysis with respect to some arbitrary objects.
-The wavefunction for a physical system, $Q$, is also known as its \emph{state}, 
+The wavefunction for a physical system, \gls{q}, is also known as its \emph{state}, 
     a complete mathematical description of the system \cite{preskill1998lecture}.
 States are vectors\footnotemark, $\ket{\psi} \in \mathbb{C}$;
-    the valid state space for $Q$ is its \emph{Hilbert space}, $\hilbert$,
+    the valid state space for \gls{q} is its \emph{Hilbert space}, $\hilbert$,
     which is a generalisation of Euclidean vector space, 
     i.e. $\ket{\psi} \in \hilbert$. 
 \footnotetext{We immediately use Dirac notation to represent the state; it is defined in \cref{sec:dirac_notation}.}
@@ -242,7 +242,7 @@ In general\footnotemark, a state can be seen as a \emph{superposition} across it
 \end{subequations}
 
 The cornerstone of \gls{qm} is the effect of \emph{measurement} on quantum systems: 
-    in general $Q$ can be seen as occupying a multitude of eigenstates as in \cref{eqn:state_vector};
+    in general \gls{q} can be seen as occupying a multitude of eigenstates as in \cref{eqn:state_vector};
     observing the system forces $\ket{\psi}$ into a definite occupation of a single eigenstate,
     where the \emph{probability} that it is measured in each eigenstate $\ket{v_i}$ is given by $\absval{\alpha_i}^2$, 
     according to Born's rule \cite{born1926quantenmechanik}.
@@ -251,7 +251,7 @@ $\alpha_i$ are hence named \emph{probability amplitudes} since they inform the p
 
 For an ideal\footnotemark \ single particle, when the state, \cref{eqn:state_vector}, has two available eigenstates, 
     e.g. the horizontal ($H$) and vertical ($V$) polarisation of a single photon, 
-    we can designate $Q$ as a two-level computational platform, called a \emph{qubit}, 
+    we can designate \gls{q} as a two-level computational platform, called a \emph{qubit}, 
     analogous to the workhorse of classical computation, the bit. 
 A qubit's state vector can then be written as a sum over the two available eigenstates, 
     where we assign vectors to the eigenstates as $\left\{ \ket{H} = \ket{v_1}, \ket{V} = \ket{v_2} \right\}$. 
@@ -342,7 +342,7 @@ We can make two remarks about basis states for a single qubit:
 
 As we alluded to in \cref{sec:qm}:
     by imposing mathematical structure on quantum systems' states, 
-    i.e. representing $Q$ as a state vector at any time, 
+    i.e. representing \gls{q} as a state vector at any time, 
     then operations which alter the state of the system must be matrices, 
     which we will call \emph{operators}. 
 In general an $n$-dimensional vector is rotated by an $n \times n$ matrix;
@@ -456,7 +456,7 @@ While single qubit states are spanned by the Pauli opeartors, multi-qubit states
     \label{fig:expectation_values}
 \end{figure}
 
-Upon measurement, the state vector of $Q$ has amplitude associated with only one eigenvector. 
+Upon measurement, the state vector of \gls{q} has amplitude associated with only one eigenvector. 
 On average, however, the eigenvector to which it would collapse encodes statistical insight on the 
     state prior to measurement. 
 In other words, if we prepared $\ket{\psi}$ and measured it -- via some observable, $\hat{A}$ -- 
@@ -478,7 +478,7 @@ An underlying theme of this thesis is to flip the usual logic:
     we will \emph{estimate} \glspl{expectation value}, either through experiment or simulation, 
     and use them to infer the structure of the observable.
 This trick enables machine learning routines to reverse engineer 
-    the processes $Q$ is subject to, as we will describe in \cref{part:algorithms}. 
+    the processes \gls{q} is subject to, as we will describe in \cref{part:algorithms}. 
 There is a subtlety to be aware of, however: 
     in later chapters, we will make reference to the \gls{expectation value} and \emph{\gls{likelihood}} 
     almost interchangeably -- these are distinct concepts that \emph{sometimes} overlap, but not in all cases,
