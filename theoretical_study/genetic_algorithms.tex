@@ -246,6 +246,7 @@ This saving depends on the user's choice of graph connectivity, see \cref{sec:el
             and using only a fraction ($0.2$) of experiments/particles for those calculations. 
             This pairwise comparison strategy is used for the \gls{bfeer} \gls{of}. 
         \textbf{Inset}, timings for each approach in seconds, with $t=1\textrm{hr}$ marked vertically in blue. 
+        \figtableref
     }
     \label{fig:bf_by_fscore}
 \end{figure}
@@ -261,7 +262,8 @@ This saving depends on the user's choice of graph connectivity, see \cref{sec:el
         Each subplot shows the success rates for varying numbers of generations, $N_G \in \{8, 16, 32, 64\}$, 
         and numbers of models per generation, $N_m \in \{8, 16, 32, 64\}$. 
         A subplot is generated for ranges of the mutation rate, $r_m$ and the number of 
-        generations for which the elite model is unchanged after which the \gls{ga} is cut off. 
+        generations for which the elite model is unchanged after which the \gls{ga} is cut off.
+        \figtableref 
     }
     \label{fig:ga_param_sweep}
 \end{figure}
@@ -331,7 +333,7 @@ In \cref{table:objective_functions},
         \hat{H}_c \ &= \ \sigma_{(1, 2)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(4, 5)}^{z}; \\
         \hat{H}_d \ &= \ \sigma_{(1, 3)}^{z}\sigma_{(1, 4)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(3, 5)}^{z}; \\
         \hat{H}_e \ &= \ \sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(4, 5)}^{z}; \\
-        \hat{H}_f \ &= \ \sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(3, 5)}^{z}.
+        \hat{H}_f \ &= \ \sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(3, 5)}^{z}. \\
     \end{align}
 \end{equation}
 
@@ -690,7 +692,7 @@ We achieve this through an imprecise mechanism:
     newly born models are given the Elo rating of the second-most-elite model, $\h_e^2$. 
 This performs three key functions: 
 \begin{easylist}[enumerate]
-    \ListProperties(Numbers=r, Start=0)
+    \ListProperties(Numbers=r, Start1=0)
     & new models are immediately \emph{within range} of the elite models; 
     if they perform well enough, they have a realistic and fair chance of overtaking them; 
     & the strongest model retains some of its advantage gained over previous generations 
@@ -889,6 +891,7 @@ We will analyse the \gls{ges} from four perspectives:
             as well as the rating of its opponent, $\hj$ (purple plus).
             The $F_1$-scores are also shown for $\hi$ (dashed green line) and $\hj$ (purple diamond).
         \textbf{c}, The corresponding change in $\hi$'s rating, $\Delta R_i$. 
+        \figtableref
     }
     \label{fig:single_models_elo_ratings}
 \end{figure}
@@ -915,6 +918,7 @@ We see that $\hi$'s rating is effected by whether it wins a given comparison,
         \textbf{Inset}, the selection probabilities resulting from the final ratings of this generation. 
         Only a fraction of models are assigned selection probability, while the remaining poorer-performing 
         models are truncated. 
+        \figtableref
     }
     \label{fig:single_generation_all_ratings}
 \end{figure}
@@ -941,6 +945,7 @@ The very strongest two models are granted a position in the subsequent generatio
         Horizontal dotted lines show the starting rating at that generation. 
         \textbf{b}, Gene pool progression for $N_m=60, N_g=15$. 
         Each time at each generation represents a model by its $\fs$. 
+        \figtableref
     }
     \label{fig:ga_instance}
 \end{figure}
@@ -977,6 +982,7 @@ Consequently, even in cases where the precise model, $\ho$, is not identified, t
                 couples the first and third qubits along the $x$-axis. 
             We test four qubits with full connectivity, resulting in 18 unique terms 
             (terms with black rectangles are not considered by the \gls{ga}).
+        \figtableref
 }
     \label{fig:ga_run}
 \end{figure}

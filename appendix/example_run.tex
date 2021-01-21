@@ -14,13 +14,14 @@ Now, we must download the code base and ensure it runs properly;
 }
 
 The steps of preparing the codebase are 
-(i) install \ttt{redis};
-(ii) create a virtual Python environment for installing \gls{qmla} dependencies without damaging other parts of 
+\begin{enumerate}
+\item install \ttt{redis};
+\item create a virtual Python environment for installing \gls{qmla} dependencies without damaging other parts of 
 the user's environment;
-(iii) download the \gls{qmla} codebase from 
+\item download the \gls{qmla} codebase from 
     the forked Github repository;
-(iv) install packages upon which \gls{qmla} depends. 
-
+\item install packages upon which \gls{qmla} depends. 
+\end{enumerate}
     
 \begin{lstlisting}[
     label=listing:qmla_setup,
@@ -109,7 +110,6 @@ plot_level=5
 exploration_strategy="TestInstall"
 \end{lstlisting}    
 
-Now we can run 
 Ensure the terminal running redis is kept active, and open a separate terminal window. 
 We must activate the Python virtual environment configured for \gls{qmla}, 
 which we set up in \cref{listing:qmla_setup}. 
@@ -262,7 +262,7 @@ class ExampleBasic(
 \end{lstlisting}
 
 
-To run\footnotemark \ the example \gls{es} for a meaningful tests, 
+To run\footnotemark \ the example \gls{es} for a meaningful test, 
     return to the \ttt{local\_launch} of \cref{listing:local_launch}, 
     but change some of the settings:
 \begin{lstlisting}[
@@ -270,8 +270,8 @@ To run\footnotemark \ the example \gls{es} for a meaningful tests,
     caption={\ttt{local\_launch} configuration for QHL.},
     language=Bash
 ]
-prt=2000
-exp=500
+particles=2000
+experiments=500
 run_qhl=1
 exploration_strategy=ExampleBasic
 \end{lstlisting}
@@ -280,7 +280,7 @@ Run locally again as in \cref{listing:launch_example};
     then move to the \gls{results directory} as in \cref{listing:results_directory}. 
 \footnotetext{
     Note this will take up to 15 minutes to run. 
-    This can be reduced by lowering the values of \ttt{prt}, \ttt{exp}, 
+    This can be reduced by lowering the values of \ttt{particles}, \ttt{experiments}, 
     which is sufficient for testing but note that the outcomes will be less effective 
     than those presented in the figures of this section.
 }
@@ -313,12 +313,12 @@ Individual models' insights can be found in \ttt{model\_training},
 \begin{figure}[H]
     \begin{center}
     \subfloat[]{
-        \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17/18_04/instances/qmla_1/model_training/learning_summary_1.pdf}
+        \includegraphics[width=0.45\textwidth]{appendix/figures/model_analysis/learning_summary_1.pdf}
         \label{fig:qmla_learning_summary}
     }
     \qquad
     \subfloat[]{
-        \includegraphics[width=0.45\textwidth]{qmla_run_data/Jan_17/18_04/instances/qmla_1/model_training/dynamics_1.pdf}
+        \includegraphics[width=0.45\textwidth]{appendix/figures/model_analysis/dynamics_1.pdf}
         \label{fig:qmla_model_dynamics}
     }
     \end{center}
@@ -341,7 +341,7 @@ Now we can run the full \gls{qmla} algorithm, i.e. train several models
     set in \cref{listing:basic_es}, which tells \gls{qmla} to construct three models
     on the first branch, then terminate the search.
 Here we need to train and compare all models so it takes considerably longer to run:
-    the purpose of testing, we reduce the resources so the entire algorithm runs in about 15 minutes.
+    for the purpose of testing, we reduce the resources so the entire algorithm runs in about 15 minutes.
 Some applications will require significantly more resources to learn effectively.
 In realistic cases, these processes are run in parallel, as we will cover in \cref{apdx:paralllel_processing}.
 \par 
@@ -352,8 +352,8 @@ Reconfigure a subset of the settings in the \ttt{local\_launch.sh} script (\cref
     caption={\ttt{local\_launch} configuration for QMLA.},
     language=Bash
 ]
-exp=250
-prt=1000
+experiments=250
+particles=1000
 run_qhl=0
 exploration_strategy=ExampleBasic
 \end{lstlisting}
@@ -381,27 +381,27 @@ The probes used during the training of all candidates are also plotted  (\cref{f
     % TODO use Jan_18/13_15 without rescaling images
     \begin{center}
         \subfloat[]{
-            \includegraphics{qmla_run_data/Jan_18/14_36/instances/qmla_10/composition_of_models.pdf}
+            \includegraphics{appendix/figures/instance_analysis/composition_of_models.pdf}
             \label{fig:qmla_model_composition}
         }
         \qquad
         \subfloat[]{
-            \includegraphics{qmla_run_data/Jan_18/14_36/instances/qmla_10/bayes_factors.pdf}
+            \includegraphics{appendix/figures/instance_analysis/bayes_factors.pdf}
             \label{fig:qmla_bayes_factors}
         }
         \qquad
         \subfloat[]{
-            \includegraphics{qmla_run_data/Jan_18/14_36/instances/qmla_10/comparisons/BF_1_3.pdf}
+            \includegraphics{appendix/figures/instance_analysis/BF_1_3.pdf}
             \label{fig:qmla_bayes_factor_comparison}
         }
         \qquad
         \subfloat[]{
-            \includegraphics{qmla_run_data/Jan_18/14_36/instances/qmla_10/branches/dynamics_branch_1.pdf}
+            \includegraphics{appendix/figures/instance_analysis/dynamics_branch_1.pdf}
             \label{fig:qmla_branch_dynamics}
         }
         \qquad
         \subfloat[]{
-            \includegraphics[width=0.25\textwidth]{qmla_run_data/Jan_18/14_36/instances/qmla_10/probes_bloch_sphere.pdf}
+            \includegraphics[width=0.25\textwidth]{appendix/figures/instance_analysis/probes_bloch_sphere.pdf}
             \label{fig:qmla_training_probes}
         }
     \end{center}
@@ -454,15 +454,16 @@ First, reconfigure some settings of \cref{listing:local_launch} and launch again
     language=Bash
 ]
 num_instances=10
-exp=20
-prt=100
+experiments=20
+particles=100
 run_qhl=0
 exploration_strategy=ExampleBasic
 \end{lstlisting}
 \par 
 
 Some of the generated analysis are shown in \crefrange{fig:run_plots}{fig:run_dynamics}. 
-The number of \glspl{instance} for each model, i.e. their \emph{\glspl{win rate}} are given in \cref{fig:qmla_win_rates}.
+The number of \glspl{instance} for which each model was deemed \gls{champion}, 
+i.e. their \emph{\glspl{win rate}} are given in \cref{fig:qmla_win_rates}.
 The \emph{top models}, i.e. those with highest \glspl{win rate}, analysed further: 
     the average parameter estimation progression for $\ho$ -- including only the \glspl{instance} where $\ho$ was deemed champion --
     are shown in \cref{fig:champ_param_progression}.
@@ -475,17 +476,17 @@ The \gls{champion model} from each \gls{instance} can attempt to reproduce syste
 \begin{figure}[H]
     \begin{center}
         \subfloat[]{
-            \includegraphics{qmla_run_data/Jan_17/22_27/performance/model_wins.pdf}
+            \includegraphics{appendix/figures/run_analysis/model_wins.pdf}
             \label{fig:qmla_win_rates}
         }
         \qquad
         \subfloat[]{
-            \includegraphics{qmla_run_data/Jan_17/22_27/champion_models/params_pauliSet_1J2_zJz_d4+pauliSet_2J3_zJz_d4+pauliSet_3J4_zJz_d4.pdf}
+            \includegraphics{appendix/figures/run_analysis/params_pauliSet_1J2_zJz_d4+pauliSet_2J3_zJz_d4+pauliSet_3J4_zJz_d4.pdf}
             \label{fig:champ_param_progression}
         }
         \qquad
         \subfloat[]{
-            \includegraphics{qmla_run_data/Jan_17/22_27/champion_models/terms_and_params.pdf}
+            \includegraphics{appendix/figures/run_analysis/terms_and_params.pdf}
             \label{fig:qmla_branch_dynamics}
         }
     \end{center}
@@ -503,7 +504,7 @@ The \gls{champion model} from each \gls{instance} can attempt to reproduce syste
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics{qmla_run_data/Jan_17/22_27/performance/dynamics.pdf}
+        \includegraphics{appendix/figures/run_analysis/dynamics.pdf}
     \end{center}
     \caption[Run plot: dynamics]{
         Run plot \ttt{performace/dynamics}: median dynamics of the \glspl{champion model}. 
@@ -785,11 +786,11 @@ Outputs can again be found in the \glspl{instance} subdirectory, including a map
 \begin{figure}[H]
     \begin{center}
     \subfloat[]{
-        \includegraphics[scale=0.75]{qmla_run_data/Jan_18/18_04/instances/qmla_1/composition_of_models.pdf}
+        \includegraphics[scale=0.75]{appendix/figures/greedy_search/composition_of_models.pdf}
     }
     \qquad
     \subfloat[]{
-        \includegraphics[scale=0.75]{qmla_run_data/Jan_18/18_04/instances/qmla_1/graphs_of_branches_ExampleGreedySearch.pdf}
+        \includegraphics[scale=0.75]{appendix/figures/greedy_search/graphs_of_branches_ExampleGreedySearch.pdf}
     }
     \end{center}
     \caption[Greedy \glsentrylong{es}]{
@@ -960,11 +961,11 @@ with corresponding results in \cref{fig:example_es_tiered_greedy}.
 \begin{figure}[H]
     \begin{center}
     \subfloat[]{
-        \includegraphics{qmla_run_data/Jan_18/19_06/instances/qmla_1/composition_of_models.pdf}
+        \includegraphics{appendix/figures/tiered_search//composition_of_models.pdf}
     }
     \qquad
     \subfloat[]{
-        \includegraphics{qmla_run_data/Jan_18/19_06/instances/qmla_1/graphs_of_branches_ExampleGreedySearchTiered.pdf}
+        \includegraphics{appendix/figures/tiered_search//graphs_of_branches_ExampleGreedySearchTiered.pdf}
     }
     \end{center}
     \caption[Tiered greedy \glsentrylong{es}]{
