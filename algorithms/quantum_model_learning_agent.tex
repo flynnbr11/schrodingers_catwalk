@@ -87,7 +87,7 @@ Pairwise comparisons can then be quantified by the \gls{bf},
 \end{equation}
 Intuitively, we see that the \gls{bf} is the ratio of the likelihood, i.e. the performance, 
     of model $\hi$'s attempt to account for the data set $\expdata$ observed following the 
-    experiment set $\expset$, against the same\gls{likelihood} for model $\hj$.
+    experiment set $\expset$, against the same \gls{likelihood} for model $\hj$.
 \glspl{bf} are known to be statistically signicative of the stronger model 
     from a pair, at explaining observed data,
     while favouring models of low cardinality, thereby supressing overfitting models. 
@@ -369,7 +369,7 @@ For example where the target system is an untrusted quantum simulator to be char
     we decide some $\ho$ in advance:
     the model training subroutine calls for  \glspl{likelihood}, 
     those corresponding to $\ho$ are computed $S_u$, 
-    while particles' \gls{likelihood} are computed on $S_t$. 
+    while particles'  \gls{likelihood} are computed on $S_t$. 
 
 \subsection{Modular functionality}\label{sec:modular_functionality}
 Finally, there are a number of fundamenetal subroutines which are called upon throughout the \gls{qmla} algorithm. 
@@ -383,7 +383,7 @@ These can be chosen to match the requirements of the user, and are set via the \
         && In this work we always used \gls{qhl}.     
     \end{easylist}
 
-    \item[\Gls{likelihood} function] the method used to estimate the\gls{likelihood} 
+    \item[ \gls{likelihood} function] the method used to estimate the \gls{likelihood} 
         for use during \gls{qle} within \gls{qhl}, 
         which ultimately depends on the measurement scheme. 
     \begin{easylist}
@@ -432,7 +432,7 @@ To solidifiy the concept of \glspl{es}, and how they affect the overall,
 Recall that all of these strategies rely on \gls{qhl} as the model training strategy, 
     so that the run time for training, is $t_{\textrm{QHL} \sim \Ne\Np t_U}$, 
     where $t_U(n)$ is the time to compute the unitary evolution via the matrix exponential for an $n$-qubit model 
-All models are trained using the default \gls{likelihood} in \cref{eqn:likelihood}. 
+All models are trained using the default  \gls{likelihood} in \cref{eqn:likelihood}. 
 Assume the conditions
 \begin{easylist}[itemize]
     & all models considered are represented by 4-qubit models;
@@ -518,9 +518,9 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
         under the assumption that represents the target system. 
     \begin{easylist}[itemize]
         && Currently only \gls{qhl} has been used, but tomography is valid in principle, albeit slower. 
-        && \Gls{qhl} relies on the calculation of a characteristic \gls{likelihood} function; 
+        && \Gls{qhl} relies on the calculation of a characteristic  \gls{likelihood} function; 
             this too is not restricted to the generic form of \cref{eqn:likelihood} and can be replaced by 
-            any form which represents the\gls{likelihood} that experimental conditions $e$ result in measurement datum $d$. 
+            any form which represents the \gls{likelihood} that experimental conditions $e$ result in measurement datum $d$. 
             We will see examples of this in \cref{chapter:nv} where we trace out part of the system in order 
             to represent open systems. 
     \end{easylist}
@@ -529,7 +529,7 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
     && Consolidation occurs at the branch level of each \gls{et}, but also in finding the tree champion, 
         and ultimately the global champion. 
     && In practice, we use either \gls{bf} or a related concept such as \gls{tltl} which are statistically signicative. 
-        However, in \cref{sec:ga} we will consider a number of alternative schemes for discerning the strongest models. 
+        However, in \cref{chapter:ga} we will consider a number of alternative schemes for discerning the strongest models. 
     \end{easylist}
 \end{description}
 
@@ -702,11 +702,11 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
 
             Prepare $Q$ in $\ket{\psi}$, evolve and measure after $t \gets d$ \tcp*[1]{datum}\;
 
-            $ \absval{ \bra{d} e^{-i \hat{H}_i^{\prime} t} \ket{\psi} }^2 \gets Pr(d | \hat{H}_i, t)$  \tcp*[1]{total\gls{likelihood} for $\hat{H}_i^{\prime}$ on $e$}\;
+            $ \absval{ \bra{d} e^{-i \hat{H}_i^{\prime} t} \ket{\psi} }^2 \gets Pr(d | \hat{H}_i, t)$  \tcp*[1]{total \gls{likelihood} for $\hat{H}_i^{\prime}$ on $e$}\;
 
-            $log \left( Pr(d | \hat{H}_i, t) \right) \gets l_e$ \tcp*[1]{log total\gls{likelihood} for $\hat{H}_i^{\prime}$ on $e$}\;
+            $log \left( Pr(d | \hat{H}_i, t) \right) \gets l_e$ \tcp*[1]{log total \gls{likelihood} for $\hat{H}_i^{\prime}$ on $e$}\;
 
-            $\tll_{i}+ l_e \gets  \tll_{i}$ \tcp*[1]{add $l_e$ to total log total\gls{likelihood} }
+            $\tll_{i}+ l_e \gets  \tll_{i}$ \tcp*[1]{add $l_e$ to total log total \gls{likelihood} }
         }
     }
     

@@ -193,11 +193,11 @@ Our base \gls{es} class uses sensbile defaults for this modular functionality,
 }
 
 \begin{easylist}[itemize]
-    & \gls{likelihood} function. By default, \gls{qhl} calls a subroutine to compute \cref{eqn:likelihood}. 
+    &  \gls{likelihood} function. By default, \gls{qhl} calls a subroutine to compute \cref{eqn:likelihood}. 
         This can be replaced by any function which, given a Hamiltonian, evolution time and \gls{probe} state, 
         returns the likelihood, according to the experiment you wish to simulate. 
         For example, in \cref{chapter:nv}, the data on which models are trained comes from experimental measurements, 
-            so we replace the\gls{likelihood} function with a calculation corresponding to the experimental procedure. 
+            so we replace the \gls{likelihood} function with a calculation corresponding to the experimental procedure. 
         Importantly, QInfer requires the quantity $\Pr(0)$, see \cref{eqn:pr0}, so that is the output of these functions. 
     & \Gls{probe} generation. The training phase requires a set of probes against which to optimise individual models. 
         Users may wish to specify the design of such probes, for example to match experimental constraints 
@@ -264,7 +264,7 @@ The role of \gls{qmla} then is to collate the outcome of those calculations in c
 Thereafter it can perform some analysis, e.g. to generate a series of plots which demonstrate how the 
     model search progressed, as well as the evidence in favour of $\hp$, including for example 
     the reproduction of \gls{q}'s dynamics by $\hp$. 
-See \cref{sec:qmla_analysis} for further details. 
+See \cref{sec:qmla_outputs} for further details. 
 
 \footnotetext{Note when running in \emph{serial} (e.g. running locally on a personal machine), it is valid to simply set $N_c=1$.}
 \par 
@@ -376,7 +376,7 @@ Note, however, that neither the  \gls{win rate}  nor \gls{success rate} are sing
     i.e. a high $\fs$, see \cref{sec:f_score}. 
 
 
-\subsection{Outputs and analysis}
+\subsection{Outputs and analysis}\label{sec:qmla_outputs}
 When a \gls{run} is launched, \gls{qmla} generates a \emph{\gls{results directory}} unique to that \gls{run}, 
     identified by the time and date of its launch,
     in which all the pertinent information for that \gls{run}, including raw data and figures, are stored. 

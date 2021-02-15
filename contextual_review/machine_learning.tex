@@ -103,7 +103,7 @@ The remaining (20\%) of samples, $\mathcal{D}_v$, are retained for the evaluatio
 The evalutation thus captures how the model can be expected to perform on future, unlabelled data. 
 \par 
 
-\subsection{Performance metrics}
+\subsection{Performance metrics}\label{sec:performance_metrics}
 \begin{figure}
     \begin{center}
         \includegraphics{contextual_review/figures/confusion_matrix.pdf}
@@ -207,7 +207,7 @@ It is clearly appropriate to blend together the usual metrics, in order to deriv
 In general -- including in this thesis -- the most important aspects of a \gls{ml} are precision and sensitivity: 
     a model which performs well with respect to \emph{both} of these is sensitive to the feature, but precise in its predictions. 
 A quantity which captures both of these is the $F_{\beta}$-score, 
-\begin{equation}
+\begin{equation}\label{eqn:f_beta}
     f_{\beta} = \left( 1 + \beta^2 \right) \frac{
         \textrm{precision} \times \textrm{sensitivity} }{
         \left(\beta^2\times\textrm{precision}\right) + \textrm{sensitivity}},

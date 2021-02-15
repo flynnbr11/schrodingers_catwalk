@@ -1,6 +1,9 @@
 Here we provide a complete example of how to run the \glsentryfull{qmla} framework, 
     including how to implement a custom \glsentryfull{es}, 
     and generate/interpret analysis.
+Note: these examples are included in the \gls{qmla} documentation in a format that may be easier to follow -- 
+    where possible, we recommend readers follow the \ttt{Tutorial} section of \cite{qmla_docs}.
+
 \par 
 
 First, \emph{fork} the \gls{qmla} codebase from \cite{flynn2021QMLA}
@@ -468,7 +471,7 @@ The \emph{top models}, i.e. those with highest \glspl{win rate}, analysed furthe
     the average parameter estimation progression for $\ho$ -- including only the \glspl{instance} where $\ho$ was deemed champion --
     are shown in \cref{fig:champ_param_progression}.
 Irrespecitve of the \glspl{champion model}, the rate with which each term is found in the \gls{champion model} ($\hat{t} \in \hp$)
-    indicates the\gls{likelihood} that the term is really present;
+    indicates the \gls{likelihood} that the term is really present;
     these rates -- along with the parameter values learned -- are shown in \cref{fig:qmla_branch_dynamics}.
 The \gls{champion model} from each \gls{instance} can attempt to reproduce system dynamics: 
     we group together these reproductions for each model in \cref{fig:run_dynamics}. 
@@ -518,7 +521,7 @@ The \gls{champion model} from each \gls{instance} can attempt to reproduce syste
 
 
 
-\section{Parallel implementation}
+\section{Parallel implementation}\label{apdx:paralllel_processing}
 We provide utility to run \gls{qmla} on parallel processes. 
 Individual models' training can run in parallel, as well as the calculation of \gls{bf} between models. 
 The provided script is designed for \gls{pbs} job scheduler running on a compute cluster. 

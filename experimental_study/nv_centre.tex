@@ -125,8 +125,8 @@ Then, excitation from the same laser results in the excitation to $\ket{m_s=0}_e
     we benchmark the population of $\ket{0}$ when nothing else has happened as $p_0$. 
 Now, when we apply gates (i.e. \gls{mw} pulses) to the \gls{nvc}, 
     we can similarly read out the population of $\ket{0}$ as $p_0^{\prime}$,
-    and infer that the\gls{likelihood} that the \gls{nvc} is found in the initial state $\ket{0}$ is $\nicefrac{p_o^{\prime}}{p_0}$. 
-We can use this quantity as the \gls{likelihood} within \gls{qle}, allowing us to learn from the \gls{nvc},
+    and infer that the \gls{likelihood} that the \gls{nvc} is found in the initial state $\ket{0}$ is $\nicefrac{p_o^{\prime}}{p_0}$. 
+We can use this quantity as the  \gls{likelihood} within \gls{qle}, allowing us to learn from the \gls{nvc},
     as we will discuss in the next sections. 
 \par 
 
@@ -427,7 +427,7 @@ This is sufficiently specific to ensure the training subroutine operates in a ph
         The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \glsentrylong{pl}. 
         Here $\ho = 0.25 \ \s_y$ was evolved for $t=0.5$ (arbitrary units), 
         and the final state overlap with the initial state, 
-        i.e. the\gls{likelihood} of measuring the spin in $\ket{0}$ is $\Pr(0 | \ho, t) = 0.865$. 
+        i.e. the \gls{likelihood} of measuring the spin in $\ket{0}$ is $\Pr(0 | \ho, t) = 0.865$. 
     }
     \label{fig:hahn_bloch_spheres}
 \end{figure}
@@ -448,20 +448,20 @@ We depict the stages of the experiment in \cref{fig:hahn_bloch_spheres},
 \par 
 
 In particular, the final state, $\ket{\psi}_5$, is read out, effectively by projection onto $\ket{0}$;
-    we can interpret the \gls{pl} after evolution time $t$ as the \gls{likelihood} 
+    we can interpret the \gls{pl} after evolution time $t$ as the  \gls{likelihood} 
     that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true} Hamiltonian, $\ho$. 
-That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the \gls{likelihood}), 
-    and it can be used within\gls{likelihood} estimation in order to refine a candidate model $\hj$, 
+That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{likelihood}), 
+    and it can be used within \gls{likelihood} estimation in order to refine a candidate model $\hj$, 
     effectively\footnotemark \ by changing the structure of 
     $\hj$ until $\Pr(0 | \ho, t) \approx \Pr(0 | \hj, t) \ \forall t$. 
 
 \footnotetext{
-    Of course this is a gross simplification of \gls{qhl} which is described fully in \cref{sec:qhl}
+    Of course this is a gross simplification of \gls{qhl} which is described fully in \cref{chapter:qhl}
 }
 \par 
 
-By varying the evolution time of the Hahn-echo sequence, we can map the\gls{likelihood} 
-    against time, which we can view as capturing the dynamics of the \gls{nvc} spin \cref{fig:exp_raw_data}.
+By varying the evolution time of the Hahn-echo sequence, we can map the \gls{likelihood} 
+    against time, which we can view as capturing the dynamics of the \gls{nvc} spin \cref{fig:nv_raw_data}.
 We vary time up to $t \sim 4 \mu s$ in the short-time range in intervals of $\Delta t = 50 ns$, 
     so we have 425 data points. 
 Importantly, the data for the studied \gls{nvc} is taken once and analysed offline, 
@@ -477,7 +477,7 @@ Importantly, the data for the studied \gls{nvc} is taken once and analysed offli
     \caption[Raw data for \glsentrylong{nvc}'s dynamics]{
         Raw data for the \glsentrylong{nvc}'s dynamics.
         The $y$-axis shows the \glsentrylong{pl} of the \gls{nvc}, 
-        equivalently the\gls{likelihood} $\Pr(0 | \ho, t)$. 
+        equivalently the \gls{likelihood} $\Pr(0 | \ho, t)$. 
     }
     \label{fig:nv_raw_data}
 \end{figure}
@@ -619,7 +619,7 @@ Moving to analyse the experimental setup, there are a number of constraints whic
     training models. 
 Firstly, the $\nicefrac{\pi}{2}$-pulse applied to the prepared qubit ($\ket{\psi_0} \rightarrow \ket{\psi_1}$ in \cref{fig:hahn_bloch_spheres})
     means that the state before evolution is always $\ket{+}$ in the computational basis;
-    this is a severe limitation on model training, as we saw in \cref{sec:probes}. 
+    this is a severe limitation on model training, as we saw in \cref{sec:heuristic}. 
 Moreover, this puts a bias on the interactions \gls{qmla} is likely to identify:
     we show in \cref{fig:hahn_bloch_spheres} how \gls{qhl} performs in training the same model using 
     (i) the \gls{probe} set available experimentally; (ii) a more general (random) \gls{probe} set. 
@@ -630,7 +630,7 @@ This has a noteworthy impact on the outcome of this study,
 
 The experiment was run until the \gls{nvc} was deemed to have decohered, 
     so \cref{fig:nv_raw_data} ceases at $t_{\textrm{max}} \sim \ 4 \mu s$. 
-As discussed in \cref{sec:edh}, usually it is helpful to allow a \glsentryfull{edh} to
+As discussed in \cref{sec:heuristic}, usually it is helpful to allow a \glsentryfull{edh} to
     choose the experimental controls, including the evoltuion time, $t$, against which 
     the model is trained at each experiment;
     the default \glsentryfull{pgh} attempts to select $t$ at the upper boundary of times 
@@ -807,12 +807,11 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     ]{
     \textbf{Left}: map of the various Hamiltonian terms included in each of the possible 40 candidate models explored by \gls{qmla}
     during any of the 100 \glspl{instance} on either simulated or experimental data.
-    The explicit form of each operator can be inferred from \cref{win_rates_r_squareds}.
     IDs of candidate models are on the vertical axis, and labels for the terms on the horizontal axis.
     The \gls{true model} $\hat{H}_0$ for the simulated case is highlighted in green and a subset of credible models in blue, 
     i.e. models which may reasonbaly be expected to describe the \gls{nvc} from theoretical arguments.
     \textbf{Right}: wins for each of the candidate models as above out of $100$ independent QMLA runs, 
-    reported as a histogram for cases adopting simulated data (empty bars) or the experimental dataset.
+    reported as a histogram for cases adopting simulated data (empty bars) or the experimental dataset (green bars).
     \figtableref
     } 
     \label{fig:nv_model_composition}

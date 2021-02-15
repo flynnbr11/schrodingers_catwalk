@@ -1,5 +1,5 @@
 \cref{chapter:nv} concerned a two-qubit approximation of the short-time dynamics of an \gls{nvc}. 
-It is valid criticism of this analysis that the \gls{model space} searched was reduced substantially from prior knowledge,
+It is valid criticism of this analysis that the \gls{model space} searched was reduced substantially through prior knowledge,
     and it therefore remains to test \gls{qmla} in a large model space, on physically meaningful data. 
 In this chapter, we extend \gls{qmla}, to consider appoximations of \gls{nvc} sytems using more qubits, 
     representing several nuclear sites, which aim to capture the interactions between the 
@@ -28,7 +28,7 @@ Such effects can be highlighted by Hahn echo measurements,
     as in \cref{fig:hahn_bloch_spheres}, 
     except reversing the evoluting by $t^{\prime} = t$ instead of $t^{\prime} = 2t$
     \cite{childress2006coherent, breuer2002theory}, so our simulations will use this measurement scheme. 
-    \todo{reference that explicitly says Hahn t=t' gives long-time dynamics}
+    % TODO reference that explicitly says Hahn t=t' gives long-time dynamics
 \par 
 
 Since we are simulating the target system, we may choose the approximation we wish to invoke. 
@@ -77,6 +77,7 @@ In total then, $\absval{\termset} = 3 + 3n_s^{\prime} + 3 n_s^{\prime} = 3 + 6 n
 
 \par 
 We set the system parameters based on theoretical predictions, listed in \cref{table:nv_gen_alg_term_params}.
+% TODO justify using equations 
 
 \begin{table}
     \begin{tabular}{cclrr}

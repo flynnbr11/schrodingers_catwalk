@@ -80,9 +80,9 @@
             they are mixed to spawn new models. 
         We use a one--point cross over about the midpoint:
             the first half of $\gamma_{p_1}$ is mixed with the second half of $\gamma_{p_2}$ 
-            to produce two new children chromosomes, $\gamma_{c_1}, \gamma_{c_2}$. 
+            to produce two new offspring chromosomes, $\{\gamma_{c_1}, \gamma_{c_2}$\}. 
         Mutation occurs probabilistically: each gene has a 25$\%$ chance of being mutated, e.g. a single gene (red) flipping from $0 \rightarrow 1$ to mutate $\gamma_{c_2}$ to $\gamma_{c_2}^{\prime}$.
-        The next generation of the genetic algorithm will then include $\gamma_{c_1}, \gamma_{c_2}^{\prime}$ (assuming $\gamma_{c_1}$ does not mutate). 
+        The next generation of the genetic algorithm will then include $\{\gamma_{c_1}, \gamma_{c_2}^{\prime}\}$ (assuming $\gamma_{c_1}$ does not mutate). 
         To generate $N_m$ models for each generation, $N_m/2$ parent couples are sampled from the previous generation and crossed over. 
     }
     \label{table:chromosome_example}
