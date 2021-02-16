@@ -1,3 +1,4 @@
+\glsresetall
 It is of primary interest to apply the \gls{qmla} algorithm to real-life, experimental systems. 
 In this chapter we devise an \gls{es} to operate in conjunction with experimental data 
     in order to characterise an electron spin in an \gls{nv} centre in diamond.
@@ -19,26 +20,25 @@ Finally we describe the implementation of an \gls{es} for the examination of the
 \label{sec:nv_centres}
 
 \gls{nv} centers are point defects in diamond, 
-    occuring naturally \cite{davies1976optical} or synthetically \cite{meijer2005generation, edmonds2012production}.
+    occuring intrinsically (naturally) \cite{davies1976optical} or extrinsically (synthetically) \cite{meijer2005generation, edmonds2012production}.
 A substitutional \gls{nitrogen} isotope is embedded in a lattice of carbon atoms in diamond, 
     adjacent to a lattice vacancy, 
-    such that it is surrounded by three \glspl{carbon} \cite{lenef1996electronic}. 
+    such that it is surrounded by three \glspl{carbon} (either $^{12}C$ or $^{13}C$) \cite{lenef1996electronic}. 
 Of the \gls{nitrogen} atom's five valence electrons, three bond with nearby \glspl{carbon};
-    the remaining two unbonded electrons for a lone pair and can be thought of as a single spin-$\frac{1}{2}$ particle. 
+    the remaining two unbonded electrons form a lone pair and can be thought of as a single spin-$\frac{1}{2}$ particle. 
 The adjacent lattice vacancy has three unbonded electrons, 
     two of which bond together leaving a single unpaired electron.
 The single electron in the lattice vacancy, together with the effective lone pair of the \gls{nitrogen}, 
-    form a a system of two spin-$\frac{1}{2}$ particles.
-Such systems have been thoroughly studied; 
-    of particular interest are the resultant \emph{triplet} states, 
+    form a system of two spin-$\frac{1}{2}$ particles: such systems have been thoroughly studied.
+Of particular interest are the resultant \emph{triplet} states, 
     i.e. the allowed permutations of the two particles with total quantum spin $S=1$, 
     with magnetic spin multiplicity allowing $m_s = {-1, 0, 1}$, 
     giving rise to three distinct energy levels for the system. 
 \par 
 
-A \emph{manifold} is a set of states differing only slightly, 
-    for example states near the absolute ground state manifold might differ only in magnetic spin quantum number,
-    and can be characterised as the ground state manifold. 
+A \emph{manifold} is a set of states with marginal differences, such as a single differing quanutm number.
+For example, states near the absolute ground state might differ only in their magnetic spin quantum number:
+    together they can be characterised as the \emph{ground state manifold}. 
 We consider two principle manifolds of the system:
     the ground state and excited manifolds, each consisting of 
     three states, corresponding to the allowed values for magnetic spin $m_s$, see \cref{fig:nv_centre_energy_levels}a. 
@@ -49,26 +49,33 @@ In the absence of a magnetic field, the states corresponding to $\ket{m_s=\pm1}$
     referred to as the Zeeman effect, \cref{fig:nv_centre_energy_levels}b. 
 \par 
 
-We designate the state $\ket{m_s=0}_g$ as the basis state $\ket{0}=\icol{1 \\ 0}$, 
-    and $\ket{m_s=-1}_g$ as $\ket{1}=\icol{0 \\ 1}$, 
+For the purposes of computation, 
+    we choose the ground state and one of the excited states as the two levels of a qubit. 
+We designate the states $\ket{m_s=0}_g$ and $\ket{m_s=-1}_g$ as the computational basis states $\ket{0}, \ket{1}$ respectively, 
     such that we have defined a qubit and computational basis, \cref{fig:nv_centre_energy_levels}d.
-By shining a laser of $532$nm (green) on the \gls{nvc}, it is excited to the excited manifold, 
-    from which it decays back to the ground state manifold. 
-Importantly, the process of this decay can be exploited for the preparation of the \gls{nvc} in 
-    the computational basis state $\ket{0}$. 
-That is, the dominant decay process from $\ket{m_s=0}_e$ is 
-    spin-preserving, so it ends in $\ket{m_s=0}_g$. 
-On the other hand, had the \gls{nvc} been in the $\ket{m_s=\pm1}_e$,
-    the dominant decay process is through a shelving (singlet) state, 
-    and does not preserve spin, such that it also decays to the $\ket{m_s=0}_g$.
+We also require a reliable mechanism by which we can be confident that our qubit is in a definite state, 
+    to serve as the starting point of computation: 
+    usually qubits are initialised to $\ket{0}$, 
+    so here we aim to prepare the \gls{nvc} in $\ket{m_s=0}_g$.
+By shining a laser of \SI{532}{\nano\metre} (green) on the \gls{nvc}, irrespective of which state within the ground state manifold the spin starts, 
+    it is excited in to the excited manifold, from which it decays back to the ground state manifold.
+The process of this decay can be exploited for the preparation of the \gls{nvc} in $\ket{m_s=0}_g$ 
+    and therefore enable initialisation for computation.
+That is, when the \gls{nvc} is excited to the $\ket{m_s=0}_e$ level, the dominant decay process is spin-preserving, 
+    so after decay it ends in $\ket{m_s=0}_g$. 
+On the other hand, if the \gls{nvc} had been excited instead to $\ket{m_s=\pm1}_e$,
+    the dominant decay process is through a meta-stable/shelving state, 
+    which does not preserve spin, so in this case it also ultimately decays to the $\ket{m_s=0}_g$.
 Therefore, irrespective of the initial state, 
-    by shining the green laser on the \gls{nvc}, 
-    it is most likely that it has been prepared in $\ket{m_s=0}_g = \ket{0}$, 
+    by shining the green laser on the \gls{nvc} and exciting it into any of the states in the excited manifold, 
+    after decay it is most likely that it has been prepared in $\ket{m_s=0}_g = \ket{0}$, 
     providing us a starting point from which to perform computation.
 \par 
 
-The difference in energy between $\ket{0}$ and $\ket{1}$ is addressible optically: 
-    by shining a \gls{mw} pulse at the \gls{nvc}, we can oscillate the qubit between the two levels. 
+The difference in energy between our defined computational basis states $\ket{0}$ and $\ket{1}$ is 
+    $\sim 2.87 \ghz$, i.e. it is addressible by \gls{mw} radiation.
+Via antenna, we can deliver a \gls{mw} pulse upon the \gls{nvc}, driving the \gls{nvc} between the two levels
+    providing an implementation of an \ttt{X}-gate. 
 Likewise, having initialised the state to $\ket{0}$, we can perform a $\nicefrac{\pi}{2}$ rotation 
     about the logical $z$-axis, by running the \gls{mw} laser for half the time, 
     resulting in the state $\ket{+}$. 
@@ -78,25 +85,26 @@ We depict these cycles in \cref{fig:nv_centre_energy_levels}c.
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.75\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
+        \includegraphics[width=0.95\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
     \end{center}
     \caption[\Glsentrylong{nvc} energy levels.]{
         Simplified depiction of energy levels of the \glsentrylong{nvc}, corresponding to its triplet state. 
-        \textbf{a}, With no external field, the system simply has excited and ground-state manifolds, 
-        each of which consist of two energy levels depending on the magnetic spin, $m_s$.
+        \textbf{a}, With no external magnetic field, the system has excited and ground-state manifolds, 
+            each of which consist of two energy levels depending on the magnetic spin, $m_s$.
         \textbf{b}, In the presence of a magnetic field (purple, $B$), the magnetic spins have distinct energy levels, 
-        i.e. Zeeman splitting. 
-        States are denoted by their magnetic spin and subscripted by their manifold. 
-        \textbf{c},  Application of a green ($532nm$) laser excites the \gls{nvc} from any of the states in the 
-        ground state manifold to the excited manifold. 
+            i.e. Zeeman splitting giving distinct $m_s$. 
+        States are denoted by their magnetic spin, $m_s$ and subscripted by their manifold ($e$ for excited and $g$ for ground-state). 
+        \textbf{c},  Application of a \SI{532}{\nano\metre} laser (green arrow) excites the \glsentrylong{nvc} from any of the states in the 
+            ground state manifold into the excited manifold. 
         The dominant decay mechanism for the excited states are shown: 
-            (i) $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ (red line) through the emission of a red ($637nm$) photon;
+            (i) $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ (\glsentrylong{pl}, red) through the emission of a photon at \SI{637}{\nano\metre});
             (ii) $\ket{m_s=\pm 1}_e \rightarrow \ket{m_s=0}_g$ (dotted grey lines) via the shelving manifold which allows for non-spin-preserving transition, 
-            and does not emit a photon. 
+            emitting a photon in the infrared (not shown).
         \textbf{d}, Computational basis states $\ket{0}$ and $\ket{1}$ are assigned to the two lowest energy states.
-            The difference in energy between these states is such that a microwave (MW, blue) photon
-            can trigger transition from $\ket{0}$ to $\ket{1}$, as well as states in between such as $\ket{+}$, 
-            allowing for the implementation of quantum logic gates. 
+            The difference in energy between these states is such that a microwave (MW, blue) 
+                can drive transition from $\ket{0} \leftrightarrow \ket{1}$.
+            MW pulses can also be used to achieve other states apart from the basis states,
+                allowing for the implementation of quantum logic gates. 
     }
     \label{fig:nv_centre_energy_levels}
 \end{figure}
@@ -104,21 +112,21 @@ We depict these cycles in \cref{fig:nv_centre_energy_levels}c.
 
 We can further exploit the decay mechanism to compose a readout procedure, 
     to infer the population of $\{\ket{0}, \ket{1}\}$ at a given instant, 
-    for example following the application of gates to the system. 
+    for example following the application of a series of gates (a circuit) to the system. 
 We know that the excitation due to the green laser is spin-preserving, 
     i.e. when the \gls{nvc} has been excited to $\ket{m_s=0}_e$, 
     it had originated in $\ket{m_s=0}_g$.
 We also know that the decay $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ is spin preserving, with the emission of 
-    a red photon: by simply counting the number of photons emitted, we quantify the population of $\ket{0}$
-    at the time of query. 
-On the contrary, when the $\ket{m_s=-1}_g$ is excited, spin is also preserved, 
-    so it goes to $\ket{m_s=-1}_e$;
-    but $\ket{m_s=-1}_e$ decays 
-    through the shelving state as outlined earlier, 
-    \emph{without} the emission of a photon. 
-We can hence infer the population of $\ket{m_s=-1}_g$ at the time of query by the fraction of incidents which don't emit a photon.
+    a red photon: by simply counting the number of excess\footnotemark \ photons emitted, 
+    we quantify the population of $\ket{0}$ at the time of query. 
+On the contrary, when the $\ket{m_s=-1}_g$ is excited, 
+    spin is also preserved, so it goes to $\ket{m_s=-1}_e$, 
+    but $\ket{m_s=-1}_e$ decays through the shelving state as outlined earlier, 
+    \emph{without} the emission of a red photon (the decay gives out infrared instead). 
+We can hence infer the population of $\ket{m_s=-1}_g$ at the time of query by the fraction of incidents which don't 
+    emit a photon \cite{knauer2016photonic}.
 That is, say we first calibrate the system by retaining the green laser for some time: 
-    after a few $\mu s$, a steady state is achieved where the majority of the time, the triplet is in the state $\ket{0} = \ket{m_s=0}_g$. 
+    after a few $\mu s$, a steady state is achieved where the majority of the time, the triplet is in the computional state $\ket{0} = \ket{m_s=0}_g$. 
 Then, excitation from the same laser results in the excitation to $\ket{m_s=0}_e$, 
     which decays back to $\ket{m_s=0}_g$ and emits a photon in the process; 
     by counting the red photons emitted in a certain time window -- equivalently, measuring the \gls{pl} signal -- 
@@ -128,13 +136,23 @@ Now, when we apply gates (i.e. \gls{mw} pulses) to the \gls{nvc},
     and infer that the \gls{likelihood} that the \gls{nvc} is found in the initial state $\ket{0}$ is $\nicefrac{p_o^{\prime}}{p_0}$. 
 We can use this quantity as the  \gls{likelihood} within \gls{qle}, allowing us to learn from the \gls{nvc},
     as we will discuss in the next sections. 
+
+\footnotetext{
+    A large number of photons are emitted by the \gls{nvc} when it is excited by a \SI{532}{\nano\metre} laser
+    which can be profiled by its emission spectrum. 
+    At the \emph{zero phonon line} (\SI{637}{\nano\metre}),
+    a relatively large number of photons are emitted, compared with nearby wavelengths.
+    This is where decay from the excited to ground state occurs without interacting with proximal phonons, 
+        as is the case during the spin-preserving decay $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$.
+    The excess photons are taken as indication that the electron had been in the state $\ket{m_s=0}_e$ immediately prior to emission.
+}
 \par 
 
 In summary then, by assigning basis states $\ket{0}, \ket{1}$ to energy levels of the ground state manifold, 
     we are able to ensure the preparation of the \gls{nvc} in $\ket{0}$ by first shining a green laser on the \gls{nvc}. 
 We can then apply \gls{mw} radiation to achieve quantum logical gates on the system, 
     and read out the final state of the system, again by shining a green laser
-    and observing the emitted photons (\gls{pl}) and inferring the population level of each basis state. 
+    and observing the \glsentrylong{pl} (i.e. the emitted photons), and inferring the population level of each basis state. 
 We represent these concepts in a simplified format in \cref{fig:nv_centre_energy_levels}. 
 
 
@@ -440,7 +458,7 @@ Hahn echo sequences attempt to decouple the spin's dynamics from the nuclear bat
     \cite{rowan1965electron, blok2014manipulating, childress2006coherent, charnock2001combined, gentile2020Operating}
     providing a helpful platform for studying residual contributions of terms in \cref{eqn:nv_terms}.
 The \gls{nvc} qubit undergoes a series of evolutions -- either according to application of quantum logic gates
-    or the natural evolution of the system interacting with its environmen  
+    or the natural evolution of the system interacting with its environment.  
 We depict the stages of the experiment in \cref{fig:hahn_bloch_spheres}, 
     starting from the initialised $\ket{0}$
     through to its final state which is read out through \gls{pl},
