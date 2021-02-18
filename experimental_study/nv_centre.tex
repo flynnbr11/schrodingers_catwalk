@@ -138,9 +138,9 @@ We can use this quantity as the  \gls{likelihood} within \gls{qle}, allowing us 
     as we will discuss in the next sections. 
 
 \footnotetext{
-    A large number of photons are emitted by the \gls{nvc} when it is excited by a \SI{532}{\nano\metre} laser
+    A large number of photons are emitted by the \gls{nvc} when it is excited by a \SI{532}{\nano\metre} laser,
     which can be profiled by its emission spectrum. 
-    At the \emph{zero phonon line} (\SI{637}{\nano\metre}),
+    At the \emph{zero phonon line} (\SI{637}{\nano\meter}),
     a relatively large number of photons are emitted, compared with nearby wavelengths.
     This is where decay from the excited to ground state occurs without interacting with proximal phonons, 
         as is the case during the spin-preserving decay $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$.
@@ -159,16 +159,15 @@ We represent these concepts in a simplified format in \cref{fig:nv_centre_energy
 \section{Target system}\label{sec:target_system}
 We take the axis of the \gls{nvc}, i.e. the axis connecting the \gls{nitrogen} with the 
     lattice vacancy, as the $z$-axis.
-There are clearly a huge number of interactions to which the \gls{nvc} is subject:
-    we choose to focus on its interactions with the environment, 
-    i.e. with nuceli in the same diamond, which dictate its decoherence. 
+While the \gls{nvc} is subject to myriad interactions which result in decoherence,
+    we choose to focus on its dominant interactions with proximal environmental nuclei. 
 These interactions are characterised by hyperfine terms \cite{smeltzer201113c}.
 The overall Hamiltonian for such systems, where the set of nuclear sites is $\{\chi\}$,
     is given by 
 
 \begin{equation}
     \label{eqn:nv_ham_full}
-    \hat{H}_{\mathrm{full}} 
+    \hat{H}_{\mathrm{\textrm{full}}} 
     = 
     \Delta_{\textrm{gs}} \hat{S}_z^2 
     + \mu_B g \mathbf{B} \cdot \mathbf{S} 
@@ -177,39 +176,46 @@ The overall Hamiltonian for such systems, where the set of nuclear sites is $\{\
     + \mu_n g \mathbf{B} \cdot \sum_{ \chi} \hat{I}_{\chi}.
 \end{equation}
 
-We will describe each term, as well as approximations which enable us to simplify the space considerably. 
+Our overarching intention is to design an approximate model $\hp$, 
+    i.e. a subset of the terms in $\hat{H}_{\textrm{full}}$ which can explain the observed dynamics 
+    and decoherence of the \gls{nvc}. 
+It is therefore prudent only to retain terms which \emph{may} contribute to the spin's decoherence. 
+First, we will describe each term in \cref{eqn:nv_ham_full}, 
+    as well as approximations which enable us to drastically reduce the space of terms to consider for inclusion in $\hp$. 
 
 \begin{description}
     \item[Isolated-spin terms] describe the spin independent of the environmental nuclei
     \begin{easylist}
     && $\Delta_{\textrm{gs}} \hat{S}_z^2$: 
-        the \emph{zero-field} splitting, 
-        i.e. without any external (magnetic) field, the spin oscillates rapidly, with 
-        $\Delta_{\textrm{gs}} \sim \ghz$. 
+        the \emph{zero-field} splitting, or ground state splitting between the computational basis states.
+        $\Delta_{\textrm{gs}} \sim \ghz$ is a constant offset which does not contribute to the decoherence, 
+        so it is excluded from our study.
+
     && $\mu_B g \mathbf{B} \cdot \mathbf{S}$: 
         the spin's precession about the magnetic field, 
         $\mathbf{B} = \left(B_x \  B_y \  B_z\right)$, 
         via the total spin operator\footnotemark \ $\mathbf{S} = \left(\hat{S}_x \ \hat{S}_y \ \hat{S}_z \right)$, 
-        where $\mu_B$ is the Bohr magneton and $g$ is the $g$-factor 
-        ($\approx 2$, simplified from the g-factor tensor).
+        where $\mu_B$ is the Bohr magneton and $g$ is the electron $g$-factor 
+        ($\approx 2$, simplified from the $g$-factor tensor).
     \end{easylist}
     
     \item[Hyperfine terms] \ 
     \begin{easylist}
     && $\hat{S} \cdot \sum_{\chi} \left( \mathbf{A}_{\chi} \cdot \hat{I}_{\chi} \right)$:
-        The \gls{nvc} total spin operator $\mathbb{S}$ couples with each site, $\chi$.
+        The \gls{nvc} total spin operator $\mathbf{S}$ couples the spin with each site, $\chi$.
         At each site there is a nucleus which has total spin operator 
         $\mathbf{I}_{\chi} = \left(\hat{I}_x \ \hat{I}_y \ \hat{I}_z \right)_{\chi}$. 
         $\mathbf{A}$ is the hyperfine tensor, containing the hyperfine parameters of interest. 
+        The coupling between the \gls{nvc} and these nuceli is one of the primary decoherence mechanisms, 
+        so is essential to any model aiming to capture those dynamics. 
     \end{easylist}
 
     \item[Bath-only terms] describe the other nuceli independent of the spin
     \begin{easylist}        
-    && $P \hat{I}_z^2 $: the quadrupole splitting, i.e. this term gives the splitting 
-        of the \gls{nitrogen}'s hyperfine splitting, which does not meaningfully
-        contribute to the short-decay processes in the experiments described in the next section. 
+    && $P \hat{I}_z^2 $: the quadrupole splitting, which provides another constant shift, 
+        and is therefore not of interest when modelling the spin's decoherence, and can be neglected.
     && $\mu_n g \mathbf{B} \cdot \sum_{ \chi} \hat{I}_{\chi}$:
-        $\mu_n$ is the nuclear magneton and $g$ is again the $g$-factor.
+        $\mu_n$ is the nuclear magneton and $g$ is the nuclear $g$-factor (again from the $g$-factor tensor).
     \end{easylist}
 
 \end{description}
@@ -229,7 +235,19 @@ This is a usual assumption in the treatment of open system dynamics,
     to allow for focus on the dominant interactions for the system of interest \cite{breuer2002theory}. 
 Additionally, since the zero field splitting contributes a constant shift in energy, 
     we can safely omit it by moving to the rotating frame. 
-We are then left only with the second and third terms of \cref{eqn:nv_ham_full}. 
+We are then left only with the second and third terms of \cref{eqn:nv_ham_full}, 
+    from which to define the space of terms in which \gls{qmla} will search:
+
+\begin{subequations}
+    \begin{equation}
+        \label{eqn:nv_spin_terms}
+        \mu_B g \mathbf{B} \cdot \mathbf{S};
+    \end{equation}
+    \begin{equation}
+        \label{eqn:nv_hyperfine_terms}
+        \mathbf{S} \cdot \sum_{\chi} \left( \mathbf{A}_{\chi} \cdot \hat{I}_{\chi} \right).
+    \end{equation}
+\end{subequations}
 
 \subsection{Mapping to model terms}
 Next we will focus on mapping the remaining terms to operators to compose the set of terms 
@@ -237,18 +255,20 @@ Next we will focus on mapping the remaining terms to operators to compose the se
 In our modelling, the \gls{nvc} spin is represented by the first logical qubit, 
     with a further $|\{\chi\}|$ qubits, each representing a unique nuclear site, 
     as discussed later in this section. 
-As standard, we take the axis\footnotemark of the \gls{nvc} as parallel to the qubit's $z$-axis. 
+As standard, we take the axis\footnotemark \ of the \gls{nvc} as parallel to the qubit's $z$-axis. 
 
-\footnotetext{The axis connecting the \gls{nitrogen} with the lattice vacancy.}
+\footnotetext{The quantisation axis, i.e. the axis along the \gls{nitrogen} and lattice vacancy.}
 \par 
 
-The first terms included come from the spin's precession about the magnetic field. 
-It is usually assumed that the external, applied magnetic field is well-aligned with the 
-    spin qubit's $z$-axis; here we will treat this determination as the role of \gls{qmla}, 
+The first terms included, \cref{eqn:nv_spin_terms}, come from the spin's precession about the magnetic field. 
+It is usually assumed that the external, applied magnetic field is well-aligned with the spin qubit's $z$-axis:
+    if the field is misaligned, it leads to decoherence effects. 
+Determining the alignment is treated as a core role of \gls{qmla}, 
     i.e. we will endeavour to establish whether the $x$-, $y$-axis components of the magnetic field 
-    are important for describing the spin's dynamics. 
+    are important for describing the spin's decoherence. 
 Then, we have
 \begin{equation}
+    \label{eqn:spin_tensor_terms}
     \mu_B g \mathbf{B} \cdot \mathbf{S} 
     = \mu_B g \irow{B_x & B_y & B_z} \cdot \irow{\hat{S}_x & \hat{S}_y & \hat{S}_z}
     \rightarrow \alpha_x \hat{S}_x + \alpha_y \hat{S}_y + \alpha_z \hat{S}_z,
@@ -257,13 +277,13 @@ with $\alpha_i = \mu_B g B_i$.
 The spin's rotation terms to be included in \gls{qmla}'s deliberations are therefore 
 \begin{equation}
     \label{eqn:exp_spin_terms}
-    \termset_{s} = \{ \hat{S}_x, \hat{S}_y, \hat{S}_z\}
+    \termset_{s} = \{ \hat{S}_x, \  \ \hat{S}_y, \ \ \hat{S}_z\}.
 \end{equation}
 \par 
 
-Next, let's focus on the hyperfine coupling term. 
-In general we sum over the nuclear sites $\{ \hi \}$, 
-    since the spin will interact with every nucleus to some extent; 
+Next, we consider the hyperfine coupling term. 
+In general we sum over the nuclear sites $\{ \chi \}$, 
+    since  the \gls{nvc} spin will interact with every nucleus within a certain range.
 We show in \cite{gentile2020learning} that a realistic system requires modelling a 
     finite-size bath of $|\{\chi\}|\sim 15$ 
     nuclei to capture the dynamics of interest, 
@@ -275,7 +295,7 @@ Instead, by focusing only on the \emph{short-time} dynamics of the \gls{nvc},
 Indeed, by assigning a first qubit as representing the \gls{nvc} spin, 
     we can map the entire environment onto a generic second \emph{environmental qubit}, 
     representing the amalgamation of said interactions, 
-    though we can think of the two-qubit system as the \gls{nvc} coupled with a single \gls{carbon} \cite{smeltzer201113c}. 
+    though we can think of the two-qubit system as the \gls{nvc} coupled with a single \gls{nitrogen} \cite{smeltzer201113c}. 
 
 \begin{equation}
     \mathbf{S} \cdot \sum_{\chi} \left( \mathbf{A}_{\chi} \cdot \mathbf{I}_{\chi} \right)
@@ -283,8 +303,9 @@ Indeed, by assigning a first qubit as representing the \gls{nvc} spin,
     \mathbf{S} \cdot \mathbf{A} \cdot \mathbf{I} 
 \end{equation}
 
-This clearly reduces the dimension of our approximation, the number of qubits, $n_q$ 
-    from $n_q = 1 + |\{\chi\}|$ to $n_q = 2$, 
+This reduces the dimension of our approximation: 
+    the number of qubits required, $n_q$ 
+    reduces from $n_q = 1 + |\{\chi\}|$ to $n_q = 2$, 
     since now we only retain qubits for the \gls{nvc} and the \gls{nitrogen} 
     (which also represents the entire bath).
 The hyperfine tensor $\mathbf{A}$ consists of the hyperfine parameters, 
@@ -300,10 +321,9 @@ The hyperfine tensor $\mathbf{A}$ consists of the hyperfine parameters,
     where $A_{\perp}$ is the non-axial hyperfine coupling term and $A_{\|}$ is the axial coupling term, 
     since the axis of the \gls{nvc} is used to define the $z$-axis for our qubits. 
 
-The total spin operators -- 
-    of the \gls{nvc} operating on the first logical qubit
-    and the environmental qubit on the second -- 
-    can be thought of as
+The total spin operators are then those of the \gls{nvc} operating on the first logical qubit, e.g. $\hat{S}^{(1)}_x$,
+    and those of the environmental qubit on the second, e.g. $\hat{I}_x^{(2)}$. 
+They can be summarised as
 \begin{equation}
     \label{total_spin_operators}
     \begin{split}
@@ -322,59 +342,65 @@ So we can write,
         &+ A_{yz} \left( \hat{S}_y \I_z + \hat{S}_z \I_y \right) \\
     \end{split}
 \end{equation}
+
+Similarly to $\alpha_i$ in \cref{eqn:spin_tensor_terms}, we replace the expected (and theoretically computable)
+    scalar parameters, e.g. $A_{\perp}$, with generic parameters $\alpha$, to be learned.
 Off-diagonal terms, referred to hereafter as \emph{transverse} terms ($\hat{S_i}\I_j$ where $i\neq j$),
-    are usually neglected \cite{blok2014manipulating}; 
-    here we will emply \gls{qmla} to determine whether their contributions are worthy of inclusion, 
+    are usually neglected \cite{blok2014manipulating}.
+Here we will employ \gls{qmla} to determine whether the transverse contributions are worthy of inclusion in the decoherence model, 
     although we consider only $\{ \hat{S}_x\I_y, \hat{S}_x\I_z, \hat{S}_y\I_z\}$ for brevity. 
-In total then, the hyperfine terms to be entertained by \gls{qmla} are 
+The hyperfine terms to be entertained by \gls{qmla} are then
 
 \begin{equation}
     \label{eqn:exp_hf_terms}
     \termset_{HF} = \left\{
+    \begin{align}  
         \begin{split}
-        & \hat{S}_x\I_x, & \hat{S}_y\I_y, & \hat{S}_z\I_z, \\
-        & \hat{S}_x\I_y, & \hat{S}_x\I_z, & \hat{S}_y\I_z 
+        & \hat{S}_x\I_x, && \hat{S}_y\I_y, && \hat{S}_z\I_z, \\
+        & \hat{S}_x\I_y, && \hat{S}_x\I_z, && \hat{S}_y\I_z 
         \end{split}
+    \end{align}
     \right\}.
 \end{equation}
 
 \footnotetext{
     This limitation arises from the requirement to compute the total evolution of the global state, 
     involving calculation of $e^{-i\h t}$, i.e. the characterisation of an $n_q$-qubit model depends on 
-    classical exponentiation of the $2n_q \times 2n_q$ Hamiltonian for each particle and experiment in \gls{cle}, 
+    classical exponentiation of the $2^{n_q} \times 2^{n_q}$ Hamiltonian for each particle and experiment in \gls{cle}, 
     which is a prohibitive expense. 
 }
 \par 
 
 Finally, combining \cref{eqn:exp_spin_terms} and \cref{eqn:exp_hf_terms}, 
-    we have the full set of terms to incorporate into \gls{qmla} \gls{es}: 
+    we have the full set of terms to incorporate into the \gls{es} for the \gls{qmla} \gls{model search}: 
+
 \begin{equation}
-    \label{eqn:nv_terms_verbose}
     \termset_{NV} = \left\{
-        \begin{split}
-            &\hat{S}_x,  & \hat{S}_y,  & \hat{S}_z, \\
-            &\hat{S}_x \I_x,  & \hat{S}_y\I_y, & \hat{S}_z\I_z, \\
-            &\hat{S}_x\I_y,  & \hat{S}_x\I_z,  & \hat{S}_y\I_z \\
-        \end{split}
+    \begin{align*}
+        & \hat{S}_x, && \hat{S}_y, && \hat{S}_z, &\\
+        & \hat{S}_x\I_x, && \hat{S}_y\I_y, && \hat{S}_z\I_z, &\\
+        & \hat{S}_x\I_y, && \hat{S}_x\I_z, && \hat{S}_y\I_z &
+    \end{align*}
     \right\}.
+    \label{eqn:nv_terms_verbose}
 \end{equation}
 \par 
 
 We introduce a shorthand notation to ease model representation for the remainder of this chapter. 
 Recall that we have defined a two-qubit Hilbert space for model construction.
-Terms which affect only the spin act only on the first qubit, $\hat{S}_i = \s_i \otimes \ident$, 
+Terms which affect only the spin act only on the first qubit, $\hat{S}_i = \hat{S}_i^{(1)} = \s_i \otimes \ident$, 
     where $\s_i$ is the Pauli operator giving rotation about the $i$-axis, and 
     $\ident$ is the one-qubit identity matrix. 
-Retaining the hyperfine notation, for the expectedly-dominant diagonal terms, we denote $\hat{A}_i = \hat{S}_i \I_i = \s_i \otimes \s_i$. 
-We refer to the less-dominant off-diagonal terms as \emph{transverse} terms, $\hat{T}_{kl} = \hat{S}_k \I_l = \s_k \otimes \s_l$. 
+Retaining the hyperfine notation, for the expectedly-dominant diagonal terms, we denote $\hat{A}_i = \hat{S}_i^{(1)} \I_i^{(2)} = \s_i \otimes \s_i$. 
+We refer to the less-dominant off-diagonal terms as \emph{transverse} terms, $\hat{T}_{kl} = \hat{S}_k^{(1)} \I_l^{2} = \s_k \otimes \s_l$. 
 We can hence rewrite \cref{eqn:nv_terms_verbose} as 
 \begin{equation}
     \label{eqn:nv_terms}
     \termset_{NV} = \left\{ 
         \begin{split}    
-            &\hat{S}_x, &\hat{S}_y,  &\hat{S}_z, \\
-            &\hat{A}_x,  &\hat{A}_y,  &\hat{A}_z, \\
-            &\hat{T}_{xy},  &\hat{T}_{xz}, &\hat{T}_{yz} 
+            &\hat{S}_x, && \hat{S}_y,  && \hat{S}_z, \\
+            &\hat{A}_x,  && \hat{A}_y,  && \hat{A}_z, \\
+            &\hat{T}_{xy},  && \hat{T}_{xz}, && \hat{T}_{yz} 
         \end{split}
     \right\}.
 \end{equation}
@@ -384,62 +410,79 @@ We also use a succinct representation for brevity, e.g. $\hat{S}_{xy}\hat{A}_z =
 
 \subsection{Prior knowledge}
 
-The spin-only terms, $\hat{S}_i$, are consequences of the magnetic field, which is usually assumed as aligned with $z$-axis,
-    such the $x$-, $y$-axis compoenents are negligible;
-    $\hat{S}_z$ is expected in the range $\sim 2-3 \mhz$.
+\gls{qmla} will construct models using the pool of terms defined in \cref{eqn:nv_terms}. 
+Recall from \cref{chapter:qmla} that each model considered must be trained independently, 
+    where the purpose of model training is to optimise the parameter vector $\al$ which characterises the model. 
+For example, the model 
+    $\hi = \hat{S}_{x,y} \hat{A}_{z} = \alpha_1 \hat{S}_x  + \alpha_2 \hat{S}_y + \alpha_3 \hat{S}_3$,
+    is trained to retrieve the optimal $\al^{\prime} = \irow{\alpha_1^{\prime} & \alpha_2^{\prime} & \alpha_3^{\prime}}$. 
+Models are trained through \gls{qhl}, described in \cref{chatper:qhl}, 
+    which iteratively updates a probability distribution for the associated parameters, $\Pr(\al)$. 
+As such, a \emph{prior} distribution must be drawn, from which \gls{qhl} begins its training. 
+While \gls{qhl} can redraw the probability distribution iteratively, and even find parameters entirely outside of the initial range, 
+    it is necessary at least to identify the order of magnitude where the true parameter should be found. 
+The algorithm therefore demands that the user specifies the \emph{range} of each parameter in which to search, 
+    which can be based on domain knowledge and theoretical predictions. 
+For example, recall from \cref{sec:target_system} that the zero field splitting, $\Delta_{gs}$ in \cref{eqn:nv_ham_full} (and excluded in our modelling),
+    is expected to be $\sim \SI{}{\giga\hertz}$: in order to provide a reasonable chance at learning the true parameter,
+    here we would propose a prior distribution of $5 \pm 2 \SI{}{\giga\hertz}$.
+We must similarly identify the rough range in which we reasonably expect to find parameters associated with each term in \cref{eqn:nv_terms}.
+\par
+
+The spin-only terms, $\hat{S}_i$, are consequences of the magnetic field, 
+    expected in the range $\sim 2-3 \mhz$.
 Likewise, the hyperfine terms, $\hat{A}_i$ are expected in the range of $\sim \mhz$ \cite{gali2008ab}, 
     while in the \emph{secular approximation} only the $z$-component is expected to contribute substantially \cite{dutt2007quantum}. 
 The non axial hyperfine terms, i.e. the transverse terms $\hat{T}_{kl}$ are not usually included in effective models, 
-    but can be found of order $\sim\mathcal{O}(10 \khz)$ \cite{hou2019experimental}. 
-We utilise this prior understanding of the system to inform the parameter range used for training candidate models: 
-    for each of the terms in \cref{eqn:nv_terms}, we will adopt a normal prior distribution of $4 \pm 1.5¬ \mhz$. 
-This is sufficiently specific to ensure the training subroutine operates in a physically meaningful -- 
-    and likely appropriate -- space, whlie also broad enough to allow for significant differences between expectation and reality, 
-    as well as supporting hypotheses where each parameter is zero, 
-    such that such negligible contributions can be identified.
+    but can be found of order $\mathcal{O}(10 \khz)$ \cite{hou2019experimental}. 
+We utilise this prior understanding of the system to inform the parameter range used for training candidate models:
+    for each of the terms in \cref{eqn:nv_terms}, we will adopt a normal prior distribution of $4 \pm 1.5\SI{}{\mega\hertz}$. 
+This range is sufficiently specific to ensure the training subroutine operates in a physically meaningful -- 
+    and likely appropriate -- space, whlie also broad enough to allow for significant differences between expectation and reality.
+Moverover this distribution supports hypotheses where each parameter is zero:
+    if these prove favourable, negligible contributions can be identified and excluded from the model.
 
 \subsection{Experimental procedure}
 
 \begin{figure}
     \begin{center}
-        \subfloat{
-            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_0.pdf}
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_0.pdf}
         }
         \qquad
-        \subfloat{
-            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_1.pdf}
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_1.pdf}
         }
         \qquad
-        \subfloat{
-            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_2.pdf}
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_2.pdf}
         }
         \\
         \qquad
-        \subfloat{
-            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_3.pdf}
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_3.pdf}
         }
         \qquad
-        \subfloat{
-            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_4.pdf}
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_4.pdf}
         }
         \qquad
-        \subfloat{
-            \includegraphics[width=0.2\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_5.pdf}
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_5.pdf}
         }
     \end{center}
     \caption[States of spin qubit at each stage of Hahn echo sequence]{
         States of spin qubit at each stage of Hahn echo sequence.
         
-        The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
-        We then apply a rotation about the $y$-axis (i.e. a \gls{mw} pulse), 
+        \textbf{(a)} The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
+        \textbf{(b)} We apply a rotation about the $y$-axis (i.e. a \glsentryfull{mw} pulse), 
             yielding the state $\ket{\psi_1} = \ket{+}$. 
-        The system is then allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
-        We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
+        \textbf{(c)} The system is allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
+        \textbf{(d)} We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
         $\ket{\psi_3} = e^{-i\pi \s_y}e^{-i\ho t}\ket{+}$.
-        Again the system evolves according to interactions with the environment, this time for $t^{\prime} = 2t$.
-        We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
-            effectively either returning the spin to near the $\ket{0}$ axis, 
-            or near the $\ket{1}$ axis. 
+        \textbf{(e)} Again the system evolves according to interactions with the environment, this time for $t^{\prime} = 2t$.
+        \textbf{(f)} We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
+            projecting it upon $\ket{0}$.
         Here $\ket{\psi_5}$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
         i.e. along the $z$-axis. 
         The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \glsentrylong{pl}. 
@@ -450,24 +493,24 @@ This is sufficiently specific to ensure the training subroutine operates in a ph
     \label{fig:hahn_bloch_spheres}
 \end{figure}
     
-We have decided to characterise the hyperfine interactions of the \gls{nvc}; 
-    these are evident most strongly at very short timescales \cite{childress2006coherent}. 
+We have decided to characterise the hyperfine interactions of the \gls{nvc} which dominate its decoherence process:
+    these interactions are evident most strongly at very short timescales \cite{childress2006coherent}. 
 To isolate the effects of the hyperfine interactions, 
     we run Hahn echo experiments, which are known to emphasise weak interactions.
 Hahn echo sequences attempt to decouple the spin's dynamics from the nuclear bath
-    \cite{rowan1965electron, blok2014manipulating, childress2006coherent, charnock2001combined, gentile2020Operating}
+    \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}
     providing a helpful platform for studying residual contributions of terms in \cref{eqn:nv_terms}.
 The \gls{nvc} qubit undergoes a series of evolutions -- either according to application of quantum logic gates
     or the natural evolution of the system interacting with its environment.  
 We depict the stages of the experiment in \cref{fig:hahn_bloch_spheres}, 
-    starting from the initialised $\ket{0}$
+    starting from the initialised computational state, $\ket{\psi_0} = \ket{0}$,
     through to its final state which is read out through \gls{pl},
     both of which as described in \cref{sec:nv_centres}.
 \par 
 
-In particular, the final state, $\ket{\psi}_5$, is read out, effectively by projection onto $\ket{0}$;
-    we can interpret the \gls{pl} after evolution time $t$ as the  \gls{likelihood} 
-    that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true} Hamiltonian, $\ho$. 
+In particular, the final state, $\ket{\psi}_5$, is effectively read out by projection onto $\ket{0}$;
+    we can interpret the normalised \gls{pl} after evolution time $t$ as the  \gls{likelihood} 
+    that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true} Hamiltonian, $\ho$ for $t$. 
 That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{likelihood}), 
     and it can be used within \gls{likelihood} estimation in order to refine a candidate model $\hj$, 
     effectively\footnotemark \ by changing the structure of 
@@ -478,11 +521,11 @@ That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{
 }
 \par 
 
-By varying the evolution time of the Hahn-echo sequence, we can map the \gls{likelihood} 
+By varying the evolution time of the Hahn echo sequence, we can map the \gls{likelihood} 
     against time, which we can view as capturing the dynamics of the \gls{nvc} spin \cref{fig:nv_raw_data}.
 We vary time up to $t \sim 4 \mu s$ in the short-time range in intervals of $\Delta t = 50 ns$, 
     so we have 425 data points. 
-Importantly, the data for the studied \gls{nvc} is taken once and analysed offline, 
+Note the data for the studied \gls{nvc} is taken once and analysed offline, 
     i.e. \gls{qmla} does not have complete authority to design experiments 
     to run on the \gls{nvc}, although it can aim to choose the most informative $t$ 
     available in the predefined set; we will discuss the consequences of this restriction 
@@ -494,7 +537,7 @@ Importantly, the data for the studied \gls{nvc} is taken once and analysed offli
     \end{center}
     \caption[Raw data for \glsentrylong{nvc}'s dynamics]{
         Raw data for the \glsentrylong{nvc}'s dynamics.
-        The $y$-axis shows the \glsentrylong{pl} of the \gls{nvc}, 
+        The $y$-axis shows the normalised \glsentrylong{pl} of the \gls{nvc}, 
         equivalently the \gls{likelihood} $\Pr(0 | \ho, t)$. 
     }
     \label{fig:nv_raw_data}
@@ -502,21 +545,22 @@ Importantly, the data for the studied \gls{nvc} is taken once and analysed offli
 
 
 \section{\Glsentrylong{es}}\label{sec:exp_es}
-Finally, then, we are in a position to describe the specific implementation details 
-    which allow \gls{qmla} to study this \gls{nvc} system. 
+We may now turn to the specific implementation details by which \gls{qmla} is applied to the study this \gls{nvc} system. 
 Recalling the terminology of \gls{qmla} from \cref{chapter:qmla}, 
     we design an \glsentryfull{es} specifically for the system under study. 
 The \gls{es} will account for the details listed in this chapter so far, in summary: 
 \begin{easylist}[itemize]
-    & we attempt to assign a model, $\hp$, to the \gls{nvc};
-    && we especially focus on its hyperfine interactions;
-    & in particular, we use a 2-qubit approximation;
-    && the first qubit represent the spin itself;
-    && the second qubit represents the environment in which the \gls{nvc} resides;
-    & we query the \gls{nvc} by performing Hahn echo experiments (\cref{fig:hahn_bloch_spheres});
-    & the outcome of those experiments are thought of as the system's \glspl{likelihood}  (\cref{fig:nv_raw_data});
-    & \glspl{likelihood}  are used for the training of individual candidate models;
-    & candidate models are composed of the terms defined in \cref{eqn:nv_terms}.
+    & we aim to assign a model, $\hp$, to the \gls{nvc} to describe its decoherence processes
+    && we especially focus on its hyperfine interactions
+    & we use a 2-qubit approximation
+    && the first qubit represent the spin itself
+    && the second qubit represents the environment in which the \gls{nvc} resides
+    & we query the \gls{nvc} by performing Hahn echo experiments (\cref{fig:hahn_bloch_spheres})
+    & the outcome of those experiments are thought of as the system's \glspl{likelihood}  (\cref{fig:nv_raw_data})
+    & candidate models are composed of the terms defined in \cref{eqn:nv_terms}
+    && \glspl{likelihood}  are used for the training of individual candidate models through \gls{qhl}
+    && we assign approximate ranges to the scalar parameters corresponding to each term based on theoretical arguments
+    &&& those parameters are to be learned precisely by \gls{qhl}.
 \end{easylist}   
 \par 
 
@@ -527,9 +571,10 @@ In this case, we exploit some intuition and prior knowledge of how such systems 
     we can think of this as a midway point between the completely specified \glspl{es} used 
     for identifying the underlying lattices from a prescribed set in \cref{chapter:lattices}, 
     and the entirely general \glsentrylong{ga} which does not restrict model generation, of \cref{chapter:ga}.
-We use the standart structure of \glspl{et} introduced in \cref{sec:exploration_strategies}, 
-    where models are placed on consecutive branches, $\mu$, with branches consolidated by complete pairwise 
-    comparisons, mediated through \glspl{bf}, resulting in the selection of a single branch champion, $\hat{H}_{C(\mu)}$. 
+We use the standard structure of \glspl{et} introduced in \cref{sec:exploration_strategies}, 
+    where models are placed on consecutive branches, $\mu$, and branches are consolidated by pairwise comparisons between all models on $\mu$, 
+    where comparisons are computed through \glspl{bf}.
+The outcome of consolidation on $\mu$ is the determination of a single \emph{branch champion}, $\hat{H}_{C(\mu)}$. 
 \par 
 
 
@@ -562,26 +607,28 @@ So, the first branch is given by $\mu = \{ \hat{S}_x, \hat{S}_y, \hat{S}_z\}$;
 After exhausting all tiers, we consolidate the set of branch champions, $\mathbb{H}_C = \{ \h_{C(\mu)}\}$, 
     to determine the best model considered globally, $\hp$.  
 \par 
+
 Clearly, this growth rule is partially deterministic, insofar as some models are gauranteed to be considered, 
-    while others are not reachable; 
-    indeed, the space of available models are heavily constrained, in particular models in later tiers will 
-    always involve all of the tier 1 models, e.g. $\hat{S}_{x}\hat{A}_{y}$ does not occur naturally. 
-We account for this shortcoming with a final redcibility test, 
-    triggered if any of the parameters of $\hp$ are potentially negligible, 
-    i.e. are within one standard deviation of 0. 
-This test simply removes such low-parmeter terms from $\hp$, 
-    giving a reduced global champion, $\hp_r$, 
-    and computes the \gls{bf} between $\hp, \hp_r$: 
+    while others are not reachable.
+Indeed, the space of available models are heavily constrained, in particular models in later tiers will 
+    always involve all of the tier 1 models, e.g. $\hat{S}_{x}\hat{A}_{y}$ can not occur organically. 
+In general, restrictions of this kind undermine the \gls{es} and are considered a weakness.
+To account for this, we add a final test of reducibility on the champion model, 
+    tiggered if any of the parameters of $\al^{\prime}$ are potentially negligible, 
+    i.e. the posterior distribution of any parameter assigns credibility to the hypothesis that the parameter is 0.
+This champion reducibility test simply removes the negligible-parmeter terms from $\hp$, 
+    yielding a reduced global champion, $\hp_r$.
+We then compute the \gls{bf} between $\hp, \hp_r$: 
     if the \gls{bf} indicates strong evidence in favour of the reduced version, 
     we replace the \gls{champion model}, $\hp \gets \hp_r$. 
 In effect, we thus verify the statistical significance of each term included in $\hp$. 
 \par 
 
 The total model in \cref{eqn:nv_ham_full} supports $N_t = 1 + 3 + 6 | \chi | + 3 + 3 |\chi| = 7 + 9|\chi| $ terms, 
-    which we reduced to a space of $N_t=3 + 6 |\chi| = 9$ through several approximations\footnotemark ;
-    even so, the remainng $2^9$ permitted models were reduced further by building the logic of this \gls{es} 
-    from our intuition aroud existing knowledge of typical \gls{nvc} systems,
-    such the \gls{es} will only ever consider $<20$ models per instance. 
+    which we reduced to a space of $N_t=3 + 6 |\chi| = 9$ through several approximations\footnotemark.
+Even so, the remainng $2^9$ permitted models were reduced further by building the logic of this \gls{es} 
+    from our intuition aroud existing knowledge of typical \gls{nvc} systems.
+As such, the described \gls{es} will only ever consider $<20$ models per instance. 
 The described \gls{es} seems overly perscriptive, 
     but should be viewed as a first attempt at a generalisable approach: 
     essentially we can view the tiers of the greedy search as characterising the system 
@@ -604,11 +651,11 @@ This leads to some important remarks:
 A common charge against \gls{qmla} supposes to first write down the most complex model, 
     train it fully, and then infer which terms are negligible, in a similar process to the champion reduction test outlined here. 
 While this may be feasible in the case described here, with $N_t=9$ and a closed term set, 
-    this would scale poorly: adding just a second nuclear site increases the model search to a space of $N_t=15$.
+    it is unscalable: adding just a second nuclear site increases the model search to a space of $N_t=15$.
 Models of higher cardinality ($|\al|$) demand higher $\Ne, \Np$ to train well, so immediately trainng the most involved model would 
     require infeasible resources\footnotemark, and risks significantly overfitting the data. 
-It seems more appropriate to work ``from the ground up'', testing terms and keeping them only when justified, 
-    instead of training all terms and attempting to decouple their effects post-hoc. 
+It seems more appropriate to work ``from the ground up'', testing terms and only keeping those justified, 
+    rather than training all terms and attempting to decouple their effects post-hoc. 
 
 \footnotetext{
     Note: in the case studies presented in this thesis, it was found that the same resources were sufficient for the simplest and most complex models, 
@@ -629,8 +676,6 @@ Of course, this is infeasible since we presume access to the full state at the t
 We vary the target $\ho$, among a series of ten models,
     which are all valid models achievable by the \gls{es}. 
 
-Varying $\ho$, allowing arbitrary \gls{probe} preparation and \gls{pgh} \gls{edh}, 
-    i.e. case (i) from \cite{gentile2020learning}. 
 
 \section{Experiment design constraints}
 Moving to analyse the experimental setup, there are a number of constraints which we must account for in 
@@ -741,7 +786,7 @@ Moreover, the \glspl{champion model}' are highly predictive:
     \caption[\gls{qmla} applied to experimental \glsentrylong{nvc} system]{
         \textbf{a}, 
         The carbon lattice providing the outer environment for the NV centre, along with the
-        time evolution of the electron spin state (represented on a Bloch sphere) during the pulses for the Hahn-echo sequences. The final $\pi/2$ pulse is omitted.  
+        time evolution of the electron spin state (represented on a Bloch sphere) during the pulses for the Hahn echo sequences. The final $\pi/2$ pulse is omitted.  
         \textbf{b}, 
         Simulation of 500 independent \gls{qmla} instances, where $\ho$ is chosen randomly. 
         The  \gls{win rate}  is reported against the difference $(N_{p}-N^{\prime}_p)$ between the 
@@ -762,7 +807,7 @@ Moreover, the \glspl{champion model}' are highly predictive:
         \textbf{e}, 
         Simulated \glspl{likelihood}  reproduced by the model with the highest  \gls{win rate}  ($\hat{S}_{x,y,z}\hat{A}_{z}$, turquoise), 
             compared with corresponding NV-centre system experimental data (
-                red-dots, extracted from the observed \gls{pl} of the first Hahn-echo decay). 
+                red-dots, extracted from the observed \gls{pl} of the first Hahn echo decay). 
         Error bars smaller than the dots (see Methods).
         \textbf{f}, 
         A single QMLA \gls{instance} against experimental data in \textbf{e}, depicted as a \gls{dag}.
