@@ -207,7 +207,8 @@ We choose to model the decoherence of the \gls{nvc} (described in \cref{sec:targ
     the decoherence effects dominating the spin. 
 The \emph{Hahn echo sequence} is a series of operations which decouple a spin from its environment, i.e. the nuclear bath
     \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}.
-This provides a platform for studying the contributions of dominant decoherence effects in isolation. 
+For short evolution times, i.e. in the first decay of the \gls{nvc}, the spin is influenced mostly by \emph{fast} decoherence processes,
+    providing a platform to study the contributions of dominant decoherence effects in isolation. 
 % We have decided to characterise the hyperfine interactions of the \gls{nvc} which dominate its decoherence process:
 %     these interactions are evident most strongly at very short timescales \cite{childress2006coherent}. 
 % To isolate the effects of the hyperfine interactions, 
@@ -215,14 +216,15 @@ This provides a platform for studying the contributions of dominant decoherence 
 % Hahn echo sequences attempt to decouple the spin's dynamics from the nuclear bath
     % \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}
     % providing a helpful platform for studying residual contributions of terms in \cref{eqn:nv_terms}.
-The \gls{nvc} spin undergoes a series of evolutions -- either according to application of quantum logic gates
+
+\par 
+During the Hahn echo sequence, the \gls{nvc} spin undergoes a series of evolutions -- 
+    either according to application of quantum logic gates
     or the natural evolution of the system interacting with its environment.  
 We depict the stages of the experiment in \cref{fig:hahn_bloch_spheres}, 
     starting from the initialised computational state, $\ket{\psi_0} = \ket{0}$,
     through to its final state which is read out through \gls{pl},
     both of which as described in \cref{sec:nv_centres}.
-\par 
-
 In particular, the final state, $\ket{\psi}_5$, is effectively read out by projection onto $\ket{0}$;
     we can interpret the normalised \gls{pl} after evolution time $t$ as the  \gls{likelihood} 
     that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true} Hamiltonian, $\ho$ for $t$. 

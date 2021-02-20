@@ -1,11 +1,11 @@
 \cref{chapter:nv} concerned a two-qubit approximation of the short-time dynamics of an \gls{nvc}. 
-It is valid criticism of this analysis that the \gls{model space} searched was reduced substantially through prior knowledge,
+It is valid criticism that the corresponding \gls{model space} searched was reduced substantially through prior knowledge,
     and it therefore remains to test \gls{qmla} in a large model space, on physically meaningful data. 
-In this chapter, we extend \gls{qmla}, to consider appoximations of \gls{nvc} sytems using more qubits, 
+In this chapter, we extend \gls{qmla} to consider appoximations of \gls{nvc} sytems using more qubits, 
     representing several nuclear sites, which aim to capture the interactions between the 
-    target \gls{nvc} and the environment. 
-We will simulate the target system here, allowing us to make definite statements on the performance of \gls{qmla}, 
-    unlike the experimental data where we can not be sure of the dynamics' genreator.
+    target \gls{nvc} and the environment more thoroughly. 
+Here we will simulate the target system, allowing us to make definite statements on the performance of \gls{qmla}, 
+    unlike the experimental data where we can not be sure of the dynamics' generator.
 
 \par 
 
@@ -21,10 +21,13 @@ We will simulate the target system here, allowing us to make definite statements
     }
     \label{fig:nv_revival_raw}
 \end{figure}
-A more realistic model may be expected from consdiering the environment as a finite-size bath, 
+A realistic model may be expected from considering the environment as a finite-size bath, 
     consisting of $n_s$ nuclear spins in addition to the \gls{nvc} spin, 
     i.e. the total number of qubits of such a model is $n_q = 1 + n_s$.   
-Such effects can be highlighted by Hahn echo measurements, 
+The effects of nuclear spins are expected to manifest at higher times than those studied in \cref{chapter:nv}, 
+    i.e. the decoherence of the \gls{nvc} is only effected by the nuclear spins' independent precession at high times, 
+    so we must modify the experimental procedure accordingly.
+Such effects can also be highlighted by Hahn echo measurements, 
     as in \cref{fig:hahn_bloch_spheres}, 
     except reversing the evoluting by $t^{\prime} = t$ instead of $t^{\prime} = 2t$
     \cite{childress2006coherent, breuer2002theory}, so our simulations will use this measurement scheme. 
@@ -32,11 +35,11 @@ Such effects can be highlighted by Hahn echo measurements,
 \par 
 
 Since we are simulating the target system, we may choose the approximation we wish to invoke. 
-We use the secular approximation, i.e. we assume the magnetic field is perfectly aligned along 
+To set $\ho$, we use the \emph{secular} approximation, i.e. we assume the magnetic field is perfectly aligned along 
     the $z$-axis \cite{rowan1965electron}:
     recalling \cref{eqn:nv_ham_full}, the \gls{nvc} spin qubit rotates only about the $z$-axis, 
-    and coupling between the electron and nuclear qubits are only via $\hat{S}_z \cdot \hat{A}_z^{\chi}$.
-We include the effect of the nuclear spins' rotations, which are much weaker. 
+    and coupling between the \gls{nvc} and nuclear qubits are only via $\hat{S}_z \cdot \hat{A}_z^{\chi}$.
+Here we will include the effect of the nuclear spins' rotations, which are much weaker and only inluence the \gls{nvc}'s decoherence at long times. 
 In total then, the set of nuclear spins, $\{\chi\}$, are mapped to $n_s$ qubits:
 \begin{equation}
     \ho = \hat{S}_z 
@@ -71,13 +74,13 @@ The permissible terms are then all spin rotation terms,
     \label{eqn:nv_ga_terms}
 \end{equation}
     for $w=\{ x, y, z \}$ and $j \in \{ 2, ..., n_q^{\prime} \}$.
-Importantly, in general $n_s^{\prime}+1 = n_q^{\prime} \neq n_q$, i.e. \gls{qmla} can search a space of models
-    with more or less spins, $n_s^{\prime}$, than are truly in $\ho$.  
-In total then, $\absval{\termset} = 3 + 3n_s^{\prime} + 3 n_s^{\prime} = 3 + 6 n_s^{\prime}$. 
+Note that $n_s^{\prime}$ is the number of nuclear spins considered by \gls{qmla}, but not necessarily the 
+    same number of nuclear spins, $n_s$, present in $\ho$:
+    in general $n_s^{\prime}+1 = n_q^{\prime} \neq n_q$.
+In total, $\absval{\termset} = 3 + 3n_s^{\prime} + 3 n_s^{\prime} = 3 + 6 n_s^{\prime}$. 
+We set the system parameters based on theoretical predictions, listed in \cref{table:nv_gen_alg_term_params}.
 
 \par 
-We set the system parameters based on theoretical predictions, listed in \cref{table:nv_gen_alg_term_params}.
-% TODO justify using equations 
 
 \begin{table}
     \begin{tabular}{cclrr}
@@ -103,14 +106,14 @@ We set the system parameters based on theoretical predictions, listed in \cref{t
     \label{table:nv_gen_alg_term_params}
 \end{table}
 
-Here our aim is to test \gls{qmla}, so the choice of $n_s$ and $n_s^{\prime}$ are arbitrary; 
+Our aim is to test \gls{qmla}, so the choice of $n_s$ and $n_s^{\prime}$ are arbitrary; 
     for the target system we use $n_s=4$ proximal spins, 
     so that, from \cref{eqn:nv_gen_alg_target},  $\absval{\termset_0} = 13$,
     and we allow candidates to consider $n_s^{\prime}=5$, 
     so $\absval{\termset} = 33$. 
 \par 
 
-In summary, irrespective of the underlying physics we are simulating, 
+In the most general sense, irrespective of the underlying physics we are simulating, 
     here \gls{qmla} is aiming to identify the 13 terms truly present in \gls{q}, 
     while searching the space of 33 permissible terms. 
 Without imposing any restrictions on which combinations of terms are allowed, 
@@ -118,7 +121,7 @@ Without imposing any restrictions on which combinations of terms are allowed,
     the total \gls{model space} is therefore of size $2^{33} \approx 10^{10}$. 
 
 \section{Genetic algorithm}
-\glspl{ga} provide a robust and thoroughly tested paradigm for searching large candidate spaces; 
+\Glspl{ga} provide a robust and thoroughly tested paradigm for searching large candidate spaces; 
     this is a natural framework through which we can explore such an unresetricted model space. 
 We have already extensively discussed the formalism of \glspl{ga} in \cref{chapter:ga}, 
     and specifically in the context of \gls{qmla} in \cref{sec:ga_adaptation_to_qmla}.
@@ -154,17 +157,17 @@ This \glsentryfull{of} relies on the definition of a validation dataset, $\expse
 \par 
 
 \subsection{Parameter learning}
-Here, our primary goal is to validate \gls{qmla}'s performance in a 
+Our primary goal in this chapter is to validate \gls{qmla}'s performance in a 
     very large \gls{model space}, with over $10^{10}$ valid candidates. 
-Our focus on model generation, then, we do \emph{not} train models individually:
-    instead we assume access to a \emph{perfect} parameter learning subroutine.
+Our focus, then, is on model generation, and not concerned with parameter learning:
+    we do \emph{not} train models individually, but rather we assume access to a \emph{perfect} parameter learning subroutine.
 That is, for each candidate considered, we simply assume knowledge of its parameters, $\al$. 
-This is a major caveat to the results of this chapter: 
+This assumption is a major caveat to the results of this chapter: 
     no such perfect training scheme is known, 
     so it remains to examine the detrimental effects of imprecisely finding $\al^{\prime} \approx \al$. 
 Moreover, while it is possible to extract information on the nuclear qubits from measuring only the 
     \gls{nvc} qubit, as in the Hahn echo measurements, 
-    it is uncertain whether any technique can simultaneously detect parameters of significantly varying orders of magnitude;
+    it is uncertain whether any technique can simultaneously detect parameters of significantly varying orders of magnitude.
 For instance, some terms in \cref{table:nv_gen_alg_term_params} are $\mathcal{O}(\ghz)$, 
     while others are $\mathcal{O}(\khz)$;
     it is likely to prove difficult to discern the $\khz$ parameters well, given that their contribution is equivalent 
@@ -178,21 +181,21 @@ Therefore we must caution that the results presented here,
 
 \subsection{Results}
 At the \gls{instance} level, we can see that the gene pool tends towards models of higher quality, 
-    captured by their $\fs$, \cref{fig:nv_ga_instance}\textbf{a}. 
+    captured\footnotemark \ by their $\fs$, \cref{fig:nv_ga_instance}\textbf{a}. 
 The improvement in modelling is reflected in the branch champions' predictive power at 
     reproducing data generated by the system, \cref{fig:nv_ga_instance}\textbf{b}. 
-
+\footnotetext{The use of $\fs$ as a figure of merit for candidate models in the \gls{qmla} search is described in \cref{sec:f_score}.}
 \begin{figure}
     \begin{center}
         \includegraphics{experimental_study/figures/nv_ga_instance_horiz.pdf}
     \end{center}
     \caption[\Gls{instance} of \glsentrylong{ga} for simulated \glsentrylong{nvc} system with four qubits]{
-        \Gls{instance} of the \glsentrylong{ga} for simulated \glsentrylong{nvc} system with four qubits.       
-        \textbf{a}, Branch champions' dynamics. 
+        \Gls{instance} of the \glsentryfull{ga} for simulated \glsentrylong{nvc} system with four qubits.       
+        \textbf{a}, Gene pool progression for the \gls{ga}. Each tile represents a candidate model by its $\fs$. 
+        Each generation considers $N_m=72$ models; the \gls{ga} runs for $N_g=53$ generations. 
+        \textbf{b}, Branch champions' dynamics. 
         Each generation, $\mu$, nominates a branch champion, $\hat{H}_{C(\mu)}$. 
         Here, progressive generations' champions dynamics are shown against those of the target system, $\ho$ (red). 
-        \textbf{b}, Gene pool progression for the \gls{ga}. Each tile represents a candidate model by its $\fs$. 
-        Each generation considers $N_m=72$ models; the \gls{ga} runs for $N_g=53$ generations. 
     }
     \label{fig:nv_ga_instance}
 \end{figure}
