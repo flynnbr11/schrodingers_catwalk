@@ -699,21 +699,7 @@ We present the result of these tests in \cref{fig:lattice_success_rates},
 \footnotetext{The remainder of this thesis is dedicated to cases where we do not prescribe the model set, but instead generate models dynamically.}
 \par 
 
-We take this test case as evidence that the \gls{bf} is a fair mechanism by which to distinguish between models. 
-In general it will not be possible to prescribe the set of models to test, 
-    although this might serve as a straightforward mechanism for the calibration of quantum devices:
-    suspected miscalibrations can be used in the design of such a set of models, 
-    along with a target $\ho$ which the device should be able to implement. 
-Then, by testing such a prescribed set and determining $\hp$, 
-    we can map the miscalibration between the intended and actual operations. 
-In the ideal case, where it is mostly believed the device works, 
-    this application of \gls{qmla} may allow for fast, automated \emph{verification} of the device:
-    if \gls{qmla} finds $\hp=\ho$ with high success given reasonable opportunity to miscompute, 
-    it may be sufficient verification that the device behaves as desired, 
-    or at least part thereof. 
-
-
-\begin{figure}
+\begin{figure}[t]
     \begin{center}
         \includegraphics{theoretical_study/figures/lattices/lattice_successes_two_column.pdf}
     \end{center}
@@ -730,3 +716,29 @@ In the ideal case, where it is mostly believed the device works,
     \label{fig:lattice_success_rates}
 \end{figure}    
 
+We take this test case as evidence that the \gls{bf} is a fair mechanism by which to distinguish between models. 
+In general it will not be possible to prescribe the set of models to test, 
+    although this might serve as a straightforward mechanism for the calibration of quantum devices:
+    suspected miscalibrations can be used in the design of such a set of models, 
+    along with a target $\ho$ which the device should be able to implement. 
+Then, by testing such a prescribed set and determining $\hp$, 
+    we can map the miscalibration between the intended and actual operations. 
+In the ideal case, where it is mostly believed the device works, 
+    this application of \gls{qmla} may allow for fast, automated \emph{verification} of the device:
+    if \gls{qmla} finds $\hp=\ho$ with high success given reasonable opportunity to miscompute, 
+    it may be sufficient verification that the device behaves as desired, 
+    or at least part thereof. 
+
+\section{Model Family Identification}\label{sec:family_identification}
+
+
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics{theoretical_study/figures/model_family_search.pdf}
+    \end{center}
+    \label{fig:family_identification}
+    \caption[\gls{qmla} for model family identification]{
+        \gls{qmla} for model family identification
+    }
+
+\end{figure}
