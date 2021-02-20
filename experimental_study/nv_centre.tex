@@ -83,7 +83,7 @@ We can similarly devise \gls{mw} radiation to achieve quantum gates and operatio
 We depict these cycles in \cref{fig:nv_centre_energy_levels}c. 
 \par
 
-\begin{figure}
+\begin{figure}[t]
     \begin{center}
         \includegraphics[width=0.95\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
     \end{center}
@@ -531,7 +531,7 @@ Note the data for the studied \gls{nvc} is taken once and analysed offline,
     available in the predefined set; we will discuss the consequences of this restriction 
     later in this chapter. 
 
-\begin{figure}
+\begin{figure}[t]
     \begin{center}
         \includegraphics{experimental_study/figures/raw_data.pdf}
     \end{center}
@@ -683,17 +683,18 @@ Moving to analyse the experimental setup, there are a number of constraints whic
 Firstly, the $\nicefrac{\pi}{2}$-pulse applied to the prepared qubit ($\ket{\psi_0} \rightarrow \ket{\psi_1}$ in \cref{fig:hahn_bloch_spheres})
     means that the state before evolution is always $\ket{+}$ in the computational basis;
     this is a severe limitation on model training, as we saw in \cref{sec:heuristic}. 
-Moreover, this puts a bias on the interactions \gls{qmla} is likely to identify:
+Moreover, this places a bias on the interactions \gls{qmla} is likely to identify:
     we show in \cref{fig:hahn_bloch_spheres} how \gls{qhl} performs in training the same model using 
     (i) the \gls{probe} set available experimentally; (ii) a more general (random) \gls{probe} set. 
-This has a noteworthy impact on the outcome of this study, 
-    since this suppression of terms means we are more likely to find some interactions
-    than others, so we must add this caveat to the \gls{champion model}. 
+This bias adds a caveat to the outcome of this study:
+    the suppression of terms means we are more likely to find some genuine interactions than others, 
+    so the \gls{champion model} is capturing the decoherence with respect only to one basis.
 \par
 
-The experiment was run until the \gls{nvc} was deemed to have decohered, 
-    so \cref{fig:nv_raw_data} ceases at $t_{\textrm{max}} \sim \ 4 \mu s$. 
-As discussed in \cref{sec:heuristic}, usually it is helpful to allow a \glsentryfull{edh} to
+The experiment was run with increasing $t$ for the duration of the first decay of the \gls{nvc}, 
+    i.e. until it had dephased, 
+    so the data available for examination terminate at $t_{\textrm{max}} \sim \ 4 \mu s$, see \cref{fig:nv_raw_data}. 
+As discussed in \cref{sec:heuristic}, usually it is helpful to allow an \gls{edh} to
     choose the experimental controls, including the evoltuion time, $t$, against which 
     the model is trained at each experiment;
     the default \glsentryfull{pgh} attempts to select $t$ at the upper boundary of times 
@@ -703,14 +704,14 @@ Here, however, we can not allow the \gls{edh} to select arbitrary $t$,
 
 \par 
 
-Clearly, we require a custom \gls{edh} to account for the constraints outlined, 
+We require a custom \gls{edh} to account for the constraints outlined, 
     with the following considerations: 
 \begin{easylist}[enumerate]
     & We may only assume access to the \gls{probe} $\ket{+}$ on the spin qubit
     && we further assume the environmental spin is polarised by the same microwave pulse, 
         such that the global \gls{probe} available is $\ket{\psi} = \ket{+}\ket{+^{\prime}}$, with 
         $\ket{+^{\prime}} = \frac{\ket{0} + e^{i \phi} \ket{1}}{\sqrt{2}}$ and $\phi$ is random \cite{broadway2018quantum}. 
-    & We can not allow the choice of any $t$
+    & We can not allow the choice of any $t$:
     && Any $t > t_{\textrm{max}}$, arising from a thin parameter distribution, 
         must be mapped to some $0 < t \leq t_{\textrm{max}}$. 
     && All nominated $t$ must be mapped to the nearest available $t$ in the dataset
@@ -732,7 +733,23 @@ That is, with each model trained for $\Ne$ experiments,
 \par 
 
 \section{Results}
-\begin{table}[h]
+
+We apply the \gls{es} described in \cref{sec:exp_es} to the raw data of \cref{fig:nv_raw_data}:
+    the results are summarised in \cref{fig:exp_qmla_analysis}.
+We first focus on the overall outcomes:
+    the most blunt figure of merit of interest is simply whether \gls{qmla}
+    overfits or underits the true parameterisation. 
+In preliminary analysis we run 500 \glspl{instance} with varying $\ho$, 
+    varying the cardinality of $\ho$,
+    so we can broadly gauge the tendency towards over- and under-fitting:
+    we see that in $\sim50\%$ of \glspl{instance} the correct cardinality is found,  
+    rising to $\sim86\%$ by allowing $\pm1$ term, \cref{fig:exp_qmla_analysis}\textbf{(b)}. 
+In general, the \glspl{champion model} from each instance are highly predictive: 
+    the median coefficient of determination between the systems' and corresponding \glspl{champion model}' data is 
+    $R^2 = 0.84$. 
+\par 
+
+\begin{table}[t]
     \centering
     \begin{tabular}{cllrr}
     \hline
@@ -755,38 +772,24 @@ That is, with each model trained for $\Ne$ experiments,
     \hline
     \end{tabular}
     \caption[
-        \gls{qmla}  \gls{win rate} s and $R^2$ for models based on experimental data and simulations. 
+        \gls{qmla} \glspl{win rate} and $R^2$ for models based on experimental data and simulations. 
     ]{
-        \gls{qmla}  \gls{win rate} s and $R^2$ for models based on experimental data and simulations. 
+        \gls{qmla}  \glspl{win rate} and $R^2$ for models based on experimental data and simulations. 
         We state the number of \gls{qmla} \glspl{instance} won by each model and the average $R^2$ for those \glspl{instance} as an indication of the
         predictive power of winning models.
     }
     \label{table:win_rates_r_squareds}
 \end{table}
 
-We apply the \gls{es} described in \cref{sec:exp_es} to the raw data of \cref{fig:nv_raw_data};
-    the results are summarised in \cref{fig:exp_qmla_analysis}.
-\par 
-
-We first focus on the overall outcomes:
-    the most blunt figure of merit of interest is simply whether \gls{qmla}
-    overfits or underits the true parameterisation. 
-In preliminary analysis we run 500 \glspl{instance} with varying $\ho$, 
-    and where the cardinality of $\ho$ ranges,
-    so we can broadly gauge the tendency towards over- and under-fitting:
-    we see that in $\sim~50\%$ of \glspl{instance} the correct cardinality is found,  
-    rising to $\sim~86\%$ by allowing one fewer (additional) terms, \cref{fig:exp_qmla_analysis}\textbf{(b)}. 
-Moreover, the \glspl{champion model}' are highly predictive: 
-    the median coefficient of determination between the systems' and corresponding \glspl{champion model}' data is 
-    $R^2 = 0.84$. 
-\par 
 
 \begin{figure}
     \includegraphics[width=0.95\textwidth]{experimental_study/figures/experimental_qmla_analysis.pdf}
     \caption[\gls{qmla} applied to experimental \glsentrylong{nvc} system]{
+        \gls{qmla} results on simulated and experimental data, describing a \glsentryfull{nvc} system. 
         \textbf{a}, 
         The carbon lattice providing the outer environment for the NV centre, along with the
-        time evolution of the electron spin state (represented on a Bloch sphere) during the pulses for the Hahn echo sequences. The final $\pi/2$ pulse is omitted.  
+        time evolution of the electron spin state (represented on a Bloch sphere) during the pulses for the Hahn echo sequences. 
+        These steps are expanded in \cref{fig:hahn_bloch_spheres}, although here the final $\pi/2$ pulse is omitted.  
         \textbf{b}, 
         Simulation of 500 independent \gls{qmla} instances, where $\ho$ is chosen randomly. 
         The  \gls{win rate}  is reported against the difference $(N_{p}-N^{\prime}_p)$ between the 
@@ -796,24 +799,26 @@ Moreover, the \glspl{champion model}' are highly predictive:
         \emph{Correct} indicates that exactly $\ho$ was found. 
         The \emph{mis-parameterised} class groups models with the same parametrisation cardinality as $\ho$, but different Hamiltonian terms. 
         \textbf{Inset}, Histogram of occurrences of $R^2$ values for each retrieved $\hp$ 
-        against a sampling of datapoints from $\ho$, with median $R^2=0.84$ (red dotted line). 
+        against a sampling of datapoints from $\ho$.
+        The blue vertical line groups together all those instance champions with $R^2<0$, and the median $R^2=0.84$ is shown as a red dotted line.
         \textbf{c}, 
-        Win rates of top four models for 100 \gls{qmla} instances, 
-        against both simulated and experimental data. 
-        Simulations use $\ho = \SxyzAz$.
+        Win rates of the top four models for 100 \gls{qmla} instances, against both simulated and experimental data. 
+        On experimental data, $\ho$ is unknown, while simulations use $\ho = \SxyzAz$.
         \textbf{d}, 
-        Total \gls{volume} spanned by the parameters' prior across epochs, for the models in \textbf{c}. 
-        Shaded areas indicate $66\%$ credible regions. 
+        Total \gls{volume} spanned by the parameters' probability distribution across progressive epochs, for the models in \textbf{(c)}. 
+        The shaded area show the $67\%$ confidence region of volumes, taken from instances where those models were deemed $\hp$.
         \textbf{e}, 
         Simulated \glspl{likelihood}  reproduced by the model with the highest  \gls{win rate}  ($\hat{S}_{x,y,z}\hat{A}_{z}$, turquoise), 
-            compared with corresponding NV-centre system experimental data (
-                red-dots, extracted from the observed \gls{pl} of the first Hahn echo decay). 
-        Error bars smaller than the dots (see Methods).
+            compared with corresponding NV-centre system experimental data 
+            (red dots, extracted from the observed \glsentrylong{pl} of the first Hahn echo decay). 
+        Error bars are smaller than the dots.
+        The shaded area indicates the $67\%$ confidence region of likelihoods predicted from the instances where $\hp=\hat{S}_{x,y,z}\hat{A}_{z}$
         \textbf{f}, 
-        A single QMLA \gls{instance} against experimental data in \textbf{e}, depicted as a \gls{dag}.
+        A single QMLA \gls{instance} against experimental data in \textbf{(e)}, depicted as a \glsentrylong{dag}.
         The thin end of each edge points to the favoured model; 
-        the colour of the edges maps $\log_{10}\mathcal{B}$ as in the bar legend at the bottom. 
-        Layer champions \huc are in light brown, whereas the global champion $\hp$  is in orange.    
+        the colour of the edges depict the strength of evidence, $\log_{10}\mathcal{B}$, where $\mathcal{B}$ is the \gls{bf} between those two models.
+        Champions of each layer, $\huc$, are in light brown, whereas the global champion $\hp$
+        is in orange and all other candidate models are grey.
     }
     \label{fig:exp_qmla_analysis}
 \end{figure}
@@ -830,19 +835,17 @@ Then, considering the performance of the algorithm on whole,
 }
 In particular, the most prominent models, $\{ \SxyzAz, \SxyzAyz, \SxyzAxz, \SyzAz \}$ are found collectively in 74\% (87\%)
     of \glspl{instance} on the experimental (simulated) data;
-    the  \gls{win rate}  and $R^2$ of all models (which won at least one instance) are reported in \cref{table:win_rates_r_squareds}. 
+    the  \gls{win rate} and $R^2$ of all models (which won at least one instance) are reported in \cref{table:win_rates_r_squareds}. 
 It is noteworthy that even in the simulated case, the same models mislead \gls{qmla}:
-    this suggests that the resultant physics from these models is substantially similar to that of the  \gls{true model} \footnotemark. 
+    this suggests that the resultant physics from these models is substantially similar to that of the  \gls{true model}\footnotemark. 
 \footnotetext{Alternatively, that the same systematic error misdirects the search in both cases.}
 These models are defensible with respect to the descriptions of \cref{sec:target_system}, 
     since in each case they detect the interaction between the spin qubit and the environmental qubit, 
-    i.e. the hyperfine terms $\hat{A}_i$, especially $\hat{A}_z$ which occurs in 97\% (99\%) of champions. 
+    i.e. the hyperfine terms $\hat{A}_i$, especially $\hat{A}_z$ which occurs in 97\% (99\%) of \glspl{champion model}. 
 We discuss some physical insights from these results in \cref{sec:exp_qmla_analysis}.   
 \par 
 
-
-
-The most frequently found model, $\hp = \SxyzAz$, is found in $45\%$ ($61\%$) of instances:
+The most frequently identified model, $\hp = \SxyzAz$, is found in $45\%$ ($61\%$) of instances:
     we show its attempt to reproduce the dynamics of \cref{fig:nv_raw_data} in \cref{fig:exp_qmla_analysis}\textbf{(e)}, 
     showing excellent agreement with the raw data, with $R^2=0.82$. 
 This serves as an essential sanity check: 
@@ -852,10 +855,10 @@ This serves as an essential sanity check:
 \par 
 
 Finally we display the model search as a \gls{dag} in \cref{fig:exp_qmla_analysis}\textbf{(f)}, 
-    where models are represented on nodes on the graphs layers (equivalent to \gls{et} branches), 
+    where models are represented on nodes on the graph's layers (equivalent to \gls{et} branches), 
     and their parents are resident on the branch immediately above their own.
 Comparisons between models, $\hi, \hj$,  are shown as edges between nodes on the graph, 
-    coloured by the strength of evidence of the outcome, the \gls{bf}, $\bij$. 
+    coloured by the strength of evidence of the outcome, i.e. the \glsentrylong{bf}, $\bij$. 
 Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     the set of branch champions are consolidated to determine the global champion, $\hp_C$. 
 \subsection{Analysis}\label{sec:exp_qmla_analysis}
@@ -866,22 +869,22 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
         \includegraphics[width=0.6\textwidth]{experimental_study/figures/model_composition.pdf}
     \end{center}
     \caption[
-        Models considered by \gls{qmla} for simulated/experimental \glsentrylong{nvc} data, and their  \gls{win rate} s
+        Models considered by \gls{qmla} for simulated/experimental \glsentrylong{nvc} data, and their  \glspl{win rate}
     ]{
     \textbf{Left}: map of the various Hamiltonian terms included in each of the possible 40 candidate models explored by \gls{qmla}
     during any of the 100 \glspl{instance} on either simulated or experimental data.
     IDs of candidate models are on the vertical axis, and labels for the terms on the horizontal axis.
     The \gls{true model} $\hat{H}_0$ for the simulated case is highlighted in green and a subset of credible models in blue, 
-    i.e. models which may reasonbaly be expected to describe the \gls{nvc} from theoretical arguments.
-    \textbf{Right}: wins for each of the candidate models as above out of $100$ independent QMLA runs, 
-    reported as a histogram for cases adopting simulated data (empty bars) or the experimental dataset (green bars).
+    i.e. models which may reasonbaly be expected to describe the targeted \glsentryfull{nvc} from theoretical arguments.
+    \textbf{Right}: number of wins for each of the candidate models out of $100$ independent \gls{qmla} \glspl{run}. 
+    Cases adopting simulated data are shown by empty bars, with those using the experimental dataset shown by green bars.
     \figtableref
     } 
     \label{fig:nv_model_composition}
     % /home/bf16951/Dropbox/QML_share_stateofart/PAPER/Figures/SuppMat/multi_instance_analysis notebook
 \end{figure}
 
-Considering the \glspl{run} summarised in \cref{fig:exp_qmla_analysis}, here we will present some furhter perspecitives.
+Considering the \glspl{run} summarised in \cref{fig:exp_qmla_analysis}, here we will present some further perspectives.
 \cref{fig:nv_model_composition} first details all models considered in the 200 \glspl{instance} 
     comprising the experimental and simulated \gls{qmla} \glspl{run}, 
     as well as the  \gls{win rate}  of each model. 
@@ -891,24 +894,24 @@ We highlight a number of \emph{credible} models which we deem especially valid a
     i.e. which contain the most viable approximations. 
 \par 
 
-\begin{figure}
+\begin{figure}[t]
     \centering
     \begin{tabular}{@{}c@{}}
-        \includegraphics{experimental_study/figures/reproduced_dyamics_sim.pdf}
+        \includegraphics[scale=0.99]{experimental_study/figures/reproduced_dyamics_sim.pdf}
     \end{tabular}
     \\ \small \textbf{a,} Simulated data
     \centering
 
     \begin{tabular}{@{}c@{}}
-        \includegraphics{experimental_study/figures/reproduced_dyamics_exp.pdf}
+        \includegraphics[scale=0.99]{experimental_study/figures/reproduced_dyamics_exp.pdf}
     \end{tabular}
     \\ \small \textbf{b,} Experimental data
 
     \caption[Dynamics reproduced by \gls{qmla} \glspl{champion model} for simulated/experimental data]{
-        Dynamics reproduced by various \gls{qmla} \glspl{champion model} for simulated/experimental data. 
-        Expectation values are shown on $y$--axis with time on $x$--axis. 
+        Dynamics reproduced by various \gls{qmla} \glspl{champion model} for \textbf{(a)} simulated and \textbf{(b)} experimental data. 
+        Likelihoods, $\Pr(0)$ are shown on $y$--axis with time on $x$--axis. 
         Red dots give the true dynamics of $\ho$, while the blue lines show the median reconstruction by $\hp$
-        from all the \glspl{instance} where that model was deemed $\hp$, with light blue showing the standard deviation of those \glspl{likelihood}.   
+        from all the \glspl{instance} where that model was deemed $\hp$, with light blue showing the $67\%$ confidence region.
         $\hp$ \ is listed on top of each plot; the number of \glspl{instance} won by each model can be read from \cref{table:win_rates_r_squareds}.
         \figtableref 
         }
@@ -921,9 +924,43 @@ We highlight a number of \emph{credible} models which we deem especially valid a
 We see that each model faithfully captures the essential dynamics arising from the respective target systems;
     this alone is insufficient to conclude that the \gls{true model} has been identified, 
     but serves as a valuable \emph{sanity-check}, convincing us that the output of \gls{qmla} is at least a sensible 
-    approximation of $\ho$, if not the absolutely  \gls{true model} .
+    approximation of $\ho$, if not the absolute \gls{true model}.
 \par 
 
+
+
+
+The key insight promised by \gls{qmla} is to identfiy the interactions present in the studied system, 
+    which in this case was the decoherence processes of an \gls{nvc}.
+In \cref{fig:nv_learned_params} we show the number of times each of the terms permitted, i.e. those in \cref{eqn:nv_terms},
+    are included in the \gls{champion model},
+    as well as the distribution of parameter estimates for those terms. 
+From the simulated case, we see that those terms which are in $\ho$, i.e. $\termset_0$, are found in almost all instances.
+Furthermore, while some terms are erroneoulsy found in $>40\%$ of instances, 
+    they are found with less than a quarter of the frequency of the true terms,
+    so these may be reasonably ruled out in post-processing the \gls{qmla} results. 
+The inaccurate terms found most often are seen to have (almost) negligible parameters:
+    in conjunction with domain expertise, users can determine whether the inclusion of these terms 
+    are meaningful or simply artefacts of slight overfitting.
+In the experimental \gls{run}, on the other hand, we see a similar gulf in frequency between some terms.
+Namely, $\{ \hat{S}_x, \hat{S}_y, \hat{S}_z, \hat{A}_z \}$ are found in over $50$ \glspl{instance} \emph{more} than all other terms:
+    we therefore conclude that those terms contribute most strongly to the \gls{nvc}'s decoherence process.
+\par 
+
+We have thus characterised the interactions which dominate the decoherence process for a given \gls{nvc}. 
+In doing so, we identified not only the terms present, but also the strength (i.e. parameteres) of those terms. 
+Automated characterisation of quantum systems will be essential in the development of quantum technologies, 
+    whether for calibration of controlled devices, or alignment of experimental systems for optimal results. 
+While this demonstration must be understood in the context of its limitations, 
+    e.g. the restricted basis studied, and the constrained model space searched, 
+    it represents a crucial proof of principle that \gls{qmla} is applicable to the task 
+    of automated quantum system characterisation. 
+In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitations mentioned here. 
+
+% The parameters found for these terms are of the same order of magnitude as we would have predicted originally, 
+%     but disagreee in the precise value. 
+% For example, the rotation about the $y$-axis, $\hat{S}_y$, has frequency $5.7\mhz$, 
+%     roughly twice the predicted value of $2.7\mhz$. 
 
 \begin{figure}
     \centering
@@ -944,29 +981,11 @@ We see that each model faithfully captures the essential dynamics arising from t
         Histograms for parameters learned by \gls{qmla} \glspl{champion model} on simulated and experimental data
     ]{
         Histograms for parameters learned by \gls{qmla} \glspl{champion model} on (\textbf{a}) simulated  and (\textbf{b}) experimental data. 
-        Blue dotted lines indicate the median for that parameter; grey blocks show the number of models which found the parameter
-        to have that value and the number listed in the legend reports how many \glspl{champion model} contained that term.
+        Blue dotted lines indicate the median for that parameter, while red dotted lines give the true parameter in the simulated case. 
+        Grey blocks show the number of champion models which found the parameter to have that value,
+        and the number listed in the legend reports the total number of \glspl{champion model} which contained that term.
         \figtableref
     }
     \label{fig:nv_learned_params}
     % /home/bf16951/Dropbox/QML_share_stateofart/Auxiliary files/QMLA plots via pandas
 \end{figure}
-
-The key insight promised by \gls{qmla} is to identfiy the interactions present in the studied system. 
-In \cref{fig:nv_learned_params} we show the number of times each of the terms permitted (\cref{eqn:nv_terms})
-    is included in the \gls{champion model}; 
-    we also show the distribution of parameter estimates for those terms. 
-From the simulated case, we see that those terms which are in $\ho$, i.e. $\termset_0$, are found in almost all instances; 
-    furthermore, while some terms are erroneoulsy found in $>40\%$ of instances, 
-    they are found with less than a quarter of the frequency of the true terms,
-    so these may be reasonably ruled out in post-processing the \gls{qmla} results. 
-The inaccurate terms found most often are seen to have (almost) negligible parameters:
-    in conjunction with domain expertise, users can determine whether the inclusion of these terms 
-    are meaningful or simply artefacts of slight overfitting.
-In the experimental \gls{run}, on the other hand, we see a similar gulf in frequency between some terms.
-Namely, $\{ \hat{S}_x, \hat{S}_y, \hat{S}_z, \hat{A}_z \}$ are found in $50+$ more \glspl{instance} than all others:
-    we therefore conclude that those terms contribute most strongly to the \gls{nvc}.
-The parameters found for these terms are of the same order of magnitude as we would have predicted originally, 
-    but disagreee in the precise value. 
-For example, the rotation about the $y$-axis, $\hat{S}_y$, has frequency $5.7\mhz$, 
-    roughly twice the predicted value of $2.7\mhz$. 
