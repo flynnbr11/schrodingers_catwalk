@@ -1,7 +1,7 @@
 \glsresetall
 It is of primary interest to apply the \gls{qmla} algorithm to real-life, experimental systems. 
 In this chapter we devise an \gls{es} to operate in conjunction with experimental data 
-    in order to characterise an electron spin in an \gls{nv} centre in diamond.
+    in order to characterise an electron spin in an \gls{nvc} in diamond.
 In particular, we model, through Hamiltonian terms, interactions between the spin and 
     the spin bath in which it resides,
     so that \gls{qmla} is finding an effective model for the open system dynamics.
@@ -19,21 +19,18 @@ Finally we describe the implementation of an \gls{es} for the examination of the
 \section{Nitrogen-Vacancy centre}
 \label{sec:nv_centres}
 
-\gls{nv} centers are point defects in diamond, 
+\Glsentryfullpl{nv} are point defects in diamond, 
     occuring intrinsically (naturally) \cite{davies1976optical} or extrinsically (synthetically) \cite{meijer2005generation, edmonds2012production}.
 A substitutional \gls{nitrogen} isotope is embedded in a lattice of carbon atoms in diamond, 
     adjacent to a lattice vacancy, 
     such that it is surrounded by three \glspl{carbon} (either $^{12}C$ or $^{13}C$) \cite{lenef1996electronic}. 
 Of the \gls{nitrogen} atom's five valence electrons, three bond with nearby \glspl{carbon};
-    the remaining two unbonded electrons form a lone pair and can be thought of as a single spin-$\frac{1}{2}$ particle. 
-The adjacent lattice vacancy has three unbonded electrons, 
-    two of which bond together leaving a single unpaired electron.
-The single electron in the lattice vacancy, together with the effective lone pair of the \gls{nitrogen}, 
-    form a system of two spin-$\frac{1}{2}$ particles: such systems have been thoroughly studied.
-Of particular interest are the resultant \emph{triplet} states, 
-    i.e. the allowed permutations of the two particles with total quantum spin $S=1$, 
-    with magnetic spin multiplicity allowing $m_s = {-1, 0, 1}$, 
-    giving rise to three distinct energy levels for the system. 
+    the remaining two unbonded electrons couple with the lattice vacancy, 
+    forming a triplet state, considered as the \gls{nvc}. 
+We can experimentally drive the outer electron, moving the \gls{nvc} between energy levels characterised by the triplet. 
+In this section we descib how we can exploit those energy levels in order to define a mechanism by which to 
+    prepare and implement gates on the controlled system, a readout procedure and a computational basis.
+
 \par 
 
 A \emph{manifold} is a set of states with marginal differences, such as a single differing quanutm number.
@@ -87,7 +84,7 @@ We depict these cycles in \cref{fig:nv_centre_energy_levels}c.
     \begin{center}
         \includegraphics[width=0.95\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
     \end{center}
-    \caption[\Glsentrylong{nvc} energy levels.]{
+    \caption[\Glsentrylong{nvc} energy levels]{
         Simplified depiction of energy levels of the \glsentrylong{nvc}, corresponding to its triplet state. 
         \textbf{a}, With no external magnetic field, the system has excited and ground-state manifolds, 
             each of which consist of two energy levels depending on the magnetic spin, $m_s$.
@@ -155,6 +152,113 @@ We can then apply \gls{mw} radiation to achieve quantum logical gates on the sys
     and observing the \glsentrylong{pl} (i.e. the emitted photons), and inferring the population level of each basis state. 
 We represent these concepts in a simplified format in \cref{fig:nv_centre_energy_levels}. 
 
+\subsection{Experimental procedure}
+\begin{figure}
+    \begin{center}
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_0.pdf}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_1.pdf}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_2.pdf}
+        }
+        \\
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_3.pdf}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_4.pdf}
+        }
+        \qquad
+        \subfloat[]{
+            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_5.pdf}
+        }
+    \end{center}
+    \caption[States of spin qubit at each stage of Hahn echo sequence]{
+        States of spin qubit at each stage of Hahn echo sequence.
+        
+        \textbf{(a)} The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
+        \textbf{(b)} We apply a rotation about the $y$-axis (i.e. a \glsentryfull{mw} pulse), 
+            yielding the state $\ket{\psi_1} = \ket{+}$. 
+        \textbf{(c)} The system is allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
+        \textbf{(d)} We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
+        $\ket{\psi_3} = e^{-i\pi \s_y}e^{-i\ho t}\ket{+}$.
+        \textbf{(e)} Again the system evolves according to interactions with the environment, this time for $t^{\prime} = 2t$.
+        \textbf{(f)} We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
+            projecting it upon $\ket{0}$.
+        Here $\ket{\psi_5}$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
+        i.e. along the $z$-axis. 
+        The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \glsentrylong{pl}. 
+        Here $\ho = 0.25 \ \s_y$ was evolved for $t=0.5$ (arbitrary units), 
+        and the final state overlap with the initial state, 
+        i.e. the \gls{likelihood} of measuring the spin in $\ket{0}$ is $\Pr(0 | \ho, t) = 0.865$. 
+    }
+    \label{fig:hahn_bloch_spheres}
+\end{figure}
+
+We choose to model the decoherence of the \gls{nvc} (described in \cref{sec:target_system}), 
+    and therefore must implement an experimental strategy which highlights 
+    the decoherence effects dominating the spin. 
+The \emph{Hahn echo sequence} is a series of operations which decouple a spin from its environment, i.e. the nuclear bath
+    \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}.
+This provides a platform for studying the contributions of dominant decoherence effects in isolation. 
+% We have decided to characterise the hyperfine interactions of the \gls{nvc} which dominate its decoherence process:
+%     these interactions are evident most strongly at very short timescales \cite{childress2006coherent}. 
+% To isolate the effects of the hyperfine interactions, 
+%     we run \emph{Hahn echo} experiments, which are known to emphasise weak interactions.
+% Hahn echo sequences attempt to decouple the spin's dynamics from the nuclear bath
+    % \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}
+    % providing a helpful platform for studying residual contributions of terms in \cref{eqn:nv_terms}.
+The \gls{nvc} spin undergoes a series of evolutions -- either according to application of quantum logic gates
+    or the natural evolution of the system interacting with its environment.  
+We depict the stages of the experiment in \cref{fig:hahn_bloch_spheres}, 
+    starting from the initialised computational state, $\ket{\psi_0} = \ket{0}$,
+    through to its final state which is read out through \gls{pl},
+    both of which as described in \cref{sec:nv_centres}.
+\par 
+
+In particular, the final state, $\ket{\psi}_5$, is effectively read out by projection onto $\ket{0}$;
+    we can interpret the normalised \gls{pl} after evolution time $t$ as the  \gls{likelihood} 
+    that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true} Hamiltonian, $\ho$ for $t$. 
+That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{likelihood}), 
+    and it can be used within \gls{likelihood} estimation in order to refine a candidate model $\hj$, 
+    effectively\footnotemark \ by changing the structure of 
+    $\hj$ until $\Pr(0 | \ho, t) \approx \Pr(0 | \hj, t) \ \forall t$. 
+
+\footnotetext{
+    Of course this is a gross simplification of \gls{qhl} which is described fully in \cref{chapter:qhl}
+}
+\par 
+
+By varying the evolution time, $t$, used within the Hahn echo sequence, we can map the \gls{likelihood} against time, 
+    which we can view as capturing the \emph{dynamics} of the \gls{nvc} spin, \cref{fig:nv_raw_data}.
+We vary $t$ up to $t \sim 4 \mu s$ in intervals of $\Delta t = 50 ns$, 
+    so we have 425 data points. 
+Note the data for the studied \gls{nvc} is taken once and analysed offline, 
+    i.e. \gls{qmla} does not have complete authority to design experiments 
+    to run on the \gls{nvc}, although it can aim to choose the most informative $t$ 
+    available in the predefined set; we will discuss the consequences of this restriction 
+    later in this chapter. 
+
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics{experimental_study/figures/raw_data.pdf}
+    \end{center}
+    \caption[Raw data for \glsentrylong{nvc}'s dynamics]{
+        Raw data for the \glsentrylong{nvc}'s dynamics.
+        The $y$-axis shows the normalised \glsentrylong{pl} of the \gls{nvc}, 
+        equivalently the \gls{likelihood} $\Pr(0 | \ho, t)$. 
+    }
+    \label{fig:nv_raw_data}
+\end{figure}
+
+
 
 \section{Target system}\label{sec:target_system}
 We take the axis of the \gls{nvc}, i.e. the axis connecting the \gls{nitrogen} with the 
@@ -185,7 +289,7 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
 
 \begin{description}
     \item[Isolated-spin terms] describe the spin independent of the environmental nuclei
-    \begin{easylist}
+    \begin{easylist}[itemize]
     && $\Delta_{\textrm{gs}} \hat{S}_z^2$: 
         the \emph{zero-field} splitting, or ground state splitting between the computational basis states.
         $\Delta_{\textrm{gs}} \sim \ghz$ is a constant offset which does not contribute to the decoherence, 
@@ -197,6 +301,8 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
         via the total spin operator\footnotemark \ $\mathbf{S} = \left(\hat{S}_x \ \hat{S}_y \ \hat{S}_z \right)$, 
         where $\mu_B$ is the Bohr magneton and $g$ is the electron $g$-factor 
         ($\approx 2$, simplified from the $g$-factor tensor).
+        Misalignment of the magnetic field is a decoherence effect, 
+        so one core aim of \gls{qmla} here is to identify whether such terms dominate.
     \end{easylist}
     
     \item[Hyperfine terms] \ 
@@ -215,7 +321,11 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
     && $P \hat{I}_z^2 $: the quadrupole splitting, which provides another constant shift, 
         and is therefore not of interest when modelling the spin's decoherence, and can be neglected.
     && $\mu_n g \mathbf{B} \cdot \sum_{ \chi} \hat{I}_{\chi}$:
+        nuclear precession terms. 
         $\mu_n$ is the nuclear magneton and $g$ is the nuclear $g$-factor (again from the $g$-factor tensor).
+        These terms represent the nuclei independent of the spin -- 
+        these terms lead to decoherence at much higher times than we have access to, since the Hahn echo sequence decouples the spin from the bath. 
+        For the short-time model targeted here, then, these terms can be excluded. 
     \end{easylist}
 
 \end{description}
@@ -228,9 +338,10 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
     to convey that we can separate the terms in the construction of models. 
 }
 
-Given that we are interested in the spin and its interactions with the environment only, 
-    we can immediately drop the bath-only terms, by assuming the bath is static 
-    apart from its interactions with the \gls{nvc}. 
+Given that we are modelling the spin's decoherence, 
+    we are interested only in the spin and its interactions with the environment, 
+    so we can immediately drop the bath-only terms, 
+    by assuming the bath is static apart from its interactions with the \gls{nvc}. 
 This is a usual assumption in the treatment of open system dynamics, 
     to allow for focus on the dominant interactions for the system of interest \cite{breuer2002theory}. 
 Additionally, since the zero field splitting contributes a constant shift in energy, 
@@ -245,7 +356,7 @@ We are then left only with the second and third terms of \cref{eqn:nv_ham_full},
     \end{equation}
     \begin{equation}
         \label{eqn:nv_hyperfine_terms}
-        \mathbf{S} \cdot \sum_{\chi} \left( \mathbf{A}_{\chi} \cdot \hat{I}_{\chi} \right).
+        \mathbf{S} \cdot \sum_{\chi} \left( \mathbf{A}_{\chi} \cdot \mathbf{\hat{I}}_{\chi} \right).
     \end{equation}
 \end{subequations}
 
@@ -352,7 +463,6 @@ Here we will employ \gls{qmla} to determine whether the transverse contributions
 The hyperfine terms to be entertained by \gls{qmla} are then
 
 \begin{equation}
-    \label{eqn:exp_hf_terms}
     \termset_{HF} = \left\{
     \begin{align}  
         \begin{split}
@@ -361,6 +471,7 @@ The hyperfine terms to be entertained by \gls{qmla} are then
         \end{split}
     \end{align}
     \right\}.
+    \label{eqn:exp_hf_terms}
 \end{equation}
 
 \footnotetext{
@@ -376,11 +487,11 @@ Finally, combining \cref{eqn:exp_spin_terms} and \cref{eqn:exp_hf_terms},
 
 \begin{equation}
     \termset_{NV} = \left\{
-    \begin{align*}
-        & \hat{S}_x, && \hat{S}_y, && \hat{S}_z, &\\
-        & \hat{S}_x\I_x, && \hat{S}_y\I_y, && \hat{S}_z\I_z, &\\
-        & \hat{S}_x\I_y, && \hat{S}_x\I_z, && \hat{S}_y\I_z &
-    \end{align*}
+    \begin{align}
+        & \hat{S}_x, && \hat{S}_y, && \hat{S}_z, \\
+        & \hat{S}_x\I_x, && \hat{S}_y\I_y, && \hat{S}_z\I_z, \\
+        & \hat{S}_x\I_y, && \hat{S}_x\I_z, && \hat{S}_y\I_z 
+    \end{align}
     \right\}.
     \label{eqn:nv_terms_verbose}
 \end{equation}
@@ -441,108 +552,6 @@ This range is sufficiently specific to ensure the training subroutine operates i
     and likely appropriate -- space, whlie also broad enough to allow for significant differences between expectation and reality.
 Moverover this distribution supports hypotheses where each parameter is zero:
     if these prove favourable, negligible contributions can be identified and excluded from the model.
-
-\subsection{Experimental procedure}
-
-\begin{figure}
-    \begin{center}
-        \subfloat[]{
-            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_0.pdf}
-        }
-        \qquad
-        \subfloat[]{
-            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_1.pdf}
-        }
-        \qquad
-        \subfloat[]{
-            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_2.pdf}
-        }
-        \\
-        \qquad
-        \subfloat[]{
-            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_3.pdf}
-        }
-        \qquad
-        \subfloat[]{
-            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_4.pdf}
-        }
-        \qquad
-        \subfloat[]{
-            \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_5.pdf}
-        }
-    \end{center}
-    \caption[States of spin qubit at each stage of Hahn echo sequence]{
-        States of spin qubit at each stage of Hahn echo sequence.
-        
-        \textbf{(a)} The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
-        \textbf{(b)} We apply a rotation about the $y$-axis (i.e. a \glsentryfull{mw} pulse), 
-            yielding the state $\ket{\psi_1} = \ket{+}$. 
-        \textbf{(c)} The system is allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
-        \textbf{(d)} We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
-        $\ket{\psi_3} = e^{-i\pi \s_y}e^{-i\ho t}\ket{+}$.
-        \textbf{(e)} Again the system evolves according to interactions with the environment, this time for $t^{\prime} = 2t$.
-        \textbf{(f)} We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
-            projecting it upon $\ket{0}$.
-        Here $\ket{\psi_5}$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
-        i.e. along the $z$-axis. 
-        The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \glsentrylong{pl}. 
-        Here $\ho = 0.25 \ \s_y$ was evolved for $t=0.5$ (arbitrary units), 
-        and the final state overlap with the initial state, 
-        i.e. the \gls{likelihood} of measuring the spin in $\ket{0}$ is $\Pr(0 | \ho, t) = 0.865$. 
-    }
-    \label{fig:hahn_bloch_spheres}
-\end{figure}
-    
-We have decided to characterise the hyperfine interactions of the \gls{nvc} which dominate its decoherence process:
-    these interactions are evident most strongly at very short timescales \cite{childress2006coherent}. 
-To isolate the effects of the hyperfine interactions, 
-    we run Hahn echo experiments, which are known to emphasise weak interactions.
-Hahn echo sequences attempt to decouple the spin's dynamics from the nuclear bath
-    \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}
-    providing a helpful platform for studying residual contributions of terms in \cref{eqn:nv_terms}.
-The \gls{nvc} qubit undergoes a series of evolutions -- either according to application of quantum logic gates
-    or the natural evolution of the system interacting with its environment.  
-We depict the stages of the experiment in \cref{fig:hahn_bloch_spheres}, 
-    starting from the initialised computational state, $\ket{\psi_0} = \ket{0}$,
-    through to its final state which is read out through \gls{pl},
-    both of which as described in \cref{sec:nv_centres}.
-\par 
-
-In particular, the final state, $\ket{\psi}_5$, is effectively read out by projection onto $\ket{0}$;
-    we can interpret the normalised \gls{pl} after evolution time $t$ as the  \gls{likelihood} 
-    that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true} Hamiltonian, $\ho$ for $t$. 
-That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{likelihood}), 
-    and it can be used within \gls{likelihood} estimation in order to refine a candidate model $\hj$, 
-    effectively\footnotemark \ by changing the structure of 
-    $\hj$ until $\Pr(0 | \ho, t) \approx \Pr(0 | \hj, t) \ \forall t$. 
-
-\footnotetext{
-    Of course this is a gross simplification of \gls{qhl} which is described fully in \cref{chapter:qhl}
-}
-\par 
-
-By varying the evolution time of the Hahn echo sequence, we can map the \gls{likelihood} 
-    against time, which we can view as capturing the dynamics of the \gls{nvc} spin \cref{fig:nv_raw_data}.
-We vary time up to $t \sim 4 \mu s$ in the short-time range in intervals of $\Delta t = 50 ns$, 
-    so we have 425 data points. 
-Note the data for the studied \gls{nvc} is taken once and analysed offline, 
-    i.e. \gls{qmla} does not have complete authority to design experiments 
-    to run on the \gls{nvc}, although it can aim to choose the most informative $t$ 
-    available in the predefined set; we will discuss the consequences of this restriction 
-    later in this chapter. 
-
-\begin{figure}[t]
-    \begin{center}
-        \includegraphics{experimental_study/figures/raw_data.pdf}
-    \end{center}
-    \caption[Raw data for \glsentrylong{nvc}'s dynamics]{
-        Raw data for the \glsentrylong{nvc}'s dynamics.
-        The $y$-axis shows the normalised \glsentrylong{pl} of the \gls{nvc}, 
-        equivalently the \gls{likelihood} $\Pr(0 | \ho, t)$. 
-    }
-    \label{fig:nv_raw_data}
-\end{figure}
-
 
 \section{\Glsentrylong{es}}\label{sec:exp_es}
 We may now turn to the specific implementation details by which \gls{qmla} is applied to the study this \gls{nvc} system. 
