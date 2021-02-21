@@ -486,7 +486,7 @@ We list a subset of possible configurations in \cref{table:hubbard_model_types},
         \begin{tabular}{crrrr}
                 & $t^{\uparrow}_{\bkl}$& $t^{\downarrow}_{\bkl}$ & $U_k$ & $\mu_k$ \\
             \hline 
-            Standard & $t^{\uparrow}$ & $t^{\downarrow}$ & $U$ & $\mu$ \\
+            Standard & $t$ & $t$ & $U$ & $\mu$ \\
             Fully parameterised & $t^{\uparrow}_{\bkl}$  & $t^{\downarrow}_{\bkl}$&  $U_k$ & $\mu_k$ \\
         \end{tabular}
     \end{center}
@@ -646,10 +646,10 @@ Therefore, in the design of probes for training Hubbard models,
 \section{Model learning for lattices}
 Finally, then, we can use the lattice systems introduced in \cref{sec:lattices,sec:ising,sec:heisenberg,sec:hubbard}
     as first case studies for \gls{qmla}. 
-Each $\cc \in \mathbb{C}$ can specify a unique model under the standard model formalism
-    for each of Ising (\cref{eqn:ising_terms}), Heisenberg (\cref{eqn:heisenberg_terms}) 
-    and Hubbard (\cref{eqn:hubbard_terms}) models.     
-We can then devise a simple \gls{es} which only tests the models corresponding to $\mathbb{C}$, 
+Each $\cc \in \mathbb{C}$ can specify a unique model under their standard forms:
+    \cref{eqn:ising_terms} for Ising, \cref{eqn:heisenberg_terms} for Heisenberg 
+    and \cref{eqn:hubbard_terms} for Hubbard models.     
+We can then devise a simple \gls{es} which only tests the models corresponding to lattices in $\mathbb{C}$, 
     with no further model generation, i.e. \cref{alg:lattice_exploration_strategy}, 
     and compares every pair of models through \glspl{bf}, 
     deeming the champion as that which wins the largest number of comparisons, 
@@ -699,14 +699,17 @@ We can then devise a simple \gls{es} which only tests the models corresponding t
 
 
 \begin{figure}
-    \QMLAfig{Nov_19/12_04/lattice_qmla_summary.pdf}
+    % \QMLAfig{Nov_19/12_04/lattice_qmla_summary.pdf}
+    \begin{center}
+        \includegraphics{theoretical_study/figures/lattice_qmla_summary.pdf}
+    \end{center}
     \caption[\gls{qmla} for prescribed set of lattices under Ising formalism]{
         \gls{qmla} for prescribed set of lattices under Ising formalism. 
         The lattice indices correspond to those in \cref{fig:lattices}, 
             and the true system is given by lattice $d$. 
         (a,b) show the decrease in \gls{volume} for each model's training phase. (spread over two plots for readibility) 
         (c,d), trained models are used to reproduce dynamics, compared with the dynamics of the
-            true system. 
+            true system (red dots). 
         (e) Heatmap of $\log_{10} \bij$ between every pair of models. The \gls{bf} is read as 
         $i$ versus $j$, where $i$ is the model on the $y$-axis and $j$ is the model on the $x$-axis. 
         $\log_{10} \bij > 0$ (green) favours the model listed on the $y$-axis;
@@ -731,15 +734,32 @@ In order to test \gls{qmla} robustly,
     we can use each of the lattices shown in \cref{fig:lattices} to specify $\ho$, 
     to ensure the algorithm is capable of finding the underlying model of arbitrary complexity, 
     within the constraints of a prescribed model set\footnotemark. 
+\footnotetext{The remainder of this thesis is dedicated to cases where we do not prescribe the model set, but instead generate models dynamically.}
 Moreover, we can extend this test to the Heisenberg and Hubbard formalisms; 
     note that due to the overhead given by the \gls{jwt} (\cref{sec:jordan_wigner}), i.e. the requirement of two qubits per site, 
-    we restrict study of the Hubbard model to lattices $a-e$ for practicality. 
+    we restrict study of the Hubbard model to lattices $a-e$ for practicality\footnotemark.
+\footnotetext{
+    The limitation of Hubbard models to $3$-site lattices is due to the $6$-qubit models required via the \gls{jwt}.
+    The primary expense of simulation is the complete unitary evolution, 
+        requiring calculation of $e^{-i \hi t}$ for each particle's likelihood calculation at every training experiment. 
+    Training becomes infeasible for systems requiring $\gtrapprox9$ qubits, whereas moving to $5$-site lattices would require $10$-qubit models.
+    We include a mixture of lattices up to $4$ sites for the Hubbard model, and some further models up to $6$ sites for the Ising and Heisenberg models.
+}
 By running 10 independent \gls{qmla} \glspl{instance} for each lattice under each formalism,
     we can gauge the success rate of the algorithm for distinguishing basic lattices from each other. 
 We present the result of these tests in \cref{fig:lattice_success_rates},   
     finding in all cases that \gls{qmla} identifies $\ho$ with success rates at least $70\%$. 
-% TODO comment on decreasing success rate for higher dimension systems?
-\footnotetext{The remainder of this thesis is dedicated to cases where we do not prescribe the model set, but instead generate models dynamically.}
+A general trend appears to emerge -- especially in the case of the Hubbard model --
+    where target models of higher dimension are identified less often. 
+This can likely be attributed to the training resources provided:
+    here models are trained with $\Ne=1000 \Np=4000$, 
+    which are clearly sufficient for training models of few qubits/parameters, 
+    but may not allow larger models to train well.  
+In the next section we investigate whether increasing $\Ne, \Np$ leads to higher success rates in general, 
+    and find a strong correlation between training resources and \gls{qmla} success rate. 
+We therefore expect that the results for large target models could be improved by drastically increasing the training resources, 
+    although for pracitcality, we do not perform such a test.
+
 \par 
 
 \begin{figure}[t]
@@ -764,7 +784,7 @@ In general it will not be possible to prescribe the set of models to test,
     although this might serve as a straightforward mechanism for the calibration of quantum devices:
     suspected miscalibrations can be used in the design of such a set of models, 
     along with a target $\ho$ which the device should be able to implement. 
-Then, by testing such a prescribed set and determining $\hp$, 
+By testing such a prescribed set and determining $\hp$, 
     we can map the miscalibration between the intended and actual operations. 
 In the ideal case, where it is mostly believed the device works, 
     this application of \gls{qmla} may allow for fast, automated \emph{verification} of the device:
@@ -773,7 +793,35 @@ In the ideal case, where it is mostly believed the device works,
     or at least part thereof. 
 
 \section{Model Family Identification}\label{sec:family_identification}
+\glsreset{es}
+\glsreset{et}
+Recall from \cref{sec:qmla_protocol} (and \cref{fig:qmla_overview}\textbf{(e)}) that \gls{qmla} 
+    is built to grow multiple \glspl{et} concurrently, each corresponding to a unique \gls{es}. 
+This functionality permits \glspl{et} of different underlying physical assumptions, 
+    and can therefore be used to examine alternative formalisms in parallel.
+For instance, we can run \glspl{es} for each of the Ising, Heisenberg and Hubbard models, 
+    and determine which formalism best describes the system of interest, \gls{q}. 
+\par 
 
+Earlier in this chapter, we alluded to a fundamental question in and any discussion of model training/comparison 
+    through Bayesian inference as underlies \gls{qhl}:
+    to what extent do training resources ($\Ne, \Np$) undermine trained models, 
+    and what resources should be granted in order to retrieve reliable outcomes?
+As usual in \gls{ml} methods, this represents a trade-off between the results of the algorithm with training time
+    and computational resources required.
+\par
+
+We combine non-exhaustive testing of the tradeoff between resources and outcomes, 
+    with the task of identifying the family of models to which \gls{q} belongs. 
+In this case, we vary the target model $\ho$ as deriving again from the lattices in 
+    \cref{fig:lattices}, 
+    however we reduce the number of tested models in each case. 
+\glspl{es} corresponding to the Ising and Heisenberg model consider lattices (a-f), 
+    while the \gls{es} for the Hubbard model only consider (a-`c). 
+\cref{fig:family_identification} shows the rate at which the precise $\ho$ is identified, 
+    as well as the rate with which family of $\ho$ is identified, 
+    compared with increasing resources $\Ne, \Np$. 
+A clear trend demonstrates that success scales with resources.
 
 \begin{figure}[t]
     \begin{center}
@@ -783,5 +831,11 @@ In the ideal case, where it is mostly believed the device works,
     \caption[\gls{qmla} for model family identification]{
         \gls{qmla} for model family identification
     }
-
 \end{figure}
+
+
+\gls{qmla}'s capacity to identify the family of model to which \gls{q} belongs suggests powerful 
+    future applications of the framework, namely to automatically discover the type of physics underlying 
+    systems of interest.
+For example, \gls{qmla} could be used to identify whether a sample is ferromagnetic or antiferromagnetic;
+    or further, is best described as a system of bosons or fermions.
