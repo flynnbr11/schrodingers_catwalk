@@ -1,3 +1,4 @@
+\glsresetall
 A sensible first case study for the \gls{qmla} framework is to prescribe a set of models, 
     where we know that the \gls{true model} is among them, or at least that we would be satisfied with 
     approximating $\ho$ as the best model in the set. 
@@ -7,25 +8,23 @@ This application can be useful, for example, for expedited device calibration;
 In order to perform this calibration, 
     we treat $S_u$ as the system, \gls{q}, i.e. we call upon it to retrieve the datum $d$ in \cref{eqn:likelihood}, 
     where the calculation of the \glspl{likelihood}  for each particle are computed through $S_t$. 
-If $S_u$ is reliable, the data from its calculations will be consistent with some $\ho$ of our choosing, 
-    while miscalibrations will mainfest as imperfectly implemented gates/steps in the calculation of the system's likelihood, 
+If $S_u$ is reliable, the data from its calculations will be consistent with some $\ho$ of our choosing. 
+Conversely, miscalibrations will mainfest as imperfectly implemented gates/steps in the calculation of the system's likelihood, 
     and so would result in data inconsistent with $\ho$. 
 Therefore, if we can prescribe the most likely miscalibrations, it may be feasible to compose a set 
     of models, $\mathbb{H}$, which represent those cases, and search for $\hp$ only within $\mathbb{H}$,
-    to find identify the miscalibrations. 
+    to identify those miscalibrations. 
 For example, by encoding connections between every pair of device qubits in $\ho$, 
     we can compose models with restricted connectivity, for instance where some pairs of qubits are disconnected, 
     and hence discover whether the device allows arbitrary two-qubit gates, 
     and which pairs are disallowed. 
-
 \footnotetext{Note: here a classical computer can fulfil the role of the trusted simulator.}
-
 
 \section{Lattices}\label{sec:lattices}
 We first consider \gls{q} as some lattice, where \gls{qmla} attempts to identify the structure of the lattice. 
 The set of viable models then comprises alternative lattices.
 Due to simluation constraints, because we train models through exact unitary evolution, 
-    we are restricted to $\sim~8$-qubit Hamiltonians, so we only consider lattices which can 
+    we are restricted to $\sim8$-qubit Hamiltonians, so we only consider lattices which can 
     be simulated in this limit. 
 The \gls{es} in this chapter is then simply to propose a set of models with no further model generation, 
     with comparisons between all pairs of models through \glspl{bf}.
@@ -35,14 +34,15 @@ Connectivity between lattice sites is achieved within the specific Hamiltonian f
     introduced in the following sections, 
     although in general we write $\mathcal{C} = \{\bkl \}$ as the set of connected pairs $\bkl$, 
     such that the Hamiltonian for a given lattice can be thought of as 
-    some function of its configuration, $\hat{H}\bk{\al, \mathcal{C}}$.
+    some function of its configuration, $\hat{H}\bk{\al, \mathcal{C}}$, 
+    where $\al$ is the usual vector of multiplicative parameters corresponding to each term in the Hamiltonian.
 Then, we can specify candidate models only by their $\mathcal{C}$, 
     e.g. a 3-site chain can be summarised by $\mathcal{C}= \{ \langle 1,2 \rangle, \langle 2,3 \rangle\}$, 
     whereas a fully connected 3-site lattice (i.e. a triangle) is given by 
     $\mathcal{C}= \{ \langle 1, 2 \rangle, \langle 1, 3 \rangle, \langle 2, 3 \rangle\}$. 
 We can then summarise the set of candidate models through the descriptions of lattice configurations, 
     corresponding to those depicted in \cref{fig:lattices}:
-\begin{easylist}
+\begin{easylist}[enumerate]
     \ListProperties(Numbers=l)
     & 2-site chain
     & 3-site chain
@@ -131,19 +131,25 @@ We can then summarise the set of candidate models through the descriptions of la
 We will use this set of lattice configurations throughout the remainder of this chapter. 
 
 \section{Ising model}\label{sec:ising}
-The Ising model is one of the most studied concepts in all of physics, 
+The quantum Ising model -- otherwise known as the transverse field Ising model, hereafter simply the Ising model -- 
+    is one of the most studied concepts in all of physics, 
     representing electrons on a lattice of $N$ sites, 
     where each electron can have \emph{spin} up or down 
     \cite{ising1925beitrag, onsager1944crystal, brush1967history}.
-Interactions between spins $\bkl$ have strength $J_{kl}$, 
+Interactions\footnotemark \ between spins $\bkl$ have strength $J_{kl}$, 
     and the transverse magnetic field acts on spin $k$ with strength $h_k$. 
-It is usually stated as 
+The Ising model is usually stated as 
 \begin{equation}
     \label{eqn:ising_standard_form}
     \hat{H}_I(\cc) = \sum_{\bkl \in \mathcal{C}} J_{kl}  \ \hat{\sigma}_k^z \ \hat{\sigma}_{l}^z + \sum_{k=1}^{N} h_k \hat{\sigma}_{k}^x.
 \end{equation}
+\footnotetext{
+    The Ising model usually considers only nearest neighbour interaction. 
+    Here we present the more general $\bkl$ which can connect any pair of sites, 
+    and specify pairs in the set $\mathcal{C}$. 
+}
 
-The interaction term indicates the class of magnetism of the pair's interaction, i.e. 
+The interaction term\footnotemark \ indicates the class of magnetism of the pair's interaction, i.e. 
 \begin{equation}
     \label{eqn:ising_magnetism_cases}
     \begin{cases}
@@ -155,11 +161,20 @@ The interaction term indicates the class of magnetism of the pair's interaction,
 If all interaction pairs are described by the same case in \cref{eqn:ising_magnetism_cases}, 
     the entire system can be said belong to that class of magnetism. 
 
+\footnotetext{
+    Note: the terms $J_{kl}$ is often presented as $-J_{kl}$ in \cref{eqn:ising_standard_form}, 
+        such that $J_{kl} > 0$ indicates ferromagnetism.
+    Here we keep the parameter general, and set the sign implicitly when defining and learning the parameter, 
+        so $J_{kl}>0$ corresponds to ferromagnetism. 
+    This is a matter of convention and does not impact any of the further discussion. 
+}
+
 \par 
 \subsection{Note on optimising the Ising model}\label{sec:ising_optimisation}
 Many treatments of the Ising model seek to find the ground state
     of the system by optimising the configuration of spins in the system. 
-This involves neglecting the transverse magnetic field, and treating Ising model classically, 
+This involves treating the Ising model classically, 
+    effectively by neglecting the transverse magnetic field term $(h_k \rightarrow 0)$,
     such that the ground state is found by minimising the energy function
 \begin{equation}
     \label{eqn:ising_energy_function}
@@ -194,7 +209,7 @@ So, by restricting the individual spins to $\ket{\psi_k} \in \{\ket{+}, \ket{-}\
     \label{eqn:ising_energy}
     E_I(\mathcal{S}) = \braket{ \psi | \hat{H}_I | \psi } = \sum\limits_{\bkl \in \cc} J_{kl} \ \ s_k s_l
 \end{equation}
-    can be minimised by optimising the configuration $\mathcal{S}$, when the interaction terms $\{J_{\bkl}\}$ are known.
+    can be minimised by optimising the configuration $\mathcal{S} = s_1, \dots, s_N$, when the interaction terms $\{J_{\bkl}\}$ are known.
 The optimal configuration $\mathcal{S}_0$ can then be mapped to a 
     state vector $\ket{\psi_0}$, i.e. the ground state of the system. 
 \par 
@@ -245,15 +260,22 @@ In the first case, we can represent the Ising model for a given lattice configur
     \end{equation}
 \end{subequations}
 
-In the more general second case, termed the \emph{fully parameterised} Ising model, we instead have the term set
-\begin{equation}
+In the more general second case, termed the \emph{fully parameterised} Ising model, we instead have the parameter and term sets
+
+\begin{subequations}
     \label{eqn:ising_fully_parameterised}
-    \termset_I = \left\{ 
-        \s^{z}_{k} \s_{l}^{z}, \ \
-        \sum\limits_{k=1}^{N} \s^{x}_{k}
-    \right\}_{\bkl \in \cc}. 
-\end{equation}
-    with unique parameters $J_{kl}$ associated with each interaction term $\s_k^z \s_l^z$. 
+    \begin{equation}
+        \alpha_{I} = \{ J_{k,l}, \ h_k \}_{\bkl \in \cc}
+    \end{equation}
+    \begin{equation}
+        \termset_I = \left\{ 
+            \s^{z}_{k} \s_{l}^{z}, \ \
+            \s^{x}_{k}
+        \right\}_{\bkl \in \cc}. 
+    \end{equation}        
+\end{subequations}
+    with unique parameters $J_{kl}$ associated with each interaction term $\s_k^z \s_l^z$, 
+    and $h_k$ associated with each field term, $\s_k$. 
 We summarise these cases in \cref{table:ising_models}.
 
 \begin{table}[H]
@@ -265,26 +287,27 @@ We summarise these cases in \cref{table:ising_models}.
             Fully parameterised & $J_{\bkl}$ & $h_{k}$
         \end{tabular}
     \end{center}
-    \caption[Types of Ising model]{Types of Ising model. Varying whether parameters $J^{z}_{\bkl}, h_k$ are shared 
-        across sites gives distinct models. 
+    \caption[Forms of Ising model]{Forms of Ising model. Varying whether parameters $J_{\bkl}, h_k$ are shared 
+        across terms result in distinct models. 
     }
     \label{table:ising_models}
 \end{table}
 
 \par 
 
-\begin{figure}
+\begin{figure}[t]
     \begin{center}
-        \QMLAfig{Nov_18/13_56/standard_ising_qhl.pdf}
+        % \QMLAfig{Nov_18/13_56/standard_ising_qhl.pdf}
+        \includegraphics{theoretical_study/figures/standard_ising_qhl.pdf}
     \end{center}
 
-    \caption[\Glsentrylong{qhl} for standard Ising model]{
-        \Glsentrylong{qhl} for standard Ising model, where terms are grouped by their functionality, 
+    \caption[\Glsentrylong{qhl} for the standard Ising model]{
+        \Glsentrylong{qhl} for the standard Ising model, where terms are grouped by their functionality, 
         as in \cref{eqn:ising_standard_form}. 
-        (a,b) show the parameter estimates progression against 
-        epochs (experiments), with the corresponding term written on top of the plot; 
-        (c) shows the \gls{volume} of the parameter distribution at each epoch, as well as the 
-        evolution time chosen by the \gls{edh}. 
+        (a,b) show the parameter estimates' progression against training experiments, 
+            with the corresponding term labelling the $y$-axis. 
+        (c) shows the \gls{volume} of the parameter distribution at each experiment, 
+            as well as the evolution time chosen by the \gls{edh}. 
         \figtableref
     }
     \label{fig:ising_two_param_learning}
@@ -292,29 +315,32 @@ We summarise these cases in \cref{table:ising_models}.
 
 \begin{figure}
     \begin{center}
-        \QMLAfig{Nov_18/13_56/fully_param_ising_qhl.pdf}        
+        % \QMLAfig{Nov_18/13_56/fully_param_ising_qhl.pdf}
+        \includegraphics{theoretical_study/figures/fully_param_ising_qhl.pdf}
     \end{center}
-    \caption[\Glsentrylong{qhl} for fully parameterised Ising model]{
-        \gls{qhl} for fully parameterised Ising model, 
+    \caption[\Glsentrylong{qhl} for the fully parameterised Ising model]{
+        \Glsentrylong{qhl} fort the fully parameterised Ising model, 
             where every interaction between pairs of sites are assigned unique parameters, 
-            here neglecting the transverse field, 
             as in \cref{eqn:ising_fully_parameterised}. 
-        (a)-(f) show the parameter estimates progression against 
-        epochs (experiments), with the corresponding term written on top of the plot; 
-        (g) shows the \gls{volume} of the parameter distribution at each epoch, as well as the 
-        evolution time chosen by the \gls{edh}. 
+        (a)-(f) show the parameter estimates' progression against training experiments, 
+            with the corresponding term labelling the $y$-axis. 
+        (g) shows the \gls{volume} of the parameter distribution at each experiment, 
+            as well as the evolution time chosen by the \gls{edh}.  
         \figtableref
     }
     \label{fig:ising_fully_parameterised}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
     \begin{center}
-        \QMLAfig{Nov_18/13_56/dynamics.pdf}
+        \includegraphics{theoretical_study/figures/dynamics.pdf}
     \end{center}
-    \caption[Ising model types' dynamics]{
-        Dynamics reproduced by Ising models under standard and fully parameterised formalisms, 
-        compared with dynamics for the true system.
+    \caption[Ising model forms' dynamics]{
+        Dynamics reproduced by Ising models using the standard form (blue, training shown in \cref{fig:ising_two_param_learning}) 
+        and the fully parameterised form (dotted green, training in \cref{fig:ising_fully_parameterised}), 
+        compared with dynamics for the true system, \gls{q} (red dots).
+        $\ho$ for $Q$ is given by the standard form, \cref{eqn:ising_standard_form}, with parameters set arbitrarily to $J=0.8$ and $h=0.2$.
+        The \glsentrylong{bf} favours the standard formalism over the fully parameterised, with  a value of $\mathcal{B}=10^{19}$.
         \figtableref
     }
     \label{fig:ising_model_types_dynamics}
@@ -322,21 +348,35 @@ We summarise these cases in \cref{table:ising_models}.
 
 
 We first construct models under each of these forms to verify \gls{qhl} is capable of learning in this regime. 
-The former case is the standard form of the Ising model; its training is shown in \cref{fig:ising_two_param_learning}, 
+Training for the standard Ising model is shown in \cref{fig:ising_two_param_learning}, 
     while the fully paramterised model is shown in \cref{fig:ising_fully_parameterised}. 
-Ultimately, these two cases give the same Hamiltonian when $J_{\bkl} = J; \ h_k = h \ \forall k,l$.
-So, the fully parameterised model will learn the same parameters as the standard Ising model,
+Ultimately, these two cases give the same Hamiltonian when we set $J_{\bkl} = J; \ h_k = h \ \forall k,l$.
+The fully parameterised model will learn the same parameters as the standard Ising model,
     and we can take the \gls{bf} between them to determine which parameterisation is favourable.
-Encouragingly, both models learaned the parameters to high precision, and neither model converged; 
-    the \gls{volume} continues to reduce exponentially in both cases, 
-    suggesting it may be impractical to seek saturation in the model training phase for every model, 
+Encouragingly, both models learned the parameters to high precision, although neither model converged; 
+    the \gls{volume} continues to reduce exponentially in both cases.
+This outcome is common: it can be impractical to seek saturation in the model training phase for every model, 
     since this may require a very large number of experiments and particles. 
+It would be preferable for each model's parameterisation to have converged before comparing them, 
+    but in practice this is infeasible due to the indefinite resources required; 
+    model comparisons must rely on limited training schedules which are presumed to reflect the overall ability of 
+    the models to capture \gls{q}'s dynamics. 
+We will see throughout this thesis\footnotemark \ that the choice of such training resources, namely $\Ne, \Np$, 
+    has a large impact on the outcome of \gls{qmla}, for example through misleading comparisons between models 
+    in the case where the better model's training was under performant``'. 
+This capacity for error is mitigated by combining many \glspl{instance} together in 
+    a \gls{qmla} \gls{run}, such that any conclusions drawn rely on the average performance, 
+    where strong models are likely to perform better overall, even given access to limited resources. 
+\footnotetext{
+    Including \cref{sec:family_identification} where we study the effect of varying resources on \gls{qmla}'s outcome
+    in the context of lattice systems described here.
+}
 \par 
 
 The dynamics produced by both models are shown in \cref{fig:ising_model_types_dynamics}:
     the dynamics are almost indistinguishable by eye, but the standard Ising model, 
     which in this case is $\ho$, outperforms the fully parameterised model, 
-    by a \gls{bf} of $10^{19}$.
+    by a \gls{bf} of $\mathcal{B} = 10^{19}$.
 This serves as a good \emph{sanity check}, confirming our expectation that 
     the \gls{bf} will favour the simpler model (i.e. fewer parameters) even when both models 
     are trained to a high precision to very similar parmaeters, and are difficult to distinguish through human intuition. 
@@ -345,7 +385,7 @@ This serves as a good \emph{sanity check}, confirming our expectation that
 \section{Heisenberg model}\label{sec:heisenberg}
 Generalising the Ising model, the Heisenberg Hamiltonian is another model for magnetic systems consisting of a set of 
     spins on a lattice \cite{greiner2012thermodynamics}. 
-It builds on the Ising model by additionally considering the spins' rotations about the $x-$ and $y-$ axes, generally stated as 
+It builds on the Ising model by additionally considering the spins' rotations about the $x$- and $y$-axes, generally stated as 
 \begin{equation}
     \label{eqn:heisenberg_model_general}
     \hat{H}_H(\cc) = 
@@ -357,8 +397,8 @@ It builds on the Ising model by additionally considering the spins' rotations ab
 
 We can consider a number of formulations of the Heisenberg model, by considering whether the interaction
     parameters are completely unique for each pair of spins in each axis, 
-    or  are shared by pairs of spins;
-    we list the \glspl{instance} within the family of Heisenberg models in \cref{table:heisenberg_models}. 
+    or  are shared by pairs of spins.
+We list a number of prominent representations within the family of Heisenberg models in \cref{table:heisenberg_models}. 
 \begin{table}[H]
     \begin{center}
         \begin{tabular}{crrrr}
@@ -371,20 +411,20 @@ We can consider a number of formulations of the Heisenberg model, by considering
             
         \end{tabular}
     \end{center}
-    \caption[Types of Heisenberg model]{
-        Heisenberg model types: varying whether the interaction parameters $J^{w}_{kl}$ are shared among pairs of spins
-        give distinct descriptions which are all in the family of Heisenberg models. 
+    \caption[Forms of Heisenberg model]{
+        Heisenberg model forms: varying whether the interaction parameters $J^{w}_{kl}$ are shared among pairs of spins
+        give distinct descriptions, all of which are within the family of Heisenberg models. 
     }
     \label{table:heisenberg_models}
 \end{table}
 
 Again, there are a number of possibile models to test, 
     although we can reasonably expect these to follow the same arguments as for the Ising model cases: 
-    increasing generality at the expense of larger parameter dimension requires more resources to learn to a reasonable level. 
-In this chapter we will refer to the Heisenberg-XYZ model,
-    and will consider the fully parameterised Heisenberg model in \cref{chapter:ga};
+    increasing generality -- at the expense of larger parameter dimension -- 
+    requires more resources to learn to a reasonable level.    
+In \cref{chapter:ga} we will consider the fully parameterised model, 
+    but here focus on the more restrictive Heisenberg-XYZ model:
     the parameters and terms of interest are then captured by \cref{eqn:heisenberg_terms}.
-
 
 \begin{subequations}
     \begin{equation}
@@ -397,7 +437,7 @@ In this chapter we will refer to the Heisenberg-XYZ model,
             \sum\limits_{\bkl \in \cc} \ \s^y_k \s^y_l \\
             \sum\limits_{\bkl \in \cc} \ \s^z_k \s^z_l \\
             \sum\limits_{k=1}^{N} \ \s^z_k  \\
-        }
+        }.
     \end{equation}
     \label{eqn:heisenberg_terms}
 \end{subequations}
@@ -407,11 +447,14 @@ In this chapter we will refer to the Heisenberg-XYZ model,
 Another representation of solid state matter systems is given by the Hubbard model 
     \cite{hubbard1963electron, scalettar2016introduction, hubbard2013}.
 The Hubbard model deals with systems of correlated fermions, 
-    allowing spins to \emph{hop} between sites. 
+    allowing spins to \emph{hop} between sites and to localise on sites.
+Spins are \emph{correlated} in this model because the spin on any site is subject to the Coulomb interaction, 
+    i.e. a repulsive force due to the presence of another electron on the same site,
+    so it is therefore energetically favourable for spins to arrange across sites.
 Note the Hubbard model is synonymous with the \gls{fh} model, 
-    which can be used to distinguish this model of fermions from a similar model of bosons, named the Bose-Hubbard model, 
-    which is not studied in this thesis. 
-We use the subscript FH to distinguish the (Fermi-)Hubbard model from the Heisenberg model $\hat{H}_{H}$, \cref{eqn:heisenberg_model_general}.
+    which can be used to distinguish the statistics from a set of fermions from the statistics of a similar set of bosons, given by the Bose-Hubbard model.
+In this thesis we will not study the Bose-Hubbard model, but will use the subscript FH to distinguish the (Fermi-)Hubbard model from the Heisenberg model 
+    $\hat{H}_{H}$, \cref{eqn:heisenberg_model_general}.
 The Hubbard model is generally stated in second quantisation as
 
 \begin{equation}
@@ -424,19 +467,36 @@ The Hubbard model is generally stated in second quantisation as
     where 
 \begin{easylist}[itemize]
     & $\hat{c}_{ks}$ and $\hat{c}^{\dagger}_{ks}$ are respecitvely the fermionic annihilation and creation operators for spin $s \in \{ \uparrow, \downarrow \}$ on site $k$;
-    & $\hat{n}_{ks} = \hat{c}^{\dagger}_{ks} \hat{c}_{ks}$ is a counting operator to count the number of spins $s$ on site $k$;
+    & $\hat{n}_{ks} = \hat{c}^{\dagger}_{ks} \hat{c}_{ks}$ is the onsite term, i.e. a counting operator to count the number of spins $s$ on site $k$;
     & $t^s_{\bkl}$ is the kinetic (hopping) term for spin $s$ between sites $k$ and $l$; 
     & $U_k$ is the onsite (repulsion) energy for site $k$;
-    & $\mu_k$ is the chemical energy for $k$;
+    & $\mu_k$ is the chemical potential for $k$;
     & $N$ is the number of sites in the system.
 \end{easylist}
 \par
 
-Again, we can achieve differing physics by controlling whether the parameters are shared, 
+Again, we can achieve differing physics by controlling whether the parameters are shared (e.g. $t_{\bkl}^s$), 
     with similar consequences to the Ising and Heisenberg models, where additional parameterisation
     comes at the expense of slower/worse performance in training. 
-We list a subset of possible configurations in \cref{table:hubbard_model_types};
-    we will use the standard form in this chapter, i.e. 
+We list a subset of possible configurations in \cref{table:hubbard_model_types}, 
+    again here we will use the standard form for the remainder of this chapter, \cref{eqn:hubbard_terms}. 
+
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular}{crrrr}
+                & $t^{\uparrow}_{\bkl}$& $t^{\downarrow}_{\bkl}$ & $U_k$ & $\mu_k$ \\
+            \hline 
+            Standard & $t^{\uparrow}$ & $t^{\downarrow}$ & $U$ & $\mu$ \\
+            Fully parameterised & $t^{\uparrow}_{\bkl}$  & $t^{\downarrow}_{\bkl}$&  $U_k$ & $\mu_k$ \\
+        \end{tabular}
+    \end{center}
+    \caption[Forms of Hubbard model]{
+        Forms of Hubbard model. Varying whether parameters $t^{s}_{\bkl}, U_k, \mu_k$ are shared 
+        across sites gives distinct models.
+    }
+    \label{table:hubbard_model_types}
+\end{table}
+    
 
 \begin{subequations}
     \begin{equation}
@@ -455,27 +515,12 @@ We list a subset of possible configurations in \cref{table:hubbard_model_types};
                 ) \\
             \sum\limits_{k=1}^{N} \hat{n}_{k\uparrow} \hat{n}_{k\downarrow} \\
             \sum\limits_{k=1}^{N} \bk{\hat{n}_{k\uparrow}  + \hat{n}_{k\downarrow} }
-        }
+        }.
     \end{equation}
     
     \label{eqn:hubbard_terms}
 \end{subequations}
 
-\begin{table}[H]
-    \begin{center}
-        \begin{tabular}{crrrr}
-             & $t^{\uparrow}_{\bkl}$& $t^{\uparrow}_{\bkl}$ & $U_k$ & $\mu_k$ \\
-            \hline 
-            Standard & $t^{\uparrow}$ & $t^{\downarrow}$ & $U$ & $\mu$ \\
-            Fully parameterised & $t^{\uparrow}_{\bkl}$  & $t^{\downarrow}_{\bkl}$&  $U_k$ & $\mu_k$ \\
-        \end{tabular}
-    \end{center}
-    \caption[Types of Hubbard model]{
-        Types of Hubbard model. Varying whether parameters $t^{s}_{\bkl}, U_k, \mu_k$ are shared 
-        across sites gives distinct models.
-    }
-    \label{table:hubbard_model_types}
-\end{table}
 
 \subsection{Jordan Wigner transformation}\label{sec:jordan_wigner}
 In order that the Hubbard model is simulateable with qubits\footnotemark, 
@@ -496,7 +541,7 @@ The system can then be given by a state in the \emph{number basis},
 where $n_{m_i}$ is the number of fermions on mode $m_i$ and there are $n$ modes in total.
 
 $\hat{c}^{\dagger}_{m_i}$ \ ($\hat{c}_{m_i}$) is the creation (annihilation) operator
-    on the mode $m_i$: it acts on the system by adding (removing) a fermion from (to) $m_i$:
+    on the mode $m_i$: it acts on the system by adding (removing) a fermion to (from) $m_i$:
 \begin{subequations}
     \begin{equation}
         \hat{c}^{\dagger}_{m_i} \ket{\psi_f} = \ket{ n_{m_1}, \dots , n_{m_i}  + 1,  \dots , n_{m_n} }, 
@@ -520,7 +565,7 @@ In particular, since fermions obey the Pauli exclusion principle,
 We therefore use a similar system to the number basis: 
     a qubit registered as $\ket{0}$ corresponds to an empty mode, while $\ket{1}$ holds a fermion. 
 Empty lattices are thus given by $\ket{0}^{\otimes 2N}$. 
-Then, in analogue with the annihilation and creation operators, we introduce oeprators $\s^{+}, \s^{-}$ such that 
+Then, in analogue with the annihilation and creation operators, we introduce operators $\s^{+}, \s^{-}$ such that 
 \begin{subequations}
     \begin{equation}
         \s^{+} = \begin{pmatrix}
@@ -543,7 +588,7 @@ Then, to map the number basis of \cref{eqn:hubbard_number_state} to a state whic
     where qubits are ordered simply by the site index and spin type, 
     as shown in \cref{table:jordan_wigner_indices}. 
 The \gls{jwt} can be summarised by mapping -- for the mode $m$ -- the creation (annihilation) operator
-    $\hat{c}^{\dagger}_{m}$ \ ($\hat{c}_{m}$), to an operator which adds a spin to the corresponding state 
+    $\hat{c}^{\dagger}_{m}$ \ ($\hat{c}_{m}$), to an operator which adds (removes) a spin to (from) the corresponding state 
     through the operator $\s_{m}^{+}$ \ ($\s_{m}^{-}$). 
 
 \begin{subequations}
@@ -556,11 +601,10 @@ The \gls{jwt} can be summarised by mapping -- for the mode $m$ -- the creation (
     \end{equation}
 \end{subequations}
 
-Note the \gls{jwt} acts on all modes/qubits other than the target with $\s^z$, since 
-
+% Note the \gls{jwt} acts on all modes/qubits other than the target with $\s^z$, since 
 For example, an empty 2-site lattice $\ket{\psi_0}$ is acted on by a creation operator on mode $3$, corresponding to spin $\uparrow$ on site $2$:
 \begin{equation}
-    \hat{c}^{\dagger}_{2\uparrow} \ket{0000}  = \hat{c}^{\dagger}_{3} \ket{0000} = \s^z_1 \s^z_2 \s^{+}_3 \s^z_4 \ket{0000} = \ket{0010}
+    \hat{c}^{\dagger}_{2\uparrow} \ket{0000}  = \hat{c}^{\dagger}_{3} \ket{0000} = \s^z_1 \s^z_2 \s^{+}_3 \s^z_4 \ket{0000} = \ket{0010}. 
 \end{equation}
 
 \begin{table}
@@ -580,7 +624,6 @@ For example, an empty 2-site lattice $\ket{\psi_0}$ is acted on by a creation op
     \caption[Jordan Wigner mode/qubit indices]{Jordan Wigner mode/qubit indices.}
     \label{table:jordan_wigner_indices}
 \end{table}
-
 
 
 \subsection{Half filled basis}
@@ -608,7 +651,7 @@ Each $\cc \in \mathbb{C}$ can specify a unique model under the standard model fo
     and Hubbard (\cref{eqn:hubbard_terms}) models.     
 We can then devise a simple \gls{es} which only tests the models corresponding to $\mathbb{C}$, 
     with no further model generation, i.e. \cref{alg:lattice_exploration_strategy}, 
-    and compares every pair of models through \gls{bf}, 
+    and compares every pair of models through \glspl{bf}, 
     deeming the champion as that which wins the largest number of comparisons, 
     as in \cref{alg:lattice_exploration_strategy_consolidation}.
 
