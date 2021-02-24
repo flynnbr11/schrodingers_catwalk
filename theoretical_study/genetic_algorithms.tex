@@ -1,3 +1,4 @@
+\glsresetall
 The \gls{qmla} framework lends itself easily to the family of optimsation techniques called \emph{evolutionary algorithms}, 
     where individuals, sampled from a population of candidates, are considered as solutions to the given problem in generations,
     and iterative generations aim to efficiently search the available population, 
@@ -11,7 +12,7 @@ We describe the concepts of \glspl{ga} in \cref{sec:genetic_algorithms},
 
 \section{Adaptation to QMLA framework}\label{sec:ga_adaptation_to_qmla}
 Unlike the generic aspects of \glspl{ga} described in \cref{sec:genetic_algorithms}, 
-    in the context of \gls{qmla}, here we must deviate from default mechanisms. 
+    in the context of \gls{qmla}, we must deviate from default mechanisms. 
 Recalling the overarching goal of \gls{qmla}, to characterise some black box quantum system, 
     \gls{q}, we do not have access to a natural \gls{of}.
 We wish to optimise the modelling of $\hp$, but assume we do not know the target $\ho$, 
@@ -42,14 +43,14 @@ Note, this does not require idenitifcation of the precise \gls{true model} to be
 We introduce metrics for success in \cref{sec:f_score}. 
 We recognise the limitations this structure imposes: we can only identify terms which were conceived in advance; 
     this may restrict \gls{qmla}'s applicability to entirely unknown systems, 
-    where such a primitive set can not even be compiled. 
+    where such a primitive set can not even be compiled.  
 \footnotetext{
     Recall that models impose structure on sets of terms: $\hj = \al_j \cdot \vec{T}_j = \sum_{k \in \termset_j} \alpha_k \hat{t}_k$.
 }    
 \par 
 
 The structure of the overall \gls{qmla} algorithm (recall \cref{fig:qmla_overview}) is unchanged.
-In a \glsentryfull{ges}:
+In a \gls{ges}:
 \begin{easylist}[itemize]
     & models are still grouped in branches, here called generations;
     & models are still trained, again through \gls{qhl};
@@ -67,16 +68,16 @@ We can restate the informal description of \glspl{ga}, now in the context of \gl
     & Sample $N_m$ models from $\population$ at random 
     && this is the first generation, $\mu$. 
     & \label{qmla_ga:loop} Evaluate each model $\hj \in \mu$. 
-    && train $\hj$ through \gls{qhl}
-    && apply the \glsentrylong{of} to assign the model's fitness, $g_j$
-    & Map the fitnesses of each model, $\{g_j\}$, to selection probabilities for each model, $\{s_j\}$
+    && train $\hj$ through \gls{qhl}.
+    && apply the \glsentrylong{of} to assign the model's fitness, $g_j$.
+    & Map the fitnesses of each model, $\{g_j\}$, to selection probabilities for each model, $\{s_j\}$.
     && e.g. by normalising the fitnesses, or by removing some poorly-performing models and then normalising. 
-    & Generate the next generation of models
+    & Generate the next generation of models.
     && Reset $\mu = \{ \}$
-    && \label{qmla_ga:select} Select pairs of parents, $\h_{p_1}, \h_{p_2}$, from $\mu$
-    &&& Each model's probability of being chosen is proportional to their $s_j$
+    && \label{qmla_ga:select} Select pairs of parents, $\h_{p_1}, \h_{p_2}$, from $\mu$.
+    &&& Each model's probability of being chosen is proportional to their $s_j$.
     && Cross over $\h_{p_1}, \h_{p_2}$ to produce children models, $\h_{c_1}, \h_{c_2}$. 
-    &&& mutate $\h_{c_1}, \h_{c_2}$ according to some random probabilistic process
+    &&& mutate $\h_{c_1}, \h_{c_2}$ according to some random probabilistic process.
     &&& keep $\h_{c_i}$ only if it is not already in $\mu$, to ensure $N_m$ unique models are tested at each generation.
     && until $| \mu| = N_m$, iterate to step (\ref{qmla_ga:select}.
     & Until the $N_g^{th}$ generation is reached, iterate to step \ref{qmla_ga:loop}.

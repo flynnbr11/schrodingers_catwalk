@@ -2,7 +2,7 @@
 A sensible first case study for the \gls{qmla} framework is to prescribe a set of models, 
     where we know that the \gls{true model} is among them, or at least that we would be satisfied with 
     approximating $\ho$ as the best model in the set. 
-This application can be useful, for example, for expedited device calibration; 
+This application can be useful, for example, for expedited device calibration:
     suppose we wish to characterise a new, \emph{untrustued} quantum simulator/device, $S_u$, 
     and we have access to a \emph{trusted}\footnotemark \  simulator, $S_t$. 
 In order to perform this calibration, 
@@ -13,12 +13,20 @@ Conversely, miscalibrations will mainfest as imperfectly implemented gates/steps
     and so would result in data inconsistent with $\ho$. 
 Therefore, if we can prescribe the most likely miscalibrations, it may be feasible to compose a set 
     of models, $\mathbb{H}$, which represent those cases, and search for $\hp$ only within $\mathbb{H}$,
-    to identify those miscalibrations. 
-For example, by encoding connections between every pair of device qubits in $\ho$, 
-    we can compose models with restricted connectivity, for instance where some pairs of qubits are disconnected, 
+    to identify the dominant error mechanism(s). 
+For example, by encoding in $\ho$ the connections between every pair of qubits on the device qubits,
+    we can compose candidate models of restricted connectivity, for instance where some pairs of qubits are disconnected, 
     and hence discover whether the device allows arbitrary two-qubit gates, 
     and which pairs are disallowed. 
 \footnotetext{Note: here a classical computer can fulfil the role of the trusted simulator.}
+\par
+
+In this chapter we perform such a study of the \gls{qmla} framework itself, 
+    by manually defining target and candidate models in simulation, 
+    given by lattice structures.
+We test the protocol by varying the physical systems it aims to represent, 
+    and finish by demonstrating that \gls{qmla} can classify the family of models 
+    underlying the target system, when allowed explore several families.  
 
 \section{Lattices}\label{sec:lattices}
 We first consider \gls{q} as some lattice, where \gls{qmla} attempts to identify the structure of the lattice. 
@@ -368,7 +376,7 @@ This capacity for error is mitigated by combining many \glspl{instance} together
     a \gls{qmla} \gls{run}, such that any conclusions drawn rely on the average performance, 
     where strong models are likely to perform better overall, even given access to limited resources. 
 \footnotetext{
-    Including \cref{sec:family_identification} where we study the effect of varying resources on \gls{qmla}'s outcome
+    Including \cref{sec:family_classification} where we study the effect of varying resources on \gls{qmla}'s outcome
     in the context of lattice systems described here.
 }
 \par 
@@ -792,50 +800,72 @@ In the ideal case, where it is mostly believed the device works,
     it may be sufficient verification that the device behaves as desired, 
     or at least part thereof. 
 
-\section{Model Family Identification}\label{sec:family_identification}
-\glsreset{es}
-\glsreset{et}
-Recall from \cref{sec:qmla_protocol} (and \cref{fig:qmla_overview}\textbf{(e)}) that \gls{qmla} 
-    is built to grow multiple \glspl{et} concurrently, each corresponding to a unique \gls{es}. 
-This functionality permits \glspl{et} of different underlying physical assumptions, 
-    and can therefore be used to examine alternative formalisms in parallel.
-For instance, we can run \glspl{es} for each of the Ising, Heisenberg and Hubbard models, 
-    and determine which formalism best describes the system of interest, \gls{q}. 
-\par 
-
-Earlier in this chapter, we alluded to a fundamental question in and any discussion of model training/comparison 
-    through Bayesian inference as underlies \gls{qhl}:
-    to what extent do training resources ($\Ne, \Np$) undermine trained models, 
-    and what resources should be granted in order to retrieve reliable outcomes?
-As usual in \gls{ml} methods, this represents a trade-off between the results of the algorithm with training time
-    and computational resources required.
-\par
-
-We combine non-exhaustive testing of the tradeoff between resources and outcomes, 
-    with the task of identifying the family of models to which \gls{q} belongs. 
-In this case, we vary the target model $\ho$ as deriving again from the lattices in 
-    \cref{fig:lattices}, 
-    however we reduce the number of tested models in each case. 
-\glspl{es} corresponding to the Ising and Heisenberg model consider lattices (a-f), 
-    while the \gls{es} for the Hubbard model only consider (a-`c). 
-\cref{fig:family_identification} shows the rate at which the precise $\ho$ is identified, 
-    as well as the rate with which family of $\ho$ is identified, 
-    compared with increasing resources $\Ne, \Np$. 
-A clear trend demonstrates that success scales with resources.
-
+\section{Model Family Classification}\label{sec:family_classification}
 \begin{figure}[t]
     \begin{center}
         \includegraphics{theoretical_study/figures/model_family_search.pdf}
     \end{center}
-    \label{fig:family_identification}
-    \caption[\gls{qmla} for model family identification]{
-        \gls{qmla} for model family identification
+    \caption[\gls{qmla} outcomes for varying training resources]{
+        \gls{qmla} outcomes for varying training resources. 
+        Independent \glspl{es} are implemented for Ising, Heisenberg and Hubbard families, 
+            with $\ho$ cycling through lattices (a-f) for the Ising and Heisenberg cases, 
+            and (a-c) for the Hubbard case, where lattices' connectivity are as depicted in \cref{fig:lattices}.
+        Each latttice in each famility is tested as $\ho$ in five \glspl{instance}, so there are 75 \glspl{instance} per datapoint. 
+        The success rates are shown for \gls{qmla} identifiyng the correct model precisely (blue),
+            as well as classifying the correct model family (orange), 
+            against the numbers of experiments and particles used to train each candidate model. 
+        \figtableref
     }
+    \label{fig:family_classification}
 \end{figure}
 
 
-\gls{qmla}'s capacity to identify the family of model to which \gls{q} belongs suggests powerful 
+
+\glsreset{es}
+\glsreset{et}
+Recall from \cref{sec:qmla_protocol} (and \cref{fig:qmla_overview}\textbf{(e)}) that \gls{qmla} 
+    can grow multiple \glspl{et} concurrently, each corresponding to a unique \gls{es}. 
+This functionality permits \glspl{et} of different underlying physical assumptions, 
+    and can therefore be used to examine alternative formalisms in parallel.
+For instance, in order to examine the target system, \gls{q}, 
+    we can independently run \glspl{es} for each of the Ising, Heisenberg and Hubbard model \emph{families}:
+    \gls{qmla} first deems the most appropriate model under each formalism, $\hp_S$,
+    before consolidating $\{\hp_S\}$ and decalring the global \gls{champion model}, $\hp$. 
+$\hp$ therefore encodes which family best describes the system of interest, \gls{q}:
+    even if the precise model is not found, $\hp \neq \ho$, we can still classify the 
+    model family -- i.e. the underlying physical mechanism -- which is most useful for describing \gls{q}. 
+\par 
+
+Earlier in this chapter, we alluded to a fundamental question in the discussion of model training/comparison 
+    through Bayesian inference, as underlies \gls{qhl}:
+    to what extent do training resources -- the number of experiments performed, $\Ne$, and the number of particles used during \gls{qhl}, $\Np$ -- 
+    undermine trained models, and what resources should be granted in order to retrieve reliable outcomes?
+As usual in \gls{ml} methods, this represents a trade-off between the results of the algorithm 
+    against training time and the computational resources required.
+\par
+
+We combine the task of family classification 
+    with non-exhaustive testing of the tradeoff between resources and outcomes.
+In this case, we vary the target model $\ho$ as deriving again from the lattices in 
+    \cref{fig:lattices}, 
+    however we reduce the number of tested models in each case. 
+\glspl{es} corresponding to the Ising and Heisenberg model consider lattices (a-f), 
+    while the \gls{es} for the Hubbard model only consider (a-c). 
+\cref{fig:family_classification} shows the rate at which the precise $\ho$ is identified, 
+    as well as the rate with which family of $\ho$ is classified, 
+    compared with increasing resources, $\Ne$ and $\Np$. 
+As expected, a clear trend demonstrates that the success rates scale with resources,
+    which we can leverage in practice in two core ways.
+Firstly, we can simply by ensure that the training regime for models is sufficient that model comparisons can be trusted, 
+    i.e. if \gls{qmla} does not give clear results, increase $\Ne, \Np$.
+Secondly, we can mitigate the unpredictable failures of \gls{qmla} by running many \glspl{instance} per \gls{run}:
+    one (or few \glspl{instance}) in a scarce-resource training regime are prone to error, 
+    so in cases where we are unsure whether the resources provided are sufficient, 
+    we must run enough independent \glspl{instance} to overcome these artefacts. 
+
+
+\gls{qmla}'s capacity to classify the family of model to which \gls{q} belongs suggests powerful 
     future applications of the framework, namely to automatically discover the type of physics underlying 
     systems of interest.
-For example, \gls{qmla} could be used to identify whether a sample is ferromagnetic or antiferromagnetic;
+For example, \gls{qmla} could be used to classify whether a sample is ferromagnetic or antiferromagnetic;
     or further, is best described as a system of bosons or fermions.
