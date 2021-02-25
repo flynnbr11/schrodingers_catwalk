@@ -1,23 +1,25 @@
+\glsresetall
 First suggested in \cite{Granade:2012kj} and since developed \cite{wiebe2014qhlpra, Wiebe:2014qhl} 
-    and implemented \cite{wang2017experimental,gentile2020learning}, 
+    and implemented \cite{gentile2020learning, wang2017experimental}, 
 \gls{qhl} is a machine learning algorithm for the optimisation of a given Hamiltonian parameterisation 
-    against a quantum system whose model is known apriori. 
-Given a target quantum system \gls{q} known to be described by some Hamiltonian $\hat{H}(\vec{\alpha})$, 
+    against a quantum system whose model is known a priori. 
+Given a target quantum system, \gls{q}, known to be described by some Hamiltonian $\hat{H}(\vec{\alpha})$, 
     \gls{qhl} optimises $\vec{\alpha}$.
 This is achieved by interrogating \gls{q} and comparing its outputs against proposals $\vec{\alpha}_p$. 
 In particular, an experiment is designed, consisting of an input state, $\ket{\psi}$, and an evolution time, $t$.
-This experiment is performed on \gls{q}, whereupon its measurement yields the datum $d \in \{0, 1\}$, 
+This experiment is performed on \gls{q}, whereupon its measurement yields the datum $d \in \{0, 1\}$ -- 
+    i.e. the eigenstate $\ket{d} \in \{ \ket{0}, \ket{1}$ is observed -- 
     according to the expectation value $\left| \bra{\psi} e^{-i \ho t} \ket{\psi} \right|^2$. 
-Then on a trusted (quantum) simulator, proposed parameters $\vec{\alpha}_p$ are encoded to the 
-    known Hamiltonian, and the same \gls{probe} state is evolved for the chosen $t$ and projected on to $d$, 
+Then, on a trusted (quantum) simulator, proposed parameters $\vec{\alpha}_p$ are encoded to the 
+    known Hamiltonian, and the same \gls{probe} state is evolved for the chosen $t$ and projected on to $\ket{d}$, 
     i.e. $\left| \bra{d} e^{-i \hat{H}(\vec{\alpha}_p) t } \ket{\psi} \right|^2 $ is computed.
 The task for \gls{qhl} is then to find $\vec{\alpha}^{\prime}$ for which this quantity 
     is close to 1 for all values of $(\ket{\psi}, t)$, 
-    i.e. the parameters input to the simulation produce dynamics consistenst with those measured from \gls{q}.
+    i.e. the parameters input to the simulation produce dynamics consistent with those measured from \gls{q}.
 \par 
 
 The procedure is as follows. 
-A \emph{prior} probability distribution $\pra$ of dimension $\left| \al \right|$ 
+A \emph{prior} probability distribution $\pra$ in a parameter space of dimension $\left| \al \right|$ 
     is initialised to represent the constituent parameters of $\al$. 
 $\pra$ is typically a multivariate normal (Gaussian) distribution; 
     it is therefore necessary to pre-suppose some mean and width for each parameter in $\al$. 
@@ -25,10 +27,6 @@ This imposes prior knowledge on the algorithm whereby the programmer must decide
     which parameters are \emph{likely} to fit:
     although \gls{qhl} is generally robust and capable of finding parameters outside of this prior,
     the prior must at least capture the order of magnitude of the target parameters. 
-An example of imposing such domain-specific prior knowledge is, 
-    when choosing the prior for a model representing an $e^-$ spin in a \gls{nv} centre,
-    to select $GHz$ parameters for the electron spin's rotation terms, and $MHz$ terms 
-    for the spin's coupling to nuclei, as proposed in literature. 
 It is important to understand, then, that \gls{qhl} removes the prior knowledge 
     of precisely the parameter representing an interaction in \gls{q}, but does rely on a ball-park estimate thereof from which to start. 
 \par 
@@ -38,15 +36,15 @@ In short, \gls{qhl} samples parameter vectors $\al_p$ from $\pra$,
     for experiments ($\ket{\psi}, t)$ designed by a \gls{qhl} heuristic subroutine, 
     and iteratively improves the probability distribution of the parameterisation $\pra$ 
     through standard \emph{Bayesian inference}. 
-A given set of $(\ket{\psi}, t)$ is called an experiment, since it corresponds to preparing, evolving and measuring \gls{q} 
-once\footnote{experimentally, this may involve repeating a measurement many times to determine a majority result and to mitigate noise}. 
+A given set of $(\ket{\psi}, t)$ is called an \emph{experiment}, since it corresponds to preparing, evolving and measuring \gls{q} 
+once\footnote{Experimentally, this may involve repeating a measurement many times to determine a majority result and to mitigate noise.}. 
 \gls{qhl} iterates for $\Ne$ experiments. 
 The parameter vectors sampled are called \emph{particles}: there are $\Np$ particles used per experiment. 
 Each particle used incurs one further calculation of the \gls{likelihood} function -- 
     this calculation, on a classical computer, is exponential in the number of qubits of the model under consideration
     (because each unitary evolution relies on the exponential of the $2^n \times 2^n$ Hamiltonian matrix of $n$ qubits). 
 Likewise, each additional experiment incurs the cost of calculation of $\Np$ particles, 
-    so the total cost of running \gls{qhl} for a single model is $\propto \Ne \Np$.
+    so the total cost of running \gls{qhl} to train a model is $\propto \Ne \Np$.
 It is therefore preferable to use as few particles and experiments as possible, 
     though it is important to include sufficient resources that the parameter estimates have the opportunity to converge. 
 Access to a fully operational, trusted quantum simulator admits an exponential 
@@ -73,15 +71,16 @@ We wish to represent our knowledge of Hamiltonian parameters with a distribution
     \Pr(\vec{\alpha} | \expdata; \expset) = \frac{\Pr(\expdata| \vec{\alpha}; \expset) \ \Pr(\vec{\alpha})}{\Pr(\expdata|\expset)}.
 \end{equation}
 
-We can then discretise \cref{eqn:qhl_bayes_rule} to the level of single particles (individual vectors in the parameter space), sampled from $\Pr(\al)$:
-\begin{equation}\label{eqn:particle_bayes_rule}
-    \Pr(\al_p | d; e) = \frac{ \Pr(d | \ \al_p; \ e ) \ \Pr(\al_p) } {\Pr(d | e)}
-\end{equation}
+We can consider \cref{eqn:qhl_bayes_rule} at the level of single \emph{particles} (individual vectors in the parameter space), 
+    sampled from $\Pr(\al)$:
+    \begin{equation}\label{eqn:particle_bayes_rule}
+        \Pr(\al_p | d; e) = \frac{ \Pr(d | \ \al_p; \ e ) \ \Pr(\al_p) } {\Pr(d | e)}
+    \end{equation}
 
 where 
 \begin{easylist}[itemize]
     & $e$ are the experimental controls of a single experiment, e.g. evolution time and input \gls{probe} state;
-    & $d$ is the datum, i.e. the binary outcome of measuring \gls{q} under conditions $e$;  
+    & $d$ is the datum, i.e. the (usually) binary outcome of measuring \gls{q} under conditions $e$;  
     & $\al_p$ is the \emph{hypothesis}, i.e. a single parameter vector, called a particle, sampled from $\Pr(\al)$;
     & $\Pr(\al_p | d; e)$ is the \emph{updated} probability of this particle following the experiment $e$, 
         i.e. accounting for new datum $d$, the probability that $\al=\al_0$;
@@ -90,25 +89,30 @@ where
         and the experiment $e$ was performed; 
     & $\Pr(\al_p)$ is the probability that $\al_p=\al_0$ according to the prior distribution $\Pr(\al)$, 
         which we can immediately access; 
-    & $\Pr(d|e)$ is a normalisation factor, the chance of observing $d$ from experiment $e$ irrespective of the underlying hypothesis.
+    & $\Pr(d|e)$ is a normalisation factor, the chance of observing $d$ from experiment $e$ irrespective of the underlying hypothesism 
+        such that $\sum_{\{d\}} \Pr(d|e) = 1$.
 \end{easylist}
 
 In order to compute the updated probability for a given particle, then, all that is required is a value for the \gls{likelihood} function.
-This is equivalent to the expectation value of projecting $\ket{\psi}$ onto $d$, after evolving $\hat{H}(\al_p)$ for $t$, i.e. 
+This is equivalent to the expectation value of projecting $\ket{\psi}$ onto $\ket{d}$, after evolving $\hat{H}(\al_p)$ for $t$, i.e. 
 \begin{equation}
     \label{eqn:likelihood}
     \Pr(d | \al; e) = \left| \bra{d} e^{-i \hat{H}(\al_p)t} \ket{\psi} \right|^2,   
 \end{equation}
     which can be simulated clasically or using a quantum simulator (see \cref{sec:likelihood}). 
-It is necessary first to know the datum $d$ (either 0 or 1) which was projected by \gls{q} under real experimental conditions. 
+It is necessary first to know the datum $d$ (either 0 or 1) which was projected by \gls{q} under experimental conditions. 
 Therefore we first perform the experiment $e$ on \gls{q} 
     (preparing the state $\ket{\psi}$ evolving for $t$ and projecting again onto $\bra{\psi}$)
     to retrieve the datum $d$. 
 $d$ is then used for the calculation of the \gls{likelihood} for each particle sampled from $Pr({\al})$. 
 Each particle's probability can be updated by \cref{eqn:particle_bayes_rule}, 
-    allowing us to redraw the entire probability distribution -- i.e. we compute a \emph{posterior} probability distribution
-    by performing this routine on $\Np$ particles. 
-
+    allowing us to redraw the entire probability distribution.
+We can hence compute a \emph{posterior} probability distribution
+    by performing this routine on a set of $\Np$ particles:
+    we hypothesise $\Np$ parameterisations $\al_i$ sampled from $\Pr(\al)$, 
+    and update their $\Pr(\al_i)$ in proportion to their likelihood.
+In effect, hypotheses (particles) which are found to be highly likely are given increased credence, 
+    while those with low likelihood have their credence decreased. 
 
 \section{Sequential Monte Carlo}\label{sec:smc}
 \begin{figure}
@@ -139,89 +143,129 @@ Each particle's probability can be updated by \cref{eqn:particle_bayes_rule},
     \subfloat{
         \includegraphics{algorithms/figures/smc_demo/cbar.pdf}
     }
-    \caption[Quantum Hamiltonian learning via sequential Monte carlo]{
-    \Acrfull{qhl} via \acrfull{smc}. 
-    The studied model has two terms, $\{\sx, \sy\}$ with true parameters $\alpha_{x}=0.9, \alpha_y=0.15$ (dahsed lines), 
-        with $\Ne=500, \Np=2000$. 
-    Crosses represent particles, while the distribution $\Pr(\alpha_p)$ for each 
-        parameter can be seen along the top and right-hand-sides of each subplot. 
-    Both parameters are assigned a uniform probability distribution $\mathcal{U}(0,1)$, representing our prior knowledge of the system. 
-    \textbf{(a), }\gls{smc} samples $\Np$ particles from the initial joint probability distribution, 
-        with particles uniformly spread across the unit square, each assigned the starting \emph{weight} $w_0$. 
-        At each experiment $e$, each of these particles' \gls{likelihood} is computed according to \cref{eqn:particle_bayes_rule}
-        and its weight is updated by \cref{eqn:qhl_weights}.
-    \textbf{(b),} after 9 experiments, the weights of the sampled particles are sufficintly informative that we know we can 
-        discard some particles while most likely retaining the true parameters. 
-    \textbf{(c),} \gls{smc} resamples according the current $\Pr(\al)$, 
-        i.e. having accounted for the experiments and \glspl{likelihood}  observed to date, 
-        a new batch of $\Np$ particles are drawn, and each reassigned weight $w_0$, 
-        irrespective of their weight prior to resampling.  
-    \textbf{(d, e),} Afer further experiments and resamplings, \gls{smc} narrows $\Pr(\al)$ to a region around the true parameters. 
-    \textbf{(f),} The final \emph{posterior} distribution consists of two narrow distributions centred on $\alpha_x$ and $\alpha_y$. 
+    \caption[\Glsentryfull{qhl} via \glsentryfull{smc}]{
+        \Glsentryfull{qhl} via \glsentryfull{smc}. 
+        The studied model has two terms, $\{\sx, \sy\}$ with true parameters $\alpha_{x}=0.9, \alpha_y=0.15$ (dahsed lines), 
+            with resources $\Ne=500, \Np=2000$ for training the model. 
+        Crosses represent particles, while the distribution $\Pr(\alpha_p)$ for each 
+            parameter can be seen along the top and right-hand-sides of each subplot. 
+        Both parameters are assigned a uniform probability distribution $\mathcal{U}(0,1)$, representing our prior knowledge of the system. 
+        \textbf{(a),} \gls{smc} samples $\Np$ particles from the initial joint probability distribution, 
+            with particles uniformly spread across the unit square, each assigned the starting \emph{weight} $w_0$. 
+            At each experiment $e$, each of these particles' \gls{likelihood} is computed according to \cref{eqn:particle_bayes_rule}
+            and its weight is updated by \cref{eqn:qhl_weights}.
+        \textbf{(b),} after 9 experiments, the weights of the sampled particles are sufficiently informative that we know we can 
+            discard some particles while most likely retaining the true parameters. 
+        \textbf{(c),} \gls{smc} resamples according the current $\Pr(\al)$, 
+            i.e. having accounted for the experiments and \glspl{likelihood}  observed to date, 
+            a new batch of $\Np$ particles are drawn, and each reassigned weight $w_0$, 
+            irrespective of their weight prior to resampling.  
+        \textbf{(d, e),} Afer further experiments and resamplings, \gls{smc} narrows $\Pr(\al)$ to a region around the true parameters. 
+        \textbf{(f),} The final \emph{posterior} distribution consists of two narrow distributions centred on $\alpha_x$ and $\alpha_y$. 
+        By taking the mean of the posterior distribution, we approximate the parameters of interest as $\al^{\prime}$. 
     }
     \label{fig:qhl_smc}
 \end{figure}
-
+\glsreset{smc}
 In practice, \gls{qhl} samples from and updates $\Pr(\al)$  via \gls{smc}.
 \gls{smc} samples the $\Np$ particles from $\Pr(\al)$, and assigns each particle a weight, $w_0 = 1/\Np$.
 Each particle corresponds to a unique position in the parameters' space, i.e. $\al_p$.
 Following the calculation of the likelihood, $\Pr(d | \al_p; e)$, 
-    the weight of particle $p$ are updated by \cref{eqn:qhl_weights}.
+    the weight of particle $p$ is updated from its initial value of $w_p^{\textrm{old}}$ by \cref{eqn:qhl_weights}.
 \begin{equation}\label{eqn:qhl_weights}
-    w_p^{new} = \frac{\Pr(d | \al_p; e) \times w_p^{old} } { \sum\limits_{p} w_p \Pr(\al_p | d; e) }
+    w_p^{\textrm{new}} = \frac{\Pr(d | \al_p; e) \times w_p^{\textrm{old}} } { \sum\limits_{p} w_p \Pr(\al_p | d; e) }
 \end{equation}
 
-In this way, strong particles (high $\Pr(d | \al_p; e)$) have their weight increased, 
+In this way, strong particles -- with high $\Pr(d | \al_p; e)$ -- have their weight increased, 
     while weak particles (low $\Pr(d | \al_p; e)$) have their weights decreased, 
     and the sum of weights remains normalised. 
-Within a single experiment, the weights of all $\Np$ particles are updated thus:
+Within a single experiment, the weights of all $\Np$ particles are updated:
     we \emph{simulataneously} update sampled particles' weights as well as $\Pr(\al)$. 
-This iterates for the following experiment, using the \emph{same} particles: 
+The procedure of updating particles' weights iterates for the subsequent experiment, using the \emph{same} particles: 
     we do \emph{not} redraw $\Np$ particles for every experiment.
 Eventually, the weights of most particles fall below a threshold, $r_t$, 
     meaning that only that fraction of particles have reasonable \gls{likelihood} of being $\al_0$.
-At this stage, \gls{smc} \emph{resamples}, i.e. selects new particles, according to the updated $\Pr(\al)$,
-    according to the Liu-West resampling algorithm \cite{liu2001combined}.
+At this stage, \gls{smc} \emph{resamples}, i.e. selects new particles, according to the updated $\Pr(\al)$\footnotemark.
 Then, the new particles are in the range of parameters which is known to be more likely, 
     while particles in the region of low-weight are effectively discarded. 
 Usually, we set $r_t=0.5$, although this \gls{hyperparameter} can have a large impact 
     on the rate of learning, so can be optimised in particular circumstances, 
     see \cref{fig:param_learning_vary_particles}.
+\par 
 This procedure is easiest understood through the example presented in \cref{fig:qhl_smc}, 
     where a two-parameter Hamiltonian is learned starting from a uniform distribution. 
+$\Np=2000$ particles are used to propose hypotheses distributed evenly throughout the parameter space, 
+    each of which are subject to weight updates as outined above. 
+In this example, after 9 experiments the particles around the diagonal ($x=y$) are deemed unlikely, 
+    while clusters form in the opposite corners where the algorithm finds the hypotheses credible. 
+Before the tenth experiment, the algorithm resamples, i.e. reassigns weights based on the present $\Pr(\al)$. 
+The algorithm iteratively reassigns weight to particles based on their likelihoods, redraws $\Pr(\al)$ and resamples. 
+We show the state of the particles after 50, 100 and 500 experiments,
+    with the overall result of a highly peaked parameter distribution, 
+    whose centre is near the target parameters. 
 
+\footnotetext{
+    Particles are \emph{resampled} according to a resampling algorithm. 
+    Throughout this thesis, we always use the Liu-West resampling algorithm \cite{liu2001combined}.
+}
 
 \section{Likelihood}\label{sec:likelihood}
-The fundamental step within \gls{qhl} is the calculation of  \gls{likelihood} in \cref{eqn:particle_bayes_rule}. 
-The core of this learning algorithm is that this  \gls{likelihood} can be retrieved from the Born rule, 
-    although in principle \emph{any} valid \gls{likelihood} function can fulfil this equation, 
-    provided the calculation of the \gls{likelihood} captures the probabilty that the present hypothesis produced the present datum.
-
-In general, it is not always possible to derive the analytical likelihood, 
-    especially in cases where we wish to vary the \gls{probe}.
-When \cref{eqn:likelihood} can be computed classically, 
-    \gls{qhl} relies on \gls{cle}, i.e. involving the exponential calculation of \cref{eqn:likelihood}, 
-    whereas \gls{qle} uses the same \gls{likelihood} function computed on a quantum simulator; 
-    this is the sole application of quantum simulators in this protocol and indeed the remainder of this thesis. 
-Access to such hardware, operating perfectly, would provide exponential speedup in the calculation of this term, 
-    rendering both \gls{qhl} and the wider \gls{qmla} formalism scalable,
-    although in this thesis we do not implement \gls{qle} so everything can be viewed as \gls{cle}. 
-\gls{qle} was implemented in \cite{wang2017experimental}. 
+The fundamental step within \gls{qhl} is the calculation of  \gls{likelihood}, 
+    which enables updates of the probability distribution in \cref{eqn:particle_bayes_rule}. 
+The key to the learning algorithm is that \gls{likelihood} can be retrieved from the Born rule, 
+    which captures how likely a given a quantum system is to be measured in an eigenstate.
+When we have retrieved a datum, $d$, from \gls{q}, we can compute the probability that \gls{q} 
+    would be measured in the corresponding eigenstate $\ket{d}$ -- this probability serves as the likelihood, 
+    and is given by \cref{eqn:likelihood}.
 \par 
 
-We adopt notation used by QInfer, which \gls{qmla} for the \gls{likelihood} estimation stage \cite{qinfer-1_0}. 
-The expectation value for a the unitary operator is given by
+In some cases, it is feasible to derive the closed form of the \gls{likelihood}, 
+    for example as a simple expression in terms of the Hamiltonian parameters, 
+    which we will exemplify in \cref{sec:analytical_likelihood}. 
+Closed form likelihoods allow for rapidly testing hypothetical parameters for comparison against 
+    the observed data, so \gls{qhl} can feasibly be run with high $\Ne, \Np$.  
+In general, however, it is not possible to derive the closed form of the likelihood, 
+    and instead the \gls{likelihood} must be computed through \cref{eqn:likelihood}, 
+    which can be done either on a classical or quantum simulator. 
+The case where the \gls{likelihood} is computed on a quantum simulator is referred to as \gls{qle}
+    \cite{Wiebe:2014qhl, wang2017experimental},
+    and can leverage any algorithm for the calculation of Hamiltonian dynamics to achieve \emph{quantum speedup}
+    \cite{berry2015hamiltonian, childs2018toward}. %TODO references for Hamiltonian dynamics
+\par 
+In this thesis, we do not implement the presented algorithms on quantum hardware,
+    instead investigating their performance using idealised classical simulations, i.e. \gls{cle}. 
+The reliance on classical resources demands that \cref{eqn:likelihood} be computed explicitly, 
+    notably involving the matrix exponential $e^{-i\hat{H}(\al_p) t}$.
+Since the Hamiltonian matrix scales with the size of the simulated system,
+    running \gls{qhl} for an $n$-qubit systems requires exponentiation of its $2^n \times 2^n$ Hamiltonian matrix, 
+    in order to compute the exact likelihoods required for learning. 
+This overhead restricts the applicability of \gls{cle}: 
+    $n=11$-qubit systems' Hamiltonians exhaust the memory capacity of most conventional classical computers.
+In practice, \gls{qhl} is limited by the computation of the total $\Ne\Np$ matrix exponentials required for training:
+    we will only entertain systems which can be represented by Hamiltonians of up to $n=8$ qubits. 
+In principle, larger systems could be condensed for simulation on available classical resources, 
+    or those resources used more efficiently \cite{rudi2020approximating}, 
+    but the remit of this thesis can be fulfilled with demonstrations in the domain $n\leq8$ qubits, 
+    so we do not endeavour to find the most effective classical strategies.
+\par 
+
+Adopting the notation used by QInfer \cite{qinfer-1_0}, upon which our software builds, 
+    the expectation value for a the unitary operator is given by
 \begin{equation}\label{eqn:pr0}
-    \Pr(0) =  |\bra{\psi} e^{-i \hat{H}_p t} \ket{\psi}|^2  = l(d=0 | \hat{H}_p; e), 
+    \Pr(0) =  |\bra{\psi} e^{-i \hat{H}_p t} \ket{\psi}|^2  = l(d=0 | \hat{H}_p; e).
 \end{equation}
-    i.e. the input basis is assigned the measurement label $d=0$, and this quantity is the probability 
-    of measuring $d=0$, i.e. measuring the same state as input. 
-However, we assume a binary outcome model, 
-    i.e. that the system is measured either in $\ket{\psi}$ (labelled $d=0$), or it is not ($d=1$);
+In \cref{eqn:pr0}, the input basis is assigned the measurement label $d=0$, and this $\Pr(0)$ is the probability 
+    of measuring $d=0$, i.e. measuring the same state as was prepared as input. 
+We assume a binary outcome model\footnotemark, 
+    i.e. that the system is measured either in $\ket{\psi}$ (labelled $d=0$), or it is not ($\ket{\psi_{\perp}}, d=1$);
     the \gls{likelihood} for the latter case is
 \begin{equation}\label{eqn:pr1}
     \Pr(1) = l(d=1 | \hat{H}_p; e) = \sum_{\{\ket{\psi_{\perp}}\}} | \bra{\psi_{\perp}} e^{-i \hat{H}_p t} \ket{\psi}  |^2 = 1 - \Pr(0).
 \end{equation}
+
+\footnotetext{
+    In principle the output does not have to be binary, so we sum over the general set  $\{ \ket{\psi_{\perp}}\} }$
+    of eigenstates orthogonal to $\ket{\psi}$ in \creq{eqn:pr1}.
 \par 
 Usually we will refer to the case where \gls{q} is projeced onto the input state $\ket{\psi}$, 
     so the terms \emph{likelihood}, \emph{expectation value} and \emph{$\Pr(0)$} are synonymous, 
@@ -229,6 +273,13 @@ Usually we will refer to the case where \gls{q} is projeced onto the input state
 
 
 \subsection{Interactive Quantum \gls{likelihood} Estimation}\label{sec:iqle}
+A fundamental result in \gls{qm} -- the \gls{le} -- undermines the basis of \gls{qle}, 
+    which can be overcome by the extension to \gls{iqle} \cite{Wiebe:2014qhl}. 
+The \gls{le} shows that the expectation values of two almost identical Hamiltonians 
+    diverge afeter exponentially small evolution time, 
+    and therefore even hypothetical parameters 
+
+
 An important extension to \gls{qle} is \gls{iqle}, 
     which follows \gls{smc} but uses an alternative  \gls{likelihood} function in order to 
     overcome some of its inherent challenges \cite{Wiebe:2014qhl}. 
@@ -276,15 +327,17 @@ The remaining application for \gls{iqle}, and correspondingly \gls{qhl},
     is in the characterisation of untrusted quantum simulators, 
     which can realise such coherent channels \cite{wang2017experimental}. 
 
-\subsection{Analytical likelihood}    
-In some cases, analytical \gls{likelihood} functions can be derived to describe the dynamics of simple quantum systems 
-    \cite{sergeevich2011characterization, ferrie2013best},
-    for instance encoding the Rabi frequency $\omega$ of an oscillating electron spin in an \gls{nvc},
+\subsection{Analytical likelihood}\label{sec:analytical_likelihood}
+For some Hamiltonians, we can derive an analytical \gls{likelihood} function to describe their dynamics
+    \cite{sergeevich2011characterization, ferrie2013best}.
+For instance, the Hamiltonian for an oscillating electron spin in a \glsentrylong{nvc} 
+    is given by
     \begin{equation}
         \label{eqn:analytical_hamiltonian}
-        \hat{H}(\omega) = \frac{\omega}{2} \s_z.
+        \hat{H}(\omega) = \frac{\omega}{2} \s_z,
     \end{equation}
-Then, bearing in mind that $\s_z \s_z = \hat{\mathbb{1}}$, so $\s_z^{2k}=\hat{\mathbb{1}}$ and $\s_z^{2k+1} = \s_z$, 
+    where $\omega$ is the Rabi frequency of the spin. 
+Then, recalling that $\s_z \s_z = \hat{\mathbb{1}}$, so $\s_z^{2k}=\hat{\mathbb{1}}$ and $\s_z^{2k+1} = \s_z$, 
     using MacLaurin expansion, the unitary evolution of \cref{eqn:analytical_hamiltonian} is given by 
 \begin{align}
     \begin{split}
@@ -293,7 +346,7 @@ Then, bearing in mind that $\s_z \s_z = \hat{\mathbb{1}}$, so $\s_z^{2k}=\hat{\m
         - i \sin\bk{ \frac{\omega t \s_z}{2}} \\
         &= \bk{ \sum\limits_{k=0}^{\infty} \frac{(-1)^k}{(2k)!} \bk{ \frac{\omega t}{2} }^{2k} \s_z^{2k}  }
         - i \bk{\sum\limits_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!} \bk{ \frac{\omega t}{2} }^{2k+1} \s_z^{2k+1}} \\
-        &=  \bk{\sum\limits_{k=0}^{\infty} \frac{(-1)^k}{(2k)!} \bk{ \frac{\omega t}{2} }^{2k+1}} \hat{\mathbb{1}} 
+        &=  \bk{\sum\limits_{k=0}^{\infty} \frac{(-1)^k}{(2k)!} \bk{ \frac{\omega t}{2} }^{2k}} \hat{\mathbb{1}} 
         - i \bk{\sum\limits_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!} \bk{ \frac{\omega t}{2} }^{2k+1} } \s_z \\
         &= \cos\bk{\frac{\omega t}{2}}\hat{\mathbb{1}} - i \sin\bk{\frac{\omega t}{2}} \s_z
     \end{split}
@@ -304,21 +357,26 @@ Then, evolving a \gls{probe} $\ket{\psi_0}$ and projecting onto a state $\ket{\p
     \label{eqn:rabi_projection}
     \bra{\psi_1} U \ket{\psi_0} = \cos\bk{\frac{\omega t}{2}} \braket{\psi_1 | \psi_0} - i \sin\bk{\frac{\omega t}{2}} \braket{ \psi_1 | \s_z | \psi_0}.
 \end{equation}
-By initialising and projecting into the same state, say $\ket{\psi_0} = \ket{\psi_1} = \ket{+}$, we have
+By initialising and projecting into the same state, say $\ket{\psi_0} = \ket{\psi_1} = \ket{+}$, and reaclling $\s_z\ket{+} = \ket{-}$, we have
 \begin{align}
     \begin{split}
-        \s_z\ket{+} = \ket{-} \implies \braket{\psi_1 | \s_z | \psi_0} &= 0 \\
-        \braket{\psi_1 | \psi_0} &= 1 \\
-        \implies \braket{\psi_1 |  U | \psi_0} &= \cos\bk{\frac{\omega t}{2}},
+        \braket{\psi_1 | \psi_0} = \braket{+|+} & = 1 \\
+        \braket{\psi_1 | \s_z | \psi_0} = \braket{+|-} & = 0 \\
+        \implies \braket{\psi_1 | U | \psi_0} &= \cos\bk{\frac{\omega t}{2}},
     \end{split}
 \end{align}
-    i.e. if the system measures in $\ket{+}$, we set the datum $d=1$, otherwise $d=0$. 
-Then, from Born's rule, and in analogy with \cref{eqn:likelihood}, we can formulate the \gls{likelihood} function, 
+Then, if the system measures in $\ket{+}$, we set the datum $d=0$, otherwise $d=1$. 
+From Born's rule, and in analogy with \cref{eqn:likelihood}, we can formulate the \gls{likelihood} function, 
     where the hypothesis is the single parameter $\omega$, and the sole experimental control is $t$, 
-\begin{equation}
+\begin{subequations}
     \label{eqn:analytical_likleihood}
-    \Pr(d=1 | \omega; t) = \left| \braket{\psi_1 |  U | \psi_0} \right|^2 = \cos^2\bk{\frac{\omega t}{2}}
-\end{equation}
+    \begin{equation}
+        \Pr(d=0 | \omega; t) = \left| \braket{\psi_1 |  U | \psi_0} \right|^2 = \cos^2\bk{\frac{\omega t}{2}}
+    \end{equation}
+    \begin{equation}
+        \Pr(d=1 | \omega; t) = 1 - \cos^2\bk{\frac{\omega t}{2}} = \sin^2 \bk{\frac{\omega t}{2}}
+    \end{equation}
+\end{subequations}
 This analytical \gls{likelihood} will underly the simulations used in the following introductions, except where explicitly mentioned. 
 
 \section{Total log total likelihood}\label{sec:total_log_total_likelihood}
@@ -327,7 +385,7 @@ We have already used the concept of  \gls{likelihood} to update our parameter di
     in the \emph{total likelihood}, 
     \begin{equation}
         \label{eqn:total_likelihood}
-        \lk_{e} = \sum\limits_{p \in \{p\}} \Pr(d | \al_p ; e) \times w_p^{old}.
+        \lk_{e} = \sum\limits_{p \in \{p\}} \Pr(d | \al_p ; e) \times w_p^{\textrm{old}}.
     \end{equation}
 For each experiment, we use total \gls{likelihood} as a measure of how well the distribution performed,
     i.e. we care about how well all particles, $\{p\}$, perform as a collective, representative of how well $\Pr(\al)$ approximates the system,
@@ -346,8 +404,8 @@ Note, we know that
 \begin{align}    
     \begin{split}
         w_p^0 = \frac{1}{\Np} & \implies \sum_p^{\Np} w_p^0 = 1 ; \\
-        \Pr(d | \al_p; e) \leq 1 & \implies \Pr(d | \al_p; e) \times w_p^{old} \leq w_p^{old} \\
-        & \implies \sum\limits_{\{p\}} \Pr(d | \al_p; e) \times w_p^{old} \leq \sum\limits_{\{p\}} w_p^{old} \leq \sum_p^{\Np} w_p^0; \\
+        \Pr(d | \al_p; e) \leq 1 & \implies \Pr(d | \al_p; e) \times w_p^{\textrm{old}} \leq w_p^{\textrm{old}} \\
+        & \implies \sum\limits_{\{p\}} \Pr(d | \al_p; e) \times w_p^{\textrm{old}} \leq \sum\limits_{\{p\}} w_p^{\textrm{old}} \leq \sum_p^{\Np} w_p^0; \\
         & \implies \lk_{e} \leq 1.
     \end{split}
 \end{align}
