@@ -264,8 +264,9 @@ We assume a binary outcome model\footnotemark,
 \end{equation}
 
 \footnotetext{
-    In principle the output does not have to be binary, so we sum over the general set  $\{ \ket{\psi_{\perp}}\} }$
-    of eigenstates orthogonal to $\ket{\psi}$ in \creq{eqn:pr1}.
+    In principle the output does not have to be binary, so we sum over the general set  $\{ \ket{\psi_{\perp}}\}$ 
+    of eigenstates orthogonal to $\ket{\psi}$ in \cref{eqn:pr1}.
+}
 \par 
 Usually we will refer to the case where \gls{q} is projeced onto the input state $\ket{\psi}$, 
     so the terms \emph{likelihood}, \emph{expectation value} and \emph{$\Pr(0)$} are synonymous, 
@@ -273,51 +274,70 @@ Usually we will refer to the case where \gls{q} is projeced onto the input state
 
 
 \subsection{Interactive Quantum \gls{likelihood} Estimation}\label{sec:iqle}
-A fundamental result in \gls{qm} -- the \gls{le} -- undermines the basis of \gls{qle}, 
-    which can be overcome by the extension to \gls{iqle} \cite{Wiebe:2014qhl}. 
-The \gls{le} shows that the expectation values of two almost identical Hamiltonians 
-    diverge afeter exponentially small evolution time, 
-    and therefore even hypothetical parameters 
-
-
-An important extension to \gls{qle} is \gls{iqle}, 
-    which follows \gls{smc} but uses an alternative  \gls{likelihood} function in order to 
-    overcome some of its inherent challenges \cite{Wiebe:2014qhl}. 
-Two almost identical Hamiltonians will diverge after exponentially small evolution time \cite{jalabert2001environment}.
-This is problematic for \gls{qhl} because it relies on the \gls{likelihood} function which is built on the assumption 
-    that increasing accuracy of $\ha$ approximating $\ho$ should result in rising likelihood;
-    this result indicates that even extremely accurate approximations become unreliable after very short evolution times. 
-Coupled with the result that small time experiments are uninformative \cite{wiebe2015quantum}, 
-    this observation demands exponentially many measurements to approximate the exponentially small \glspl{likelihood} , 
-    rendering the approach inefficient. 
-\par 
-The \gls{le} is the measure of the revival resulting from an imperfect time-reversal operation implemented after the standard time evolution. 
-The reversal operation corresponds to some Hamiltonian, $\hat{H}_{-}$, which is seen as an attempt to un-do the evolution
-    according to the original Hamiltonian, $\hat{H}_{+}$. 
-As such we say that $\hat{H}_{-}$ is evolved for $-t$, so its unitary is $e^{-i \hat{H}_{-}(-t)}$ after $\hat{H}_{+}$ is evolved for $t$. 
-The \gls{le} can be written and characterised as 
-\begin{align}
+A fundamental result in \gls{qm} -- the \gls{le} -- shows that marginally differing Hamiltonians 
+    produce exponentially diverging evolutions,  undermining the basis of \gls{qle}, 
+    i.e. that the likelihood function can inform Bayesian updates to a paramater distribution. 
+The \gls{le} concerns the result when \gls{q} is prepared in some initial state $\ket{\psi}$, 
+    evolved forward in time by some $\hat{H}_+$, then evolved \emph{backwards}\footnotemark \ in time by $\hat{H}_{-}$,
+    \footnotetext{Equivalently and in practice, evolved forward in time for $-\hat{H}_{-}$.}
+    and projected back onto $\ket{\psi}$. 
+The \gls{le} -- or the \emph{fidelity} -- is given by 
+\begin{equation}
     \label{eqn:loschmidt_echo}
-    M(t) = \absval{ \braket{ \psi | e^{+i\hat{H}_{-} t} e^{-i \hat{H}_{+} t} | \psi} }^2 \sim 
+    M(t) = \absval{ \braket{ \psi | e^{+i\hat{H}_{-} t} e^{-i \hat{H}_{+} t} | \psi} }^2.
+\end{equation}
+\par
+
+$M(t)$ is dictated by the \emph{similarity} between the two Hamiltonians.
+If $\hat{H}_{+} = \hat{H}_{-}$, then $M(t) = 1$, while $\|\hat{H}_{+} - \hat{H}_{-} \|_2 > 0$ yields $M(t) < 1$, 
+    indicating disagreement between the two Hamiltonians. 
+The fidelity is characterised by a number of distinct regions, depending on the evolution time, $t$:
+\begin{align}
+    \label{eqn:loschmidt_ranges}
+    M(t) \sim 
     \begin{cases}
         1 - \mathcal{O}(t^2),  & t \leq t_c \\
         e^{-\mathcal{O}(t)}, & t_c \leq t \leq t_{s} \\
         \nicefrac{1}{\| \hat{H} \|}, & t \geq t_{s}
     \end{cases}
 \end{align}
-    where $\hat{H}_{-}, \hat{H}_{+}$ are backward and forward time evolutions respsectively, which are assumed almost identical;
-    $\|\hat{H}\|$ is their dimension, and $t_c, t_{s}$ are bounds on the evolution time marking the transition between the 
+    where $\|\hat{H}\|$ is the dimension of the Hamiltonians, and $t_c, t_{s}$ are bounds on the evolution time marking the transition between the 
     \emph{parabolic decay}, \emph{asymptotic decay} and \emph{saturation} of the echo \cite{goussev2012loschmidt}. 
-In effect, the \gls{le} gaurantees that if $\hat{H}_{-} \not\approx \hat{H}_{+}$, then $M(t) \ll 1$, 
-    while $\hat{H}_{-} \approx \hat{H}_{+}$ gives $M(t) \approx 1$. 
-This can be exploited for learning: 
-    by taking $\hat{H}_{+}$ as either $\ho$ (true) or $\ha$ (particle or hypothesis), 
-    and sampling $\hat{H}_{-}$ from $\pra$, 
-    we can adopt \cref{eqn:loschmidt_echo} as the \gls{likelihood} function in \cref{eqn:likelihood}, 
-    in the knowledge that this will disinguish between hypotheses based on their similarity to $\ho$.
+$t_c$ and $t_s$ generally depend on the similarity between $\hat{H}_+$ and $\hat{H}_{-}$: 
+    intuitively, as $\|\hat{H}_+ - \hat{H}_{-}\|_2$ decreases, the echo does not saturate until higher evolution times. 
 \par 
 
-Importantly, \gls{iqle} can only be used where we can \emph{reliably} evolve the system under study. 
+Recall that the Bayesian updates to the parameter distribution relies on good hypotheses receiving likelihood $l_e \sim 1$,
+    and weak hypothesis receiving $l_e \sim 0$. 
+The \gls{le} tells us that there is a small range of evolution times ($t \lesssim t_c$) for which even good particles may expect $l_e \sim 1$.
+We can exploit this effect, however: 
+    by designing experiments with $t \sim t_c$, the likelihood is extremely sensitive to the parameterisation, 
+    in that only particles close to the precise parameters will give a high likelihood in this regime. 
+This is the basis of the \glsentrylong{pgh}, described in \cref{sec:pgh}. 
+\par 
+
+We can relate the \gls{le} to the likelihood, \cref{eqn:likelihood}, by supposing $\hat{H}_{-} = \ident$. 
+It is inescapable that the \glspl{likelihood} are exponentially small if the evolution times are not short;
+    experimentally, exponentially small expectation values demand an exponential number of measurements to approximate accurately.
+Furthermore, short-time experiments are known to be uninformative \cite{wiebe2014qhlpra, wiebe2015quantum}.
+Together, these problems render \gls{qle} unscalable.
+We overcome these inherent problems by using a modification of \gls{qle}, \gls{iqle},
+    the key to which is invoking a \gls{likelihood} function other than \cref{eqn:likelihood}.
+    
+\par 
+In effect, the \gls{le} guarantees that, for most $t$, if $\hat{H}_{-} \not\approx \hat{H}_{+}$, then $M(t) \ll 1$, 
+    while $\hat{H}_{-} \approx \hat{H}_{+}$ gives $M(t) \approx 1$. 
+This can be exploited for learning: 
+    by taking $\hat{H}_{+}$ as either $\ho$ (the true system) or $\ha$ (particle/hypothesis), 
+    and sampling $\hat{H}_{-}$ from $\pra$, 
+    we can adopt \cref{eqn:loschmidt_echo} as the \gls{likelihood} function.
+Then, both $\ho$ and $\ha$ have been evolved for arbitrary $t$, and unevolved by a common unitary, $e^{i\hat{H}_+ t}$.
+The likelihood that they are both measured in the same eigenstate is still a function of the overlap between the 
+    hypothesis and the true parameters, but here the informative difference between them is not drowned out by the chaotic effects captured by the \gls{le},
+    as it had been in \gls{qle}.
+\par 
+
+Importantly, \gls{iqle} can only be used where we can \emph{reliably} reverse the evolution for the system under study. 
 In order that the reverse evolution is relibable, it must be performed on a trusted simulator, 
     restricting \gls{iqle} to cases where a coherent quantum channel exists between the target
     system and a trusted simulator. 
