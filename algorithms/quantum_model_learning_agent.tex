@@ -441,7 +441,7 @@ These can be chosen to match the requirements of the user, and are set via the \
         && Choice of $t$ has a large effect on how well the model can train. 
             By default, times are chosen proportional to the inverse of the 
             current uncertainty in $\al$ to maximise Fischer information, 
-            through the multi-particle guess heuristic described in \crec{sec:pgh} \cite{Wiebe:2014qhl}.
+            through the multi-particle guess heuristic described in \cref{sec:pgh} \cite{Wiebe:2014qhl}.
         &&& Alternatively, evolution times may be chosen from a fixed set in order to force \gls{qhl} to 
             reproduce the dynamics within those times' scale. 
             For instance, if a small amount of experimental data is available offline, 
@@ -678,9 +678,19 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
     \caption{ES subroutine: \ttt{generate\_models} (example: greedy spawn)}
     \label{alg:generate_models}
     \DontPrintSemicolon
-    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\;
+    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}
+    \KwIn{ $\mathcal{T}$ \tcp*[1]{set of terms to search}}
+    \KwOut{ $\mathbb{H}$  \tcp*[1]{set of candidate models}}\;
 
-    % TODO 
+    $\huc \gets$ \ttt{top\_model}$(\nu)$
+    
+    $\mathbb{H} \gets \{\}$ 
+
+    \For{ $\hat{t} \in \mathcal{T}$}{
+        $\hat{H}_i \gets \huc + \hat{t}$\;
+        $\mathbb{H} \gets \mathbb{H} \cup \{ \hat{H}_i\}$
+    }
+    
     return $\mathbb{H}$ 
 
 \end{algorithm}
