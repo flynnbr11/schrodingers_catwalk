@@ -1,19 +1,24 @@
-\glsentryfull{qmla} is an algorithm that extends the concept of applying machine learning to the 
-    characterisation of Hamiltonians we've seen so far. 
+\glsresetall
+
+A \emph{model} is the mathematical description of a quantum system of interest, \gls{q}.
+In \cref{chapter:qhl}, we discussed a number of systems in terms of their Hamiltonian descriptions,
+    although in general the description of a quantum system need not be Hamiltonian, 
+    e.g. Lindbladian models describe open quantum systems, 
+    so we will generically refer to the \emph{\gls{model}} of \gls{q} throughout. 
+\par 
+
+\gls{qmla} is an algorithm that extends the concept of applying machine learning to the 
+    characterisation of Hamiltonians we've seen in \cref{chapter:qhl}. 
 The extension, and central question of \gls{qmla} is:
-    if we do not even have the structure of the model which describes a target quantum system, 
+    if we do not know the structure of the model which describes a target quantum system, 
     can we still learn about the physics of the system?
 That is, we remove the assumption about the form of the Hamiltonian model, 
     and attempt to uncover which \emph{\glspl{term}} constitute the Hamiltonian, 
-    and in so doing, learn what interactions the system is subject to. 
-Throughout this thesis, we are concerned solely with Hamiltonian models. 
-    although, in general, the description of a quantum system of interest need not be Hamiltonian, 
-    e.g. it could be Lindbladian for open quantum systems, 
-    so we generalise the effort to the search for the most suitable \emph{\gls{model}}. 
+    and in so doing, learn the interactions the system is subject to. 
 \par 
 
 For the remainder of this thesis, our objective is to learn the model underlying 
-    some target system \gls{q}. 
+    a series of target quantum systems.
 We will first introduce some concepts which will prove useful when discussing \gls{qmla}, 
     before describing the protocol in detail in \cref{sec:qmla_protocol}.
 
@@ -24,7 +29,7 @@ We will first introduce some concepts which will prove useful when discussing \g
 In this thesis, \glspl{model} are synonymous with Hamiltonians,
     composed of a set of \emph{\glspl{term}}, $\termset = \{ \hat{t} \}$, 
     where each $\hat{t}$ is a matrix. 
-Each term is assosiated with a multipicative scalar, which may be referred to as that term's \emph{parameter}: 
+Each term is assosiated with a multiplicative scalar, which may be referred to as that term's \emph{parameter}: 
     we impose order on the terms and parameters such that we can succinctly summarise any model as 
 
 \begin{align}
@@ -50,22 +55,24 @@ For example, a model which is the sum of the (non-identity) Pauli operators is g
 \par 
 
 Through this formalism, we can say that the sole task of \gls{qhl} was to optimise $\al$, given $\terms$. 
-The principle task of \gls{qmla} is to identify $\terms$ with the most statistical evidence 
-    for describing the target system \gls{q}. 
-In short, \gls{qmla} proposes candidate models $\hi$ as hypoteses to explain \gls{q}; 
+The principle task of \gls{qmla} is to identify the terms $\terms$ 
+    which are supported by the most statistical evidence as describing the target system \gls{q}. 
+In short, \gls{qmla} proposes \emph{candidate models} $\hi$ as hypotheses to explain \gls{q}; 
     we \emph{train} each model independently through a parameter learning routine, 
     and finally nominate the model with the best performance after training. 
-In particular, \gls{qmla} uses \gls{qhl} as the parameter learning subroutine, 
+In particular, \gls{qmla} uses \gls{qhl} as the parameter learning \emph{subroutine}, 
     but in principle this step can be performed by any algorithm which learns $\al$ for given $\terms$, 
     \cite{wang2015hamiltonian, krastanov2019stochastic, flurin2020using, niu2019learning, 
     greplova2017quantum,lokhov2018optimal, acampora2019evolutionary, burgarth2017evolution}. 
 While discussing a model $\hi$, their \emph{training} then simply means the implementation 
-    of \gls{qhl}, where $\hi$ is assumed to represent \gls{q}, 
-    such that $\al_i$ is optimised as well as it can be, even if $\hi$ is entirely inaccurate. 
+    of \gls{qhl}\footnote{Or the chosen parameter learning subroutine.}, 
+    where $\hi$ is \emph{assumed} to represent \gls{q}, 
+    such that $\al_i$ is optimised as well as it can be, 
+    even if $\hi$ is entirely inaccurate. 
 
 % %%%%%%%%%%% BAYES FACTORS %%%%%%%%%%% 
 \section{Bayes factors}\label{sec:bayes_factors}
-We can use the tools introduced in \cref{sec:total_log_total_likelihood} to \emph{compare} models. 
+We can use the tools introduced in \cref{sec:total_log_total_likelihood} to \emph{compare} candidate models. 
 Of course it is first necessary to ensure that each model has  
     been adequately trained: while inaccurate models are unlikely to strongly 
     capture the system dynamics, they should first train on the system 
@@ -139,9 +146,9 @@ Therfore $\left| B_{ij} \right|$ is the strength of the statistical evidence
 \begin{equation}
     \label{eqn:bf_cases}
     \begin{cases}
-        B_{ij} > 1 & \Rightarrow \hi \text{\ stronger than \ } \hj \\
-        B_{ij} < 1 & \Rightarrow \hj \text{\ stronger than \ } \hi \\
-        B_{ij} = 1 & \Rightarrow \hi \text{\ as strong as \ } \hj \\
+        B_{ij} > 1 & \Rightarrow \hi \text{\ favoured over \ } \hj \\
+        B_{ij} < 1 & \Rightarrow \hj \text{\ favoured than \ } \hi \\
+        B_{ij} = 1 & \Rightarrow \hi \text{\ equally favoured as \ } \hj. \\
     \end{cases}
 \end{equation} 
 
@@ -175,8 +182,7 @@ Moreover it provides a benefit in reducing the computation requirements:
     requires only half the computation time, 
     which can be further reduced by lowering the number of particles used during the update, $\Np^{\prime}$, 
     which will give a similar result as using $\Np$, assuming the posterior has converged.
-We will verify this claim later, after we have introduced some relevant concepts, in \cref{sec:bf_by_f_score}. 
-\todo{figures to prove these points.}
+We will verify this claim later in \cref{sec:bf_by_f_score}, in the context of real examples.
 \par 
 
 A final option is to design a set of \emph{evaluation} experiments, $\expset_v$, 
@@ -208,7 +214,7 @@ This approach would be favoured in principle, in the case where such constraints
      
 % %%%%%%%%%%% PROTOCOL %%%%%%%%%%%     
 \section{Quantum Model Learning Agent Protocol}\label{sec:qmla_protocol}
-Given a target quantum system, \gls{q}, described by some \emph{true} model $\ho$, 
+Given a target quantum system, \gls{q}, described by some \emph{true} Hamiltonian model, $\ho$, 
     \gls{qmla} distills a model $\hp \approx \ho$.
 We can think of \gls{qmla} as a forest search algorithm\footnotemark:
     consisting of a number of trees, each of which can have an arbitrary number of branches, 
@@ -221,10 +227,26 @@ We can think of \gls{qmla} as a forest search algorithm\footnotemark:
 }    
 Each tree in the \gls{qmla} forest corresponds to an independent \emph{ \gls{model search} }, 
     structured according to a bespoke \gls{es}, which we detail in \cref{sec:exploration_strategies}. 
-In short, the  \gls{model search}  proceeds by grouping models in \emph{layers},
-    training each model on each layer independently,
-    layers are then \emph{consolidated} to rank their performance,
-    and new models are then \emph{spawned}. 
+\par 
+In short, the components of the iterative \gls{model search} for a given \gls{es}, 
+    depicted in \cref{fig:qmla_overview}\textbf{(a-d)}, are
+\begin{description}
+    \item[Branches] A set of candidate models, $\{ \hi \}$, are held together on a branch, $\mu$. 
+    \item[Training] Each model $\hi \in \mu$ is trained according to a parameter learning subroutine.
+    \item[Consolidation] The performance of candidates in $\mu$ are ranked relative to each other, 
+        such that some models are favoured over others, for instance through selection of a \emph{branch champion}, $\hat{H}_C^{\mu}$. 
+        Consolidation can rely on any statistical test, with \glspl{bf} providing a robust platform to disinguish 
+        any pair of candidates.
+    \item[Spawn] A set of new models are constructed, accounting for the immediately prior consolidation stage, 
+        i.e. leveraging the best-yet-known models to construct similar hypotheses.
+\end{description}
+
+Following the iterative model generation procedure, the model selects the strongest considered candidate,
+    for instance by consolidating the set of branch champions, $\{\hat{H}_C^{\mu} \}$,
+    resulting in the nomination of a single \emph{champion model}, $\hat{H}_{S}^{\prime}$, \cref{fig:qmla_overview}\textbf{(e)}.
+Multiple model searches can proceed in parallel, and they are each assigned an independent \gls{et}, $S$. 
+The final step of \gls{qmla} is then to consolidate the set of champion models from all \glspl{et}, $\{\hat{H}_{S}^{\prime} \}$, 
+    in order to delcare a \emph{global} \gls{champion model}, $\hp$, \cref{fig:qmla_overview}\textbf{(f)}. 
 
 \begin{figure}[t!]
     \begin{center}
@@ -232,20 +254,20 @@ In short, the  \gls{model search}  proceeds by grouping models in \emph{layers},
     \end{center}
     \caption[Quantum Model Learning Agent overview]{
         Schematic of \acrfull{qmla}. 
-        \textbf{(a-d)} \Glsentryfull{model search} phase within an \Glsentryfull{es}.
+        \textbf{(a-d)} \Gls{model search} phase within an \Glsentryfull{es}.
         \textbf{(a)} Models are placed as (empty, purple) nodes on the \emph{active branch} $\mu$, 
-            where each model is a sum of terms $\hat{t}_k$ multiplied by a scalar parameter $\alpha_k$. 
+            where each model is a sum of terms $\hat{t}_k$ multiplied by corrresponding scalar parameters $\alpha_k$. 
         \textbf{(b)} Each active model is trained according to a subroutine such as 
             quantum Hamiltonian learning to optimise $\al_i$, 
             resulting in the trained $\hat{H}(\al_i^{\prime})$ (filled purple node). 
         \textbf{(c)} $\mu$ is consolidated, i.e. models are evaluated relative to other
             models on $\mu$, according to the consolidation mechanism specificed by the \gls{es}.
-            In this example, pairwise Bayes factors $B_{ij}$ between $\hi, \hj$ are computed, 
+            In this example, pairwise Bayes factors, $B_{ij}$, between $\hi, \hj$ are computed, 
             resulting in the election of a single branch champion $\hat{H}_C^{\mu}$ (bronze). 
         \textbf{(d)} A new set of models are \emph{spawned} according to the chosen
-            \gls{es}'s model genertion strategy.
+            \gls{es}'s model generation strategy.
             In this example, models are spawned from a single parent. 
-            The newly spawned models are placed on the next layer $\mu+1$, 
+            The newly spawned models are placed on the next layer, $\mu+1$, 
             iterating back to \textbf{(a)}.
         \textbf{(e-f)} Higher level of entire QMLA procedure.
         \textbf{(e)} The  \gls{model search}  phase for a unique \gls{es} is presented on an \emph{exploration tree}. 
@@ -285,7 +307,7 @@ We elucidate the responsibilities of \glspl{es} in the remainder of this section
 \gls{qmla} acts in tandem with one or more \glspl{es}, through the process depicted in \cref{fig:qmla_flow}. 
 In summary: 
     \gls{qmla} sends a request to the \gls{es} for a set of models; 
-    \gls{es} designs models and places them as leaves on one of its branches, and returns the set $\mathbb{H}$; 
+    \gls{es} designs models and places them as leaves on a new branch on its \gls{et}, and returns the set $\mathbb{H}$; 
     \gls{qmla} places $\mathbb{H}$ on a unique layer; 
     \gls{qmla} trains the models in $\mathbb{H}$; 
     \gls{qmla} consolidates $\mathbb{H}$;
@@ -309,11 +331,11 @@ The  \gls{model search}  occurs within some \emph{\gls{model space}}, the size o
     by assuming that terms are binary -- either the interaction they represent is present or not. 
 If all possible terms are accounted for, and the total set of terms is $\termset$,
     then there are $2^{\absval{\termset}}$ available candidates in the model space. 
-The \gls{model space} encompasses the closed\footnotemark set of models construable by the set of terms considered by an \gls{es}. 
+The \gls{model space} encompasses the closed\footnotemark \ set of models construable by the set of terms considered by an \gls{es}. 
 Because training models is slow in general,
     a central aim of \gls{qmla} is to search this space efficiently,
     i.e. to minimise the number of models considered, while retaining high quality models and 
-    providing a reasonable prospect of uncovering the  \gls{true model} , or a strong approximation thereof. 
+    providing a reasonable prospect of uncovering the \gls{true model}, or a strong approximation thereof. 
 
 \footnotetext{
     It is feasible to define an \gls{es} which uses an open model space, that is, there is no pre-defined $\termset$, 
@@ -326,7 +348,7 @@ Because training models is slow in general,
 
 \subsection{Decision criteria for the model search phase}
 Further control parameters, which direct the growth of the \gls{et}, are set within the \gls{es}.
-At several junctions within Algs. \cref{alg:qmla}, \cref{alg:model_search}, 
+At several junctions within \cref{alg:qmla}, \cref{alg:model_search}, 
     \gls{qmla} queries the \gls{es} in order to decide what happens next.
 Here we list the important cases of this behaviour. 
 
@@ -337,15 +359,15 @@ Here we list the important cases of this behaviour.
     \begin{easylist}[itemize]
     && such as the prior distribution to assign each parameter during \gls{qhl}, and the parameters needed to run \gls{smc}.
     && the time scale on which to examine \gls{q}.
-    && the input probes to train upon. 
+    && the input probes to train upon, $\Psi$, described in \cref{sec:probes}. 
     \end{easylist}
     
     \item[Branch comparison strategy] \
     \begin{easylist}
-    && How to compare models within a branch (or \gls{qmla} layer). Some examples used in this work are
-        &&& a points-ranking where each points are assigned according to Eqn. \cref{eqn:bf_cases};
-        &&& ranking reflecting each model's log-likelihood after training;
-        &&& models are ranked according to some \glsentrylong{of}.
+    && How to consolidate models within a branch. Some examples used in this work are
+        &&& a points-ranking, where all candidates are compared via \gls{bf} and points are assigned to the favoured model according to \cref{eqn:bf_cases};
+        &&& ranking reflecting each model's log-likelihood (\cref{eqn:log_likelihood}) after training;
+        &&& models are ranked according to some \glsentrylong{of}, as in the case of \glspl{ga} which we detail in \cref{chapter:ga}.
     \end{easylist}
 
     \item[\gls{model search} termination criteria] \
@@ -355,13 +377,13 @@ Here we list the important cases of this behaviour.
     
     \item[Champion nomination] \
     \begin{easylist}    
-    && when a single tree is explored, identify a single champion from the branch champions
-    && if multiple trees are explored, how to compare champions across trees. 
+    && when a single \gls{et} is explored, identify a single champion from the branch champions, $\{\huc\}$;
+    && if multiple \glspl{et} are explored, the mechanism to compare champions across trees. 
     \end{easylist}
 \end{description}
 
 \subsection{True model specification}
-It is necessary also to specify details about the \gls{true model} $\ho$, 
+It is necessary also to specify details about the \gls{true model}, $\ho$, 
     at least in the case where \gls{qmla} acts on simulated data. 
 Within the \gls{es}, we can set $\terms_0$ as well as $\al_0$. 
 For example where the target system is an untrusted quantum simulator to be characterised, 
@@ -387,56 +409,64 @@ These can be chosen to match the requirements of the user, and are set via the \
         for use during \gls{qle} within \gls{qhl}, 
         which ultimately depends on the measurement scheme. 
     \begin{easylist}
+        && The role of these functions is to compute the probability of measuring each experimental outcome. 
+        % &&& We typically refer to the quantity $\Pr(0)$, which is the probability of measuring \gls{q} in a chosen basis,
+        %     which is used for the parameter distribution updates within QInfer \cite{qinfer-1_0}. 
+        && These functions compute the \emph{expectation value}
+            of the unitary operator, $e^{-i\hat{H} t}$, corresponding to the dynamics of either \gls{q} or the hypothesis model.
         && By default, here we use projective measurement back onto the input \gls{probe} state, 
             $\left| \bra{\psi} e^{-i\hat{H}t} \ket{\psi} \right|^2$.        
-        && The role of these functions is to compute $\Pr(0)$ to be used by QInfer, 
-            which is not always the same as computing the likelihood,
-            although these are equiavelent when we measure $d=0$, see .
-        &&& Generically, without referring to the likelihood, these functions are to compute the expectation value
-                of the unitary operator corresponding to the model of the system.        
-        && It is possible to change this to implement any measurement procedure, 
-            for example an experimental procedure where the environment is traced out.
+        && In the usual case where \gls{q} has binary outcomes, we label one outcome 
+            -- say, measurement in the state $\ket{+}$--  as $d=0$ and compute $\Pr(0)$
+            so that the \gls{likelihood}, expectation value and $\Pr(0)$ 
+            refer to the same quantity, see \cref{sec:likelihood}.
+        && It is possible instead to implement any measurement procedure, 
+            for example an experimental procedure where the environment is traced out,
+            as we address in \cref{chapter:nv}.
     \end{easylist}
             
-    \item[\gls{probe}] defining the input probes to be used during training. 
+    \item[\gls{probe}] defining the input probes to be used during training, $\Psi$, see \cref{sec:probes}. 
     \begin{easylist}   
         && In general it is preferable to use numerous probes in order to avoid biasing particular terms. 
         && In some cases we are restricted to a small number available input probes, e.g. to match experimental constraints.
     \end{easylist}
 
     \item[Experiment design heuristic] bespoke experiments to maximise the information 
-        on which models are individually trained.
+        on which models are individually trained, described in \cref{sec:heuristic}.
     \begin{easylist}
         && In particular, in this work the experimental controls consist solely of $\{ \ket{\psi}, t \}$. 
-        && Currently, probes are generated once according to the previous point, 
+        && Currently, probes are generated offline,
             but in principle it is feasible to choose optimal probes based on available or hypothetical information. 
             For example, probes can be chosen as a normalised sum of the candidate model's eigenvectors.
         && Choice of $t$ has a large effect on how well the model can train. 
-            By default times are chosen proportional to the inverse of the 
+            By default, times are chosen proportional to the inverse of the 
             current uncertainty in $\al$ to maximise Fischer information, 
-            through the multi-particle guess heuristic \cite{Wiebe:2014qhl}.
-            Alternatively, times may be chosen from a fixed set to force \gls{qhl} to 
+            through the multi-particle guess heuristic described in \crec{sec:pgh} \cite{Wiebe:2014qhl}.
+        &&& Alternatively, evolution times may be chosen from a fixed set in order to force \gls{qhl} to 
             reproduce the dynamics within those times' scale. 
             For instance, if a small amount of experimental data is available offline, 
             it is sensible to train all candidate models against the entire dataset.  
     \end{easylist}
 
-    \item[Model training prior] change the prior distribution, e.g. Fig. \cref{fig:qhl_smc}(a)
+    \item[Model training prior] specify the structure of the prior distribution, e.g. Fig. \cref{fig:qhl_smc}(a)
+    \begin{easylist}
+        && Set the initial mean and width of each parameter separately to define the prior multi-dimensional $\Pr(\al)$.
+    \end{easylist} 
 
 \end{description}
 
 \subsection{Exploration strategy examples}
-To solidifiy the concept of \glspl{es}, and how they affect the overall,
+To solidifiy the concept of \glspl{es}, and how they affect the overall
     reach and runtime of a given \gls{et}, consider the following examples, 
     where each strategy specifies how models are generated, as well as how trained models are compared within a branch. 
 Recall that all of these strategies rely on \gls{qhl} as the model training strategy, 
-    so that the run time for training, is $t_{\textrm{QHL} \sim \Ne\Np t_U}$, 
+    so that the run time for training, is $t_{\textrm{QHL}} \sim \Ne\Np t_{U(n)}$, 
     where $t_U(n)$ is the time to compute the unitary evolution via the matrix exponential for an $n$-qubit model 
 All models are trained using the default  \gls{likelihood} in \cref{eqn:likelihood}. 
 Assume the conditions
 \begin{easylist}[itemize]
     & all models considered are represented by 4-qubit models;
-    && $t_{U(4)} \sim 10^{-3}\textrm{sec}$. 
+    && $t_{U(4)} \sim 10^{-3} \textrm{sec}$. 
     & each model undergoes a reasonable training regime;
     && $\Ne=1000, \Np=3000$;
     && $\implies t_{\textrm{QHL}} = \Ne \times \Np \times  t_{U(4)} = 3000s \sim 1 \textrm{h} $;
@@ -446,7 +476,7 @@ Assume the conditions
     & there are 12 available terms
     && allowing any combination of terms, this admits a \gls{model space} of size $2^{12} = 4096$
     & access to 16 computer cores to parallelise calculations over
-    && i.e. we can train 16 models or perform 16 \gls{bf} comparisons in $1h$.
+    && i.e. we can train 16 models or perform 16 \gls{bf} comparisons in $1\textrm{h}$.
 \end{easylist}
 \par 
 
@@ -454,18 +484,18 @@ Assume the conditions
 \begin{easylist}[enumerate]
     \ListProperties(Numbers1=l, Numbers2=r)
     & \label{gr:predefined} Predefined set of $16$ models, comparing every pair of models
-    && Training takes $1h$, and ${16 \choose 2} = 120$ comparisons need $8h$
-    && total time is $9h$. 
+    && Training takes $1\textrm{h}$, and there are ${16 \choose 2} = 120$ comparisons spread across 16 processes, requiring $8\textrm{h}$
+    && total time is $9\textrm{h}$. 
     & \label{gr:generative_full} Generative procedure for model design, comparing every pair of models,
         running for 12 branches
-    && One branch takes $9h \implies$ total time is $12 \times 9 = 108h$; 
+    && One branch takes $9\textrm{h} \implies$ total time is $12 \times 9 = 108\textrm{h}$; 
     && total number of models considered is $16 \times 12 = 192$. 
     & \label{gr:generative_sparse} Generative procedure for model design, where less model comparisons are needed 
         (say one third of all model pairs are compared),
         running for 12 branches
-    && Training time is still $1h$
-    && One third of comparisons, i.e. $40$ \gls{bf} to compute, requires $3h$
-    && One branch takes $4 h \implies$ total time is $36 h$
+    && Training time is still $1\textrm{h}$
+    && One third of comparisons, i.e. $40$ \gls{bf} to compute, requires $3\textrm{h}$
+    && One branch takes $4 h \implies$ total time is $36 \textrm{h}$
     && total number of models considered is also $192$. 
 \end{easylist}
 
@@ -473,11 +503,11 @@ These examples illustrate some of the design decisions involved in \gls{es}s,
     namely whether timing considerations are more important than thoroughly exploring the model space.
 They also show considerable time--savings in cases where it is
     acceptable to forego all model comparisons. 
-The approch in \cref{gr:predefined} is clearly limited in its applicability, 
+The approch in (a) is clearly limited in its applicability, 
     mainly in that there is a heavy requirement for prior knowledge, 
     and it is only useful in cases where we either know $\ho \in \mathbb{H}$, 
     or would be satisfied with approximating $\ho$ as the closest available $\hj \in \mathbb{H}$. 
-On the opposite end of this spectrum, \cref{gr:generative_sparse}  is an excellent approach
+On the opposite end of this spectrum, (c) is an excellent approach
     with respect to minimising prior knowledge required by the algorithm, 
     although at the significant expense of testing a much larger number of candidate models. 
 There is no optimal strategy for all use--cases: 
@@ -485,24 +515,6 @@ There is no optimal strategy for all use--cases:
     and the amount of prior information available informs how wide the model search should reach. 
 
 \par 
-
-In this work we have used two straightforward model generation routines.
-Firstly, during the study of various physical classes (Ising, Heisenberg, Fermi-Hubbard), 
-    a list of lattice configurations were chosen in advance,
-    which were then mapped to Hamiltonian models.
-This \gls{es} is non-adaptive and indeed the model search
-    consists merely of a single branch with no subsequent calls to the model generation routine, 
-    as in \cref{gr:predefined}. 
-In the latter section instead we use a \gls{ga}:
-    this is clearly a far more general strategy, at a significant computational cost, 
-    but is suitable for systems where we have less knowledge in advance. 
-In this case, new models are designed based heavily on results from earlier branches of the \gls{et}. 
-The genetic algorithm model generation subroutine is listed in \cref{alg:generate_models}, 
-    and can broadly be summed up thus: 
-    the best models in a generation $\mu$ produce offspring which constitute models on the next generation.
-These types of evolutionary algorithms ensure that newly proposed candidates inherit 
-    some of the structure which rendered previous candidates (relatively) successful, 
-    in the expectation that this will yield ever-stronger candidates. 
 
 % %%%%%%%%%%% GENERALITY %%%%%%%%%%% 
 
@@ -515,9 +527,11 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
         && Here we exclusively consider Hamiltonian models, but Lindbladian models can also be considered as generators of quantum dynamics. 
     \end{easylist}
     \item[Model training] is any subroutine which can train a given model, i.e. optimise a given parameterisation 
-        under the assumption that represents the target system. 
+        under the assumption that it represents the target system. 
     \begin{easylist}[itemize]
-        && Currently only \gls{qhl} has been used, but tomography is valid in principle, albeit slower. 
+        && Currently only \gls{qhl} has been implemented, although for example tomography is valid in principle, 
+            with its own advantages and disadvantages.
+            Overall \gls{qhl} is found to fulfil the remit of model training with a balance of efficiency and rigour \cite{gentile2020learning}.
         && \Gls{qhl} relies on the calculation of a characteristic  \gls{likelihood} function; 
             this too is not restricted to the generic form of \cref{eqn:likelihood} and can be replaced by 
             any form which represents the \gls{likelihood} that experimental conditions $e$ result in measurement datum $d$. 
@@ -566,7 +580,7 @@ We conclude this chapter by listing the algorithms used most frequently,
 The  \gls{model search}  iteself is listed in \cref{alg:model_search},
     which contains calls to subroutines for model learning (\gls{qhl}, \cref{alg:qhl}), 
     branch evaluation (which can be based upon \gls{bf}, \cref{alg:bayes_factor})
-    and centers on the generation of new models, an example of which -- based on a genetic algorithm -- 
+    and centers on the generation of new models, an example of which -- based on a \emph{greedy search} prerogative -- 
     is given in  \cref{alg:generate_models}. 
 
 \begin{algorithm}
@@ -580,7 +594,7 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
     
     $\mathbb{H}_c \gets \{\}$\;   
     \For{$S \in \mathbb{S}$ }{
-        $\hat{H}_{S}^{\prime} \gets$ \ttt{model\_search(Q, S)} 
+        $\hat{H}_{S}^{\prime} \gets$ \ttt{model\_search(Q, S)} \tcp*[1]{Run model search for this ES}
 
         $\mathbb{H}_c \gets \mathbb{H}_c \cup  \{\hat{H}_{S}^{\prime}\}$ \tcp*[1]{add ES champion to collection}
     }
@@ -607,7 +621,7 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
         \For{ $\hi \in \mu$}{
             $\hi^{\prime} \gets $ \ttt{S.train($\hi$)} \tcp*[1]{e.g. \cref{alg:qhl}}
         }
-        $\nu \gets$ \ttt{S.evaluate($\mu$)} \tcp*[1]{e.g. pairwise via \cref{alg:bayes_factor}}
+        $\nu \gets$ \ttt{S.consolidate($\mu$)} \tcp*[1]{e.g. pairwise via \cref{alg:consolidate}}
 
         $\hat{H}_{c}^{\mu} \gets $ \ttt{S.branch\_champion($\nu$)} \tcp*[1]{use $\nu$ to select a branch champion}
 
@@ -618,6 +632,46 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
     return $\hat{H}_{S}^{\prime}$
 
 \end{algorithm}
+
+\begin{algorithm}
+    \caption{ES subroutine: \ttt{consolidate} (example: points per Bayes factor win)}
+    \label{alg:consolidate}
+    \DontPrintSemicolon
+    \KwIn{ $\mu$ \tcp*[1]{information about models considered to date}}
+    \KwIn{ $b$ \tcp*[1]{threshold for sufficient evidence that one model is stronger}}
+    \KwIn{\ttt{BF()} \tcp*[1]{callable function to compute the Bayes factor between $\hat{H}_j$ and $\hat{H}_k$, \cref{alg:bayes_factor} }}    
+    \KwOut{ $\nu$ \tcp*[1]{information about models' relative performance}}\;
+     
+    $\mathbb{H} \gets$ \ttt{extract\_models}$(\mu)$
+
+    \For{
+        $\hat{H}_j \in \mathbb{H}$
+    }{
+        $s_j = 0$ \tcp*[1]{Initialise score for each model} 
+    }
+     
+    \For{
+        $\hat{H}_j, \hat{H}_k \in \mathbb{H}$
+        \tcp*[1]{pairwise Bayes factor between all models in the set}
+    }{
+        $B \gets \ttt{BF}( \hat{H}_j, \hat{H}_k)$ \;
+        \uIf{$B > b$ \tcp*[1]{Increase score of winning model}}{
+            $s_j \gets s_j+1$
+        }  
+        \uElseIf{$B < 1/b $}
+        {
+            $s_k \gets s_k+1$
+        }
+    }
+    
+    $ k^{\prime} \gets \max_k \{s_k\}$ \tcp*[1]{Find which model has most points} 
+    
+    
+    return $\hat{H}_{k^{\prime}}$
+
+
+\end{algorithm}
+
 
 
 \begin{algorithm}
@@ -641,7 +695,7 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
 
     \KwIn{$\hat{H}_i$ \tcp*[1]{Hamiltonian model attempting to reproduce data from $\hat{H}_0$ }}
     \KwIn{$\pra$ \tcp*[1]{probability distribution for $\al = \al_0 $}}
-    \KwIn{$\Ne$ \tcp*[1]{number of epochs to iterate learning procedure for}}
+    \KwIn{$\Ne$ \tcp*[1]{number of experiments to iterate learning procedure for}}
     \KwIn{$\Np$ \tcp*[1]{number of particles to draw from $\pra$}}
     \KwIn{\ttt{$\Lambda(\pra)$} \tcp*[1]{Heuristic algorithm which designs experiments}}
     \KwIn{\ttt{RS($\pra$)} \tcp*[1]{Resampling algorithm for redrawing particles}}
@@ -650,7 +704,11 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
 
 
     Sample $\Np$ times from $\pra \gets \mathcal{P}$ \tcp*[1]{particles}\;
-    
+    \For{
+        $p \in \mathcal{P}$ 
+    }{
+        $w_p \gets 1/\Np$ \tcp*[1]{set weights for each particle}
+    }\;
     \For{$ e \in  \{1 \rightarrow \Ne\}$ }{ 
         
         $t, \ket{\psi} \gets \Lambda(\pra)$ \tcp*[1]{design an experiment}
@@ -662,9 +720,9 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
             
             Prepare $Q$ in $\ket{\psi}$, evolve and measure after $t \gets d$ \tcp*[1]{datum}
             
-            $| \bra{d} e^{-iH(\al_p)t} \ket{\psi} |^2 \gets Pr(d|\al_p; t)$ \tcp*[1]{likelihood}
+            $\lvert \bra{d} e^{-iH(\al_p)t} \ket{\psi} \rvert^2 \gets \Pr(d|\al_p; t)$ \tcp*[1]{likelihood}
                         
-            $w_p \gets w_p \times Pr(d|\al_p; t)$ \tcp*[1]{weight update}
+            $w_p \gets w_p \times \Pr(d|\al_p; t)$ \tcp*[1]{weight update}
         }
         \If{
             $ 1 / \sum_p w_p^2 < \Np/2$
@@ -672,6 +730,11 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
         }{
             $\ttt{RS}(\pra) \gets \mathcal{P}$
             \tcp*[1]{Redraw particles via resampling algorithm}
+            \For{
+                $p \in \mathcal{P}$ 
+            }{
+                $w_p \gets 1/\Np$ \tcp*[1]{set weights for each particle}
+            }
         }
     }
     
@@ -688,13 +751,12 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
     \label{alg:bayes_factor}
     \DontPrintSemicolon
     \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulateable quantum system.}}
-    \KwIn{ $\hat{H}_j^{\prime}, \hat{H}_k^{\prime}$ \tcp*[1]{Hamiltonian models after QHL (i.e. $\al_j, \al_k$ already optimised), on which to compare performance.}}
+    \KwIn{ $\hat{H}_j^{\prime}, \hat{H}_k^{\prime}$ \tcp*[1]{Hamiltonian models after training (i.e. $\al_j, \al_k$ already optimised), on which to compare performance.}}
     \KwIn{ $\expset_j, \expset_k$ \tcp*[1]{experiments on which $\hat{H}_j^{\prime}$ and $\hat{H}_k^{\prime}$ were trained during QHL.}}
     
-    \KwOut{$B_{jk}$ \tcp*[1]{Bayes factor between two candidate Hamiltonians}}
-     
-     
-    $\expset = \{ \expset_j \cup \expset_k \}$ \;
+    \KwOut{$B_{jk}$ \tcp*[1]{Bayes factor between two candidate Hamiltonians}}\;
+          
+    $\expset = \{ \expset_j \cup \expset_k \}$ \tcp*[1]{common experiments for fair comparison}\;
     \For{$\hat{H}_i^{\prime} \in  \{\hat{H}_j^{\prime}, \hat{H}_k^{\prime}$ \} }{
         $\tll_{i} = 0$ \tcp*[1]{total log-likelihood of $\hat{H}_i$} 
         \For{$e \in \expset$}{
@@ -702,15 +764,15 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
 
             Prepare $Q$ in $\ket{\psi}$, evolve and measure after $t \gets d$ \tcp*[1]{datum}\;
 
-            $ \absval{ \bra{d} e^{-i \hat{H}_i^{\prime} t} \ket{\psi} }^2 \gets Pr(d | \hat{H}_i, t)$  \tcp*[1]{total \gls{likelihood} for $\hat{H}_i^{\prime}$ on $e$}\;
+            $ \absval{ \bra{d} e^{-i \hat{H}_i^{\prime} t} \ket{\psi} }^2 \gets \Pr(d | \hat{H}_i, t)$  \tcp*[1]{total \gls{likelihood} for $\hat{H}_i^{\prime}$ on $e$}\;
 
-            $log \left( Pr(d | \hat{H}_i, t) \right) \gets l_e$ \tcp*[1]{log total \gls{likelihood} for $\hat{H}_i^{\prime}$ on $e$}\;
+            $log \left( \Pr(d | \hat{H}_i, t) \right) \gets l_e$ \tcp*[1]{log total \gls{likelihood} for $\hat{H}_i^{\prime}$ on $e$}\;
 
             $\tll_{i}+ l_e \gets  \tll_{i}$ \tcp*[1]{add $l_e$ to total log total \gls{likelihood} }
         }
     }
     
-    $\exp\left( \tll_{j} - L_k \right) \gets B_{jk}$  \tcp*[1]{Bayes factor between models}\;
+    $\exp\left( \tll_{j} - \tll_k \right) \gets B_{jk}$  \tcp*[1]{Bayes factor between models}\;
     return $B_{jk}$
 \end{algorithm}
 
