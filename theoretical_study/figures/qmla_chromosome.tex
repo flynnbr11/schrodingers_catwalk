@@ -74,8 +74,7 @@
         Mapping between \gls{qmla}'s models and chromosomes used by a genetic algorithm. 
         Example shown for a three-qubit system with six possible terms, $\s_{i,j}^{w} = \s_i^w \s_j^w$. 
         Model terms are mapped to binary genes: 
-            if the gene registers $0$ then the corresponding term is not present in the model, 
-            and if it registers $1$ the term is included. 
+            if the gene registers $1$ ($0$) then the corresponding term is (not) present in the model.
         The top two chromosomes are \emph{parents}, $\gamma_{p_1}=101010$ (blue) and $\gamma_{p_2}=001011$ (green):
             they are mixed to spawn new models. 
         We use a one--point cross over about the midpoint:

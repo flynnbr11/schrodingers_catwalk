@@ -2,8 +2,9 @@
     \caption{\gls{es} subroutine: \ttt{generate\_models} via genetic algorithm}
     \label{alg:ga_generate_models}
     \DontPrintSemicolon
-    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\;
-    \KwIn{ $g(\hi)$ \tcp*[1]{objective function}}\;
+    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\
+    \KwIn{ $t$ \tcp*[1]{truncation rate}}\;
+    \KwIn{ $g(\hi)$ \tcp*[1]{objective function that can act on any model $\hi$}}\;
 
     \KwOut{$\mathbb{H}$ \tcp*[1]{set of models}}\;
     
@@ -11,10 +12,10 @@
 
     \For{$\hi \in \nu$}{
        $g_i \gets g(\hi)$ \tcp*[1]{model fitness via objective function}
-    }
+    }\;
     $r \gets $ \ttt{rank($\{ g_i \}$)} \tcp*[1]{rank models by their fitness}
-    $\mathbb{H}_t \gets $ \ttt{truncate($r, \frac{N_m}{2}$)} \tcp*[1]{truncate models by rank: only keep $\frac{N_m}{2}$}
-    $ s \gets $ \ttt{normalise($\{g_i\}$)} $\forall \hi \in \mathbb{H}_t$ \tcp*[1]{normalise remaining models' fitness}
+    $\mathbb{H}_t \gets $ \ttt{truncate($r, N_m\times t$)} \tcp*[1]{truncate models by rank: only keep $N_m \times t$}
+    $ s \gets $ \ttt{normalise($\{g_i\}$)} $\forall \hi \in \mathbb{H}_t$ \tcp*[1]{normalise remaining models' fitnesses}
 
     $\mathbb{H} = \{\}$ \tcp*[1]{new batch of chromosomes/models}
 
@@ -27,7 +28,7 @@
 
         $\mathbb{H} \gets \mathbb{H} \cup \{ c_1, c_2 \} $ \tcp*[1]{add new models to batch}
 
-    }
+    }\;
 
     % \ttt{roulette($s$)}
 
