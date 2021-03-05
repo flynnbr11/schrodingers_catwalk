@@ -9,17 +9,17 @@ This is achieved by interrogating \gls{q} and comparing its outputs against prop
 In particular, an experiment is designed, consisting of an input state, $\ket{\psi}$, and an evolution time, $t$.
 This experiment is performed on \gls{q}, whereupon its measurement yields the datum $d \in \{0, 1\}$ -- 
     i.e. the eigenstate $\ket{d} \in \{ \ket{0}, \ket{1}$ is observed -- 
-    according to the expectation value $\left| \bra{\psi} e^{-i \ho t} \ket{\psi} \right|^2$. 
+    according to the expectation value $\lvert \bra{\psi} e^{-i \ho t} \ket{\psi} \rvert^2$. 
 Then, on a trusted (quantum) simulator, proposed parameters $\vec{\alpha}_p$ are encoded to the 
     known Hamiltonian, and the same \gls{probe} state is evolved for the chosen $t$ and projected on to $\ket{d}$, 
-    i.e. $\left| \bra{d} e^{-i \hat{H}(\vec{\alpha}_p) t } \ket{\psi} \right|^2 $ is computed.
+    i.e. $\lvert \bra{d} e^{-i \hat{H}(\vec{\alpha}_p) t } \ket{\psi} \rvert^2 $ is computed.
 The task for \gls{qhl} is then to find $\vec{\alpha}^{\prime}$ for which this quantity 
     is close to 1 for all values of $(\ket{\psi}, t)$, 
     i.e. the parameters input to the simulation produce dynamics consistent with those measured from \gls{q}.
 \par 
 
 The procedure is as follows. 
-A \emph{prior} probability distribution $\pra$ in a parameter space of dimension $\left| \al \right|$ 
+A \emph{prior} probability distribution $\pra$ in a parameter space of dimension $\lvert \al \rvert$ 
     is initialised to represent the constituent parameters of $\al$. 
 $\pra$ is typically a multivariate normal (Gaussian) distribution; 
     it is therefore necessary to pre-suppose some mean and width for each parameter in $\al$. 
@@ -32,7 +32,7 @@ It is important to understand, then, that \gls{qhl} removes the prior knowledge
 \par 
 
 In short, \gls{qhl} samples parameter vectors $\al_p$ from $\pra$, 
-    simulates experiments by computing the \emph{likelihood} $\left| \bra{d} e^{-i \hat{H}(\al_p)t} \ket{\psi} \right|^2$
+    simulates experiments by computing the \emph{likelihood} $\lvert \bra{d} e^{-i \hat{H}(\al_p)t} \ket{\psi} \rvert^2$
     for experiments ($\ket{\psi}, t)$ designed by a \gls{qhl} heuristic subroutine, 
     and iteratively improves the probability distribution of the parameterisation $\pra$ 
     through standard \emph{Bayesian inference}. 
@@ -97,7 +97,7 @@ In order to compute the updated probability for a given particle, then, all that
 This is equivalent to the expectation value of projecting $\ket{\psi}$ onto $\ket{d}$, after evolving $\hat{H}(\al_p)$ for $t$, i.e. 
 \begin{equation}
     \label{eqn:likelihood}
-    \Pr(d | \al; e) = \left| \bra{d} e^{-i \hat{H}(\al_p)t} \ket{\psi} \right|^2,   
+    \Pr(d | \al; e) = \lvert \bra{d} e^{-i \hat{H}(\al_p)t} \ket{\psi} \rvert^2,   
 \end{equation}
     which can be simulated clasically or using a quantum simulator (see \cref{sec:likelihood}). 
 It is necessary first to know the datum $d$ (either 0 or 1) which was projected by \gls{q} under experimental conditions. 
@@ -391,7 +391,7 @@ From Born's rule, and in analogy with \cref{eqn:likelihood}, we can formulate th
 \begin{subequations}
     \label{eqn:analytical_likleihood}
     \begin{equation}
-        \Pr(d=0 | \omega; t) = \left| \braket{\psi_1 |  U | \psi_0} \right|^2 = \cos^2\bk{\frac{\omega t}{2}}
+        \Pr(d=0 | \omega; t) = \lvert \braket{\psi_1 |  U | \psi_0} \rvert^2 = \cos^2\bk{\frac{\omega t}{2}}
     \end{equation}
     \begin{equation}
         \Pr(d=1 | \omega; t) = 1 - \cos^2\bk{\frac{\omega t}{2}} = \sin^2 \bk{\frac{\omega t}{2}}
@@ -460,8 +460,8 @@ Perfect agreement between the model and the system would result in $\lk_{e}=1 \R
     as opposed to imperfect agreemenet where $\lk_{e} < 1 \Rightarrow ln(\lk_{e}) < 0$.
 In all cases \cref{eqn:log_total_likelihood} is negative, 
     and across a series of experiments,
-    strong agreement gives low $\left| \tll_{i} \right| $, 
-    whereas weak agreement gives large $\left| \tll_{i} \right| $. 
+    strong agreement gives low $\lvert \tll_{i} \rvert $, 
+    whereas weak agreement gives large $\lvert \tll_{i} \rvert $. 
 
 
 \section{Parameter estimation}

@@ -3,23 +3,23 @@
     \label{alg:ga_generate_models}
     \DontPrintSemicolon
     \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\
-    \KwIn{ $t$ \tcp*[1]{truncation rate}}\;
+    \KwIn{ $\tau$ \tcp*[1]{truncation rate}}\;
     \KwIn{ $g(\hi)$ \tcp*[1]{objective function that can act on any model $\hi$}}\;
 
     \KwOut{$\mathbb{H}$ \tcp*[1]{set of models}}\;
     
-    $ N_m = \left| \nu \right| $ \tcp*[1]{number of models}
+    $ N_m = \lvert \nu \rvert $ \tcp*[1]{number of models}
 
     \For{$\hi \in \nu$}{
        $g_i \gets g(\hi)$ \tcp*[1]{model fitness via objective function}
     }\;
     $r \gets $ \ttt{rank($\{ g_i \}$)} \tcp*[1]{rank models by their fitness}
-    $\mathbb{H}_t \gets $ \ttt{truncate($r, N_m\times t$)} \tcp*[1]{truncate models by rank: only keep $N_m \times t$}
+    $\mathbb{H}_t \gets $ \ttt{truncate($r, N_m\times \tau$)} \tcp*[1]{truncate models by rank: only keep $N_m \times \tau$}
     $ s \gets $ \ttt{normalise($\{g_i\}$)} $\forall \hi \in \mathbb{H}_t$ \tcp*[1]{normalise remaining models' fitnesses}
 
     $\mathbb{H} = \{\}$ \tcp*[1]{new batch of chromosomes/models}
 
-    \While{ $\left| \mathbb{H} \right| < N_m$ }{
+    \While{ $\lvert \mathbb{H} \rvert < N_m$ }{
         $p_1, p_2 = $ \ttt{roulette($s$)} \tcp*[1]{use $s$ to select two parents via roulette selection}
     
         $c_1, c_2$ = \ttt{crossover($p_1, p_2$)} \tcp*[1]{produce offspring models}

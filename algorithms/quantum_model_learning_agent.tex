@@ -140,7 +140,7 @@ This is simply the exponential of the difference between two models' total log-l
 Intuitively, if $\hi$ performs well, and therefore has a high \gls{tltl}, $\tll_{i}=-10$, 
     and $\hj$ performs worse with $\tll_{j}=-100$, then $B_{ij} = e^{-10-(-100)} = e^{90} \gg 1$.
 Conversely for $\tll_{i}=-100, \tll_{j}=-10$, then $B_{ij} = e^{-90} \ll 1$. 
-Therfore $\left| B_{ij} \right|$ is the strength of the statistical evidence
+Therfore $\lvert B_{ij} \rvert$ is the strength of the statistical evidence
     in favour of the interpretation 
 
 \begin{equation}
@@ -415,7 +415,7 @@ These can be chosen to match the requirements of the user, and are set via the \
         && These functions compute the \emph{expectation value}
             of the unitary operator, $e^{-i\hat{H} t}$, corresponding to the dynamics of either \gls{q} or the hypothesis model.
         && By default, here we use projective measurement back onto the input \gls{probe} state, 
-            $\left| \bra{\psi} e^{-i\hat{H}t} \ket{\psi} \right|^2$.        
+            $\lvert \bra{\psi} e^{-i\hat{H}t} \ket{\psi} \rvert^2$.        
         && In the usual case where \gls{q} has binary outcomes, we label one outcome 
             -- say, measurement in the state $\ket{+}$--  as $d=0$ and compute $\Pr(0)$
             so that the \gls{likelihood}, expectation value and $\Pr(0)$ 
