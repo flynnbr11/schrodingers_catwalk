@@ -361,13 +361,13 @@ In \cref{table:objective_functions},
 \begin{equation}
     \label{eqn:obj_fnc_eg_models}
     \begin{align}
-        \hat{H}_0 \ &= \ \sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 5)}^{z};\\
-        \hat{H}_a \ &= \ \sigma_{(1, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(4, 5)}^{z}; \\
-        \hat{H}_b \ &= \ \sigma_{(1, 4)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}; \\
-        \hat{H}_c \ &= \ \sigma_{(1, 2)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(4, 5)}^{z}; \\
-        \hat{H}_d \ &= \ \sigma_{(1, 3)}^{z}\sigma_{(1, 4)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(3, 5)}^{z}; \\
-        \hat{H}_e \ &= \ \sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(1, 5)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(4, 5)}^{z}; \\
-        \hat{H}_f \ &= \ \sigma_{(1, 2)}^{z}\sigma_{(1, 3)}^{z}\sigma_{(2, 3)}^{z}\sigma_{(2, 4)}^{z}\sigma_{(2, 5)}^{z}\sigma_{(3, 4)}^{z}\sigma_{(3, 5)}^{z}. \\
+        \hat{H}_0 \ &= \ \s_{(1, 2)}^{z}\s_{(1, 3)}^{z}\s_{(2, 3)}^{z}\s_{(2, 5)}^{z}\s_{(3, 5)}^{z};\\
+        \hat{H}_a \ &= \ \s_{(1, 5)}^{z}\s_{(3, 4)}^{z}\s_{(4, 5)}^{z}; \\
+        \hat{H}_b \ &= \ \s_{(1, 4)}^{z}\s_{(1, 5)}^{z}\s_{(2, 5)}^{z}\s_{(3, 4)}^{z}; \\
+        \hat{H}_c \ &= \ \s_{(1, 2)}^{z}\s_{(1, 5)}^{z}\s_{(2, 4)}^{z}\s_{(2, 5)}^{z}\s_{(4, 5)}^{z}; \\
+        \hat{H}_d \ &= \ \s_{(1, 3)}^{z}\s_{(1, 4)}^{z}\s_{(1, 5)}^{z}\s_{(2, 4)}^{z}\s_{(2, 5)}^{z}\s_{(3, 4)}^{z}\s_{(3, 5)}^{z}; \\
+        \hat{H}_e \ &= \ \s_{(1, 2)}^{z}\s_{(1, 3)}^{z}\s_{(1, 5)}^{z}\s_{(2, 3)}^{z}\s_{(2, 5)}^{z}\s_{(4, 5)}^{z}; \\
+        \hat{H}_f \ &= \ \s_{(1, 2)}^{z}\s_{(1, 3)}^{z}\s_{(2, 3)}^{z}\s_{(2, 4)}^{z}\s_{(2, 5)}^{z}\s_{(3, 4)}^{z}\s_{(3, 5)}^{z}. \\
     \end{align}
 \end{equation}
 
@@ -846,7 +846,7 @@ Overall, then, we can see that a strong balance of outcome with resource conside
 We strongly emphasise, however, that the performance of each objective function
     can vary under alternative conditions, and therefore similar analysis may 
     be warranted for future applications. 
-For instance, if $t_{max}$ is known to be small, 
+For instance, if $t_{\textrm{max}}$ is known to be small, 
     in smaller model spaces, using $g^r$ results in higher success rates.
 We retain \gls{bfeer}, however, for generality and novelty, 
     but it is important to recognise that the results listed do not reflect
@@ -865,55 +865,54 @@ Having introduced all the necessary concepts of \glspl{ga},
     \gls{of}, we can finally use the \gls{ges} for model search. 
 In summary of this chapter so far, we use the following settings. 
 \begin{easylist}[itemize]
-    & Models are mapped to a bit string (chromosome), where each bit represents whether a given
+    & Models are mapped to a unique bit string (chromosome), where each bit represents whether a given
         model term (gene) is present; chromosomes are of length $N_t$ genes. 
     & A maximum of $N_g$ generations are run, each with $N_m$ unique models. 
-    & Candidate models are trained using \gls{qhl}, specifically by using \gls{iqle}\footnotemark 
+    & Candidate models are trained using \gls{qhl}, specifically by using \gls{iqle}\footnotemark \ 
         for parameter estimation. 
     & Models' fitness are determined by their \gls{bfeer}, 
         after having been trained by \gls{qhl} 
         and compared against some set of competing candidate models. 
-    & For generating models on $\mu+1$, the models on $\mu$ are first truncated 
-        (the worst-performing $\nicefrac{N_m}{2}$ are discarded), and then assigned 
-        selection probability based on their fitness. 
-    & Models are selected to become parents sequentially using roulette selection. 
-        Highly favoured models can parent many children models. 
-    & Selected parent models are crossed over via a one point cross-over,
+    & For generating models on $\mu+1$, the models on $\mu$ are first truncated with truncation rate $\tau$; 
+        the remaining $\tau N_m$ models are assigned selection probability based on their fitness. 
+    & Pairs of models are selected to become parents sequentially using roulette selection. 
+        Highly favoured models can parent many offspring models. 
+    & Selected parent models are crossed over via a one-point cross-over,
         at crossover location $\kappa \in \left( \frac{N_t}{4}, \frac{3N_t}{4} \right)$, 
         and probabilistically mutated with rate $r_m=0.25$. 
-    & The top two elite models from $\mu$ are included on the $\mu+1$.
-    & If, after 5 generations, the highest-fitness (elite) model is unchanged, 
-        we terminate the search and declare that model as the champion, $\hp$. 
-    & Otherwise, after $N_g$ generations, the highest-fitness model on the final generation is 
-        declared $\hp$.
+    & The top two elite models from $\mu$ are included on the subsequent generation $\mu+1$.
+    & If, after 5 generations, the highest-fitness (elite) model is unchanged, i.e. $\hat{H}_e^{\mu} = \hat{H}_e^{\mu +5}$, 
+        we terminate the search and declare that model as the champion, $\hp = \hat{H}_e^{\mu}$. 
+    & Otherwise, after $N_g$ generations, the highest-fitness model on the final generation is declared the global champion model, 
+        $\hp = \hat{H}_C^{N_g}$.
 \end{easylist}
 \footnotetext{
-    \gls{iqle} assumes complete access to the target system see \cref{sec:iqle}. 
+    \gls{iqle} assumes complete access to the target system, see \cref{sec:iqle}. 
     This restricts the present analysis to simulateable, rather than physical, use cases, 
     e.g. device calibration. 
 }
 
 We will use a four-qubit \gls{model space} under the Heisenberg formalism, \cref{eqn:heisenberg_model_general}, 
-    such that any pair of sites $\bkl$ can be coupled by any of $\s^x_{\bkl}, \s^y_{\bkl}m \s^z_{\bkl}$, 
+    such that any pair of sites $\bkl$ can be coupled by any of the terms $\{\s^x_{\bkl}, \s^y_{\bkl}, \s^z_{\bkl}\}$, 
     so in total there are $N_t = |\termset| = 3 \times {4 \choose 2} = 18$ terms, 
     giving a \gls{model space} of $2^{18} \approx 250,000$ viable models/chromosomes. 
 For practical reasons\footnotemark, we set $N_m=60$ and $N_g=16$, although in most cases the 
     elitism clause is triggered so the search terminates long before $N_g$ is reached. 
 \footnotetext{
     This is to ensure, with 15 available worker nodes, and accounting for some slowly-learning models, 
-    that all $N_m$ models in a generation are trained within $2 t_{qhl}$, 
-    where $t_{qhl}$ is the time to train a single model. 
+    that all $N_m$ models in a generation are trained within $4 t_{\textrm{qhl}}$, 
+    where $t_{\textrm{qhl}}$ is the time to train a single model. 
 }
 The true parameters $\al_0$ are assigned randomly in the range $(0.25, 0.75)$; 
     within \gls{qhl} the prior is set as a multivariate normal distribution $0.5 \pm 0.125$. 
 We choose $\ho$ at random to contain half the available terms\footnotemark,
 \begin{equation}
     \label{eqn:gen_alg_true_model}
-    \ho = \sigma_{(1, 2)}^{yz}\sigma_{(1, 3)}^{z}\sigma_{(1, 4)}^{y}\sigma_{(2, 3)}^{xy}\sigma_{(2, 4)}^{x}\sigma_{(3, 4)}^{xz}.
+    \ho = \s_{(1, 2)}^{yz}\s_{(1, 3)}^{z}\s_{(1, 4)}^{y}\s_{(2, 3)}^{xy}\s_{(2, 4)}^{x}\s_{(3, 4)}^{xz}.
 \end{equation} 
 \footnotetext{
     Note we use a compact model representation, e.g. 
-    $\hi = \sigma_{(1, 2)}^{yz}\sigma_{(1, 3)}^{z} = \sigma_{(1, 2)}^{y} + \sigma_{(1, 2)}^{z} + \sigma_{(1, 3)}^{z}$.
+    $\hi = \s_{(1, 2)}^{yz}\s_{(1, 3)}^{z} = \s_{(1, 2)}^{y} + \s_{(1, 2)}^{z} + \s_{(1, 3)}^{z}$.
 }
 \par 
 \subsection{Analysis}
@@ -927,10 +926,10 @@ We will analyse the \gls{ges} from four perspectives:
         \includegraphics{theoretical_study/figures/single_generation_ratings_progression.pdf}
     \end{center}
     \caption[Single model within a single generation of \gls{qmla} \glsentrylong{ga}]{
-        \glsentrylong{bfeer} progression for a single candidate, $\hi$, within a single generation.
+        Progression of \glsentrylong{bfeer}  for a single candidate, $\hi$, within a single generation.
         \textbf{a}, The \glspl{bf} between $\hi$ and some opponents, $\{\hj\}$, 
             from the perspective where $\hi$ \emph{wins} given $\bij > 1 \Rightarrow \log_{10}\bij > 0$, 
-            and loses otherwise. 
+            and \emph{loses} otherwise. 
         \textbf{b}, $\hi$'s rating is shown (solid green line) changing according to the \glspl{bf} 
             comparisons with 12 other models from the same generation. 
             Before each comparison, $\hi$'s rating is shown (green cross)
@@ -944,13 +943,16 @@ We will analyse the \gls{ges} from four perspectives:
 
 Recall that \gls{bfeer} are mediated through random graphs: 
     given $N_m$ models on $\mu$, a given model $\hi$ undergoes some 
-    $N^i_{BF} < N_m$ \gls{bf} comparisons. 
+    $N_i^{BF} < N_m$ \gls{bf} comparisons. 
 In \cref{fig:single_models_elo_ratings} we show the \gls{bf} results 
-    and effects on the rating of a random model, $\hi$, where $N_m=60$ and $N^i_{BF}=12$,
-    i.e. $\hi$ is directly compared against $\sim20\%$ of contemporary models on $\mu$. 
+    and effects on the rating of a random model, $\hi$, where $N_m=60$ and $N_i^{BF}=12$,
+    i.e. $\hi$ is directly compared against $20\%$ of contemporary models on $\mu$. 
 We see that $\hi$'s rating is effected by whether it wins a given comparison, 
     but also by the strength of evidence provided by the comparison (the \gls{bf}), 
-    and the quality of its opposition (its rating).
+    and the quality of its opposition $\hj$, i.e. the initial rating of $\hj$.
+For example, the sixth comparison finds $\hj$ as the superior model, 
+    but the evidence is relatively weak and $\hi, \hj$ began with similar ratings, 
+    so $R_i$ is not effected drastically. 
 
 
 \par 
@@ -959,11 +961,11 @@ We see that $\hi$'s rating is effected by whether it wins a given comparison,
         \includegraphics{theoretical_study/figures/single_generation_all_ratings.pdf}
     \end{center}
     \caption[Ratings of all models in a single \glsentrylong{ga} generation.]{
-        Ratings of all models in a single \glsentrylong{ga} generation.
+        Ratings of all $N_m=60$ models in a single \glsentrylong{ga} generation.
         Each line represents a unique model and is coloured by the $\fs$ of that model. 
         \textbf{Inset}, the selection probabilities resulting from the final ratings of this generation. 
-        Only a fraction of models are assigned selection probability, while the remaining poorer-performing 
-        models are truncated. 
+        Only $tau=\nicefrac{1}{3}$ of models are assigned selection probability, 
+            while the remaining poorer-performing models are discarded. 
         \figtableref
     }
     % TODO replace left of figure with version where elite models are reset to initial rating
@@ -974,11 +976,13 @@ We extend the single model analysis of \cref{fig:single_models_elo_ratings} to a
     in the first generation in \cref{fig:single_generation_all_ratings}.
 The general trend is that models of higher $\fs$ have their ratings increased, 
     at the expense of models of lower $\fs$. 
-After assessing models thus, the set of models is truncated to retain only the strongest candidates,
-    which are assigned probability of being chosen to become a parent during roulette selection, 
+After assessing models thus, the set of models is truncated with rate $\tau=\nicefrac{1}{3}$ to retain only 
+    the strongest $20$ candidates,
+    which are assigned selection probability, i.e. their chance of being chosen to become a parent during roulette selection, 
     as in \cref{sec:reproduction}.
-The very strongest two models are granted a position in the subsequent generation: 
-    these are the \emph{elite} models. 
+$N_m$ models are required to populate the next generation:
+    the two models with highest $R_i$ -- the \emph{elite} models -- are automatically granted a position;
+    the remaining positions are filled through the crossover procedure outlined above.
 
 \par 
 \begin{figure}
@@ -997,12 +1001,13 @@ The very strongest two models are granted a position in the subsequent generatio
     \label{fig:ga_instance}
 \end{figure}
 
-Similarly we can consider the quality of models across at each generation,
-    and their ratings. 
-In \cref{fig:ga_instance} we see the trend suggested by \cref{fig:single_generation_all_ratings} continue,
-    i.e. that models of higher quality overall tend to achieve higher \gls{bfeer}.
-The gene pool as a whole tends towards a homogeneous set of models, all with $f \geq 0.85$. 
-Consequently, even in cases where the precise model, $\ho$, is not identified, the \gls{champion model}
+We can likewise consider the quality and ratings of models across generations.
+In \cref{fig:ga_instance}\textbf{(a)} we see the ratings for models over the first five generations of a \gls{qmla} \gls{instance}:
+    the trend suggested by \cref{fig:single_generation_all_ratings} continues,
+    where models of higher $\fs$ tend to achieve higher \gls{bfeer}.
+The gene pool as a whole tends towards a homogeneous set of high-quality models:
+    the final generation consists only of models with $f \geq 0.85$, \cref{fig:ga_instance}\textbf{(b)}. 
+Consequently, even in \glspl{instance} where the precise model, $\ho$, is not identified, the \gls{champion model}
     is highly informative, in that it captures many of the same interactions, 
     therefore most-likely providing meaningul insight on the system's physics. 
 
@@ -1013,21 +1018,21 @@ Consequently, even in cases where the precise model, $\ho$, is not identified, t
     \end{center}
     \caption[\Gls{run} of \gls{qmla} \glsentrylong{ga}]{
         A \gls{run} of the \gls{qmla} \glsentryfull{ga}, consisting of 100 independent \glspl{instance}.
-        \textbf{(a)}, The \gls{model space} contains $2^{18}\approx250,000$ candidate models; 
+        \textbf{(a)}, The \gls{model space} contains $2^{18}\approx250,000$ candidate models, 
             normally distributed around $f=0.5 \pm 0.14$. 
-        \textbf{(b)}, The models explored during the model search of all \glspl{instance} combined, 
-            $\{\hat{H}_i\}$, show that \gls{qmla} tends towards stronger models overall, 
-            with $f = 0.76 \pm 0.15$ from $\sim~43,000$ chromosomes across the instances, 
-            i.e. each \gls{instance} trains $\sim~430$ distinct models. 
-        \textbf{(c)}, Champion models from each instance, showing \gls{qmla} finds strong models 
-            in general, and in particular finds the \gls{true model} $\ho$ (with $f=1$) in $72\%$ of cases, 
-            and $f \geq 0.88$ in all instances. 
+        \textbf{(b)}, The models explored during the model search of all \glspl{instance} combined, $\{\hat{H}_i\}$.
+            \gls{qmla} generates $\sim~43,000$ chromosomes in total across the 100 instances,
+                i.e. each \gls{instance} trains $\sim~430$ distinct models;
+                Models generated by \gls{qmla} are described overall by a distribution of $f = 0.76 \pm 0.15$, 
+        \textbf{(c)}, Champion models from each instance, showing in general \gls{qmla} nominates cahmpion models with
+            $f \geq 0.88$ in all instances, 
+            and in particular finds the \gls{true model} $\ho$ (with $f=1$) in $72\%$. 
         \textbf{(d)}, Hinton diagram showing the rate at which each term is found in the winning model. 
             The size of the blocks show the frequency with which they are found, while the colour indicates 
-            whether that term was in the \gls{true model} (blue) or not (red).
-            Terms are couplings between two qubits, e.g $\hat{\sigma}_{(1, 3)}^{x}$ 
+            whether that term was (not) in the \gls{true model} in blue (red).
+            Terms represetn couplings between two qubits, e.g $\s_{(1, 3)}^{x}$ 
                 couples the first and third qubits along the $x$-axis. 
-            We test four qubits with full connectivity, resulting in 18 unique terms 
+            Available terms involve four qubits with full connectivity, resulting in 18 unique terms 
             (terms with black rectangles are not considered by the \gls{ga}).
         \figtableref
 }
@@ -1035,20 +1040,21 @@ Consequently, even in cases where the precise model, $\ho$, is not identified, t
 \end{figure}
 
 Finally, to understand the performance of the \gls{qmla} algorithm overall, 
-    we run 100 independent \glspl{instance} in a \gls{run}, \cref{fig:ga_run}. 
-We see that, while the overall \gls{model space} can be characterised by the distribution 
-    of models' $\fs$, where we sample where $\bar{f} = 0.5 \pm 0.14$, 
-    that \gls{qmla} quickly moves to the subspace of high-quality models, 
-    i.e. the models explored have median $f = 0.76 \pm 0.15$.
+    we combine 100 independent \glspl{instance} in a \gls{run}, \cref{fig:ga_run}. 
+We see that, while the overall \gls{model space} can be characterised by a distribution 
+    of models with $\bar{f} = 0.5 \pm 0.14$ (\cref{fig:ga_run}\textbf{(a)}), 
+    \gls{qmla} quickly moves to the subspace of high-quality models, 
+    i.e. the models explored have median $f = 0.76 \pm 0.15$ (\cref{fig:ga_run}\textbf{(b)}).
 This exploration is based on $430 \pm 45$ chromosomes per instance, 
-    i.e. \gls{qmla} trains only $0.16\%$ of the $2^{18}$ potential models. 
-Ultimately \gls{qmla} nominates \glspl{champion model}, $\{ \hp \}$ with $f \geq 0.88$ in all instances, 
-    and precisely identifies $\hp=\ho$ in $72\%$ of instances. 
-Considering the big picture, where the remit of \gls{qmla} is to identify the interactions 
-    the target system is subject to, we show how often each term/gene is included in $\hp$ in 
-    \cref{fig:ga_run}\textbf{d}. 
+    i.e. \gls{qmla} trains only $0.16\%$ of the $2^{18}$ permitted models. 
+Ultimately \gls{qmla} nominates \glspl{champion model} $\{ \hp \}$ with $f \geq 0.88$ in all instances, 
+    and precisely identifies $\hp=\ho$ in $72\%$ of instances, \cref{fig:ga_run}\textbf{(c)}. 
+Considering the big picture 
+    -- where the remit of \gls{qmla} is to identify the interactions \gls{q} undergoes -- 
+    we show the rate at which each individual term/gene is included in $\hp$ in 
+    \cref{fig:ga_run}\textbf{(d)}. 
 Crucially, we see that terms which really are within the true Hamiltonian, $\hat{t} \in \termset_0$, 
-    are found significantly more frequently than those without, $\hat{t} \notin \termset_0$. 
+    are found at a higher rate than those without, $\hat{t} \notin \termset_0$. 
 This level of analysis can be used to post-validate the outcome of \gls{qmla}, 
     i.e. rather than relying on $\hp$ from a single instance, 
     trusting the terms' individual frequencies as evidence that they are of importance when describing 
