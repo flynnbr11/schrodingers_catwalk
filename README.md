@@ -7,11 +7,12 @@ This repository holds the LaTeX source code to my PhD thesis, `Schrodinger's Cat
 ## In this repository
 * Tex files used to generate the thesis PDF. 
   * Files are organised into directories according to the *Parts* of the thesis.
-  * each chapter is written in a unique file.
-  * e.g. the genetic algorithm chapter in the Theroetical Study Part is in ```theoretical_study/genetic_algorithm.tex```. 
-  * Figures are stored in ```figures``` sub-directories of the corresponding Part, e.g. ```theoretical_study/figures```.
+  * Each chapter is written in a unique file.
+    * e.g. the genetic algorithm chapter in the Theroetical Study Part is in ```theoretical_study/genetic_algorithm.tex```. 
+  * Figures are stored in ```figures``` sub-directories of the corresponding Part
+    * e.g. ```theoretical_study/figures```.
 * Jupyter notebooks with Python scripts to generate figures used in the thesis. 
-    ** Contained in ```figure_development```. 
+  * Contained in ```figure_development```. 
 
 ## Figure reproduction
 All data presented in the thesis can be reproduced using the [QMLA framework](https::/github.com/flynnbr11/QMLA). 
