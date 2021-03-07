@@ -262,7 +262,7 @@ Note that the time saving reported between full and partial connectivity between
 
 \begin{figure}
     \includegraphics{theoretical_study/figures/bayes_factors_by_f_scores.pdf}
-    \caption[\glsentrylong{bf} by $\fs$.]{
+    \caption[\glsentrylong{bf} by $\fs$]{
         Pairwise \glsentrylong{bf}, $\bij$, by $\fs$ of candidates $\hi$ ($f_i$ on the $y$-axis) 
         and $\hj$ ($f_j$ on the $x$-axis).
         $\log_{10}\bij > 0 \ (<0)$, green (purple), indicates statistical evidence that $\hi$ ($\hj$) 
@@ -1035,7 +1035,7 @@ Consequently, even in \glspl{instance} where the precise model, $\ho$, is not id
             Available terms involve four qubits with full connectivity, resulting in 18 unique terms 
             (terms with black rectangles are not considered by the \gls{ga}).
         \figtableref
-}
+    }
     \label{fig:ga_run}
 \end{figure}
 
@@ -1059,12 +1059,28 @@ This level of analysis can be used to post-validate the outcome of \gls{qmla},
     i.e. rather than relying on $\hp$ from a single instance, 
     trusting the terms' individual frequencies as evidence that they are of importance when describing 
     the system of interest. 
+\par 
 
-\subsection{Device characterisation}
-This adaptive \gls{ges} may prove a useful application of \gls{qmla} in the domain of device calibration,
+\subsection{Device calibration}
+The use-case presented in this chapter is restrictive,
+    so cannot be considered as a solution to characterising any black box quantum system.
+Firstly, the set of conceivable terms must be prescribed in advance to facilitate a chromosome mapping;
+    this either limits the range of insight \gls{qmla} can achieve to interactions envisaged by the user,
+    or requires a vast set of permissible terms, leading to substantially longer model search phases than shown here. 
+Secondly, models were trained using \gls{iqle} in order to learn effectively with relatively few resources. 
+\gls{iqle} is only available to train models where we can reliably reverse the evolution of the target system 
+    (see \cref{sec:iqle}), and as such it is only useful when we have complete control over \gls{q}, 
+    for example where \gls{q} is some quantum simulator. 
+\par 
+The adaptive \gls{ges} presented in this chapter may therefore prove a useful 
+    application of \gls{qmla} in the domain of device calibration,
     in particular to characterise some untrusted quantum simulator.
 That is, by using the simulator to implement some target $\ho$, 
     \gls{qmla} can identify which operator is \emph{actually} implemented.
 For instance, implementation of a four--qubit model
-    relies on high-fidelity two-qubit gates between arbitrary qubit pairs, 
-    and \gls{qmla} can effectively reconstruct which operations were and were not faithfully computed.
+    relies on high-fidelity two-qubit gates between arbitrary qubit pairs.
+\gls{qmla} can effectively reconstruct which operations were and were not faithfully computed,
+    i.e. determine in which operations the device failed to perform the intended calculations,
+    allowing for the calibration of said device. 
+The extension of \gls{qmla} to the characterisation of real quantum devices is one of the main 
+    recommendations for future research in the scope of the \gls{qmla} framework beyond this thesis.  
