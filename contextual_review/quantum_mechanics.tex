@@ -1,8 +1,9 @@
+\glsresetall
 \Gls{qm} -- the study of nature's fundamental processes, manifest in its smallest particles --
     has been at the forefront of physics since the early $20^{\textrm{th}}$ century \cite{jammer1966conceptual}.
 Advances in theoretical understanding of quantum mechanical systems in the first half of the century 
     \cite{einstein1905heuristic, born1926quantenmechanik, schrodinger1926undulatory, heisenberg1985quantentheoretische, von2018mathematical}
-    which came to underpin all modern information and communications technologies 
+    came to underpin all modern information and communications technologies in the second half
     \cite{svelto2010principles, van2004principles}.
 The $21^{\textrm{st}}$ century, on the other hand, is poised to see the development of 
     technologies which \emph{deliberately} exploit the most intricate quantum processes in order to yield 
@@ -53,11 +54,12 @@ We start with the assumption that \emph{similarity} is conserved between two wav
     (Susskind's \emph{minus first} law of classical mehcanics \cite{susskind2014quantum})
 \begin{equation}
     \label{eqn:conservation_simularity}
-    \braket{\phi(t) | \psi(t)} = \braket{\phi(t_0) | \psi(t_0)}
+    \braket{\phi(t) | \psi(t)} = \braket{\phi(t_0) | \psi(t_0)}.
 \end{equation}
 
 Then, assuming some equations of motion capture the dynamics of \gls{q}, 
     there exists some evolution operator, $\hat{U}(t)$, which deterministically maps $\ket{\psi(t_o)}$ to $\ket{\psi(t)}$.
+That is, 
 \begin{equation}
     \label{eqn:unitary_time_evolution}
     \ket{\psi(t)} = \hat{U}(t) \ket{\psi(t_0)},
@@ -85,9 +87,8 @@ By construction, we require that after zero time, i.e. $t = t_0$, the wavefuncti
     \end{split}
 \end{equation}
 Without loss of generality we can set $t_0 = 0$, giving $\hat{U}(0) = \ident$. 
-Then, let us consider an infintesimally small time increment $t_0 + \epsilon$:
+Then, let us consider an infinitesimally small time increment $t_0 + \epsilon$:
     again, take $t_0 = 0$ so $t = \epsilon$,  where $\epsilon \gg \epsilon^2$. 
-
 We can say
 \begin{equation}
     \hat{U}(\epsilon) = \ident + \mathcal{O}(\epsilon),
@@ -105,7 +106,7 @@ In other words, the operator $\ho$ is generically the generator of the evolution
     any difference between $\ket{\psi(t_0)}$ and $\ket{\psi(t)}$ arises solely due to $\ho$. 
 So far there is no restriction on $\ho$, 
     except that it must be of the same dimension as the Hilbert space in question. 
-Recalling the unitarity condition, however:
+Recalling the unitarity condition, and that $\mathcal{O}(\epsilon^2) \sim 0$, however:
 \begin{equation}
     \label{eqn:hamiltonian_hermiticity}
     \begin{split}
@@ -165,12 +166,13 @@ As mentioned, we presented this argument in a nonstandard order:
 \begin{equation}
     \label{eqn:unitary_evolution}
     \begin{split}
-        \ket{\psi(t)} = \hat{U}(t) \ket{\psi(0)}
+        \ket{\psi(t)} &= \hat{U}(t) \ket{\psi(0)}
         \\
-        \hat{U}(t) = e^{-i \ho t} 
+        \implies \hat{U}(t) &= e^{-i \ho t}.
     \end{split}
 \end{equation}
-    which describes the unitary evolution of the state according to the unitary evolution operator, $\hat{U}(t)$. 
+$\hat{U}(t)$ then describes the unitary evolution of the wavefunction of a 
+    quantum system according to its Hamiltonian, $ho$. 
 \par 
 
 \subsection{Hamiltonians}\label{sec:hamiltonians}
@@ -202,7 +204,7 @@ We can think that each process/interaction \gls{q} undergoes contributes to its 
 \footnotetext{
     Aside: the author shares a hometown with the mathematician for whom it is named, William Rowan Hamilton. 
     It is hoped that, after another 150 years, the next physicist from Trim, Co. Meath, Ireland might 
-    profitably use knowledge of Hamiltonians on a \gls{qc}. 
+    profitably use knowledge of Hamiltonians on a functional quantum computer.} 
 }
 
 Hamiltonians describe \emph{closed} quantum systems, 
@@ -228,7 +230,7 @@ States are vectors\footnotemark, $\ket{\psi} \in \mathbb{C}$;
     which is a generalisation of Euclidean vector space, 
     i.e. $\ket{\psi} \in \hilbert$. 
 \footnotetext{We immediately use Dirac notation to represent the state; it is defined in \cref{sec:dirac_notation}.}
-The Hilbert space defines the overlap between any two vectors as the \emph{inner product}, $\braket{\psi | \phi}$ (\cref{sec:linear_algebra}). 
+The Hilbert space defines the overlap between any two vectors as the \emph{inner product}, $\braket{\psi | \phi}$ (see \cref{sec:linear_algebra}). 
 In general\footnotemark, a state can be seen as a \emph{superposition} across its eigenstates, $\left\{\ket{v_i}\right\}$.  
 \footnotetext{We expand on this brief description in \cref{sec:states}.}
 
@@ -254,11 +256,18 @@ For an ideal\footnotemark \ single particle, when the state, \cref{eqn:state_vec
     we can designate \gls{q} as a two-level computational platform, called a \emph{qubit}, 
     analogous to the workhorse of classical computation, the bit. 
 A qubit's state vector can then be written as a sum over the two available eigenstates, 
-    where we assign vectors to the eigenstates as $\left\{ \ket{H} = \ket{v_1}, \ket{V} = \ket{v_2} \right\}$. 
-\footnotetext{
+    where we assign vectors to the eigenstates as 
+\begin{equation}
+    \begin{split}
+        \ket{H} = \ket{v_1} = \icol{1 \\ 0 } =: \ket{0}; \\
+        \ket{V} = \ket{v_2} = \icol{0 \\ 1} =: \ket{1}. 
+    \end{split}
+\end{equation}
+    \footnotetext{
     Here we restrict to the space of ideal, \emph{logical} qubits. In reality, physical qubits are beset by errors, 
-    demanding error correction routines such that multiple particles are needed attain a single logical qubit. 
+    demanding error correction routines such that multiple particles are needed in order to attain a single logical qubit. 
 }
+The state of a qubit is then given by 
 \begin{equation}
     \label{eqn:qubit_state}
     \ket{\psi} = \alpha_1 \ket{v_1} + \alpha_2 \ket{v_c},
@@ -298,7 +307,7 @@ In general, a qubit requires two orthogonal state vectors to define a \emph{basi
             \\
             &\ket{1}
             \end{split}
-            \right.
+            \right .
     \end{equation}
 \end{subequations}
 
@@ -362,19 +371,19 @@ We introduce a set of speical one-qubit operators, the \emph{Pauli matrices},
         \sx = \begin{pmatrix}
             0 & 1 \\
             1 & 0 
-        \end{pmatrix}
+        \end{pmatrix};
     \end{equation}        
     \begin{equation}
         \sy = \begin{pmatrix}
             0 & -i \\
             i & 0 
-        \end{pmatrix}
+        \end{pmatrix};
     \end{equation}        
     \begin{equation}
         \sz = \begin{pmatrix}
             1 & 0 \\
-            0 & -1 
-        \end{pmatrix}
+            0 & -1
+        \end{pmatrix}.
     \end{equation}        
 \end{subequations}
 
@@ -404,7 +413,7 @@ By defining the computational basis, we ground abstract computational reasoning 
 \footnotetext{
     The terms \emph{eigenstate} and \emph{eigenvector} are interchangeable, 
     although it may be helpful to think of eigenstate as the physical manifestation (horizontal photon), 
-    and think of eigenvector as the logical manifestions ($\ket{0}$). 
+    and think of eigenvector as the logical manifestion ($\ket{0}$). 
 }
 In the computational basis, then, a qubit can be specified as
 \begin{equation}
@@ -424,7 +433,7 @@ In the computational basis, then, a qubit can be specified as
     \end{center}
     \caption[Rotations on Bloch sphere]{
         Rotations on Bloch sphere. 
-        The initial and final state are shown in blue and green respectively, while intermediate states are shown in black. 
+        The initial and final states are shown in blue and green respectively, while intermediate states are shown in black. 
         \textbf{Left}, The $Z$-basis unit vector, $\ket{0}$, is rotated about the $X$-axis, resulting in the unit vector along the $Y$-axis. 
         \textbf{Right}, The $Z$-basis unit vector, $\ket{0}$, is rotated about the $Y$-axis, resulting in the unit vector along the $X$-axis. 
     }
@@ -434,13 +443,13 @@ In the computational basis, then, a qubit can be specified as
 
 The concepts of qubits representing quantum systems, as well as operators
     altering their states and measurement collapsing those states,
-    extend straightforwardly to multipartite systems, by merging Hilbert spaces through tensor products, 
+    extend straightforwardly to multipartite systems by merging Hilbert spaces through tensor products, 
     as we show in \cref{sec:multipartite}. 
 The cases where this is a simple mathematical exercise represent \emph{pure} states;
     of course this leads to the more intricate topic of \emph{mixed} states and entanglement, 
     briefly described in \cref{sec:entanglement}.
 In this thesis, however, we are concerned only with pure states, i.e. separable qubits.
-While single qubit states are spanned by the Pauli opeartors, multi-qubit states are spanned by the Pauli group, $\mathbb{G}$: 
+While single qubit states are spanned by the Pauli operators, multi-qubit states are spanned by the Pauli group, $\mathbb{G}$: 
     $n$-qubit states are spanned by $\mathbb{G}_n = \left(\mathbb{C}^2\right)^{\otimes n}$.
 
 \subsection{\Gls{expectation value}}\label{sec:expectation_value}
@@ -449,7 +458,7 @@ While single qubit states are spanned by the Pauli opeartors, multi-qubit states
         \includegraphics{contextual_review/figures/expectation_values.pdf}
     \end{center}
     \caption[Expectation values]{
-        Expectation values of the observable $\hat{A}$ -- here the Pauli matrices --  
+        Expectation values of the observable $\hat{A} \in \{ \sx, \sy, \sz\}$ 
             for $\ket{\psi} = \alpha_0 \ket{0} + \alpha_1 \ket{1}$.
             Coefficients are real, varying $\alpha_1 \in \left( -1, 1\right)$, such that $\alpha_0 = \sqrt{1 - \alpha_1^2}$. 
     }
@@ -462,14 +471,14 @@ On average, however, the eigenvector to which it would collapse encodes statisti
 In other words, if we prepared $\ket{\psi}$ and measured it -- via some observable, $\hat{A}$ -- 
     and repeat the procedure $N$ times, 
     then as $N \rightarrow \infty$, the average outcome is the \emph{expecatation value}
-    for the system is given by 
+    for the system, given by 
 \begin{equation}
     \label{eqn:expectation_value}
     \braket{\hat{A}} = \braket{\psi | \hat{A} | \psi} = \sum\limits_{i} \alpha_i \braket{v_i | \hat{A} | v_i},  
 \end{equation}
-    where $\braket{\hat{A}}$ is the \gls{expectation value} (average) for the observable, $\hat{A}$; 
+    where $\braket{\hat{A}}$ is the \gls{expectation value} (average) for the observable $\hat{A}$; 
     $\ket{v_i}$ are the eigenvectors of $\hat{A}$, and $\alpha_i \in \mathbb{C}$ are the proability amplitudes
-    associated with each $\ket{v_i}$ when the state $\ket{psi}$ is represented as in \cref{eqn:state_vector}.
+    associated with each $\ket{v_i}$ when the state $\ket{\psi}$ is represented as in \cref{eqn:state_vector}.
 We show some examples of \glspl{expectation value} for the observable Pauli matrices in \cref{fig:expectation_values}. 
 \par 
 
@@ -479,11 +488,6 @@ An underlying theme of this thesis is to flip the usual logic:
     and use them to infer the structure of the observable.
 This trick enables machine learning routines to reverse engineer 
     the processes \gls{q} is subject to, as we will describe in \cref{part:algorithms}. 
-There is a subtlety to be aware of, however: 
-    in later chapters, we will make reference to the \gls{expectation value} and \emph{ \gls{likelihood}} 
-    almost interchangeably -- these are distinct concepts that \emph{sometimes} overlap, but not in all cases,
-    as we explain in \cref{chapter:qhl}. 
-
 
 %%%%%%%%%%%%%%% QUANTUM COMPUTING %%%%%%%%%%%%%%%%%%
 
@@ -524,13 +528,13 @@ Of course, while the advances in algorithmic quantum computation promise huge im
     quantum devices is a significant challenge.
 In constructing \glspl{qc} and dealing with their output, 
     we must account for physical effects which lead to errors, 
-    requiring expensive error mitigation schemes to be reliable \cite{shor1996fault, aharonov2008fault}.
+    requiring expensive error mitigation schemes in order to be reliable \cite{shor1996fault, aharonov2008fault}.
 Furthermore, there are a number of criteria a \gls{qc} must meet before it can be deemed reliable \cite{divincenzo2000physical}. 
 \par 
 
-Any two-level quantum system can be used as a qubit;
-    a range of platforms have emerged in attempts to fulfil the potential of quantum computation \cite{humble2019quantum},
-    among the most popular\footnote{An incomplete list of quantum architectures together with their primary advantages and limitations.}:
+Any two-level quantum system can be used as a qubit, so a range of platforms have emerged in
+    attempts to fulfil the potential of quantum computation \cite{humble2019quantum};
+    here we provide an incomplete list of quantum architectures together with their primary advantages and limitations.
 
 \begin{description}
     \item[Photonic qubits] (linear optical \glspl{qc}) \cite{kok2007linear}.
@@ -553,7 +557,7 @@ Any two-level quantum system can be used as a qubit;
     && difficult to engineer substantial coherence times, although there has been significant recent progress 
         \cite{martinis2014ucsb, wendin2017quantum},
         e.g. $T_1 \sim \mathcal{O}(\textrm{ms})$ in \cite{pop2014coherent};
-    && require cryogenic temperatures \cite{devoret2004superconducting};
+    && require cryogenic temperatures for operation \cite{devoret2004superconducting};
     && arbitrary qubit connectivity at scale is yet to be demonstrated \cite{kjaergaard2020superconducting};
     && methods for the fabrication of medium-to-large scale devices required for fault tolerant 
         quantum computation are not yet known \cite{gambetta2017building}.        
@@ -571,7 +575,7 @@ Any two-level quantum system can be used as a qubit;
 \end{description}
 \par 
 
-The ever-increasing space of contenders has led to a growing eco-system for quantum software \cite{larose2019overview},
+The ever-increasing space of quantum hardware contenders has led to a growing eco-system for quantum software \cite{larose2019overview},
     promising a wide range of applications in the era of noisy intermediate scale quantum devices \cite{preskill2018quantum}. 
 Following numerous proposoals \cite{harrow2017quantum},
     recent efforts have married state-of-the-art hardware with bespoke algorithms in order to achieve quantum advantage
@@ -586,12 +590,12 @@ In principle, however, any quantum simulator -- universal or otherwise -- capabl
 Our restriction to classical resources leads to a few remarks:
 \begin{easylist}[itemize]
     & given access to a fault-tolerant \gls{qc}/simulator,
-        the algorithms described would enjoy an automatic exponential speedup:
+        the algorithms described would enjoy considerable speedup:
     && the classical bottleneck is the calculation of the time evolution dynamics, 
         \cref{eqn:unitary_evolution}, according to the matrix exponential, of dimension $2^n$, 
         where $n$ is the dimension of the system;
-    && it is believed that the same calculation can be performed in polynomial time on a \gls{qc} \cite{lloyd1996universal}. 
-
+    && it is believed that the same calculation can be performed in polynomial time on a \gls{qc} 
+        \cite{lloyd1996universal, poulin2011quantum, berry2015simulating, berry2015hamiltonian, clinton2020hamiltonian}. 
     & the results achieved in this thesis are limited by the capability of classical computers in simulating quantum systems
     && we study only up to 8-qubit systems, whereas it would be of interest to extend these methods to higher dimensions, 
         which is expected to be feasible when reliable quantum simulators/computers are available.
