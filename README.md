@@ -11,7 +11,7 @@ This repository holds the LaTeX source code to my PhD thesis, `Schrodinger's Cat
   * Files are organised into directories according to the *Parts* of the thesis.
   * Each chapter is written in a unique file.
     * e.g. the genetic algorithm chapter in the Theroetical Study Part is in ```theoretical_study/genetic_algorithm.tex```. 
-  * Figures are stored in ```figures``` sub-directories of the corresponding Part
+  * Figures are stored in ```figures``` sub-directories of the corresponding Part.
     * e.g. ```theoretical_study/figures```.
 * Jupyter notebooks with Python scripts to generate figures used in the thesis. 
   * Contained in ```figure_development```. 
@@ -57,5 +57,6 @@ Documentation, including instructions for installation, customisation and deploy
 are [available here](https://quantum-model-learning-agent.readthedocs.io/en/latest/). 
 
 The quantum model learning agent was written about in this [Nature Physics paper](https://arxiv.org/abs/2002.06169). 
-Talks recorded about the work presented in this thesis were given at [BQIT2020](https://www.youtube.com/watch?v=m0UPG0aA0gY) 
-and [QTML2020](https://www.youtube.com/watch?v=MppHO9HB2is).
+Talks about the work presented in this thesis were given and recorded at the conferences
+[Bristol Quantum Information Technology workshop 2020](https://www.youtube.com/watch?v=m0UPG0aA0gY) 
+and [Quantum Techniques in Machine Learning 2020](https://www.youtube.com/watch?v=MppHO9HB2is).
