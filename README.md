@@ -3,6 +3,8 @@
 This repository holds the LaTeX source code to my PhD thesis, `Schrodinger's Catwalk`, 
 [which can be downloaded as a PDF here](https://github.com/flynnbr11/schrodingers_catwalk/blob/main/thesis.pdf). 
 
+## Abstract
+
 
 ## In this repository
 * Tex files used to generate the thesis PDF. 
@@ -16,9 +18,7 @@ This repository holds the LaTeX source code to my PhD thesis, `Schrodinger's Cat
 
 ## Figure reproduction
 All data presented in the thesis can be reproduced using the [QMLA framework](https::/github.com/flynnbr11/QMLA). 
-
 Instructions for how to install/operate the codebase are available in the [QMLA documentation](https://quantum-model-learning-agent.readthedocs.io/en/latest/).
-
 The full configurations for each figure can be seen on the [Figure Configuration Table](https://github.com/flynnbr11/schrodingers_catwalk/blob/main/appendix/figures/figure_implementations.md). 
 
 Given the large number of plots available, ranging from high-level perspective of the overall run, 
@@ -50,3 +50,9 @@ Note some figures presented in the thesis do correspond directly to automated QM
     was analysed offline, so the figure does not exist in the dataset. 
 All offline [figure development](https://github.com/flynnbr11/schrodingers_catwalk/tree/main/figure_development) 
     is made available, so it is possible to reconstruct any figure from the dataset and source code. 
+
+## Links
+The QMLA framework is [available here](https::/github.com/flynnbr11/QMLA). 
+Documentation, including instructions for installation, customisation and deployment, and a complete tutorial, 
+are [available here](https://quantum-model-learning-agent.readthedocs.io/en/latest/). 
+The quantum model learning agent was written about in this [Nature Physics paper](https://arxiv.org/abs/2002.06169). 
