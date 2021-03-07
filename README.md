@@ -55,4 +55,7 @@ All offline [figure development](https://github.com/flynnbr11/schrodingers_catwa
 The QMLA framework is [available here](https::/github.com/flynnbr11/QMLA). 
 Documentation, including instructions for installation, customisation and deployment, and a complete tutorial, 
 are [available here](https://quantum-model-learning-agent.readthedocs.io/en/latest/). 
+
 The quantum model learning agent was written about in this [Nature Physics paper](https://arxiv.org/abs/2002.06169). 
+Talks recorded about the work presented in this thesis were given at [BQIT2020](https://www.youtube.com/watch?v=m0UPG0aA0gY) 
+and [QTML2020](https://www.youtube.com/watch?v=MppHO9HB2is).
