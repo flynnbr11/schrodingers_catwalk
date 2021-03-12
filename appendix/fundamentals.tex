@@ -7,27 +7,24 @@ We include them here for completeness\footnotemark.
 Here we review the language of linear algebra and summarise the basic mathematical techniques used throughout this thesis.
 We will briefly recall some definitions for reference. 
 
-\begin{itemize}
-\item Notation
-
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{lr}
-            \hline 
-            Definition of & Representation \\
-            \hline 
-            Vector (or \textit{ket})     & $\ket{\psi} $  \\
-            Dual Vector (or \textit{bra}) & $\bra{\psi}  $ \\
-            Tensor Product & $\ket{\psi} \otimes \ket{\phi}$ \\
-            Complex conjugate & $\ket{\psi^{*}}$ \\
-            Transpose & $\ket{\psi}^T $\\
-            Adjoint & $\ket{\psi}^{\dag}  = (\ket{\psi}^{*})^{T}$\\
-            \hline 
-        \end{tabular}
-        \caption[Linear algebra defintions]{Linear algebra definitions.}
-        \label{table:linear_algebra}
-    \end{table}
-The dual vector of a vector (ket) $\ket{\psi} $ is given by $\bra{\psi} = \ket{\psi}^{\dag}$. 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lr}
+        \hline 
+        Definition of & Representation \\
+        \hline 
+        Vector (or \textit{ket})     & $\ket{\psi} $  \\
+        Dual Vector (or \textit{bra}) & $\bra{\psi}  $ \\
+        Tensor Product & $\ket{\psi} \otimes \ket{\phi}$ \\
+        Complex conjugate & $\ket{\psi^{*}}$ \\
+        Transpose & $\ket{\psi}^T $\\
+        Adjoint & $\ket{\psi}^{\dag}  = (\ket{\psi}^{*})^{T}$\\
+        \hline 
+    \end{tabular}
+    \caption[Linear algebra defintions]{Linear algebra definitions.}
+    \label{table:linear_algebra}
+\end{table}
+The dual vector of a vector, or \emph{ket} $\ket{\psi}$, is given by its \emph{bra},  $\bra{\psi} = \ket{\psi}^{\dag}$. 
 
 The \textit{adjoint} of a matrix replaces each matrix element with its own complex conjugate, and then switches its columns with rows.
     \begin{equation}
@@ -36,21 +33,18 @@ The \textit{adjoint} of a matrix replaces each matrix element with its own compl
     \begin{pmatrix}
     M_{0,0}^* & M_{0,1}^* \\ M_{1,0}^* & M_{1,1}^* \end{pmatrix} ^T = 
     \begin{pmatrix}
-    M_{0,0}^* & M_{1,0}^* \\ M_{0,1}^* & M_{1,1}^* \end{pmatrix}
+    M_{0,0}^* & M_{1,0}^* \\ M_{0,1}^* & M_{1,1}^* \end{pmatrix}.
     \end{equation}
 The \textit{inner product} of two vectors, $\ket{\psi} = \icol{\psi_1 \\ \psi_2 \\ \vdots \\ \psi_n}$ and $\ket{\phi}= \icol{\phi_1 \\ \phi_2 \\ \vdots \\ \phi_n }$ is given by 
 
     \begin{equation}
     \braket{\phi | \psi} = (\ket{\phi}^{\dag})\ket{\psi}
     = (\phi_1^* \ \phi_2^* \ \hdots \ \phi_n^*) \icol{\psi_1 \\ \psi_2 \\ \vdots \\ \psi_n}
-    = \phi_1^* \psi_1 + \phi_2^* \psi_2 + \dots + \phi_n^* \psi_n
+    = \phi_1^* \psi_1 + \phi_2^* \psi_2 + \dots + \phi_n^* \psi_n.
     \end{equation}
 
 $\ket{\psi}_i, \ket{\phi}_i$ are complex numbers, and therefore the above is simply a sum of products of complex numbers. 
 The inner product is often called the \emph{scalar product}, which is in general complex.
-
-\end{itemize}
-
 
 \section{Postulates of \glsentrylong{qm}}\label{sec:postulates}
 
@@ -92,7 +86,7 @@ Each version of the statements aims to achieve the same foundation, so we endeav
 Using these building blocks, we can begin to construct a language to describe quantum systems. 
 
 \section{States}\label{sec:states}
-An orhthonormal basis consists of vectors of unit length which do not overlap, 
+An orthonormal basis consists of vectors of unit length which do not overlap, 
     e.g. $\ket{x_1} = \icol{1 \\ 0 }, \ket{x_2} = \icol{0 \\ 1} \Rightarrow \braket{x_1 | x_2} = 0$. 
 In general, if $ \{ \ket{x} \} $ are the eigenstates of a system, then the system can be written as some state vector, $\ket{\psi}$, 
     in general a superposition over the basis-vectors: 
@@ -102,7 +96,7 @@ In general, if $ \{ \ket{x} \} $ are the eigenstates of a system, then the syste
         \ket{\psi} = \sum\limits_{x} a_x |x \rangle 
     \end{equation}
     \begin{equation}\label{vector_norm}
-        \textrm{subject to} \ \ \ \sum\limits_{x} |a_x|^2 =1, \ \ \ a_x \in \mathbb{C}
+        \textrm{subject to} \ \ \ \sum\limits_{x} |a_x|^2 =1, \ \ \ a_x \in \mathbb{C}.
     \end{equation}
 \end{subequations}
 
@@ -167,11 +161,11 @@ Mathematically, we consider the state vector of a system containing $n$ qubits a
 \footnotetext{We will later discuss entangled states, which can not be described thus.} 
 For instance, suppose a 2-qubit system, $\ket{\psi}$ consisting of two independent qubits $\ket{\psi_A}$ and $\ket{\psi_B}$: 
 \begin{equation}\label{two_qubit_state}
-    \ket{\psi}  = \ket{\psi_A} \ket{\psi_B} = \ket{\psi_A \psi_B} = \ket{\psi_A} \otimes \ket{\psi_B}
+    \ket{\psi}  = \ket{\psi_A} \ket{\psi_B} = \ket{\psi_A \psi_B} = \ket{\psi_A} \otimes \ket{\psi_B}.
 \end{equation}
 
 Consider first a simple system of 2 qubits. Measuring in the standard basis, these qubits will have to collapse in to one of the basis states $|0,0 \rangle, |0,1 \rangle, |1,0\rangle, |1,1\rangle $. Thus, for such a 2-qubit system, we have the general superposition
-$$ \ket{\psi} = \alpha_{0,0} |0,0 \rangle + \alpha_{0,1}|0,1 \rangle + \alpha_{1,0} |1,0\rangle +\alpha_{1,1} |1,1\rangle $$ 
+$$ \ket{\psi} = \alpha_{0,0} |0,0 \rangle + \alpha_{0,1}|0,1 \rangle + \alpha_{1,0} |1,0\rangle +\alpha_{1,1} |1,1\rangle. $$ 
 where $\alpha_{i,j}$ is the amplitude for measuring the system as the state $|i,j\rangle $. 
 This is perfectly analogous to a classical 2-bit system necessarily occupying one of the four possibilities $\left\{ (0,0), (0,1), (1,0), (1,1) \right\}$.
 
@@ -190,7 +184,7 @@ Hence, for example, if we wanted to concoct a two-qubit system composed of one q
 
 That is, the two qubit system -- and indeed any two qubit system -- is given by a linear combination of the four basis vectors
 \begin{equation}
-    \left\{ \ket{00}, \ket{0,1}, \ket{10}, \ket{11} \right\} 
+    \left\{ \ket{00}, \ket{01}, \ket{10}, \ket{11} \right\} 
     = \left\{ \icol{1\\0\\0\\0}, \ \icol{0\\1\\0\\0}, \ \icol{0\\0\\1\\0}, \  \icol{0\\0\\0\\1} \right\}.
 \end{equation}
 We can notice that a single qubit system can be described by a linear combination of two basis vectors, 
@@ -230,7 +224,7 @@ However we require $\ket{\Phi^{+}} = \frac{1}{\sqrt{2}} \left( \ket{00} + \ket{1
     which would imply $a_1b_2 = 0$ and $b_1a_2 = 0$. 
 These imply that either $a_1 =0$ or $b_2=0$, and also that $b_1=0$ or $a_2$=0, which are obviously invalid since we require that $a_1a_2 = b_1b_2 = \frac{1}{\sqrt{2}} $. 
 Thus, we cannot express $ |\Phi^+ \ra=  \ket{\psi_1} \otimes \ket{\psi_2} $;
-    this inability to separate the first and second qubits is what we term \emph{entanglement}. 
+    this inability to describe the first and second qubits independently from each other is termed \emph{entanglement}. 
 
 \section{Unitary Transformations}\label{sec:unitary}
 A fundamental concept in quantum mechanics is that of performing transformations on states. 
@@ -244,7 +238,7 @@ There are certain restrictions on a physically possible quantum transformation: 
     % it should be equally valid to first apply $U$ to $\ket{\psi}$ and then measuring, as it is to first measure and then transform the result. %\todo{Does this make any sense?}
 
 To fulfil these properties, we require that $U$ \emph{preserve the inner product}:
-$$ \langle \psi_0 | U^{\dag}U | \psi \rangle = \langle \psi_0 | \psi \rangle $$
+$$ \langle \psi_0 | U^{\dag}U | \psi \rangle = \langle \psi_0 | \psi \rangle. $$
 
 That is, we require that any such transformation be \emph{unitary}:
 
@@ -261,7 +255,7 @@ The tensor product $U_1 \otimes U_2$ acts on the space $\mathcal{H}_1 \otimes \m
 So, then, supposing a system of two separable qubits, $\ket{\psi_1} $ and $\ket{\psi_2} $ where we wish to act on $\ket{\psi_1} $ with operator $U_1$ and on $\ket{\psi_2} $ with $U_2$, 
     we perform it as
 \begin{equation}
-    \left( U_1 \otimes U_2 \right) \left(\ket{\psi_1} \otimes \ket{\psi_2} \right) = \left(U_1\ket{\psi_1}\right) \otimes \left(U_2 \ket{\psi_2}\right)
+    \left( U_1 \otimes U_2 \right) \left(\ket{\psi_1} \otimes \ket{\psi_2} \right) = \left(U_1\ket{\psi_1}\right) \otimes \left(U_2 \ket{\psi_2}\right).
 \end{equation}
 
 \section{Dirac Notation}\label{sec:dirac_notation}
@@ -270,8 +264,8 @@ Vectors are denoted by \emph{kets} of the form $|a\rangle$.
 For example, the standard basis is represented by, 
 \begin{equation}
     \begin{split}
-    \ket{x} =  \ket{0} &= \icol{1\\0} 
-    \\ \ket{y} = \ket{1} &= \icol{0\\1}
+    \ket{x} =  \ket{0} &= \icol{1\\0};
+    \\ \ket{y} = \ket{1} &= \icol{0\\1}.
     \end{split}
 \end{equation}
  
@@ -280,13 +274,13 @@ We saw in \cref{table:linear_algebra} that for every such ket, $\ket{\psi}$, the
 That is,
 \begin{equation}
     \begin{split}
-        \bra{\psi}^{\dag} &= \ket{\psi} 
-        \\ \ket{\psi} ^{\dag} &= \bra{\psi}
+        \bra{\psi}^{\dag} &= \ket{\psi},
+        \\ \ket{\psi} ^{\dag} &= \bra{\psi}.
     \end{split}
 \end{equation}
 \begin{equation}
     \ket{\psi} = \icol{\psi_1 \\ \psi_2 \\ \vdots \\ \psi_n} 
-    \Rightarrow \bra{\psi}  = \irow{\psi_1^{*} & \psi_2^{*} & \dots & \psi_n^{*}} 
+    \Rightarrow \bra{\psi}  = \irow{\psi_1^{*} & \psi_2^{*} & \dots & \psi_n^{*}}.
 \end{equation}
 
 Then if we have two vectors $\ket{\psi} $ and $\ket{\phi}$, their \emph{inner product} is given as $ \braket{\psi | \phi}  = \braket{ \phi | \psi} $. 
@@ -332,7 +326,7 @@ Then we can say, for $\ket{0} = \icol{1\\0} $ and $\ket{1} = \icol{0\\1} $
 \ket{0} \bra{0} = \begin{pmatrix}
   1 & 0  \\
   0 & 0 
-  \end{pmatrix}
+  \end{pmatrix};
 \end{equation}
 
 
@@ -340,23 +334,22 @@ Then we can say, for $\ket{0} = \icol{1\\0} $ and $\ket{1} = \icol{0\\1} $
 \ket{0} \bra{1} = \begin{pmatrix}
   0 & 1  \\
   0 & 0 
-  \end{pmatrix}
+  \end{pmatrix};
 \end{equation}
 
 \begin{equation}
 \ket{1} \bra{0} = \begin{pmatrix}
   0 & 0  \\
   1 & 0 
-  \end{pmatrix}
+  \end{pmatrix};
 \end{equation}
 \qquad
 \begin{equation}
 \ket{1} \bra{1} = \begin{pmatrix}
   0 & 0  \\
   0 & 1 
-  \end{pmatrix}
+  \end{pmatrix}.
 \end{equation}
-
 
 \end{subequations}
 
@@ -367,14 +360,14 @@ And so any 2-dimensional linear transformation in the standard basis $\ket{0}, \
   a & b  \\
   c & d 
   \end{pmatrix} \\
-= a \ket{0} \la 0| + b \ket{0} \bra{1} + c \ket{1} \bra{0} + d\ket{1} \bra{1}
+= a \ket{0} \la 0| + b \ket{0} \bra{1} + c \ket{1} \bra{0} + d\ket{1} \bra{1}.
 \end{equation}
 \\
 This is a common method of representing operators as outer products of vectors.
 A transformation that \emph{exchanges} a particle between two states, say $\ket{0} \leftrightarrow \ket{1}$ is given by the operation 
 $$ \hat{Q}: \begin{cases} \ket{0} \rightarrow \ket{1} \\ \ket{1} \rightarrow \ket{0} \end{cases} $$
 Which is equivalent to the outer product representation
-$$ \hat{Q} = \ket{0} \bra{1} + \ket{1} \la0| $$
+$$ \hat{Q} = \ket{0} \bra{1} + \ket{1} \la0|. $$
 For clarity, here we will prove this operation
 
 
@@ -403,7 +396,7 @@ $$ \hat{Q}\ket{0} = (\ket{0} \bra{1} + \ket{1} \la0|) \ket{0} $$
 $$ = \ket{0} \bra{1} \ket{0} + \ket{1} \braket{0|0} $$
 $$ = \ket{0} \braket{ 1 | 0} + \ket{1} \braket{0 | 0} $$
 Then, since $\ket{0}$ and $\ket{1}$ are orthogonal basis, their inner product is $0$ and the inner product of a vector with itself is $1$, 
-    $\left( \braket{1|1} = \braket{0|0} = 1, \braket{0|1} = \braket{1|0} =0\right)$. 
+    i.e. $\braket{1|1} = \braket{0|0} = 1, \braket{0|1} = \braket{1|0} =0$. 
     So,
 \begin{equation}
     \begin{split}
@@ -428,10 +421,10 @@ We can similarly define any operator which acts on an $n$ qubit state as a linea
     \end{equation}
     Then, using matrix calculations this would require separately calculating the four outer products in the above sum and adding them to find a $4\times4$ matrix to represent $\hat{Q}$, 
         which then acts on a state $\ket{\psi}$. 
-    Instead, consider first that $\ket{\psi} = \ket{00}$, ie one of the basis vectors our transformation is to change:
+    Instead, consider first that $\ket{\psi} = \ket{00}$, i.e. one of the basis vectors our transformation is to change:
 
     \begin{equation}
-        \hat{Q}\ket{00} = (\ket{00} \bra{11} + \ket{11} \bra{00} + |10 \ra \bra{10} + \ket{01} \la 01|) \ \ket{00} 
+        \hat{Q}\ket{00} = \left(\ket{00} \bra{11} + \ket{11} \bra{00} + |10 \ra \bra{10} + \ket{01} \la 01|\right) \ \ket{00} 
     \end{equation}
 
     And as before, only the inner products of a vector with itself remains:
@@ -468,7 +461,7 @@ We can similarly define any operator which acts on an $n$ qubit state as a linea
             \ &a \Big((0) \ket{00}  + (0) \ket{11} + (1) \ket{10}  + (0) \ket{01} \Big)
             \\ + &b \Big((0)\ket{00} +(0) \ket{11}+ (0) \ket{10} + (1) |01 \ra \Big)
             \\ = &a\ket{10}| + b |01 \ra 
-            \\ = &\ket{\psi} 
+            \\ = &\ket{\psi}.
         \end{split}
     \end{equation}
     
@@ -483,4 +476,4 @@ This quantity is an 8-row vector.  To calculate the outer product $\la 000 | 000
 Clearly then we will be working with $8 \times 8$ matrices, which will become quite difficult to maintain effectively and efficiently quite fast. 
 As we move to systems of larger size, standard matrix multiplication becomes impractical for hand-written analysis, 
     although of course remains tractable computationally up to $n\sim 10$ qubits. 
-It is obvious that Dirac's bra/ket notation is a helpful, pathematically precise tool for \gls{qm}. 
+It is obvious that Dirac's bra/ket notation is a helpful, mathematically precise tool for \gls{qm}. 
