@@ -1,4 +1,59 @@
-There is a large and growing interest in automatically identifying the models of quantum systems 
-\cite{rigo2020machine, cranmer2020discovering, bairey2019learning, pickard2011ab, chertkov2018computational}.
-Automated methodologies for identifying quantum mechanical models are becoming feasible with the development of 
-quantum devices capable of simulating nature at the quantum level. 
+\glsresetall
+
+Optimal control techniques are a crucial component in improving quantum technologies, 
+    such that imperfect near-term devices may be leveraged to achieve some meaningful quantum advantages. 
+The developments presented in this thesis contribute to the growing interest in automatic characterisation
+    and verification of quantum systems and devices. 
+Namely, the introduction of the \gls{qmla} represents an important advancement, 
+    whereby quantum systems can be completely characterised starting with little prior knowledge. 
+The majority of this thesis was dedicated to the rigourous testing of \gls{qmla},
+    gradually moving from ideal scenarios in simulation to genuine experimental quantum systems.
+\par
+
+We described the implementation of \gls{qmla} as an open source software platform in \cref{part:algorithms}, 
+    detailing numerous tunable aspects of the protocol, and their impact on training candidate models in \cref{chapter:qhl}.
+\gls{qmla} facilitates customisation of its core elements and subroutines, 
+    such that it is applicable to a wide range of target quantum systems, as described in \crefrange{chapter:qmla}{chapter:sw}.
+This malleability enables users to easily adapt the framework to their own needs,
+    and formed the basis for the cases studied in the remainder of the thesis:
+    we tested \gls{qmla} by devising a series of exploration strategies,
+    each corresponding to a different target quantum system.
+
+\par 
+In \cref{part:theoretical_study} we considered ideal theoretical quantum systems in simulation. 
+Initial tests in \cref{chapter:lattices} showed that \gls{qmla} could distinguish between 
+    different physical scenarios and internal configurations. 
+In \cref{chapter:ga}, we explored much larger model spaces by incorporating a \gls{ga} into \gls{qmla}'s model design;
+    the \gls{ga} showed promise for characterising complex quantum systems by successfully identifying the target model.
+The performance of the \gls{ga}, however, came at the expense of relying on a restrictive subroutine 
+    -- used for training individual candidate models -- 
+    drastically reducing its applicability to realistic systems. 
+However, the restriction is permitted in the scope of characterising \emph{controlled} quantum systems, 
+    for example new, untrusted quantum simulators. 
+
+\par 
+
+We concluded the thesis by considering realistic quantum systems in \cref{part:experimental_study}. 
+Experimental data from an electron spin in a \gls{nvc} was treated in \cref{chapter:nv};
+    this too relied upon tailoring \gls{qmla}'s procedure with respect to the system under study.
+A theoretically justified Hamiltonian is proposed by \gls{qmla} to describe the decoherence of the electron spin, 
+    yielding a highly predictive model in agreement with the system's measured dynamics, 
+    albeit exploring a small model space. 
+To overcome concerns that the model search was artifically constrained in the context of realistic systems, 
+    \cref{chapter:many_qubits} exercised \gls{qmla} in a vast model space, 
+    spanning terms which represent plausible interactions for the same type of system. 
+Here, again, \gls{qmla} achieved high success rates, but with caveats on the subroutines assumed for model training, 
+    and resorting to simulated data. 
+\par
+
+In summary, this thesis has provided extensive tests of the \gls{qmla} algorithm, 
+    but each may be undermined by its individual constraints. 
+In outlook, near-term developments of model learning methodologies in the context of quantum systems
+    must address these shortcomings, for instance by unifying the strategies described in this thesis. 
+Through the advancements presented herein, we hope to have provided a solid foundation upon which these constraints may be relaxed, 
+    ultimately with a view to providing an automated platform for the complete characterisation of quantum systems.
+We envision \gls{qmla} as a straighforward but powerful utility for quantum engineers in the design of near term quantum devices, 
+    expecting continued development of the framework alongside the burgeoning open-source quantum software eco-system. 
+\par
+
+
