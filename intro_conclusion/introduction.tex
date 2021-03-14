@@ -9,7 +9,7 @@ Automated methodologies for characterising quantum systems are among the applica
     with the development of quantum devices capable of
     simulating nature at the quantum level \cite{childs2018toward}. 
 There is a large and growing interest in automatically identifying the \emph{models} of quantum systems, 
-    i.e. the mathematical structure representing the system's interactions
+    i.e. the mathematical structure representing a system's interactions
     \cite{rigo2020machine, cranmer2020discovering, bairey2019learning, pickard2011ab, chertkov2018computational}.
 \par 
 
@@ -17,8 +17,8 @@ In parallel to the rise of quantum technologies over the past several decades,
     \glsentrylong{ml} and \glsentrylong{ai} have enjoyed increasing interest and resources.
 Landmark outcomes, for example in facial recognition \cite{taigman2014deepface} 
     and complex strategy games \cite{silver2017mastering, brown2019superhuman},
-    were bolstered by dramatic gains in the design of information processing devices
-    such as supercomputing facilities and \glsentrylongpl{gpu} \cite{top500, lindholm2008nvidia}.
+    were bolstered by dramatic gains in the design of information processing machinery
+    such as supercomputing facilities \cite{top500} and \glsentrylongpl{gpu} \cite{lindholm2008nvidia}.
 
 \par 
 
@@ -26,45 +26,45 @@ In this thesis we report progress in the domain of quantum system characterisati
     through novel quantum algorithms empowered by the promise of quantum simulators, 
     leveraging state-of-the-art machine learning techniques. 
 Namely, we introduce and develop the \gls{qmla} as a powerful platform for the study of 
-    quantum systems ranging from controlled quantum simulators to experimental setups.
-\gls{qmla} uncovers an approximate model for a given quantum system, 
+    quantum systems, ranging from controlled quantum simulators to experimental setups.
+\gls{qmla} distills an approximate model for a given quantum system, 
     by constructing a series of candidate models and testing them against data from the system of interest.
 In providing a robust software framework for \gls{qmla}, we initiate an exciting field of research 
-    at the overlap of \gls{ml} and quantum simulation, 
+    at the overlap of \glsentrylong{ml} and quantum simulation, 
     with proposed applications in calibrating new quantum technologies as well as understanding 
     quantum processes in nature.
 
 \section{Main Results and Thesis Outline}
 
 The works presented in this thesis are closely related, 
-    all stemming from the \gls{qmla} algorithm and framework. 
+    all stemming from the \gls{qmla} protocol and framework. 
 The thesis is organised into \emph{parts}, 
-    which group together related bodies of work. 
-Within each part, individual studies are presented in self contained chapters;
-    the main results and novel research is contained in \crefrange{part:algorithms}{part:experimental_study}.  
-At the outset of each part, we summarise its chapters and contributions;
-    the contents of each part are as follows. 
+    which group together related bodies of work;
+    within each part, individual studies are presented in self contained chapters.
+The main results and novel research is contained in \crefrange{part:algorithms}{part:experimental_study}.  
+At the outset of each part, we summarise its chapters and contributions.
+The contents of each part are as follows. 
 
 \begin{description}
     \item[\cref{part:contextual_review} Contextual Review] \
     
         We introduce the concepts upon which the thesis will build. 
-        \cref{chapter:qm} establishes the vocabulary of \gls{qm}, 
-            followed by a summary of \gls{ml} in \cref{chapter:ml}. 
+        \cref{chapter:qm} establishes the vocabulary of \glsentrylong{qm}, 
+            followed by a summary of \glsentrylong{ml} in \cref{chapter:ml}. 
         In both cases, we seek to introduce the minimal nomenclature required to 
-            contextualise the work in the following chapters, 
-            i.e. neither topic is described exhaustively. 
+            contextualise the work in the following chapters;
+            that is, neither topic is described exhaustively. 
     
     \item[\cref{part:algorithms} Algorithms] \
     
         We provide a thorough explanation of the algorithms underlying this thesis. 
-        We start by summarising \gls{qhl}, which serves as a key subroutine within later studies and should therefore 
-            be understood in order to fully appreciate their contributions. 
+        We start by summarising \glsentrylong{qhl}, which serves as a key subroutine within later studies and should therefore 
+            be understood, in order that the contributions of later chapters may be fully appreciated.
         The first major result is the \gls{qmla} algorithm itself, 
             detailed in \cref{chapter:qmla}. 
         All subsequent chapters assume knowledge of the terminology and concepts related to \gls{qmla}, 
             so unfamiliar readers will find \cref{chapter:qmla} essential. 
-        Our next contribution is an open source software platform for the implementation of \gls{qmla} 
+        Our next contribution is an open source software platform for the implementation of \gls{qmla}, 
             for the study of arbitary quantum systems.
         In \cref{chapter:sw} we list the implementation details of this framework, 
             but do not further any physical or algorithmic concepts. 
@@ -78,27 +78,29 @@ At the outset of each part, we summarise its chapters and contributions;
     
         We perform tests of the \gls{qmla} framework under idealised simulated conditions, 
             corresponding directly to \cite{flynn2021Quantum}. 
-        We demonstrate that \gls{qmla} can is trustworthy in the most straightforward scenario, 
-            where a number of candidate models are proposed in advance, in \cref{chapter:lattices}. 
+        In \cref{chapter:lattices} we demonstrate that \gls{qmla} is trustworthy in the most straightforward scenario, 
+            where a number of candidate models are proposed in advance. 
         We then move to more difficult conditions in \cref{chapter:ga}, 
-            exploring spaces of $10^5$ valid candidate models, by incorporating a \gls{ga} within \gls{qmla}. 
-        Together, the cases studied here verify that \gls{qmla} shows promise in characterising quantum systems. 
+            exploring spaces of $10^5$ valid candidate models, by incorporating a \glsentrylong{ga} within \gls{qmla}. 
+        Together, the cases studied here verify that \gls{qmla} shows promise in characterising quantum systems, 
+            in particular suggesting a compelling application in the calibration and verification of quantum simulators. 
     
     \item[\cref{part:experimental_study} Experimental Study] \
 
-        The final contribution reflects work published \cite{gentile2020learning}.
+        The final contribution reflects work published in \cite{gentile2020learning}.
         We extend the \gls{qmla} protocol to \emph{realistic} quantum systems, namely targeting the decoherence processes dominating the 
-        dynamics of an electron spin in an \glsentrylong{nvc}. 
+        dynamics of an electron spin in a \glsentrylong{nvc}. 
         In \cref{chapter:nv} we operate on data extracted from an experimental system, 
             from which \gls{qmla} distills models with high predictive power -- i.e. which can reproduce the dynamics of the target system -- 
             and which are in agreement with theoretical predictions. 
         \cref{chapter:nv} relied on several constraints to facilitate the model search; 
             in \cref{chapter:many_qubits} we relax some of those constraints by simulating a similar system, 
-            and again exploiting a \gls{ga} to explore the model space. 
+            and again exploiting a \glsentrylong{ga} to explore the model space. 
+        The results of this part indicate that \gls{qmla} may be helpful in the study of \emph{black-box} quantum systems.
     
     \item[\cref{part:conclusion} Conclusion] \
     
-        We close the thesis with a brief summary of its main contributions and the outlook for 
-        model learning methodologies in the context of quantum technologies. 
+        We close the thesis with a brief summary of its main contributions, 
+            and offer an outlook for model learning methodologies in the context of quantum technologies. 
 
 \end{description}
