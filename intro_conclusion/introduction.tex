@@ -7,7 +7,7 @@ Alongside improvements in quantum systems' control, progress in quantum algorith
     from database search \cite{grover1997quantum} to quantum chemistry \cite{cao2019quantum} and drug design \cite{cao2018potential}.
 Automated methodologies for characterising quantum systems are among the applications becoming feasible, 
     with the development of quantum devices capable of
-    simulating nature at the quantum level \cite{childs2018toward, arute2019quantum}. 
+    simulating nature at the quantum level \cite{childs2018toward}. 
 There is a large and growing interest in automatically identifying the \emph{models} of quantum systems, 
     i.e. the mathematical structure representing the system's interactions
     \cite{rigo2020machine, cranmer2020discovering, bairey2019learning, pickard2011ab, chertkov2018computational}.
@@ -34,8 +34,71 @@ In providing a robust software framework for \gls{qmla}, we initiate an exciting
     with proposed applications in calibrating new quantum technologies as well as understanding 
     quantum processes in nature.
 
-\section{Main Results}
+\section{Main Results and Thesis Outline}
 
-\section{Outline}
+The works presented in this thesis are closely related, 
+    all stemming from the \gls{qmla} algorithm and framework. 
+The thesis is organised into \emph{parts}, 
+    which group together related bodies of work. 
+Within each part, individual studies are presented in self contained chapters;
+    the main results and novel research is contained in \crefrange{part:algorithms}{part:experimental_study}.  
+At the outset of each part, we summarise its chapters and contributions;
+    the contents of each part are as follows. 
 
-\section{Publications} % maybe as unnumberred chapter?
+\begin{description}
+    \item[\cref{part:contextual_review} Contextual Review] \
+    
+        We introduce the concepts upon which the thesis will build. 
+        \cref{chapter:qm} establishes the vocabulary of \gls{qm}, 
+            followed by a summary of \gls{ml} in \cref{chapter:ml}. 
+        In both cases, we seek to introduce the minimal nomenclature required to 
+            contextualise the work in the following chapters, 
+            i.e. neither topic is described exhaustively. 
+    
+    \item[\cref{part:algorithms} Algorithms] \
+    
+        We provide a thorough explanation of the algorithms underlying this thesis. 
+        We start by summarising \gls{qhl}, which serves as a key subroutine within later studies and should therefore 
+            be understood in order to fully appreciate their contributions. 
+        The first major result is the \gls{qmla} algorithm itself, 
+            detailed in \cref{chapter:qmla}. 
+        All subsequent chapters assume knowledge of the terminology and concepts related to \gls{qmla}, 
+            so unfamiliar readers will find \cref{chapter:qmla} essential. 
+        Our next contribution is an open source software platform for the implementation of \gls{qmla} 
+            for the study of arbitary quantum systems.
+        In \cref{chapter:sw} we list the implementation details of this framework, 
+            but do not further any physical or algorithmic concepts. 
+        The \gls{qmla} software is available at \cite{flynn2021QMLA} with documentation at \cite{qmla_docs}.
+        By the end of \cref{part:algorithms}, 
+            we are armed with \gls{qmla} as a tool for the inspection of target quantum systems of interest,
+            which will serve as a platform for the remaining chapters.
+        
+    
+    \item[\cref{part:theoretical_study} Theoretical Study] \
+    
+        We perform tests of the \gls{qmla} framework under idealised simulated conditions, 
+            corresponding directly to \cite{flynn2021Quantum}. 
+        We demonstrate that \gls{qmla} can is trustworthy in the most straightforward scenario, 
+            where a number of candidate models are proposed in advance, in \cref{chapter:lattices}. 
+        We then move to more difficult conditions in \cref{chapter:ga}, 
+            exploring spaces of $10^5$ valid candidate models, by incorporating a \gls{ga} within \gls{qmla}. 
+        Together, the cases studied here verify that \gls{qmla} shows promise in characterising quantum systems. 
+    
+    \item[\cref{part:experimental_study} Experimental Study] \
+
+        The final contribution reflects work published \cite{gentile2020learning}.
+        We extend the \gls{qmla} protocol to \emph{realistic} quantum systems, namely targeting the decoherence processes dominating the 
+        dynamics of an electron spin in an \glsentrylong{nvc}. 
+        In \cref{chapter:nv} we operate on data extracted from an experimental system, 
+            from which \gls{qmla} distills models with high predictive power -- i.e. which can reproduce the dynamics of the target system -- 
+            and which are in agreement with theoretical predictions. 
+        \cref{chapter:nv} relied on several constraints to facilitate the model search; 
+            in \cref{chapter:many_qubits} we relax some of those constraints by simulating a similar system, 
+            and again exploiting a \gls{ga} to explore the model space. 
+    
+    \item[\cref{part:conclusion} Conclusion] \
+    
+        We close the thesis with a brief summary of its main contributions and the outlook for 
+        model learning methodologies in the context of quantum technologies. 
+
+\end{description}
