@@ -220,7 +220,7 @@ We will not use $\fs$ within the algorithm\footnote{Except for meta-analysis in 
 
 \input{theoretical_study/pseudocode_gen_alg_subroutine.tex}
 
-\subsubsection{Distinguishing $\fs$ through \glsentrylongpl{bf}}\label{sec:bf_by_f_score}
+\subsubsection{Distinguishing $\fs$ through Bayes factors}\label{sec:bf_by_f_score}
 We have so far relied on \gls{bf} as the means by which to distinguish models' 
     ability to explain data from \gls{q}. 
 We conjecture that models of higher $\fs$ are usually statistically better at predicting dynamics of \gls{q}
@@ -389,7 +389,7 @@ In \cref{table:objective_functions},
     \label{table:objective_functions}
 \end{table}
 
-\subsection{Inverse Log-likelihood}\label{sec:inverse_ll}
+\subsection{Inverse log-likelihood}\label{sec:inverse_ll}
 $\tll_{i}$, defined in \cref{eqn:log_total_likelihood}, can be thought of as a measure of the success of a given model at explaining data from any set of experiments, $\expset$. 
 This can be immediately interpreted as an \gls{of}, provided each candidate model 
     computes a meaningful \gls{tltl}, requiring that they are all based on the same set of experiments, $\expset_v$,
@@ -410,7 +410,7 @@ Its primary flaw, however, is its reliance on $\expset_v$:
     the design of which can not be gauranteed in advance, or at least risks introducing strong bias
     towards some models. 
 
-\subsection{Akaike Information Criterion}\label{sec:akaike_info_criterion}
+\subsection{Akaike information criterion}\label{sec:akaike_info_criterion}
 A common metric in the general field of model selection is \gls{aic} \cite{dr2002model}.
 Incorporating \gls{tltl}, 
     \gls{aic} objectively quantifies how well a given model accounts for data from the target system,
@@ -459,7 +459,7 @@ Instead we compute a straightforward quantity related to \gls{aic},
 
 \par 
 
-\subsection{Bayesian Information Criterion}\label{sec:bayes_info_criterion}
+\subsection{Bayesian information criterion}\label{sec:bayes_info_criterion}
 Related to the concept of \gls{aic} (Eqn. \ref{eqn:aic}), is that of \gls{bic}, 
 \begin{equation}
     \label{eqn:bic}
@@ -925,7 +925,7 @@ We will analyse the \gls{ges} from four perspectives:
     \begin{center}
         \includegraphics{theoretical_study/figures/single_generation_ratings_progression.pdf}
     \end{center}
-    \caption[Single model within a single generation of \gls{qmla} \glsentrylong{ga}]{
+    \caption[Single model within a single generation of QMLA genetic algorithm]{
         Progression of \glsentrylong{bfeer}  for a single candidate, $\hi$, within a single generation.
         \textbf{a}, The \glspl{bf} between $\hi$ and some opponents, $\{\hj\}$, 
             from the perspective where $\hi$ \emph{wins} given $\bij > 1 \Rightarrow \log_{10}\bij > 0$, 
@@ -960,7 +960,7 @@ For example, the sixth comparison finds $\hj$ as the superior model,
     \begin{center}
         \includegraphics{theoretical_study/figures/single_generation_all_ratings.pdf}
     \end{center}
-    \caption[Ratings of all models in a single \glsentrylong{ga} generation]{
+    \caption[Ratings of all models in a single genetic algorithm generation]{
         Ratings of all $N_m=60$ models in a single \glsentrylong{ga} generation.
         Each line represents a unique model and is coloured by the $\fs$ of that model. 
         \textbf{Inset}, the selection probabilities resulting from the final ratings of this generation. 
@@ -989,7 +989,7 @@ $N_m$ models are required to populate the next generation:
     \begin{center}
         \includegraphics{theoretical_study/figures/gen_alg_instance_combined.pdf}
     \end{center}
-    \caption[\Gls{instance} of \gls{qmla} \glsentrylong{ga}]{
+    \caption[Instance of QMLA genetic algorithm]{
         A single \gls{instance} of the \gls{qmla} \glsentrylong{}{ga}.
         \textbf{a}, Ratings of all models for the first four generations. 
         Each line in each generation represents a model by its $\fs$. 
@@ -1017,7 +1017,7 @@ Consequently, even in \glspl{instance} where the precise model, $\ho$, is not id
     \begin{center}
         \includegraphics{theoretical_study/figures/gen_alg_run.pdf}
     \end{center}
-    \caption[\Gls{run} of \gls{qmla} \glsentrylong{ga}]{
+    \caption[Run of QMLA genetic algorithm]{
         A \gls{run} of the \gls{qmla} \glsentryfull{ga}, consisting of 100 independent \glspl{instance}.
         \textbf{(a)}, The \gls{model space} contains $2^{18}\approx250,000$ candidate models, 
             normally distributed around $f=0.5 \pm 0.14$. 

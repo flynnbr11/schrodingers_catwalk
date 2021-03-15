@@ -51,7 +51,7 @@ Access to a fully operational, trusted quantum simulator admits an exponential
     speedup by simulating the unitary evolution instead of computing the matrix exponential classically.
 \par 
 
-\section{Bayes Rule}
+\section{Bayes' rule}
 Bayes' rule is used to update a probability distribution describing hypotheses, $\Pr(\textrm{hypothesis})$, when presented with new information (data).
 That is, the probabilty that a hypothesis is true is replaced
     by the initial probability that is was true, $\Pr(\textrm{hypothesis})$, multiplied by 
@@ -273,7 +273,7 @@ Usually we will refer to the case where \gls{q} is projeced onto the input state
     unless otherwise stated. 
 
 
-\subsection{Interactive Quantum Likelihood Estimation}\label{sec:iqle}
+\subsection{Interactive quantum likelihood estimation}\label{sec:iqle}
 A fundamental result in \gls{qm} -- the \gls{le} -- shows that marginally differing Hamiltonians 
     produce exponentially diverging evolutions,  undermining the basis of \gls{qle}, 
     i.e. that the likelihood function can inform Bayesian updates to a paramater distribution. 
@@ -549,7 +549,7 @@ The \gls{edh} is modular and can be replaced by any method that returns a valid 
     so we can consider numerous approaches, for instance those described in \cite{hincks2018hamiltonian, fiderer2020neural}.
 \par 
 
-\subsection{Particle Guess Heuristic}\label{sec:pgh}
+\subsection{Particle guess heuristic}\label{sec:pgh}
 The default \gls{edh} is the \gls{pgh} \cite{Wiebe:2014qhl}, 
     an online method which attempts to design the optimal evolution time based on the posterior at each experiment.
 Note \gls{pgh} does not specify the \gls{probe}, so is coupled with a \gls{probe} selection routine to comprise 

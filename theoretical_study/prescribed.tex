@@ -128,7 +128,7 @@ We can then summarise the set of candidate models through the descriptions of la
             \caption{}
         \end{subfigure}
     \end{center}
-    \caption[Lattices for prescribed \gls{qmla} \glsentrylong{es}]{
+    \caption[Lattices for prescribed QMLA exploration strategy]{
         Lattices used for prescribed models test for \gls{qmla}.
         Lattices are characterised by the connectivity of their sites; 
             dotted lines show connection between pairs of sites.                 
@@ -711,7 +711,7 @@ We can then devise a simple \gls{es} which only tests the models corresponding t
     \begin{center}
         \includegraphics{theoretical_study/figures/lattice_qmla_summary.pdf}
     \end{center}
-    \caption[\gls{qmla} for prescribed set of lattices under Ising formalism]{
+    \caption[QMLA for prescribed set of lattices under Ising formalism]{
         \gls{qmla} for prescribed set of lattices under Ising formalism. 
         The lattice indices correspond to those in \cref{fig:lattices}, 
             and the true system is given by lattice $d$. 
@@ -737,7 +737,7 @@ We run \gls{qmla} by training the ten models corresponding to the ten lattices, 
 In this example, $\ho$ is stronger than every alternative model according to the \glspl{bf}, 
     and is hence determined as $\hp$. 
 
-\section{Complete \glsentrylong{qmla} \glspl{run} for lattice sets}
+\section{Complete QMLA run for lattice sets}
 In order to test \gls{qmla} robustly, 
     we can use each of the lattices shown in \cref{fig:lattices} to specify $\ho$, 
     to ensure the algorithm is capable of finding the underlying model of arbitrary complexity, 
@@ -774,7 +774,7 @@ We therefore expect that the results for large target models could be improved b
     \begin{center}
         \includegraphics{theoretical_study/figures/lattice_successes_two_column.pdf}
     \end{center}
-    \caption[\gls{qmla} success rates for lattices]{
+    \caption[QMLA success rates for lattices]{
         Rates of success for \gls{qmla} under various conditions. 
         Each lattice is set as the \gls{true model} $\ho$ for ten independent instances. 
         In each instance, the \gls{es} considers the available lattices 
@@ -800,12 +800,12 @@ In the ideal case, where it is mostly believed the device works,
     it may be sufficient verification that the device behaves as desired, 
     or at least part thereof. 
 
-\section{Model Family Classification}\label{sec:family_classification}
+\section{Model family classification}\label{sec:family_classification}
 \begin{figure}[t]
     \begin{center}
         \includegraphics{theoretical_study/figures/model_family_search.pdf}
     \end{center}
-    \caption[\gls{qmla} outcomes for varying training resources]{
+    \caption[QMLA outcomes for varying training resources]{
         \gls{qmla} outcomes for varying training resources. 
         Independent \glspl{es} are implemented for Ising, Heisenberg and Hubbard families, 
             with $\ho$ cycling through lattices (a-f) for the Ising and Heisenberg cases, 

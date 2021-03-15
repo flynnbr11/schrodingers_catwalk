@@ -35,34 +35,19 @@
 \usepackage{amssymb}
 \usepackage[ampersand, itemize]{easylist}
 \usepackage{enumitem}
-% \usepackage[hidelinks]{hyperref}
-%  % TODO colour glossary items but don't allow large red box
-% \hypersetup{
-%   pdfborder = {0 0 0},
-%   colorlinks,
-%   citecolor=red,
-%   filecolor=black,
-%   linkcolor=black,
-%   linktoc=all,
-%   urlcolor=black
-% }
 \usepackage{hyperref}
 \hypersetup{
   colorlinks = true, %Colours links instead of ugly boxes
-  linkcolor={red!50!black},
-  citecolor={blue!50!black},
-  urlcolor=blue,
+  linkcolor={blue!50!black}, %Colour of internal links
+  citecolor=red, %{red!50!black}, %Colour of citations
+  urlcolor=blue, %Colour for external hyperlinks
   linktoc=page,
-  % linktoc=all,
-  % urlcolor     = blue, %Colour for external hyperlinks
-  % linkcolor    = grey, %Colour of internal links
-  % citecolor   = red %Colour of citations
 }
 
 \newlist{postulate}{enumerate}{1}     % this creates a dedicated counter named 'subtaski'
 \setlist[postulate,1]{label=\arabic*} % set form of enumeration label here
 
-\usepackage[capitalise]{cleveref}
+\usepackage[capitalise, nameinlink]{cleveref}
 \crefname{postulatei}{postulate}{postulates}
 
 

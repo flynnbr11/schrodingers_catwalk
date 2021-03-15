@@ -142,7 +142,7 @@ For example, if the \gls{run} was initialised on January $1^{st}$ at 01:23, navi
 
 \begin{lstlisting}[
     label=listing:results_directory,
-    caption={QMLA \gls{results directory}.},
+    caption={QMLA results directory.},
     language=Bash
 ]
 cd results/Jan_01/01_23
@@ -151,7 +151,7 @@ cd results/Jan_01/01_23
 For now it is sufficient to notice that the code has \gls{run} successfully:
     it should have generated (in \ttt{results/Jan\_01/01\_23}) files like \ttt{storage\_001.p} and \ttt{results\_001.p}.
 
-\section{Custom \glsentrylong{es}}
+\section{Custom exploration strategy}
 
 Next, we design a basic \gls{es}, for the purpose of demonstrating how to \gls{run} the algorithm.
 \glspl{es} are placed in the directory \ttt{qmla/exploration\_strategies}. 
@@ -337,7 +337,7 @@ Individual models' insights can be found in \ttt{model\_training},
     \label{fig:model_analysis}
 \end{figure}
 
-\subsection{\Gls{instance} analysis}
+\subsection{Instance analysis}
 Now we can run the full \gls{qmla} algorithm, i.e. train several models 
     and determine the most suitable. 
 \gls{qmla} will call the \ttt{generate\_models} method of the \ttt{ExampleBasic} \gls{es},
@@ -408,7 +408,7 @@ The probes used during the training of all candidates are also plotted  (\cref{f
             \label{fig:qmla_training_probes}
         }
     \end{center}
-    \caption[\Gls{instance} plots]{
+    \caption[Instance plots]{
         \gls{qmla} plots; found within instance directory e.g. \ttt{Jan\_01/01\_23/instances/qmla\_1}, 
         and its subdirectories. 
         \textbf{(a)} \ttt{composition\_of\_models}: constituent terms of all considered models, indexed by their model IDs.
@@ -428,7 +428,7 @@ The probes used during the training of all candidates are also plotted  (\cref{f
     \label{fig:instance_plots}
 \end{figure}
 
-\subsection{\Gls{run} analysis}
+\subsection{Run analysis}
 Considering a number of \glspl{instance} together is a \emph{\gls{run}}. 
 In general, this is the level of analysis of most interest: 
     an individual instance is liable to errors due to the probabilistic nature of 
@@ -631,7 +631,7 @@ When all jobs have finished, results are stored as in the local case,
     where \ttt{analyse.sh} can be used to generate a series of automatic analyses. 
 \par 
 
-\section{Customising \glsentrylongpl{es}}
+\section{Customising exploratino strategies}
 User interaction with the \gls{qmla} codebase should be achieveable primarily through the \glsentryfull{es} framework. 
 Throughout the algorithm(s) available, \gls{qmla} calls upon the \gls{es} before determining how to proceed. 
 The usual mechanism through which the actions of \gls{qmla} are directed, 

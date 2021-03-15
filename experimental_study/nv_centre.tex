@@ -16,7 +16,7 @@ We next discuss the target system with respect to its modelling,
 Finally we describe the implementation of an \gls{es} for the examination of the \gls{nvc},
     and the results of the \gls{qmla} procedure. 
 
-\section{Nitrogen-Vacancy centre}
+\section{Nitrogen-vacancy centre}
 \label{sec:nv_centres}
 
 \Glsentryfullpl{nv} are point defects in diamond, 
@@ -555,7 +555,7 @@ This range is sufficiently specific to ensure the training subroutine operates i
 Moverover this distribution supports hypotheses where each parameter is zero:
     if these prove favourable, negligible contributions can be identified and excluded from the model.
 
-\section{\Glsentrylong{es}}\label{sec:exp_es}
+\section{Exploration strategy}\label{sec:exp_es}
 We may now turn to the specific implementation details by which \gls{qmla} is applied to the study this \gls{nvc} system. 
 Recalling the terminology of \gls{qmla} from \cref{chapter:qmla}, 
     we design an \glsentryfull{es} specifically for the system under study. 
@@ -783,7 +783,7 @@ In general, the \glspl{champion model} from each instance are highly predictive:
     \hline
     \end{tabular}
     \caption[
-        \gls{qmla} \glspl{win rate} and $R^2$ for models based on experimental data and simulations
+        QMLA win rates and $R^2$ for models based on experimental data and simulations
     ]{
         \gls{qmla}  \glspl{win rate} and $R^2$ for models based on experimental data and simulations. 
         We state the number of \gls{qmla} \glspl{instance} won by each model and the average $R^2$ for those \glspl{instance} as an indication of the
@@ -795,7 +795,7 @@ In general, the \glspl{champion model} from each instance are highly predictive:
 
 \begin{figure}
     \includegraphics[width=0.95\textwidth]{experimental_study/figures/experimental_qmla_analysis.pdf}
-    \caption[\gls{qmla} applied to experimental \glsentrylong{nvc} system]{
+    \caption[QMLA applied to experimental \glsentrylong{nvc} system]{
         \gls{qmla} results on simulated and experimental data, describing a \glsentryfull{nvc} system.
         Figure reproduced from \cite{gentile2020learning}. 
         \textbf{a}, 
@@ -881,7 +881,7 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
         \includegraphics[width=0.6\textwidth]{experimental_study/figures/model_composition.pdf}
     \end{center}
     \caption[
-        Models considered by \gls{qmla} for simulated/experimental \glsentrylong{nvc} data, and their  \glspl{win rate}
+        Models considered by QMLA for simulated/experimental nitrogen-vacancy centre data, and their win rates
     ]{
     \textbf{Left}: map of the various Hamiltonian terms included in each of the possible 40 candidate models explored by \gls{qmla}
     during any of the 100 \glspl{instance} on either simulated or experimental data.
@@ -919,7 +919,7 @@ We highlight a number of \emph{credible} models which we deem especially valid a
     \end{tabular}
     \\ \small \textbf{b,} Experimental data
 
-    \caption[Dynamics reproduced by \gls{qmla} \glspl{champion model} for simulated/experimental data]{
+    \caption[Dynamics reproduced by QMLA champion models for simulated/experimental data]{
         Dynamics reproduced by various \gls{qmla} \glspl{champion model} for \textbf{(a)} simulated and \textbf{(b)} experimental data. 
         Likelihoods, $\Pr(0)$ are shown on $y$--axis with time on $x$--axis. 
         Red dots give the true dynamics of $\ho$, while the blue lines show the median reconstruction by $\hp$
@@ -990,7 +990,7 @@ In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitat
     \\
     \small \textbf{b,} Experimental QMLA instances.
     \caption[
-        Histograms for parameters learned by \gls{qmla} \glspl{champion model} on simulated and experimental data
+        Histograms for parameters learned by QMLA champion models on simulated and experimental data
     ]{
         Histograms for parameters learned by \gls{qmla} \glspl{champion model} on (\textbf{a}) simulated  and (\textbf{b}) experimental data. 
         Blue dotted lines indicate the median for that parameter, while red dotted lines give the true parameter in the simulated case. 
