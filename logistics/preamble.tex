@@ -50,10 +50,6 @@
 \usepackage[capitalise, nameinlink]{cleveref}
 \crefname{postulatei}{postulate}{postulates}
 
-
-% \crefname{algocf}{alg.}{algs.}
-% \Crefname{algocf}{Algorithm}{Algorithm}
-
 %%%%%%%%%%%%% Nonstandard packages %%%%%%%%%%%%%
 \usepackage[
   style=long,
@@ -64,25 +60,16 @@
   acronym,
   toc=true, 
 ]{glossaries}
-% \setacronymstyle{long-short-desc}
-% \setacronymstyle{long-short-desc}
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}
-% \setlength\LTleft{0pt}
-% \setlength\LTright{0pt}
 \setlength\glsdescwidth{0.8\hsize}
-
-% \makeglossaries
 
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \usepackage{braket}
 \usepackage{amsthm}
 \usepackage{nicefrac}
-% \usepackage{subfig}
-% \usepackage{underscore}
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{siunitx}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% Settings %%%%%%%%%%%%%
@@ -109,9 +96,7 @@
 {\raggedright\spacedallcaps}[\normalsize\vspace*{.8\baselineskip}\titlerule]%
 
 \renewcommand{\thepart}{\Roman{part}}
-%\AtBeginDocument{\renewcommand{\thepart}{\Roman{part}}}
 \titleformat{\part}[display]{\normalfont\large\centering}{\thispagestyle{empty}\partname~\thepart}{1em}{\color{red}\spacedallcaps}
-% \DeclareCaptionType{code}[Code Listing][List of Code Listings] 
 
 % Listing formatting
 \lstset{
@@ -156,8 +141,3 @@
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
-
-% \theoremstyle{definition}
-% \newtheorem{definition}[thm]{Definition} % definition numbers are dependent on theorem numbers
-% \theoremstyle{example}
-% \newtheorem{example}[Example]{Example} % same for example numbers
