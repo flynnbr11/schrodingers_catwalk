@@ -28,7 +28,7 @@ the user's environment;
     
 \begin{lstlisting}[
     label=listing:qmla_setup,
-    caption={QMLA codebase setup}
+    caption={QMLA codebase setup.},
     language=Bash
 ]
 # Install redis (database broker)
@@ -67,7 +67,7 @@ Run the following
     version installed on the user's machine in the above setup section):
 \begin{lstlisting}[
     label=listing:launch_redis,
-    caption={Launch redis database},
+    caption={Launch redis database.},
     language=Bash
 ]
 ~/redis-4.0.8/src/redis-server
@@ -90,7 +90,7 @@ Ensure the first few lines of \ttt{local\_launch.sh} read:
 
 \begin{lstlisting}[
     label=listing:local_launch,
-    caption={\ttt{local\_launch} script},
+    caption={\ttt{local\_launch} script.},
     language=Bash
 ]
 #!/bin/bash
@@ -119,7 +119,7 @@ which we set up in \cref{listing:qmla_setup}.
 Then, we navigate to the \gls{qmla} directory, and launch:
 \begin{lstlisting}[
     label=listing:launch_example,
-    caption={Launch QMLA},
+    caption={Launch QMLA.},
     language=Bash
 ]
 
@@ -142,7 +142,7 @@ For example, if the \gls{run} was initialised on January $1^{st}$ at 01:23, navi
 
 \begin{lstlisting}[
     label=listing:results_directory,
-    caption={QMLA \gls{results directory}},
+    caption={QMLA \gls{results directory}.},
     language=Bash
 ]
 cd results/Jan_01/01_23
@@ -160,7 +160,7 @@ make a new subdirectory, and copy the template file.
 
 \begin{lstlisting}[
     label=listing:qmla_setup,
-    caption={QMLA codebase setup},
+    caption={QMLA codebase setup.},
     language=Bash
 ]
 
@@ -182,7 +182,7 @@ To add any further \glspl{es} inside the directory \ttt{custom\_es}, include the
 
 \begin{lstlisting}[
     label=listing:importing_es,
-    caption={Providing custom exploration strategy to QMLA},
+    caption={Providing custom exploration strategy to QMLA.},
     language=Python
 ]
 
@@ -540,7 +540,7 @@ Open the parallel launch script, \ttt{QMLA/launch/parallel\_launch.sh}, and prep
 
 \begin{lstlisting}[
     label=listing:parallel_launch,
-    caption={\ttt{parallel\_launch} script},
+    caption={\ttt{parallel\_launch} script.},
     language=Bash
 ]
 #!/bin/bash
@@ -592,7 +592,7 @@ These commands will probably not work with most machines, so must be configured 
 
 \begin{lstlisting}[
     label=listing:instace_script,
-    caption={\ttt{run\_single\_qmla\_instance} script},
+    caption={\ttt{run\_single\_qmla\_instance} script.},
     language=Bash
 ]
 
@@ -614,7 +614,7 @@ When the modifications are finished,
 
 \begin{lstlisting}[
     label=listing:instace_script,
-    caption={\ttt{run\_single\_qmla\_instance} script},
+    caption={\ttt{run\_single\_qmla\_instance} script.},
     language=Bash
 ]
 source qmla_test/qmla-env/bin/activate
@@ -685,7 +685,7 @@ Here we demonstrate how to impose custom logic to terminate the seach also.
 
 \begin{lstlisting}[
     label=listing:greedy_exploration_strategy,
-    caption={\ttt{ExampleGreedySearch} exploration stategy},
+    caption={\ttt{ExampleGreedySearch} exploration stategy.},
     language=Bash
 ]
 class ExampleGreedySearch(
@@ -821,7 +821,7 @@ A corresponding \gls{es} is given as follows.
 
 \begin{lstlisting}[
     label=listing:tiered_greedy_exploration_strategy,
-    caption={\ttt{ExampleGreedySearchTiered} exploration stategy},
+    caption={\ttt{ExampleGreedySearchTiered} exploration stategy.},
     language=Bash
 ]
 

@@ -16,6 +16,7 @@
 \usepackage{graphicx}
 \usepackage{subfiles}
 \usepackage{datetime}
+\usepackage[nottoc]{tocbibind}
 \usepackage[
     font=small,
 ]{caption}
@@ -33,17 +34,29 @@
 \usepackage{listings}
 \usepackage{amssymb}
 \usepackage[ampersand, itemize]{easylist}
-\usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
- % TODO colour glossary items but don't allow large red box
+% \usepackage[hidelinks]{hyperref}
+%  % TODO colour glossary items but don't allow large red box
+% \hypersetup{
+%   pdfborder = {0 0 0},
+%   colorlinks,
+%   citecolor=red,
+%   filecolor=black,
+%   linkcolor=black,
+%   linktoc=all,
+%   urlcolor=black
+% }
+\usepackage{hyperref}
 \hypersetup{
-  pdfborder = {0 0 0},
-  colorlinks,
-  citecolor=red,
-  filecolor=black,
-  linkcolor=black,
-  linktoc=all,
-  urlcolor=black
+  colorlinks = true, %Colours links instead of ugly boxes
+  linkcolor={red!50!black},
+  citecolor={blue!50!black},
+  urlcolor=blue,
+  linktoc=page,
+  % linktoc=all,
+  % urlcolor     = blue, %Colour for external hyperlinks
+  % linkcolor    = grey, %Colour of internal links
+  % citecolor   = red %Colour of citations
 }
 
 \newlist{postulate}{enumerate}{1}     % this creates a dedicated counter named 'subtaski'
@@ -63,7 +76,8 @@
   nolist, 
   nonumberlist,
   nopostdot,
-  acronym
+  acronym,
+  toc=true, 
 ]{glossaries}
 % \setacronymstyle{long-short-desc}
 % \setacronymstyle{long-short-desc}
