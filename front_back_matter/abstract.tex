@@ -1,42 +1,40 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Humans have always been, and will always be, curious about the world around them;
-    recently we've called the practice \emph{science}. 
+People have always been, and will always be, curious about the world around them;
+    recently we've called this practice \emph{science}. 
 In the name of science, we've discovered that the earth revolves around the sun, 
     produced countless medicines, and built atomic bombs.
-At every stage of human history, we na\"ively believed we had reached the bottom;
+At every stage in the history of science, we na\"ively believed we had reached the bottom;
     the current incarnation of this belief is \emph{quantum mechanics},
-    which promises to describe nature's most delicate procedures using mathematics nobody understands. 
-Another fundamental human endeavour has been the design and construction of machinery to expedite crucial tasks, 
+    which promises to describe nature's most delicate procedures by making assumptions nobody understands. 
+Another fundamental human endeavour has been the design and construction of machinery to expedite crucial tasks;
     from prehistoric hunting tools, to farm equipment in the industrial revolution, 
     and the ubiquity of information technologies through  the $20^{\textrm{th}}$ century. 
 
 \par 
 The $21^{\textrm{st}}$ century marks the culmination of these core efforts in the realisation of \emph{quantum technologies}:
     devices which exploit quantum mechanical processes to achieve outcomes beyond the reach of classical machinery.
-% The prospect of functional quantum computers in the near term demands meaningful applications, 
-%     to justify their enormous financial and labour costs. 
 One of the most promising applications is quantum simulation, 
     whereby particles, atoms and molecules can be examined thoroughly for the first time, 
-    since their quantum mechanical properties are beyond the scope of even the most powerful supercomputers. 
+    having been beyond the scope of even the most powerful supercomputers. 
 \par 
-
-To understand physical systems, it has proved useful to appeal to \emph{models}:
-    mathematical structures encoding physical interactions,
+\emph{Models} have been useful tools in understanding physical systems:
+    these are mathematical structures encoding physical interactions,
     which allow us to predict how the system will behave under various conditions. 
 Models of quantum systems are particularly difficult to design and test, 
-    owing to the huge computational resources required to represent them accurately.
+    owing to the huge computational required to represent them accurately.
 In this thesis, we introduce and develop an algorithm to characterise quantum systems efficiently, 
     by inferring a model consistent with their observed dynamics.
 The \emph{Quantum Model Learning Agent} (QMLA) is an extensible framework which permits 
-    the study of any quantum system of interest.
-QMLA iteratively proposes candidate models and trains them against the target system through machine learning, 
+    the study of any quantum system of interest, 
+    by combining quantum simulation with state of the art machine learning.
+QMLA iteratively proposes candidate models and trains them against the target system,
     finally declaring a single model as the best representation for the system of interest.  
 \par 
 
 We describe QMLA and its implementation through open source software,
-    before testing it under a series of physical scenarios, 
+    before testing it under a series of physical scenarios.
 First, we consider idealised theoretical systems in simulation, 
     verifying the core principles of QMLA. 
 Next, we incorporate strategies for generating candidate models

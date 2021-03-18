@@ -1,21 +1,9 @@
 \glsresetall
-\Gls{qm} -- the study of nature's fundamental processes, manifest in its smallest particles --
-    has been at the forefront of physics since the early $20^{\textrm{th}}$ century \cite{jammer1966conceptual}.
-Advances in theoretical understanding of quantum mechanical systems in the first half of the century 
-    \cite{einstein1905heuristic, born1926quantenmechanik, schrodinger1926undulatory, heisenberg1985quantentheoretische, von2018mathematical}
-    came to underpin all modern information and communications technologies\footnotemark in the second half
-    \cite{svelto2010principles, van2004principles}.
-The $21^{\textrm{st}}$ century, on the other hand, is poised to see the development of 
-    technologies which \emph{deliberately} exploit the most intricate quantum processes in order to yield 
-    some non-classical advantage. 
+\par 
 This thesis focuses on the application of \glsentrylong{ml} to the characterisation of quantum mechanical systems
     through use of quantum simulators, 
     so it is pertinent first to introduce the vocabulary of \gls{qm}. 
-\footnotetext{Colloquially referred to as \emph{Quantum 1.0}.}
-\par 
-
-\Gls{qm} is central to the topics described in this thesis, 
-    however it is impossible to succinctly capture the entire discipline; 
+It is impossible, however, to succinctly capture the entire discipline; 
     in this chapter we will only introduce concepts utilised throughout.
 For completeness, we elucidate some fundamental topics of linear algebra and quantum theory in \cref{apdx:fundamentals},
     but consider them too cumbersome to include in the main text. 
@@ -51,7 +39,7 @@ We have yet to describe the structure of the wavefunction, which we will do in \
 Suppose we have two such wavefunctions, $\ket{\phi(t)}, \ket{\psi(t)}$ which are functions of time $t > t_0$.
 We start with the assumption that \emph{similarity} is conserved between two wavefunctions,
     if they undergo the same transformation 
-    (Susskind's \emph{minus first} law of classical mehcanics \cite{susskind2014quantum})
+    (Susskind's \emph{minus first} law of classical mechanics \cite{susskind2014quantum})
 \begin{equation}
     \label{eqn:conservation_simularity}
     \braket{\phi(t) | \psi(t)} = \braket{\phi(t_0) | \psi(t_0)}.
