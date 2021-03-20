@@ -15,24 +15,26 @@ Likewise, in this chapter we quickly summarise the key aspects of quantum comput
 %%%%%%%%%%%%%%%% QUANTUM MECHANICS %%%%%%%%%%%%%%%%%
 \section{Quantum mechanics}\label{sec:qm}
 
-At any time, a quantum system, \gls{q}, can be described by its \emph{wavefunction}, $\Psi(t)$, 
+At any time, $t$, a quantum system, \gls{q}, can be described by its \emph{wavefunction}, $\Psi(t)$, 
     which contains all information about \gls{q}. 
 In analogy with Newton's second law of motion, 
     which allows for the determination of a particle's position at any time, $\vec{r}(t)$, 
-    given its conditions such as mass and acceleration as well as its initial position, $\vec{r}(t_0)$,  
+    given its conditions -- its initial position, $\vec{r}(t_0)$ and momentum --   
     quantum \emph{equations of motion} can describe the evolution of \gls{q} through its wavefunction \cite{dirac1981principles}. 
 One proposal\footnotemark \ for the equation of motion 
     to describe the evolution of the wavefunction under known conditions, 
     i.e. determining $\Psi(t)$ from $\Psi(t_0) \ \forall t > t_0$, 
-    is \emph{\schrodinger's equation}  \cite{griffiths2018introduction, mart2020introduce, nelson1966derivation}.
+    is the \emph{\schrodinger equation}  \cite{griffiths2018introduction, mart2020introduce, nelson1966derivation}.
 \footnotetext{
     The most noteworthy alternative formalism, due to Heisenberg \cite{heisenberg1985quantentheoretische}, 
     was shown equivalent to the \schrodinger picture described here.
 }
 \par 
 
-Although the \schrodinger equation is a \emph{postulate} of \gls{qm} (see \cref{sec:postulates}), 
-    let us introduce it in reverse order to elucidate its meaning, following \cite{susskind2014quantum}. 
+Although the \schrodinger equation is a \emph{postulate} of \gls{qm}, 
+    i.e. can act as a starting point for \gls{qm} (see \cref{sec:postulates}), 
+    we will sketch a brief, informal derivation to elucidate its meaning
+    following \cite{susskind2014quantum},
 We have yet to describe the structure of the wavefunction, which we will do in \cref{sec:quantum_info},
     but here we will represent wavefunctions using \emph{Dirac notation} (\cref{sec:dirac_notation}), 
     and can think of them generically as vectors, i.e. $\Psi(t) \rightarrow \ket{\psi(t)}$. 
@@ -40,6 +42,7 @@ Suppose we have two such wavefunctions, $\ket{\phi(t)}, \ket{\psi(t)}$ which are
 We start with the assumption that \emph{similarity} is conserved between two wavefunctions,
     if they undergo the same transformation 
     (Susskind's \emph{minus first} law of classical mechanics \cite{susskind2014quantum})
+
 \begin{equation}
     \label{eqn:conservation_simularity}
     \braket{\phi(t) | \psi(t)} = \braket{\phi(t_0) | \psi(t_0)}.
@@ -53,7 +56,13 @@ That is,
     \ket{\psi(t)} = \hat{U}(t) \ket{\psi(t_0)},
 \end{equation}
     where we have not yet imposed any restrictions on $\hat{U}$. 
-Combining \crefrange{eqn:conservation_simularity}{eqn:unitary_time_evolution}, 
+We also have the \emph{dual vector} of \cref{eqn:unitary_time_evolution},
+\begin{equation}
+    \label{eqn:dual_unitary_evolution}
+    \bra{\psi(t)} = \bra{\psi(t_o)}\hat{U}^{\adjoint},
+\end{equation}
+    see \cref{sec:linear_algebra}. 
+Combining \crefrange{eqn:conservation_simularity}{eqn:dual_unitary_evolution}{eqn:unitary_time_evolution}, 
 \begin{equation}
     \begin{split}
         \braket{\phi(t) | \psi(t)} &= \braket{ \phi(t_0) | \hat{U}^{\dag} \hat{U}| \psi(t_o) }
@@ -63,7 +72,7 @@ Combining \crefrange{eqn:conservation_simularity}{eqn:unitary_time_evolution},
         \Rightarrow \hat{U}^{\dag}(t) \hat{U}(t) &= \ident \ \ \ \ \forall t,
     \end{split}
 \end{equation}
-where the result $\hat{U}^{\dag}(t) \hat{U}(t) = \ident$ is the condition for \emph{unitarity} (\cref{sec:unitary}), 
+where the result $\hat{U}^{\dag}(t) \hat{U}(t) = \ident$ is the condition for \emph{unitarity} of $\hat{U}(t)$ (\cref{sec:unitary}), 
     so we can claim the quantum wavefunction evolves unitarily. 
 \par 
 
@@ -89,12 +98,18 @@ We suppose the form of the offset, so we can write
     \hat{U}(\epsilon) = \ident - \epsilon \left(\frac{i}{\hbar} \ho \right),
 \end{equation}
     where the inclusion of the phase $-i$ is arbitrary, 
-    and we have named as $\nicefrac{\ho}{\hbar}$ the operator by which the time evolution differs from the identity. 
-In other words, the operator $\ho$ is generically the generator of the evolution/dynamics of \gls{q}:
+    and we have named as $\ho$ the operator by which the time evolution differs from the identity,
+    scaled by the reduced Planck constant, $\hbar = 1.054 \times 10^{-34}$.
+In other words, the operator $\ho$ is, generically, the generator of the evolution/dynamics of \gls{q}:
     any difference between $\ket{\psi(t_0)}$ and $\ket{\psi(t)}$ arises solely due to $\ho$. 
-So far there is no restriction on $\ho$, 
-    except that it must be of the same dimension as the Hilbert space in question. 
-Recalling the unitarity condition, and that $\mathcal{O}(\epsilon^2) \sim 0$, however:
+So far there is no restriction on $\ho$\footnotemark.
+    \footnotetext{
+        We do restrict $\ho$ to the same dimension as the Hilbert space in question;
+        the concept of Hilbert space will be defined in \cref{sec:quantum_info}, 
+        but is not needed in this discussion.
+    }
+Recalling the unitarity condition, and that $\lim_{\epsilon \rightarrow 0} \mathcal{O}(\epsilon^2) \sim 0$, 
+    we have:
 \begin{equation}
     \label{eqn:hamiltonian_hermiticity}
     \begin{split}
@@ -118,7 +133,7 @@ Recalling the unitarity condition, and that $\mathcal{O}(\epsilon^2) \sim 0$, ho
 In fact, this is the \emph{Hamiltonian} of the system, described in the next section. 
 
 \par 
-We can also use the infintesimal evolution to see 
+We can also use the infinitesimal evolution to see 
 \begin{equation}
     \label{eqn:derivation_schrodinger_eqn}
     \begin{split}
@@ -127,7 +142,7 @@ We can also use the infintesimal evolution to see
         \\ \Rightarrow 
         \ket{\psi(\epsilon)} &= \left(\ident - \epsilon \frac{i}{\hbar} \ho \right) \ket{\psi(t_0)}
         \\ \Rightarrow \ket{\psi(\epsilon)} &= \ket{\psi(t_0)} - \epsilon \frac{i}{\hbar} \ho \ket{\psi(t_0)}
-        \\ \Rightarrow \frac{\ket{\psi(\epsilon)} - \ket{\psi(t_0)} }{\epsilon}  &= - \frac{i}{\hbar} \ho \ket{\psi(t_0)}
+        \\ \Rightarrow \frac{\ket{\psi(\epsilon)} - \ket{\psi(t_0)} }{\epsilon}  &= - \frac{i}{\hbar} \ho \ket{\psi(t_0)}.
     \end{split}
 \end{equation}
 Taking the limit as $\epsilon \rightarrow 0 $, the left hand side of the final line of \cref{eqn:derivation_schrodinger_eqn} is the definition
@@ -160,40 +175,38 @@ As mentioned, we presented this argument in a nonstandard order:
     \end{split}
 \end{equation}
 $\hat{U}(t)$ then describes the unitary evolution of the wavefunction of a 
-    quantum system according to its Hamiltonian, $ho$. 
+    quantum system according to its Hamiltonian, $\ho$. 
 \par 
 
 \subsection{Hamiltonians}\label{sec:hamiltonians}
-In the previous section we introduced the Hamiltonian\footnotemark \ of \gls{q} as the generator of its 
+In the previous section we introduced the Hamiltonian of \gls{q} as the generator of its 
     time evolution dynamics;
     Hamiltonians are of primary importance in this thesis, so it is worth pausing to consider their physical meaning. 
-We saw in \cref{eqn:hamiltonian_hermiticity} that $\ho$ is Hermitian, 
-    meaning that the operator is physically observable 
-    according to \Crefrange{postulate:eigenvalues}{postulate:hermiticity}
-    of \glsentrylong{qm} (\cref{sec:postulates}). 
-The Hamiltonian operator captures the energy of \gls{q}: 
-    the eigenvalues of the observable $\ho$ are the permitted energy levels of the system.
+We saw in \cref{eqn:hamiltonian_hermiticity} that $\ho$ is Hermitian;
+    the Hamiltonian is the observable operator (see \Crefrange{postulate:eigenvalues}{postulate:hermiticity} in \cref{sec:postulates}) 
+    associated with the system's total energy, 
+    i.e. the permitted energy levels of the system are given by the eigenfunctions of $\ho$. 
 \par 
 
-The quantum Hamiltonian, $\ho$, is analogous to the classical Hamiltonian, 
-    insofar as it captures all the interactions of a given system which contribute to its time evolution.
+The quantum Hamiltonian, $\ho$, is analogous to the \emph{classical} Hamiltonian, 
+    which captures all the interactions of a given classical system which contribute to its time evolution.
 Knowing the classical Hamiltonian and the initial conditions -- position and momentum -- 
     Hamilton's equations of motion allow for the calcaultion of those quantities for the particle 
     in question an infintesimal time later \cite{susskind2014classical}.    
 Likewise, knowledge of the initial wavefunction, $\ket{\psi(t_0)}$, and the system's quantum Hamiltonian, $\ho$, 
-    the quantum equations of motion -- \schrodinger's equation, \cref{eqn:schrodinger} -- 
+    the quantum equation of motion -- namely the \schrodinger equation, \cref{eqn:schrodinger} -- 
     permits the calculation of the wavefunction at later times.
 As such the Hamiltonian must consist of all processes which influence the evolution of \gls{q};
     we will later break the Hamiltonian into independent \emph{terms} which each correspond to unique physical interactions
-    \gls{q} is subject to, \cref{sec:models}. 
+    \gls{q} is subject to, in \cref{sec:models}. 
 We can think that each process/interaction \gls{q} undergoes contributes to its total energy,
     giving intuition as to why its eigenvalues are the energy levels. 
 \par 
-\footnotetext{
-    Aside: the author shares a hometown with the mathematician for whom it is named, William Rowan Hamilton. 
-    It is hoped that, after another 150 years, the next physicist from Trim, Co. Meath, Ireland might 
-    profitably use knowledge of Hamiltonians on a functional quantum computer.} 
-}
+% \footnotetext{
+%     Aside: the author shares a hometown with the mathematician for whom it is named, William Rowan Hamilton. 
+%     It is hoped that, after another 150 years, the next physicist from Trim, Co. Meath, Ireland might 
+%     profitably use knowledge of Hamiltonians on a functional quantum computer.} 
+% }
 
 Hamiltonians describe \emph{closed} quantum systems, 
     i.e. where \emph{all} processes and interactions which influence \gls{q} are accounted for. 
@@ -209,17 +222,15 @@ We do, however, show initial progress towards this endeavour by modelling a phys
 
 %%%%%%%%%%%%% QUANTUM INFORMATION %%%%%%%%%%%%%
 \section{Quantum information}\label{sec:quantum_info}
-We have not yet described the structure of the wavefunction, 
-    instead performing the previous analysis with respect to some arbitrary objects.
 The wavefunction for a physical system, \gls{q}, is also known as its \emph{state}, 
     a complete mathematical description of the system \cite{preskill1998lecture}.
-States are vectors\footnotemark, $\ket{\psi} \in \mathbb{C}$;
+States are vectors\footnotemark \ of complex numbers;
     the valid state space for \gls{q} is its \emph{Hilbert space}, $\hilbert$,
     which is a generalisation of Euclidean vector space, 
     i.e. $\ket{\psi} \in \hilbert$. 
 \footnotetext{We immediately use Dirac notation to represent the state; it is defined in \cref{sec:dirac_notation}.}
 The Hilbert space defines the overlap between any two vectors as the \emph{inner product}, $\braket{\psi | \phi}$ (see \cref{sec:linear_algebra}). 
-In general\footnotemark, a state can be seen as a \emph{superposition} across its eigenstates, $\left\{\ket{v_i}\right\}$.  
+In general\footnotemark, a state can be seen as a \emph{superposition} across the system's eigenstates, $\left\{\ket{v_i}\right\}$.  
 \footnotetext{We expand on this brief description in \cref{sec:states}.}
 
 \begin{subequations}
@@ -239,9 +250,9 @@ The cornerstone of \gls{qm} is the effect of \emph{measurement} on quantum syste
 $\alpha_i$ are hence named \emph{probability amplitudes} since they inform the probability of measuring the corresponding eigenstate. 
 \par 
 
-For an ideal\footnotemark \ single particle, when the state, \cref{eqn:state_vector}, has two available eigenstates, 
+For a single particle, when the state, \cref{eqn:state_vector}, has two available eigenstates, 
     e.g. the horizontal ($H$) and vertical ($V$) polarisation of a single photon, 
-    we can designate \gls{q} as a two-level computational platform, called a \emph{qubit}, 
+    we can designate \gls{q} as a two-level computational platform, called a \emph{qubit}\footnotemark, 
     analogous to the workhorse of classical computation, the bit. 
 A qubit's state vector can then be written as a sum over the two available eigenstates, 
     where we assign vectors to the eigenstates as 
@@ -251,14 +262,15 @@ A qubit's state vector can then be written as a sum over the two available eigen
         \ket{V} = \ket{v_2} = \icol{0 \\ 1} =: \ket{1}. 
     \end{split}
 \end{equation}
-    \footnotetext{
-    Here we restrict to the space of ideal, \emph{logical} qubits. In reality, physical qubits are beset by errors, 
+\footnotetext{
+    Here we describe ideal, \emph{logical} qubits as the foundation of computation. 
+    In reality, physical qubits are beset by errors, 
     demanding error correction routines such that multiple particles are needed in order to attain a single logical qubit. 
 }
 The state of a qubit is then given by 
 \begin{equation}
     \label{eqn:qubit_state}
-    \ket{\psi} = \alpha_1 \ket{v_1} + \alpha_2 \ket{v_c},
+    \ket{\psi} = \alpha_1 \ket{v_1} + \alpha_2 \ket{v_2},
 \end{equation}
 where $\alpha_i \in \mathbb{C}$ and $\absval{\alpha_1}^2 + \absval{\alpha_2}^2 = 1$. 
 \par
@@ -337,7 +349,7 @@ We can make two remarks about basis states for a single qubit:
 
 \par 
 
-As we alluded to in \cref{sec:qm}:
+As we alluded to in \cref{sec:qm},
     by imposing mathematical structure on quantum systems' states, 
     i.e. representing \gls{q} as a state vector at any time, 
     then operations which alter the state of the system must be matrices, 
@@ -352,7 +364,7 @@ By thinking of qubits generically with respect to any basis, we can encode infor
     i.e. we can design information processing techniques leveraging the infrastructure -- states, operators and measurement -- of \gls{qm}. 
 \par 
 
-We introduce a set of speical one-qubit operators, the \emph{Pauli matrices},  
+We introduce a set of special one-qubit operators, the \emph{Pauli matrices},  
 
 \begin{subequations}
     \begin{equation}
@@ -389,8 +401,8 @@ Any single qubit operation can therefore be expressed as a product of
 \end{equation}
     
 \par
-The Pauli matrices are Hermitian, meaning they are observable. 
-We can see that the eigenstates of $\sz$ are the $Z$-basis states:
+The Pauli matrices are observable; 
+    in particular, the eigenstates of $\sz$ are the $Z$-basis states:
     $\sz \ket{0} = \ket{0}; \sz \ket{1} = - \ket{1}$.
 Recalling the earlier claim that the two-level quantum system (e.g. $H$ and $V$ polarisation of a photon)
     can be mapped to eigenvectors\footnotemark \ of an obserable operator to form a qubit, 
@@ -399,9 +411,7 @@ By defining the computational basis, we ground abstract computational reasoning 
     anywhere throughout this thesis where the basis states $\ket{0}, \ket{1}$ are referenced, 
     we mean the eigenstates of the physical axis which is defined as the $Z$-axis for the system in question. 
 \footnotetext{
-    The terms \emph{eigenstate} and \emph{eigenvector} are interchangeable, 
-    although it may be helpful to think of eigenstate as the physical manifestation (horizontal photon), 
-    and think of eigenvector as the logical manifestion ($\ket{0}$). 
+    The terms \emph{eigenstate}, \emph{eigenfunction} and \emph{eigenvector} are interchangeable.
 }
 In the computational basis, then, a qubit can be specified as
 \begin{equation}
@@ -432,13 +442,16 @@ In the computational basis, then, a qubit can be specified as
 The concepts of qubits representing quantum systems, as well as operators
     altering their states and measurement collapsing those states,
     extend straightforwardly to multipartite systems by merging Hilbert spaces through tensor products, 
-    as we show in \cref{sec:multipartite}. 
-The cases where this is a simple mathematical exercise represent \emph{pure} states;
-    of course this leads to the more intricate topic of \emph{mixed} states and entanglement, 
-    briefly described in \cref{sec:entanglement}.
-In this thesis, however, we are concerned only with pure states, i.e. separable qubits.
+    as we show in \cref{sec:multipartite}.
+% The cases where this is a simple mathematical exercise represent \emph{pure} states;
+%     of course this leads to the more intricate topic of \emph{mixed} states and entanglement, 
+%     briefly described in \cref{sec:entanglement}.
+% In this thesis, however, we are concerned only with pure states, i.e. separable qubits.
 While single qubit states are spanned by the Pauli operators, multi-qubit states are spanned by the Pauli group, $\mathbb{G}$: 
     $n$-qubit states are spanned by $\mathbb{G}_n = \left(\mathbb{C}^2\right)^{\otimes n}$.
+Multipartite systems can exhibit the strictly non-classical phenomenon of \emph{entanglement}, 
+    where the constituent particles can not be described independently, 
+    which we briefly detail in \cref{sec:entanglement}. 
 
 \subsection{Expectation values}\label{sec:expectation_value}
 \begin{figure}
@@ -458,8 +471,8 @@ On average, however, the eigenvector to which it would collapse encodes statisti
     state prior to measurement. 
 In other words, if we prepared $\ket{\psi}$ and measured it -- via some observable, $\hat{A}$ -- 
     and repeat the procedure $N$ times, 
-    then as $N \rightarrow \infty$, the average outcome is the \emph{expecatation value}
-    for the system, given by 
+    then as $N \rightarrow \infty$, the average outcome is the \emph{\gls{expecatation value}}
+    for the system.
 \begin{equation}
     \label{eqn:expectation_value}
     \braket{\hat{A}} = \braket{\psi | \hat{A} | \psi} = \sum\limits_{i} \alpha_i \braket{v_i | \hat{A} | v_i},  
@@ -491,10 +504,10 @@ Applications range from enhanced sensing and metrology \cite{giovannetti2004quan
 The initial motivation for the development of quantum technologies, however, 
     was the  observation that simulating nature at a quantum level would require 
     exponential resources and is therefore only feasible given controllable quantum systems,
-    which can accurately emulate the true dynamics \cite{manin1980vychislimoe, benioff1980computer, benioff1982quantum, feynman1982simulating}. 
+    which can accurately emulate the true dynamics \cite{feynman1982simulating, manin1980vychislimoe, benioff1980computer, benioff1982quantum}. 
 
 \par 
-The notion of controlling quantum systems to mimic the dynamics of real quantum systems is tantamount to 
+The notion of controlling quantum systems to mimic the dynamics of natural quantum systems is tantamount to 
     \emph{quantum simulation} \cite{lloyd1996universal, cirac2012goals}. 
 In particular, simulating quantum systems is believed to be of interest for quantum chemistry \cite{cao2019quantum, lanyon2010towards, mcardle2020quantum}, 
     for example leading to advances in the simulation of molecular dynamics \cite{aspuru2005simulated, sparrow2018simulating}.
@@ -531,11 +544,14 @@ Any two-level quantum system can be used as a qubit, so a range of platforms hav
         of integrated photonic devices at the scale of millions of degrees of freedom \cite{adcock2020advances};
         && photons do not decohere so are useful for encoding information \cite{kovac2002detection};
         && photons do not interfere \cite{dirac1981principles, gerry2005introductory}, 
+            making multi-qubit gates difficult to achieve, 
             so information processing must be mediated by non-trivial measurement schemes \cite{raussendorf2003measurement};
         && they are liable to a unique error mechanism -- photon loss -- 
             necessitating novel quantum error correcting codes \cite{vigliar2020error};
         && on-demand single photon generation has not yet been demonstrated,
-            although there is significant progress in the area of photon generation \cite{paesani2020near}.
+            although there is significant progress in the area of photon generation \cite{paesani2020near};
+        && alternative resource generation is possible through multiplexing, i.e. combining numerous probabilistic photon sources, 
+            but this imposes stringent hardware requirements \cite{kaneda2019high}.
         \end{easylist}
 
     \item[Superconducting qubits] \cite{devoret2004superconducting, kjaergaard2020superconducting}

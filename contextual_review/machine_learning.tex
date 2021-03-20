@@ -25,8 +25,9 @@ Similarly to the remit of \cref{chapter:qm}, here we do not provide an exhaustiv
 
 The first step in any \gls{ml} application is to consider the types of available data,
     with respect to the ensemble of known algorithms. 
-Classical \gls{ml} is usually described in three categories,
-    broadly based on the format of data on which the insight can be built;
+Classical \gls{ml} is usually described in three categories:
+    \emph{supervised learning}, \emph{unsupervised learning} and \emph{reinforcement learning}.  
+These categories are broadly based on the format of data on which the insight can be built;
     we will briefly describe each to provide context to discussions throughout this thesis. 
 Later in this thesis we will use the word \emph{model} for descriptions of quantum systems, 
     but here \emph{model} refers to the mapping between inputs and outputs, devised by the \gls{ml} algorithm.
@@ -74,11 +75,11 @@ There are a number of families of algorithms even within the broad category of s
         $f(w^{\prime}): \vec{x}_i \longmapsto y_i$. 
         \begin{easylist}
             && Usually used for classification.
-            &&& e.g. input \emph{neurons}\footnotemark \ encode the pixel values of images. 
+            && For example, input \emph{neurons}\footnotemark \ encode the pixel values of images. 
             The neural network can be used to classify the objects it detects within the image. 
         \end{easylist}
     \item[ Support Vector Machines ]
-        Distinguish similar data points by projecitng data into higher dimensional space,
+        Distinguish similar data points by projecting data into higher dimensional space,
         and therein finding the hypersurface which separates classes \cite{boser1992training}.
         \begin{easylist}
             && Usually used for classification tasks.
@@ -337,13 +338,13 @@ There are a number of methodologies which are referred to as \gls{qml};
 
     \item[Complete quantum machine learning] 
         Data of a quantum nature is processed -- at least partially -- by quantum processors. 
-        The most common technique here is \gls{vqe}, which simulates quanutm systems on \glspl{qc}, 
+        The most common technique here is \gls{vqe}, which simulates quantum systems on \glspl{qc}, 
         in order to retrieve quantum systems' ground states \cite{peruzzo2014variational}.
         The algorithm relies on a classical optimisation routine, but was devised explicitly for implementation on quantum hardware. 
 \end{description}
 \par 
 
-The algorithms described in \cref{part:algorithms} and the applications in \crefrange{part:experimental_study}{part:theoretical_study} 
+The algorithms described in \cref{part:algorithms} and the applications in \crefrange{part:theoretical_study}{part:experimental_study}
     can be described as classical learning for quantum systems. 
 This is because the data upon which the applications are built represent quantum systems, 
     but are processed through classical \gls{ml} algorithms in order to derive insight about those systems.
@@ -478,8 +479,10 @@ In general, \glspl{gene} can have continuous values, although usually, and for a
     }
 
 \end{figure}
+
 One commonly referenced combinatorial optimisation problem is the \emph{knacksack problem},
-    which we will use to elucidate the abstract concepts described so far. 
+    which we will use to elucidate the abstract concepts described so far, 
+    and introduce further concepts with immediate illustration. 
 The knapsack problem is stated as:
     given a set of objects, where each object has a defined weight and value, 
     determine the set of objects to pack in a knapsack which can support a limited weight, 
@@ -490,7 +493,7 @@ Say there are $n$ objects;
 We can then represent configurations of objects -- i.e. candidate solutions to the problem -- 
     as vectors $\vec{\gamma}_j$, whose elements are binary, 
     and simply indicate whether or not the associated object is included in the set. 
-The candidate vector $\vec{gamma}_j$ is equivalent to the chromosome $\gamma_j$. 
+The candidate vector $\vec{\gamma}_j$ is equivalent to the chromosome $\gamma_j$. 
 For example, with $n=6$,
 \begin{equation}
     \vec{\gamma}_j = \irow{1 & 0 & 0 & 0 & 0 & 1} \Longrightarrow  \gamma_j = \ttt{100001} 
@@ -499,8 +502,8 @@ indicates a set of objects consisting only of those indexed first and last, with
 
 \par
 The fitness of any candidate is then given by the total value of that configuration of objects, $v_j = \vec{v} \cdot \vec{\gamma}_j$, 
-    but candidates are only admitted\footnotemark \ if the weight of the corresponding set of objects 
-    is less than the capacity of the knapsack, i.e. $w_j = \vec{w} \cdot \vec{\gamma}_j \leq w_{max}$. 
+    but candidates are only admitted if the weight of the corresponding set of objects 
+    is less than the capacity of the knapsack\footnotemark \, i.e. $w_j = \vec{w} \cdot \vec{\gamma}_j \leq w_{max}$. 
 \footnotetext{
     Note there are alternative strategies to dealing with candidates who violate the weight condition, 
     such as to impose a penalty within the \gls{of}, but for our purposes let us assume we simply disregard violators. 
@@ -534,11 +537,12 @@ We can likewise compute the total weight and value of a series of randomly gener
 \end{table}
 
 The strongest (valid) candidates from \cref{table:knapsack_candidates} are \ttt{101010}, \ttt{011110}. 
-By spawning from these candidates through a one-point crossover at the midpoint\footnotemark, 
-    we get $\gamma_{c_1} = \ttt{101110}, \gamma_{c_2} = \ttt{011010}$, 
-    from which we can see $v_{c_1} = 132, w_{c_1} = 50$, i.e. by combining two strong candidates we produce 
-    the strongest-yet-seen valid candidate. 
-\footnotetext{One-point crossovers are detailed in \cref{sec:reproduction} with this example shown in \cref{fig:gen_alg_reproduction}.}
+We can combine these two strong candidates in order to produce further candidates:
+    by merging the first half of the first candidate with the second half of the second candidate\footnotemark,
+    we get the \emph{child} candidate $\gamma_{c} = \ttt{101110}$, 
+    from which we can see $v_{c_1} = 132, w_{c_1} = 50$, 
+    i.e. by combining two strong candidates we produce the strongest-yet-seen valid candidate. 
+\footnotetext{This process is described as a one-point crossover in \cref{sec:reproduction} with this example shown in \cref{fig:gen_alg_reproduction}.}
 \par 
 
 By repeating this procedure, it is expected to uncover candidates which optimise $v_j$ while maintining $w_j \leq w_{max}$, 
@@ -630,9 +634,9 @@ When a pair of parents have been nominated by the selection mechanism above,
     it remains to use those parents to \emph{reproduce}, 
     i.e. to produce offspring which should inherit and improve upon the properties of their parents. 
 Here we use a \emph{one-point crossover}, whereby the two parent chromosomes are mixed together 
-    to form two offspring, about a single point, $\kappa$: 
-    for candidates of $n$ genes, 
-    the first $\kappa$ genes of $\gamma_{p_1}$ are conjoined with the latter $n - \kappa$ genes of $\gamma_{p_2}$. 
+    to form two offspring, about a single point, $\kappa$.
+For candidates of $n$ genes, $\gamma_{c_1}$ ($\gamma_{c_2}$) is produced when
+    the first $\kappa$ genes of $\gamma_{p_1}$ ($\gamma_{p_2}$) are conjoined with the latter $n - \kappa$ genes of $\gamma_{p_2}$ ($\gamma_{p_2}$).
 Often $\kappa$ is restricted to the midpoint of the chromosomes, although in general it need not be: 
     we will instead consider $\kappa \in \left( \frac{n}{4}, \frac{3n}{4} \right)$, 
     e.g. with $n=12$, $\kappa \in (3, 9)$. 

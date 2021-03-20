@@ -1,21 +1,22 @@
 \glsresetall
 The default behaviour of the \gls{qmla} software framework is to generate 
-    a \emph{results directory} for every \gls{run} of the algorithm, 
+    a \emph{\gls{results directory}} for every \gls{run} of the algorithm, 
     uniquely identified by the date and time the \gls{run} was launched, 
     e.g. \ttt{qmla/launch/Jan\_01/12\_34}. 
 Most of the figures presented in the main text analyse data from \glspl{run} of the \gls{qmla} framework;
-    the results directory corresponding to each figure are listed (as \emph{Data}) in \cref{table:figure_reproduction},
+    the \gls{results directory} corresponding to each figure are listed (as \emph{Data}) in \cref{table:figure_reproduction},
     and all data presented herein can be downloaded from \cite{flynn2021schrodinger}. 
 The presented figures are usually available as default analyses through the \gls{qmla} framework, 
     and therefore can be reproduced by implementing the corresponding configuration. 
 In \cref{table:figure_reproduction} we list the core implementation details 
-    -- $\Ne, \Np$ andthe \gls{es} -- used to achieve those results;
-    complete configuration details and information are available at \cite{flynn2021schrodinger}.
+    -- the number of experiments $\Ne$, and particles, $\Np$ and the \gls{es} -- used to achieve those results.
+In some cases, further configuration details are necessary to produce equivalent \glspl{run};
+    complete details and information are available at \cite{flynn2021schrodinger}.
 Instructions for installing, configuring and running the \gls{qmla} software are given in \cref{apdx:software_eg}.
 
 \par  
 \section{Structure of results directory}
-Within the \gls{results directory}, the outcome of the run's \glspl{instance} are stored, 
+Within the \gls{results directory}, the outcome of the \gls{run}'s \glspl{instance} are stored, 
     with analysis plots broadly grouped as
 \begin{easylist}
     \ListProperties(Start1=1)
@@ -49,6 +50,11 @@ Within the \gls{results directory}, the outcome of the run's \glspl{instance} ar
         \input{appendix/figures/figure_implementations_top.tex}
     \end{center}
     \caption[Figure implementation details]{Implementation details for figures used in the main text. 
+        For each \emph{Figure}, we list the \emph{Exploration Strategy} used by the \gls{qmla} framework to achieve 
+            the corresponding results, which are stored in the \gls{results directory} labelled by \emph{Data}.
+            We list the number of experiments, $\Ne$, and particles, $\Np$, used in the training of all models
+            within that \gls{run}. 
+            Equivelent \glspl{run} of \gls{qmla} can be launched as outlined in \cref{apdx:software_eg}
         Continued in \cref{table:figure_reproduction_contd}.
     }
     \label{table:figure_reproduction}
@@ -60,7 +66,14 @@ Within the \gls{results directory}, the outcome of the run's \glspl{instance} ar
         \begin{center}
             \input{appendix/figures/figure_implementations_bottom.tex}
         \end{center}
-        \caption[Figure implementation details continued]{[Continued from \cref{table:figure_reproduction}] Implementation details for figures used in the main text.}
+        \caption[Figure implementation details continued]{[Continued from \cref{table:figure_reproduction}] 
+            Implementation details for figures used in the main text.
+            For each \emph{Figure}, we list the \emph{Exploration Strategy} used by the \gls{qmla} framework to achieve 
+            the corresponding results, which are stored in the \gls{results directory} labelled by \emph{Data}.
+            We list the number of experiments, $\Ne$, and particles, $\Np$, used in the training of all models
+            within that \gls{run}. 
+            Equivelent \glspl{run} of \gls{qmla} can be launched as outlined in \cref{apdx:software_eg}
+        }
         \label{table:figure_reproduction_contd}
 \end{table}
     

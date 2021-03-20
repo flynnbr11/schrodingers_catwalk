@@ -1,7 +1,8 @@
 \addcontentsline{toc}{chapter}{Overview and contributions}
 \glsresetall
 In this Part, we examine a series of theoretical quantum systems, 
-    to assess the usefulness of the \gls{qmla} protocol described in \cref{part:algorithms}. 
+    to assess the usefulness of the \gls{qmla} protocol described in \cref{part:algorithms}.
+The results presented here will be made public in \cite{flynn2021Quantum}.
 \par 
 \vspace{1cm}
 
@@ -10,8 +11,8 @@ We begin in \cref{chapter:lattices} with ideal systems described by lattice mode
 This serves as a first test of the \gls{qmla} framework under reasonably straightforward
     conditions, where a small number of candidate models are proposed in advance, 
     with the \gls{true model} gauranteed to be among them. 
-We then show that \gls{qmla} is capable also of classifying the family of 
-    physical regimes to which a target model belongs. 
+We then show that \gls{qmla} is also capable of classifying the family to which a target system belongs, 
+    i.e. whether it should be considered within Ising, Heisenberg or Hubbard formalisms. 
 The initial idea for this chapter was proposed by Dr. Raffaele Santagati, 
     and refined together with Dr. Andreas Gentile and myself. 
 I modified the \gls{qmla} software for this application, 
@@ -21,13 +22,14 @@ The figures presented are my own.
 \par 
 \vspace{1cm}
 In \cref{chapter:ga} we consider more general application of the \gls{qmla} protocol, 
-    in significant model spaces comprising over 250,000 valid candidate models. 
+    searching through model spaces comprising over 250,000 valid candidate models. 
 We explore these spaces efficiently by incorporating a \glsentryfull{ga} in \gls{qmla}. 
 I proposed \glspl{ga} for the study of large model spaces, 
     and performed the initial \gls{hyperparameter} tuning. 
-I devised the numerous \glsentryfullpl{of} considered, 
+I devised the numerous \glspl{of} considered, 
     and in particular the combination of \glsentrylongpl{bf}
     with Elo ratings for a bespoke \gls{of} which takes advantage of \gls{qmla}'s core strengths. 
 I built \gls{ga} infrastructure into the \gls{qmla} software, 
     ran the \glspl{instance} presented, and analysed the data.
 The figures presented are my own. 
+\par 
