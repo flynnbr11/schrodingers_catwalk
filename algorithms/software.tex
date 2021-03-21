@@ -37,7 +37,7 @@ We can then utilise the \ttt{Footballer} class to store information about an \em
 \par 
 
 A fundamental concept in object-oriented programming is \emph{inheritance} between objects, 
-    such that a \emph{child} objects inherit properties of its \emph{parent}.
+    such that a \emph{child} object inherits/ properties of its \emph{parent}.
 In general, a parent object can be thought of as an abstract concept, 
     which provides basic functionality and reasonable default properties,
     while a child object can specify further details. 
@@ -166,11 +166,11 @@ mickey.summarise()
             and green are \emph{classes}. 
         Objects are grouped broady, with double lines showing communication channels between (groups of) objects. 
         \emph{Infrastructure}: functions for the implementation of model training/comparisons on 
-            a remote compute server.
+            a remote compute server, \cref{sec:infrastructure}.
         \emph{Algorithm}: implementation of the iterative procedures and decision-making 
-        laid out in \cref{chapter:qmla}. 
+        laid out in \cref{chapter:qmla}. The algorithmic controls are detailed in \cref{sec:sw_algorithm}. 
         \emph{Application}: inter-changeable data/functionality for the unique requirements 
-        of a given target system. 
+        of a given target system, \cref{sec:application}. 
         Users wishing to customise \gls{qmla} must choose a valid implementation for each object in this segment
             but need not alter any of the underlying framework.
     }
@@ -203,7 +203,7 @@ In particular, \glspl{es} allow users to specify the implementation of aspects l
 The most crucial methods\footnotemark \ of the \gls{es} class are modular, 
     described in \cref{sec:modular_functionality},
     meaning that they can be directly replaced, provided the alternative method fulfils the same role. 
-Our base \gls{es} class uses sensbile defaults for this modular functionality, 
+Our base \gls{es} class uses sensible defaults for this modular functionality, 
     but this flexible mechanism allows for adapting \gls{qmla} by choosing an approach for each 
     of the following subroutines. 
 \footnotetext{
@@ -250,7 +250,7 @@ The core \gls{qmla} class manages the database of models and their comparisons,
     and decides how to react at certain stages, by consulting the decision criteria set by the \gls{es}. 
 \par 
 
-\subsubsection{Parallel implementiation}\label{sec:parallel}
+% \subsubsection{Parallel implementiation}\label{sec:parallel}
 \begin{figure}
     \includegraphics{algorithms/figures/parallel_architecture.pdf}
     \caption[Parallel architecture for QMLA]{
@@ -266,7 +266,7 @@ The core \gls{qmla} class manages the database of models and their comparisons,
             which informs the model training procedure, for example the terms and parameters 
             of $\hat{H}_5$. 
         After training, it sends a packet, $R_5$, summarising the result of $\hat{H}_5$'s training. 
-        The right-hand process compares two models with IDs 1 and 2, by first retrieivng the results packets
+        The right-hand process compares two models with IDs 1 and 2, by first retrievng the results packets
             $R_1, R_2$, then storing the comparison $C_{1,2}$ on the database. 
     }
     \label{fig:parallel}
@@ -293,22 +293,20 @@ The mapping here is trivial: the master of our algorithm is \gls{qmla},
     while workers can be used for the tasks of training and comparing models. 
 \gls{qmla} distributes tasks to \emph{worker} processes in a server, 
     i.e. we assume that \gls{qmla} is run on a machine with $N_c$ available parallel \emph{processes}\footnotemark. 
-The \gls{qmla} class is assigned a single process solely for its considerations, 
+One process is designated for the \gls{qmla} class alone,
     e.g. for the ranking of models and determination of the next models to tests, 
     while the remaining $N_c - 1$ processes lay dormant until \gls{qmla} requests that they perform a task. 
 The role of \gls{qmla} is to collate the outcome of those calculations in conjunction with the set of \glspl{et}, 
     until each \gls{et} is deemed complete, and then to consolidate the set of 
     \gls{et} champions, ultimately setting the global champion, $\hp$. 
-Thereafter it can perform some analysis, e.g. to generate a series of plots which demonstrate how the 
-    model search progressed, as well as the evidence in favour of $\hp$, including for example 
-    the reproduction of \gls{q}'s dynamics by $\hp$. 
-See \cref{sec:qmla_outputs} for further details. 
+Thereafter it can perform some analysis; see \cref{sec:qmla_outputs} for further details. 
 
 \footnotetext{Note when running in \emph{serial} (e.g. running locally on a personal machine), it is valid to simply set $N_c=1$.}
 \par 
 \gls{qmla} and all workers have shared access to a database, through which they communciate data pertaining to individual tasks \cite{redis}. 
 We use a simple \emph{task queue} for the distribution of jobs: 
-    \gls{qmla} adds tasks to the queue and any available worker can take the next job and compute it \cite{redis_queue}. 
+    \gls{qmla} adds tasks to the queue and any available worker can take the next job and compute it \cite{redis_queue}.
+The queue can be access by only one thread at a time, to ensure tasks are not duplicated. 
 There are two types of task for workers:
 \begin{easylist}
     & to train a candidate model, $\hi$:
@@ -358,34 +356,35 @@ We need a series of distinct classes to represent models, for use in each stage 
 Crucially, this separation allows us to perform data-heavy calculations independently, 
     e.g. on a remote process within a compute cluster, 
     and discard the class instance used for the calculation and the large amount of data it generates, 
-    while only the relatively small \emph{storage} classs is retained by \gls{qmla} for later use. 
+    while only the relatively small \emph{storage} class is retained by \gls{qmla} for later use. 
 
 \par 
-The tasks which actually implement the calculations (\cref{sec:parallel}) are captured by standalone \emph{remote} functions. 
+The tasks which actually implement the calculations (\cref{sec:sw_algorithm}) are captured by standalone \emph{remote} functions. 
 These functions receive instructions such as \ttt{train model 10}; 
     they then contact the database for the set of shared settings, 
     such as $\Ne, \Np$ and the set of probes, 
-    before performing the task, and then send the compressed result, $R_{10}$, to the database for storage. 
+    before performing the task, and then send the compressed result, $R_{10}$, to the database for storage.  
 
 \par 
 To achieve this separation between calculation and analysis, we use a redis database \cite{redis},
     which holds the core implementation settings, e.g. $\Ne, \Np$ and the set of probes to train upon, 
-    as well as the compressed summaries of the outcomes of tasks
+    as well as the compressed summaries of the outcomes of tasks.
 
 \section{Usage}
 
 Several aspects of \gls{qmla} are \emph{probabilistic}.
 Firstly, the Bayesian updates within model training -- i.e. \gls{qhl} --
     relies on \glspl{likelihood} which 
-    implicitly depend on the measurement datum of a quantum system; 
-    in the case where the the measurement collapses \gls{q} into the less-likely basis, 
+    implicitly depend on the measurement datum of a quantum system.
+In the case where the projective measurement finds \gls{q} in a less-likely eigenstate, 
+    i.e. one with lower probability immediately prior to measurement, 
     the \glspl{likelihood}  will indicate poor outcomes from good hypotheses, 
     resulting in misguided posterior distributions. 
 It is thus \emph{possible} that the parameter learning will converge on incorrect values,
     or not converge at all even given ample resources. 
 Moreover, the model design subroutine is not gauranteed to exploit the aspects of favoured models which are 
     actually informative, e.g. given a favoured model with four correct terms and two incorrect terms, 
-    the model generator may opt to build upon the incorrect terms, in the common situation where it can not distinguish betwen 
+    the model generator may opt to build upon the incorrect terms, in the common situation where it can not distinguish between 
     helpful and misleading constituent terms.
 \par 
 
@@ -427,38 +426,45 @@ Some of these analyses are generated by default, while others are optional depen
 A number of sub-directories are produced in the \gls{results directory}, 
     each containing data/figures from a different view of the \gls{run};
     these are listed in \cref{apdx:figure_repoduction}.
+Results are categorised across the levels of the framework, the most important of which are:
+
 \footnotetext{
     Note this script is not run automatically since, on remote servers, \glspl{instance} finish independently without any central process
     noticing. Therefore this script must be run by the user when the run is complete.
 }
-\par 
-
-The user has control on which plots are generated, in order that the appropriate degree of analysis is produced, 
-    without generating excessive images which can slow the protocol down. 
-Results are categorised across the levels of the framework, the most important of which are:
 \begin{description}
-    \item[\Gls{run}] results across a number of instances.
+    \item[\Gls{run}] \ 
+    
+    Results across a number of instances.
     \begin{easylist}
-        && the \glspl{win rate} for all models which are found as \gls{champion model} at least once.
-        && average dynamics reproduced by \glspl{champion model}.
+        && \Glspl{win rate} for all models which are found as \gls{champion model} at least once.
+        && Average dynamics reproduced by \glspl{champion model}.
     \end{easylist}
     
-    \item[Instance] performance of a single insance.
+    \item[\Gls{instance}] \ 
+    
+    Performance of a single \gls{instance}.
     \begin{easylist}
-        && models generated and the branches on which they reside.
+        && Models generated and the branches on which they reside.
     \end{easylist}
 
-    \item[\Gls{model}] Individual model performance within an instance.
+    \item[\Gls{model}] \  
+    
+    Individual model performance within an instance.
     \begin{easylist}
-        && parameter estimation through \gls{qhl}.
+        && Parameter estimation through \gls{qhl}.
     \end{easylist}
 
-    \item[Pairwise Comparisons] direct comparison of models’ performance.
+    \item[Pairwise Comparisons] \ 
+    
+    Direct comparison of models’ performance.
     \begin{easylist}
-        && dynamics of both candidates (with respect to a single basis).
+        && Dynamics of both candidates (with respect to a single basis).
     \end{easylist}
 
-    \item[\Glsentrylong{es}] figures specific to the \gls{es}
+    \item[\Acrlong{es}] \ 
+    
+    Figures specific to the \gls{es}
     \begin{easylist}
         && model generation metrics.
     \end{easylist}

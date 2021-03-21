@@ -101,17 +101,17 @@
     \end{tikzpicture}
     \end{center}
     
-    \caption[Interface between \glsentryshort{qmla} and a single \glsentrylong{es}]{
-        Interface between \glsentryfull{qmla} and a single \glsentryfull{es}
+    \caption[Interface between QMLA and a single exploration strategy]{
+        Interface between \acrfull{qmla} and a single \acrfull{es}
         The main components are the \gls{es}, model training subroutine, target quantum system (i.e. black box, \gls{q}), 
         and (quantum) simulator. 
         The main steps of the algorithm, shown in red with arrows denoting data transferred during that step, are as follows.
         \textbf{1}, QMLA retrieves decision infrastructure from ES, such as the consolidation mechanism and termination criteria.
         \textbf{2}, models are designed/spawned; 
-        \textbf{2a}, QMLA signals to ES requesting a set of models, passing the results of the previous layers' models if appropriate.
+        \textbf{2a}, QMLA signals to ES requesting a set of models, passing the results of the previous branch's models if appropriate.
         \textbf{2b}, ES spawns new models, $\mathbb{H}$;
         \textbf{2c}, ES passes $\mathbb{H}$ to QMLA. 
-        \textbf{3}, QMLA assigns a new layer $(\mu \gets \mu + 1)$ and places the newly proposed models upon it.
+        \textbf{3}, QMLA assigns a new branch $(\mu \gets \mu + 1)$ and places the newly proposed models upon it.
         \textbf{4}, Model training subroutine (here quantum Hamiltonian learning), performed independently for each model $\hi \in \mu$; 
         \textbf{4a}, QMLA passes $\hi$ to the model trainer; 
         \textbf{4b}, construct a prior distribution $P_i$ describing the model's parameterisation $\vec{\alpha}_i$;

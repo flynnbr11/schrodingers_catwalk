@@ -59,11 +59,12 @@ That is,
 We also have the \emph{dual vector} of \cref{eqn:unitary_time_evolution},
 \begin{equation}
     \label{eqn:dual_unitary_evolution}
-    \bra{\psi(t)} = \bra{\psi(t_o)}\hat{U}^{\adjoint},
+    \bra{\psi(t)} = \bra{\psi(t_o)}\hat{U}^{\dagger},
 \end{equation}
     see \cref{sec:linear_algebra}. 
-Combining \crefrange{eqn:conservation_simularity}{eqn:dual_unitary_evolution}{eqn:unitary_time_evolution}, 
-\begin{equation}
+Combining \crefrange{eqn:conservation_simularity}{eqn:dual_unitary_evolution}, 
+
+\begin{align}
     \begin{split}
         \braket{\phi(t) | \psi(t)} &= \braket{ \phi(t_0) | \hat{U}^{\dag} \hat{U}| \psi(t_o) }
         \\
@@ -71,7 +72,7 @@ Combining \crefrange{eqn:conservation_simularity}{eqn:dual_unitary_evolution}{eq
         \\
         \Rightarrow \hat{U}^{\dag}(t) \hat{U}(t) &= \ident \ \ \ \ \forall t,
     \end{split}
-\end{equation}
+\end{align}
 where the result $\hat{U}^{\dag}(t) \hat{U}(t) = \ident$ is the condition for \emph{unitarity} of $\hat{U}(t)$ (\cref{sec:unitary}), 
     so we can claim the quantum wavefunction evolves unitarily. 
 \par 
@@ -471,7 +472,7 @@ On average, however, the eigenvector to which it would collapse encodes statisti
     state prior to measurement. 
 In other words, if we prepared $\ket{\psi}$ and measured it -- via some observable, $\hat{A}$ -- 
     and repeat the procedure $N$ times, 
-    then as $N \rightarrow \infty$, the average outcome is the \emph{\gls{expecatation value}}
+    then as $N \rightarrow \infty$, the average outcome is the \emph{\gls{expectation value}}
     for the system.
 \begin{equation}
     \label{eqn:expectation_value}

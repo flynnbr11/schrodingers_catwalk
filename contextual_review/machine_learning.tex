@@ -144,10 +144,10 @@ These type of binary predictions have four outcomes, which can be summarised in 
     \begin{tabular}{lcc}
         & $y$ has feature & $y^{\prime}$ has feature \\
         \hline
-        \Glsentryfull{tp} & \tick & \tick \\
-        \Glsentryfull{fp} & \cross & \tick \\
-        \Glsentryfull{tn} & \cross & \cross \\
-        \Glsentryfull{fn} & \tick & \cross\\
+        \Acrfull{tp} & \tick & \tick \\
+        \Acrfull{fp} & \cross & \tick \\
+        \Acrfull{tn} & \cross & \cross \\
+        \Acrfull{fn} & \tick & \cross\\
     \end{tabular}
     \end{center}
     \caption[Classification metrics]{
@@ -231,7 +231,7 @@ For examples of how $\fs$ balances these considerations, see \cref{table:f1_exam
     \centering
     \begin{tabular}{|ccc|cc|c|}
         \hline
-        \Glsentrylong{tp} & \Glsentrylong{fn} & \Glsentrylong{fp} & Precision & Sensitivity & $\fs$  \\
+        \Acrlong{tp} & \Acrlong{fn} & \Acrlong{fp} & Precision & Sensitivity & $\fs$  \\
         \hline
         \rule{0pt}{3ex} 500 & 500 & 1000 & 33 & 50 & $ (\frac{2 \times 33 \times 50 }{33 + 50 }) = 37 $ \\
         \rule{0pt}{3ex} 500 & 500 & 500 & 50 & 50 & $( \frac{2 \times 50 \times 50 }{50 + 50 } ) = 50 $ \\
@@ -284,7 +284,7 @@ Although we do not utilise these methods in this thesis, we briefly summarise th
 \end{description}
 \par 
 
-\subsection{\Glsentrylong{rl}}
+\subsection{\Acrlong{rl}}
 A third category of \gls{ml} algorithms are \glsentryfull{rl}. 
 These are methods where an \emph{agent} interacts with some environment, 
     and refines a \emph{policy} for reacting to different stimuli. 
