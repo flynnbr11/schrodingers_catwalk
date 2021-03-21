@@ -12,7 +12,7 @@ Nevertheless, the field of \gls{ml} has been advancing rapidly since the second 
 \par 
 
 Throughout this thesis, we endeavour to combine known methods from the \gls{ml} literature with capabilities of \glspl{qc}\footnotemark. 
-Typical \gls{ml} algorithms, which rely on \glspl{cpu} or \glspl{gpu}, are deemed \emph{classical} \glsentrylong{ml},
+Typical \gls{ml} algorithms, which rely on \glspl{cpu} or \glspl{gpu}, are deemed \emph{classical} \acrlong{ml},
     in contrast with \gls{qml}, where \glspl{qc} are central to processing the data.
 Similarly to the remit of \cref{chapter:qm}, here we do not provide an exhaustive account of \gls{ml} algorithms;
     we describe only the concepts which are used in later chapters, 
@@ -21,7 +21,7 @@ Similarly to the remit of \cref{chapter:qm}, here we do not provide an exhaustiv
 \footnotetext{Or simulated \glspl{qc}, in this thesis.}
 
 
-\section{Classical \glsentrylong{ml}}\label{sec:classical_ml}
+\section{Classical machine learning}\label{sec:classical_ml}
 
 The first step in any \gls{ml} application is to consider the types of available data,
     with respect to the ensemble of known algorithms. 
@@ -33,7 +33,7 @@ Later in this thesis we will use the word \emph{model} for descriptions of quant
     but here \emph{model} refers to the mapping between inputs and outputs, devised by the \gls{ml} algorithm.
 \par 
 
-\subsection{Supervised \glsentrylong{ml}}
+\subsection{Supervised machine learning}
 Models are trained using \emph{labelled} data, 
     i.e. each training sample has a known label $y_i$ -- 
     or, a set of \emph{feature vectors} $\left\{\vec{x}_i\right\}$ are associated with the set of 
@@ -113,7 +113,7 @@ The evalutation thus captures how the model can be expected to perform on future
     \end{center}
     \caption[Confusion matrix]{
         Confusion matrix showing the meaning of 
-        \glsentrylong{tp}, \glsentrylong{tn}, \glsentrylong{fp} and \glsentrylong{fn}.
+        \acrlong{tp}, \acrlong{tn}, \acrlong{fp} and \acrlong{fn}.
     }
     \label{fig:confusion_matrix}
 \end{figure}
@@ -240,13 +240,13 @@ For examples of how $\fs$ balances these considerations, see \cref{table:f1_exam
         \hline
     \end{tabular}
     \caption[$\fs$ examples]{
-        Examples of how \fs behaves for varying \glsentrylong{tp}, \glsentrylong{fn} and \glsentrylong{fp}. 
+        Examples of how \fs behaves for varying \acrlong{tp}, \acrlong{fn} and \acrlong{fp}. 
     }
     \label{table:f1_example}
 \end{table}
 
 
-\subsection{Unsupervised \glsentrylong{ml}}
+\subsection{Unsupervised machine learning}
 
 Contrary to supervised algorithms, unsupervised methods operate on \emph{unlabelled} data, $\mathcal{D}$. 
 This is often summarised as finding structure within unstructured data.
@@ -285,7 +285,7 @@ Although we do not utilise these methods in this thesis, we briefly summarise th
 \par 
 
 \subsection{\Acrlong{rl}}
-A third category of \gls{ml} algorithms are \glsentryfull{rl}. 
+A third category of \gls{ml} algorithms are \acrfull{rl}. 
 These are methods where an \emph{agent} interacts with some environment, 
     and refines a \emph{policy} for reacting to different stimuli. 
 As such, the agent can, in principle, deal with a wide array of situations. 
@@ -304,16 +304,16 @@ The concept of a machine's \emph{agency} is an ongoing discussion in the \gls{ml
     and will be important in this thesis when we define our model learning protocol as an agent, 
     we will revisit the concept in \cref{sec:agency}.
 
-\section{Quantum \glsentrylong{ml}}
+\section{Quantum machine learning}
 \begin{figure}
     \begin{center}
         \includegraphics{contextual_review/figures/qml_types.pdf}
     \end{center}
-    \caption[Types of \glsentrylong{qml}]{Types of \glsentrylong{qml}.}
+    \caption[Types of quantum machine learning]{Types of \acrlong{qml}.}
     \label{fig:qml_types}
 \end{figure}
 A growing domain is the development of \gls{ml} algorithms which run on quantum hardware, 
-    or exploit data from quantum systems; generally referred to as \glsentryfull{qml} \cite{biamonte2017quantum, adcock2015advances}. 
+    or exploit data from quantum systems; generally referred to as \acrfull{qml} \cite{biamonte2017quantum, adcock2015advances}. 
 There are a number of methodologies which are referred to as \gls{qml};
     for clarity, we define the main branches here, as shown in \cref{fig:qml_types}. 
 
@@ -356,13 +356,13 @@ We caveat that it is feasible, and indeed the long term intention of such algori
 In later chapters (\cref{chapter:ga} and \cref{chapter:many_qubits}) 
     we will use a class of optimisation techniques known as
     \emph{evolutionary algorithms} \cite{back1996evolutionary, de2020evolutionary}.
-In particular, \emph{\glsentryfullpl{ga}} are central to our primary applications.
+In particular, \emph{\acrfullpl{ga}} are central to our primary applications.
 Here we describe \glspl{ga} in general terms for reference throughout. 
 \par 
 \glspl{ga} work by assuming a given problem can be optimised, if not solved, by a single candidate 
     among a fixed, closed space of candidates, called the population, $\population$. 
 A number of candidates are sampled at random from $\population$ into a single \emph{generation}, 
-    and evaluated through some \glsentryfull{of}, which assesses the fitness of the candidates at solving the problem of interest. 
+    and evaluated through some \acrfull{of}, which assesses the fitness of the candidates at solving the problem of interest. 
 Candidates from the generation are then mixed together to produce the next generation's candidates: 
     this \emph{crossover} process aims to combine only relatively strong candidates, such that the average 
     candidates' fitness improve at each successive generation, 
@@ -703,8 +703,8 @@ In the example of the knapsack problem, candidate solutions were evaluated by th
 Idenitfiyng the appropriate method by which to evaluate candidates is arguably the most important aspect of designing a \gls{ga}:
     while the choice of hyperperameters ($N_g, N_m, \tau. r_m$) dictate the efficacy of the search, 
     the lack of an effective metric by which to distinguish candidates would render the procedure pointless.
-Considerations are hence usually built into the \glsentrylong{of};
-    \gls{ga} implementations later in this thesis therefore demand we design \glsentrylongpl{of} 
+Considerations are hence usually built into the \acrlong{of};
+    \gls{ga} implementations later in this thesis therefore demand we design \acrlongpl{of} 
     with respect to the individual application. 
 \par 
 

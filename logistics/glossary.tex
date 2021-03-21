@@ -11,52 +11,96 @@
 
 %%%%%%%%%%% ACRONYMS %%%%%%%%%%%
 \newacronym[
-    % description={Algorithm for learning models of quantum systems.}
-    ]{qmla}{QMLA}{Quantum Model Learning Agent}
-\newacronym{qm}{QM}{quantum mechanics}
+    description={Quantum Model Learning Agent, \cref{chapter:qmla}.}
+]{qmla}{QMLA}{Quantum Model Learning Agent}
 \newacronym[
-    % description={Algorithm for optimising parameters of a quantum model, \cref{chapter:qhl}.}
-    ]{qhl}{QHL}{quantum Hamiltonian learning}
-\newacronym{bf}{BF}{Bayes factor}
+    description={quantum mechanics, \cref{chapter:qm}}
+]{qm}{QM}{quantum mechanics}
+\newacronym[
+    description={quantum Hamiltonian learning, \cref{chapter:qhl}.}
+]{qhl}{QHL}{quantum Hamiltonian learning}
+\newacronym[
+    description={Bayes factor, \cref{sec:bayes_factors}}
+]{bf}{BF}{Bayes factor}
 \newacronym{nisq}{NISQ}{noisy intermediate scale quantum}
-\newacronym{ml}{ML}{machine learning}
+\newacronym[
+    description={machine learning, \cref{chapter:ml}}
+]{ml}{ML}{machine learning}
 \newacronym{rl}{RL}{reinforcement learning}
 \newacronym{ai}{AI}{artificial intelligence}
 \newacronym{qml}{QML}{quantum machine learning}
 \newacronym{nv}{NV}{nitrogen-vacancy}
-\newacronym{nvc}{NVC}{nitrogen-vacancy centre}
-\newacronym{ql}{QL}{quadratic loss}
-\newacronym{ga}{GA}{genetic algorithm}
+\newacronym[
+    description={nitrogen-vacancy centre, \cref{sec:nv_centres}}
+]{nvc}{NVC}{nitrogen-vacancy centre}
+\newacronym[
+    description={quadratic loss, \cref{eqn:quadratic_loss}}
+]{ql}{QL}{quadratic loss}
+\newacronym[
+    description={genetic algorithm, \cref{sec:genetic_algorithms}}
+]{ga}{GA}{genetic algorithm}
 \newacronym{ges}{GES}{genetic exploration strategy}
 \newacronym{gr}{GR}{growth rule}
 \newacronym{fh}{FH}{Fermi-Hubbard}
 \newacronym{fhm}{FHM}{Fermi-Hubbard model}
 \newacronym{im}{IM}{Ising model}
 \newacronym{hm}{HM}{Heisenberg model}
-\newacronym{bfeer}{BFEER}{Bayes factor enhanced Elo ratings}
+\newacronym[
+    description={Bayes factor enhanced Elo ratings, \cref{sec:elo}}
+]{bfeer}{BFEER}{Bayes factor enhanced Elo ratings}
 \newacronym{gagr}{GAGR}{genetic algorithm growth rule}
-\newacronym{smc}{SMC}{sequential monte carlo}
-\newacronym{tll}{TLL}{total log-likelihood}
-\newacronym{ltl}{LTL}{log total likelihood}
-\newacronym{tltl}{TLTL}{total log total likelihood}
+\newacronym[
+    description={sequential Monte Carlo, \cref{sec:smc}}
+]{smc}{SMC}{sequential Monte Carlo}
+\newacronym[
+    description={total log-likelihood}
+]{tll}{TLL}{total log-likelihood}
+\newacronym[
+    description={log total likelihood, \cref{sec:total_log_total_likelihood}}
+]{ltl}{LTL}{log total likelihood}
+\newacronym[
+    description={total log total likelihood, \cref{eqn:log_total_likelihood}}
+]{tltl}{TLTL}{total log total likelihood}
 \newacronym{aic}{AIC}{Akaike information criterion}
 \newacronym{aicc}{AICC}{Akaike information criterion corrected}
 \newacronym{bic}{BIC}{Bayesian information criterion}
-\newacronym{ll}{LL}{log-likelihood}
-\newacronym{tp}{TP}{true positives}
-\newacronym{tn}{TN}{true negatives}
-\newacronym{fp}{FP}{false positives}
-\newacronym{fn}{FN}{false negatives}
+\newacronym[
+    description={log-likelihood}
+]{ll}{LL}{log-likelihood}
+\newacronym[
+    description={true positives, \cref{table:classification_metrics}}
+]{tp}{TP}{true positives}
+\newacronym[
+    description={true negatives, \cref{table:classification_metrics}}
+]{tn}{TN}{true negatives}
+\newacronym[
+    description={false positives, \cref{table:classification_metrics}}
+]{fp}{FP}{false positives}
+\newacronym[
+    description={false negatives, \cref{table:classification_metrics}}
+]{fn}{FN}{false negatives}
 \newacronym{svm}{SVM}{support vector machine}
-\newacronym{iqle}{IQLE}{interactive quantum \gls{likelihood} estimation}
-\newacronym{qle}{QLE}{quantum \gls{likelihood} estimation}
-\newacronym{cle}{CLE}{classical \gls{likelihood} estimation}
+\newacronym[
+    description={interactive quantum likelihood estimation, \cref{sec:iqle}}
+]{iqle}{IQLE}{interactive quantum likelihood estimation}
+\newacronym[
+    description={quantum likelihood estimation, \cref{sec:likelihood}}
+]{qle}{QLE}{quantum likelihood estimation}
+\newacronym{cle}{CLE}{classical likelihood estimation}
 \newacronym{hpd}{HPD}{high particle density}
-\newacronym{mvee}{MVEE}{minimum \gls{volume} enclosing ellipsoid}
-\newacronym{edh}{EDH}{experiment design heuristic}
-\newacronym{pgh}{PGH}{particle guess heuristic}
-\newacronym{et}{ET}{exploration tree}
-\newacronym{es}{ES}{exploration strategy}
+\newacronym{mvee}{MVEE}{minimum volume enclosing ellipsoid}
+\newacronym[
+    description={experiment design heuristic, \cref{sec:heuristic}}
+]{edh}{EDH}{experiment design heuristic}
+\newacronym[
+    description={particle guess heuristic, \cref{sec:pgh}}
+]{pgh}{PGH}{particle guess heuristic}
+\newacronym[
+    description={exploration tree, \cref{sec:qmla_protocol}}
+]{et}{ET}{exploration tree}
+\newacronym[
+    description={exploration strategy, \cref{sec:exploration_strategies}}
+]{es}{ES}{exploration strategy}
 \newacronym{of}{OF}{objective function}
 \newacronym{carbon}{$C$}{carbon}
 \newacronym{nitrogen}{$^{14}N$}{nitrogen-14}
@@ -72,7 +116,7 @@
 \newacronym{mw}{MW}{microwave}
 \newacronym{dag}{DAG}{directed acyclic graph}
 \newacronym{jwt}{JWT}{Jordan Wigner transformation}
-\newacronym{le}{LE}{Loschmidt echo}
+\newacronym[description={Loschmidt echo, \cref{sec:iqle}}]{le}{LE}{Loschmidt echo}
 
 % \newacronym{le}{LE}{\gls{Loschmidt echo}}
 
@@ -88,65 +132,72 @@
     particular software program that implements that API. 
 }
 
+\newdefinedabbreviation{test_acr}{QMLA}{
+    % macro taken from https://tex.stackexchange.com/questions/8946/how-to-combine-acronym-and-glossary
+    Test this structure}{
+    Here is a description. 
+}
+
+
 %%%%%%%%%%% TERMS %%%%%%%%%%%
 \newglossaryentry{expectation value}
 {
     name=expectation value,
-    description={Average outcome expected by measuring an observable of a quantum system many times, \cref{sec:expectation_value}}
+    description={Average outcome expected by measuring an observable of a quantum system many times, \cref{sec:expectation_value}.}
 }
 
 \newglossaryentry{model search}
 {
     name=model search,
-    description={Exploration through the \gls{model space} performed by \gls{qmla}, where the direction of the search is determined by the \gls{es}}
+    description={Exploration through the \gls{model space} performed by \acrshort{qmla}, where the direction of the search is determined by the \gls{es}.}
 }
 
 \newglossaryentry{spawn}
 {
     name=spawn,
-    description={Process by which new models are generated, ususally by combining previously considered models}
+    description={Process by which new models are generated, ususally by combining previously considered models.}
 }
 
 \newglossaryentry{likelihood}
 {
     name=likelihood,
-    description={Value that represents how likely a hypothesis is. Usually used in the context of likelihood estiamation, \cref{sec:likelihood}}
+    description={Value that represents how likely a hypothesis is. Usually used in the context of likelihood estiamation, \cref{sec:likelihood}.}
 }
 \newglossaryentry{probe}
 {
     name=probe,
-    description={Input \gls{probe} state, $\ket{\psi}$, which the target system is initialised to, before unitary evolution},
+    description={Input \gls{probe} state, $\ket{\psi}$, which the target system is initialised to, before unitary evolution.},
     plural={probes},
 }
 \newglossaryentry{volume}
 {
     name=volume,
-    description={Volume of a parameter distribution's credible region, \cref{sec:volume}}
+    description={Volume of a parameter distribution's credible region, \cref{sec:volume}.}
 }
 \newglossaryentry{hyperparameter}
 {
     name=hyperparameter,
-    description={Variable within an algorithm that determines how the algorithm itself proceeds}
+    description={Variable within an algorithm that determines how the algorithm itself proceeds.}
 }
 \newglossaryentry{model}
 {
     name=model,
-    description={The mathematical description of some quantum system, \cref{sec:models}}
+    description={The mathematical description of some quantum system, \cref{sec:models}.}
 }
 \newglossaryentry{model space}
 {
     name=model space,
-    description={Abstract space containing all descriptions (within defined constraints such as dimension) of the system as models}
+    description={Abstract space containing all descriptions (within defined constraints such as dimension) of the system as models.}
 }
 \newglossaryentry{win rate}
 {
     name=win rate,
-    description={For a given candidate model, the fraction of \glspl{instance} within a \gls{run} which nominated it as champion}
+    description={For a given candidate model, the fraction of \glspl{instance} within a \gls{run} which nominated it as champion.}
 }
 \newglossaryentry{success rate}
 {
     name=success rate,
-    description={Fraction of \glspl{instance} within a \gls{run} where \gls{qmla} nominates the \gls{true model} as \gls{champion}}
+    description={Fraction of \glspl{instance} within a \gls{run} where \acrshort{qmla} nominates the \gls{true model} as \gls{champion}.}
 }
 \newglossaryentry{true model}
 {
@@ -158,29 +209,29 @@
 \newglossaryentry{run}
 {
     name=run,
-    description={Collection of \gls{qmla} \glspl{instance}, usually targeting the same system with the same initial conditions}
+    description={Collection of \acrshort{qmla} \glspl{instance}, usually targeting the same system with the same initial conditions.}
 }
 \newglossaryentry{instance}
 {
     name=instance,
-    description={A single implementation of the \gls{qmla} algorithm, resulting in a nominated \gls{champion model}}
+    description={A single implementation of the \acrshort{qmla} algorithm, resulting in a nominated \gls{champion model}.}
 }
 
 \newglossaryentry{champion}
 {
     name=champion,
-    description={See \gls{champion model}}
+    description={See \gls{champion model}.}
 }
 
 \newglossaryentry{champion model}
 {
     name=champion model,
-    description={The model deemed by \gls{qmla} as the most suitable for describing the target system}
+    description={The model deemed by \acrshort{qmla} as the most suitable for describing the target system.}
 }
 \newglossaryentry{q}
 {
     name=$Q$,
-    description={Quantum system which is the target of \glsentrylong{qmla}, i.e. the system to be characterised}
+    description={Quantum system which is the target of \glsentrylong{qmla}, i.e. the system to be characterised.}
 }
 
 \newglossaryentry{term}
@@ -195,7 +246,7 @@
 {
     name={results directory},
     description={
-        Directory to which the data and analysis for a given \gls{run} of \gls{qmla} are stored
+        Directory to which the data and analysis for a given \gls{run} of \acrshort{qmla} are stored.
     }
 }
 
@@ -203,7 +254,7 @@
 {
     name=chromosome,
     description={
-        A single candidate, in the space of valid solutions to the posed problem in a genetic algorithm
+        A single candidate, in the space of valid solutions to the posed problem in a genetic algorithm.
     }
 }
 
@@ -211,7 +262,7 @@
 {
     name=gene,
     description={
-        Individual element within a \gls{chromosome}
+        Individual element within a \gls{chromosome}.
     }
 }
 

@@ -35,9 +35,9 @@ This is a tenet of \gls{qmla}: for each candidate $\hj ( \al_j )$, we use a subr
 \par
 
 Ultimately, the conceived role of a \gls{ga} within \gls{qmla} is to generate the sets of models to place 
-    on successive branches\footnote{Branches in \gls{qmla} and generations of the \glsentrylong{ga} are equivalent here.} 
+    on successive branches\footnote{Branches in \gls{qmla} and generations of the \acrlong{ga} are equivalent here.} 
     of an \gls{et} as depicted in \cref{fig:qmla_overview}.
-The apparatus within \gls{qmla} which facilitates novel model generation techniques is the \glsentryfull{es}.
+The apparatus within \gls{qmla} which facilitates novel model generation techniques is the \acrfull{es}.
 Here we will design an \gls{es} which acts in cooperation with a \gls{ga}:
     the \gls{es} specifies that consolidation of a generation $\mu$ involve evaluating the \emph{fitness}, 
     $g_i$, of each candidate, $\hi$, via the chosen \gls{of}; 
@@ -82,7 +82,7 @@ We can restate the informal description of \glspl{ga}\footnotemark, now in the c
     && this is the first generation, $\mu$. 
     & \label{qmla_ga:loop} Evaluate each model $\hj \in \mu$
     && train $\hj$ through \gls{qhl};
-    && apply the \glsentrylong{of} to assign the model's fitness, $g_j$.
+    && apply the \acrlong{of} to assign the model's fitness, $g_j$.
     & Map the fitnesses of each model, $\{g_j\}$, to selection probabilities for each model, $\{s_j\}$
     && e.g. by normalising the fitnesses, or by removing some poorly-performing models and then normalising. 
     & Generate the next generation of models
@@ -212,8 +212,8 @@ We will not use $\fs$ within the algorithm\footnote{Except for meta-analysis in 
         \textbf{a}, the set of available terms $\termset$ containing individual terms $\hat{t}_1$ to $\hat{t}_{10}$. 
         The \gls{true model} $\ho$ is constructed from the set $\termset_0$. 
         Suppose a candidate $\hp$ has the set $\termset^{\prime}$. 
-        \textbf{b}, the confusion matrix for $\hp$. Correctly classified terms are \glsentrylong{tp} and \glsentrylong{tn} (green), 
-            and incorrectly classified terms are \glsentrylong{fp} and \glsentrylong{tn} (red). 
+        \textbf{b}, the confusion matrix for $\hp$. Correctly classified terms are \acrlong{tp} and \acrlong{tn} (green), 
+            and incorrectly classified terms are \acrlong{fp} and \acrlong{tn} (red). 
     }
     \label{fig:classification_eg}
 \end{figure}
@@ -226,7 +226,7 @@ We have so far relied on \gls{bf} as the means by which to distinguish models'
 We conjecture that models of higher $\fs$ are usually statistically better at predicting dynamics of \gls{q}
     than those of lower $\fs$, and therefore \glspl{bf} will favour models of higher $\fs$;
 Verifying this hypothesis will allow us to incorporate statistical tools into the design of \glspl{of};
-    we can perform straightforward tests training models of equally spaced $\fs$, and computing \glsentryshort{bf} between all pairs.
+    we can perform straightforward tests training models of equally spaced $\fs$, and computing \acrshort{bf} between all pairs.
 \par 
 
 In \cref{fig:bf_by_fscore}, we show the relationships between $\fs$ and \gls{bf} for various conditions. 
@@ -262,8 +262,8 @@ Note that the time saving reported between full and partial connectivity between
 
 \begin{figure}
     \includegraphics{theoretical_study/figures/bayes_factors_by_f_scores.pdf}
-    \caption[\glsentrylong{bf} by $\fs$]{
-        Pairwise \glsentrylong{bf}, $\bij$, by $\fs$ of candidates $\hi$ ($f_i$ on the $y$-axis) 
+    \caption[Bayes factors by $\fs$]{
+        Pairwise \acrlong{bf}, $\bij$, by $\fs$ of candidates $\hi$ ($f_i$ on the $y$-axis) 
         and $\hj$ ($f_j$ on the $x$-axis).
         $\log_{10}\bij > 0 \ (<0)$, green (purple), indicates statistical evidence that $\hi$ ($\hj$) 
         is the better model with respect to the observed data.
@@ -300,7 +300,7 @@ Note that the time saving reported between full and partial connectivity between
 \end{figure}
 
 Firstly we will validate our reasoning that $\fs$ is a sensible figure of merit, 
-    by directly invoking it as the \glsentrylong{of}. 
+    by directly invoking it as the \acrlong{of}. 
 That is, we first implement a \gls{ga}, using the mapping between models and chromosomes outlined above,
     where we fix the numbers of sites $d=4$, and assume full connectivity between the sites, with $x-$, $y-$ and $z-$ couplings available,
         such that there are $N_t = 3 \times {4 \choose 2} = 18$ terms in $\termset$, so that the total population is of size $2^{18}$ chromosomes.
@@ -345,9 +345,9 @@ We will show how each \gls{of} computes a fitness, $g_i$, for candidate models, 
 For examples of each, we group together some demonstrative values in \cref{table:objective_functions}.
 For each $\hi$, we may refer to 
 \begin{easylist}[itemize]\label{list:obj_fnc_terms}
-    & $\tll_i$, \glsentryfull{tltl},  introduced in \cref{sec:total_log_total_likelihood};
+    & $\tll_i$, \acrfull{tltl},  introduced in \cref{sec:total_log_total_likelihood};
     & $k_i$, the model's cardinality, i.e. number of terms in its parameterisation;
-    & $\expset_i$, the bespoke set of experiments composed by the \glsentrylong{edh} (\cref{sec:heuristic}) solely for trainng $\hi$;
+    & $\expset_i$, the bespoke set of experiments composed by the \acrlong{edh} (\cref{sec:heuristic}) solely for trainng $\hi$;
     & $n = |\expset_i|$, the number of samples (datapoints) used in trainng $\hi$. 
 \end{easylist}
 In \cref{table:objective_functions}, 
@@ -786,8 +786,8 @@ One disadvantage is that it does not explicitly punish models based
 \begin{figure}
     \centering
     \includegraphics[width=0.95\textwidth]{theoretical_study/figures/objective_fnc_comparison.pdf}
-    \caption[Comparison between proposed \glsentrylongpl{of}]{
-        Comparison between proposed \glsentryfullpl{of}. 
+    \caption[Comparison between proposed objective functions]{
+        Comparison between proposed \acrfullpl{of}. 
         Each \gls{of} trains the same initial generation of $N_m=28$ models with resources
         $N_E=500, N_P=2000$, and then design a new set of $N_m$ models through 
         a roulette strategy, such that the only difference between \gls{of}'s output 
@@ -926,7 +926,7 @@ We will analyse the \gls{ges} from four perspectives:
         \includegraphics{theoretical_study/figures/single_generation_ratings_progression.pdf}
     \end{center}
     \caption[Single model within a single generation of QMLA genetic algorithm]{
-        Progression of \glsentrylong{bfeer}  for a single candidate, $\hi$, within a single generation.
+        Progression of \acrlong{bfeer}  for a single candidate, $\hi$, within a single generation.
         \textbf{a}, The \glspl{bf} between $\hi$ and some opponents, $\{\hj\}$, 
             from the perspective where $\hi$ \emph{wins} given $\bij > 1 \Rightarrow \log_{10}\bij > 0$, 
             and \emph{loses} otherwise. 
@@ -961,7 +961,7 @@ For example, the sixth comparison finds $\hj$ as the superior model,
         \includegraphics{theoretical_study/figures/single_generation_all_ratings.pdf}
     \end{center}
     \caption[Ratings of all models in a single genetic algorithm generation]{
-        Ratings of all $N_m=60$ models in a single \glsentrylong{ga} generation.
+        Ratings of all $N_m=60$ models in a single \acrlong{ga} generation.
         Each line represents a unique model and is coloured by the $\fs$ of that model. 
         \textbf{Inset}, the selection probabilities resulting from the final ratings of this generation. 
         Only $tau=\nicefrac{1}{3}$ of models are assigned selection probability, 
@@ -990,7 +990,7 @@ $N_m$ models are required to populate the next generation:
         \includegraphics{theoretical_study/figures/gen_alg_instance_combined.pdf}
     \end{center}
     \caption[Instance of QMLA genetic algorithm]{
-        A single \gls{instance} of the \gls{qmla} \glsentrylong{}{ga}.
+        A single \gls{instance} of the \gls{qmla} \acrlong{}{ga}.
         \textbf{a}, Ratings of all models for the first four generations. 
         Each line in each generation represents a model by its $\fs$. 
         Horizontal dotted lines show the starting rating at that generation. 
@@ -1018,7 +1018,7 @@ Consequently, even in \glspl{instance} where the precise model, $\ho$, is not id
         \includegraphics{theoretical_study/figures/gen_alg_run.pdf}
     \end{center}
     \caption[Run of QMLA genetic algorithm]{
-        A \gls{run} of the \gls{qmla} \glsentryfull{ga}, consisting of 100 independent \glspl{instance}.
+        A \gls{run} of the \gls{qmla} \acrfull{ga}, consisting of 100 independent \glspl{instance}.
         \textbf{(a)}, The \gls{model space} contains $2^{18}\approx250,000$ candidate models, 
             normally distributed around $f=0.5 \pm 0.14$. 
         \textbf{(b)}, The models explored during the model search of all \glspl{instance} combined, $\{\hat{H}_i\}$.

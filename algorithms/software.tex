@@ -244,7 +244,7 @@ We can also specify some \gls{es}-specific analyses to examine its internal perf
 
 \subsection{Algorithm}\label{sec:sw_algorithm}
 The algorithm layer of \cref{fig:software_overview} implements the core steps of \gls{qmla},
-    as shown in \cref{fig:qmla_overview}, by running a set of \glsentryfullpl{et}, 
+    as shown in \cref{fig:qmla_overview}, by running a set of \acrfullpl{et}, 
     each of which communicate with a unique \gls{es}. 
 The core \gls{qmla} class manages the database of models and their comparisons,
     and decides how to react at certain stages, by consulting the decision criteria set by the \gls{es}. 
@@ -254,7 +254,7 @@ The core \gls{qmla} class manages the database of models and their comparisons,
 \begin{figure}
     \includegraphics{algorithms/figures/parallel_architecture.pdf}
     \caption[Parallel architecture for QMLA]{
-        Parallel architecture for \glsentryfull{qmla}.
+        Parallel architecture for \acrfull{qmla}.
         \textbf{Left}, \gls{qmla} generates tasks 
             -- either to train (blue dumbbells) or compare (green scales) models -- 
             and places them in a task queue. 

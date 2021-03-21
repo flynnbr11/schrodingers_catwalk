@@ -1,4 +1,5 @@
 \glsresetall
+
 \Gls{qm} is the study of nature's fundamental processes, manifest in its smallest particles. 
 \gls{qm} has been at the forefront of physics since the early $20^{\textrm{th}}$ century \cite{jammer1966conceptual}.
 Advances in theoretical understanding of quantum mechanical systems in the first half of the century 
@@ -33,11 +34,11 @@ There is a large and growing interest in automatically identifying the \emph{mod
 \par 
 
 In parallel to the rise of quantum technologies over the past several decades,
-    \gls{ml} and \glsentrylong{ai} have enjoyed increasing interest and resources.
+    \gls{ml} and \acrlong{ai} have enjoyed increasing interest and resources.
 Landmark outcomes, for example in facial recognition \cite{taigman2014deepface} 
     and complex strategy games \cite{silver2017mastering, brown2019superhuman},
     were bolstered by dramatic gains in the design of information processing machinery
-    such as supercomputing facilities \cite{top500} and \glsentrylongpl{gpu} \cite{lindholm2008nvidia}.
+    such as supercomputing facilities \cite{top500} and \acrlongpl{gpu} \cite{lindholm2008nvidia}.
 \Gls{ml} has been widely adopted to accelerate the impact of quantum technologies, 
         from error correction \cite{chen2019machine, valenti2019hamiltonian}
         to metrology \cite{hentschel2010machine}
@@ -53,7 +54,7 @@ Namely, we introduce and develop the \gls{qmla} as a powerful platform for the s
 \gls{qmla} distills an approximate model for a given quantum system, 
     by constructing a series of candidate models and testing them against data from the system of interest.
 In providing a robust software framework for \gls{qmla}, we initiate an exciting field of research 
-    at the overlap of \glsentrylong{ml} and quantum simulation, 
+    at the overlap of \acrlong{ml} and quantum simulation, 
     with proposed applications in calibrating new quantum technologies as well as understanding 
     quantum processes in nature.
 
@@ -72,8 +73,8 @@ The contents of each part are as follows.
     \item[\cref{part:contextual_review} Contextual Review] \
     
         We introduce the concepts upon which the thesis will build. 
-        \cref{chapter:qm} establishes the vocabulary of \glsentrylong{qm}, 
-            followed by a summary of \glsentrylong{ml} in \cref{chapter:ml}. 
+        \cref{chapter:qm} establishes the vocabulary of \acrlong{qm}, 
+            followed by a summary of \acrlong{ml} in \cref{chapter:ml}. 
         In both cases, we seek to introduce the minimal nomenclature required to 
             contextualise the work in the following chapters;
             that is, neither topic is described exhaustively. 
@@ -81,7 +82,7 @@ The contents of each part are as follows.
     \item[\cref{part:algorithms} Algorithms] \
     
         We provide a thorough explanation of the algorithms underlying this thesis. 
-        We start by summarising \glsentrylong{qhl}, which serves as a key subroutine within later studies and should therefore 
+        We start by summarising \acrlong{qhl}, which serves as a key subroutine within later studies and should therefore 
             be understood, in order that the contributions of later chapters may be fully appreciated.
         The first major result is the \gls{qmla} algorithm itself, 
             detailed in \cref{chapter:qmla}. 
@@ -104,7 +105,7 @@ The contents of each part are as follows.
         In \cref{chapter:lattices} we demonstrate that \gls{qmla} is trustworthy in the most straightforward scenario, 
             where a number of candidate models are proposed in advance. 
         We then move to more difficult conditions in \cref{chapter:ga}, 
-            exploring spaces of $10^5$ valid candidate models, by incorporating a \glsentrylong{ga} within \gls{qmla}. 
+            exploring spaces of $10^5$ valid candidate models, by incorporating a \acrlong{ga} within \gls{qmla}. 
         Together, the cases studied here verify that \gls{qmla} shows promise in characterising quantum systems, 
             in particular suggesting a compelling application in the calibration and verification of quantum simulators. 
     
@@ -112,13 +113,13 @@ The contents of each part are as follows.
 
         The final contribution reflects work published in \cite{gentile2020learning}.
         We extend the \gls{qmla} protocol to \emph{realistic} quantum systems, namely targeting the decoherence processes dominating the 
-        dynamics of an electron spin in a \glsentrylong{nvc}. 
+        dynamics of an electron spin in a \acrlong{nvc}. 
         In \cref{chapter:nv} we operate on data extracted from an experimental system, 
             from which \gls{qmla} distills models with high predictive power -- i.e. which can reproduce the dynamics of the target system -- 
             and which are in agreement with theoretical predictions. 
         \cref{chapter:nv} relied on several constraints to facilitate the model search; 
             in \cref{chapter:many_qubits} we relax some of those constraints by simulating a similar system, 
-            and again exploiting a \glsentrylong{ga} to explore the model space. 
+            and again exploiting a \acrlong{ga} to explore the model space. 
         The results of this part indicate that \gls{qmla} may be helpful in the study of \emph{black-box} quantum systems.
     
     \item[\cref{part:conclusion} Conclusion] \

@@ -143,8 +143,8 @@ In effect, hypotheses (particles) which are found to be highly likely are given 
     \subfloat{
         \includegraphics{algorithms/figures/smc_demo/cbar.pdf}
     }
-    \caption[\Glsentrylong{qhl} via \glsentrylong{smc}]{
-        \Acrfull{qhl} via \glsentryfull{smc}. 
+    \caption[Quantum Hamiltonian learning via sequential Monte Carlo]{
+        \Acrfull{qhl} via \gls{smc}. 
         The studied model has two terms, $\{\sx, \sy\}$ with true parameters $\alpha_{x}=0.9, \alpha_y=0.15$ (dahsed lines), 
             with resources $\Ne=500, \Np=2000$ for training the model. 
         Crosses represent particles, while the distribution $\Pr(\alpha_p)$ for each 
@@ -313,7 +313,7 @@ The \gls{le} tells us that there is a small range of evolution times ($t \lesssi
 We can exploit this effect, however: 
     by designing experiments with $t \sim t_c$, the likelihood is extremely sensitive to the parameterisation, 
     in that only particles close to the precise parameters will give a high likelihood in this regime. 
-This is the basis of the \glsentrylong{pgh}, described in \cref{sec:pgh}. 
+This is the basis of the \acrlong{pgh}, described in \cref{sec:pgh}. 
 \par 
 
 We can relate the \gls{le} to the likelihood, \cref{eqn:likelihood}, by supposing $\hat{H}_{-} = \ident$. 
@@ -350,7 +350,7 @@ The remaining application for \gls{iqle}, and correspondingly \gls{qhl},
 \subsection{Analytical likelihood}\label{sec:analytical_likelihood}
 For some Hamiltonians, we can derive an analytical \gls{likelihood} function to describe their dynamics
     \cite{sergeevich2011characterization, ferrie2013best}.
-For instance, the Hamiltonian for an oscillating electron spin in a \glsentrylong{nvc} 
+For instance, the Hamiltonian for an oscillating electron spin in a \acrlong{nvc} 
     is given by
     \begin{equation}
         \label{eqn:analytical_hamiltonian}
@@ -561,7 +561,7 @@ The principle of \gls{pgh} is that the uncertainty of the posterior limits how w
     reasonably mimic $\ho$\footnotemark.
 \footnotetext{
     The reasoning behind limiting the evolution time according to the posterior distribution is 
-    rooted in the effect of the \glsentrylong{le}, described in \cref{sec:iqle}.
+    rooted in the effect of the \acrlong{le}, described in \cref{sec:iqle}.
 }
 For example, consider \cref{eqn:analytical_hamiltonian} with a single parameter with $\omega_0 = 10$,
     and current $\mean\bk{\Pr(\omega)} = 9, \std\bk{\Pr(\omega)} = 2$:
@@ -653,7 +653,7 @@ Each $\hi$ have randomly chosen parameters implicitly assigned to each term.
         % \QMLAfig{Nov_27/heuristic_comparisons.pdf}
         \includegraphics{algorithms/figures/heuristic_comparisons.pdf}
     \end{center}
-    \caption[Effect on model training of \glsentrylong{edh}]{
+    \caption[Effect on model training of the experiment design heuristic]{
         The \gls{volume} and evolution times of various models when trained through \gls{qhl} using different \glspl{edh}.
         We show models of various complexity and dimension, each trained using four heuristics, 
         outlined in the main text.

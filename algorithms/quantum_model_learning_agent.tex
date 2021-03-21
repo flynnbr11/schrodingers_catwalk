@@ -238,13 +238,24 @@ Each tree in the \gls{qmla} forest corresponds to an independent \emph{ \gls{mod
 In short, the components of the iterative \gls{model search} for a given \gls{es}, 
     depicted in \cref{fig:qmla_overview}\textbf{(a-d)}, are
 \begin{description}
-    \item[Branches] A set of candidate models, $\{ \hi \}$, are held together on a branch, $\mu$. 
-    \item[Training] Each model $\hi \in \mu$ is trained according to a parameter learning subroutine.
-    \item[Consolidation] The performance of candidates in $\mu$ are ranked relative to each other, 
+    \item[Branches] \ 
+    
+    A set of candidate models, $\{ \hi \}$, are held together on a branch, $\mu$. 
+    
+    \item[Training] \ 
+    
+    Each model $\hi \in \mu$ is trained according to a parameter learning subroutine.
+    
+    \item[Consolidation] \ 
+    
+    The performance of candidates in $\mu$ are ranked relative to each other, 
         such that some models are favoured over others, for instance through selection of a \emph{branch champion}, $\hat{H}_C^{\mu}$. 
         Consolidation can rely on any statistical test, with \glspl{bf} providing a robust platform to disinguish 
         any pair of candidates.
-    \item[Spawn] A set of new models are constructed, accounting for the immediately prior consolidation stage, 
+    
+    \item[Spawn] \  
+    
+    A set of new models are constructed, accounting for the immediately prior consolidation stage, 
         i.e. leveraging the best-yet-known models to construct improved hypotheses.
 \end{description}
 
@@ -375,7 +386,7 @@ Here we list the important cases of this behaviour.
     && How to consolidate models within a branch. Some examples used in this work are:
         &&& a points-ranking, where all candidates are compared via \gls{bf} and points are assigned to the favoured model according to \cref{eqn:bf_cases};
         &&& ranking reflecting each model's log-likelihood (\cref{eqn:log_likelihood}) after training;
-        &&& models are ranked according to some \glsentrylong{of}, as in the case of \glspl{ga} which we detail in \cref{chapter:ga}.
+        &&& models are ranked according to some \acrlong{of}, as in the case of \glspl{ga} which we detail in \cref{chapter:ga}.
     \end{easylist}
 
     \item[\gls{model search} termination criteria] \
@@ -538,11 +549,15 @@ There is no optimal strategy for all use--cases:
 Several aspects of \gls{qmla} are deliberately vague in order to facilitate generality. 
 
 \begin{description}
-    \item[\Gls{model}] can mean any description of a quantum system which captures the interactions it is subject to. 
+    \item[\Gls{model}] \
+    
+    Can mean any description of a quantum system which captures the interactions it is subject to. 
     \begin{easylist}[itemize]
         && Here we exclusively consider Hamiltonian models, but Lindbladian models can also be considered as generators of quantum dynamics. 
     \end{easylist}
-    \item[Model training] is any subroutine which can train a given model, i.e. optimise a given parameterisation 
+    \item[Model training] \
+    
+    Any subroutine which can train a given model, i.e. optimise a given parameterisation 
         under the assumption that it represents the target system. 
     \begin{easylist}[itemize]
         && Currently only \gls{qhl} has been implemented, although for example tomography is valid in principle, 
@@ -554,7 +569,9 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
             We will see examples of this in \cref{chapter:nv} where we trace out part of the system in order 
             to represent open systems. 
     \end{easylist}
-    \item[Model selection] or \emph{consolidation} can be as rigourous as desired by the user. 
+    \item[Consolidation] \
+    
+    Can be as rigourous as desired by the user. 
     \begin{easylist}[itemize]
     && Consolidation occurs at the branch level of each \gls{et}, but also in finding the tree champion, 
         and ultimately the global champion. 

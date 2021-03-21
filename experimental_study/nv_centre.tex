@@ -85,16 +85,16 @@ We depict these cycles in \cref{fig:nv_centre_energy_levels}c.
         \includegraphics[width=0.95\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
     \end{center}
     \caption[\Glsentrylong{nvc} energy levels]{
-        Simplified depiction of energy levels of the \glsentrylong{nvc}, corresponding to its triplet state. 
+        Simplified depiction of energy levels of the \acrlong{nvc}, corresponding to its triplet state. 
         \textbf{a}, With no external magnetic field, the system has excited and ground-state manifolds, 
             each of which consist of two energy levels depending on the magnetic spin, $m_s$.
         \textbf{b}, In the presence of a magnetic field (purple, $B$), the magnetic spins have distinct energy levels, 
             i.e. Zeeman splitting giving distinct $m_s$. 
         States are denoted by their magnetic spin, $m_s$ and subscripted by their manifold ($e$ for excited and $g$ for ground-state). 
-        \textbf{c},  Application of a \SI{532}{\nano\metre} laser (green arrow) excites the \glsentrylong{nvc} from any of the states in the 
+        \textbf{c},  Application of a \SI{532}{\nano\metre} laser (green arrow) excites the \acrlong{nvc} from any of the states in the 
             ground state manifold into the excited manifold. 
         The dominant decay mechanism for the excited states are shown: 
-            (i) $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ (\glsentrylong{pl}, red) through the emission of a photon at \SI{637}{\nano\metre});
+            (i) $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ (\acrlong{pl}, red) through the emission of a photon at \SI{637}{\nano\metre});
             (ii) $\ket{m_s=\pm 1}_e \rightarrow \ket{m_s=0}_g$ (dotted grey lines) via the shelving manifold which allows for non-spin-preserving transition, 
             emitting a photon in the infrared (not shown).
         \textbf{d}, Computational basis states $\ket{0}$ and $\ket{1}$ are assigned to the two lowest energy states.
@@ -149,7 +149,7 @@ In summary then, by assigning basis states $\ket{0}, \ket{1}$ to energy levels o
     we are able to ensure the preparation of the \gls{nvc} in $\ket{0}$ by first shining a green laser on the \gls{nvc}. 
 We can then apply \gls{mw} radiation to achieve quantum logical gates on the system, 
     and read out the final state of the system, again by shining a green laser
-    and observing the \glsentrylong{pl} (i.e. the emitted photons), and inferring the population level of each basis state. 
+    and observing the \acrlong{pl} (i.e. the emitted photons), and inferring the population level of each basis state. 
 We represent these concepts in a simplified format in \cref{fig:nv_centre_energy_levels}. 
 
 \subsection{Experimental procedure}
@@ -184,7 +184,7 @@ We represent these concepts in a simplified format in \cref{fig:nv_centre_energy
         States of spin qubit at each stage of Hahn echo sequence.
         
         \textbf{(a)} The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
-        \textbf{(b)} We apply a rotation about the $y$-axis (i.e. a \glsentryfull{mw} pulse), 
+        \textbf{(b)} We apply a rotation about the $y$-axis (i.e. a \acrfull{mw} pulse), 
             yielding the state $\ket{\psi_1} = \ket{+}$. 
         \textbf{(c)} The system is allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
         \textbf{(d)} We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
@@ -194,7 +194,7 @@ We represent these concepts in a simplified format in \cref{fig:nv_centre_energy
             projecting it upon $\ket{0}$.
         Here $\ket{\psi_5}$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
         i.e. along the $z$-axis. 
-        The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \glsentrylong{pl}. 
+        The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \acrlong{pl}. 
         Here $\ho = 0.25 \ \s_y$ was evolved for $t=0.5$ (arbitrary units), 
         and the final state overlap with the initial state, 
         i.e. the \gls{likelihood} of measuring the spin in $\ket{0}$ is $\Pr(0 | \ho, t) = 0.865$. 
@@ -252,9 +252,9 @@ Note the data for the studied \gls{nvc} is taken once and analysed offline,
     \begin{center}
         \includegraphics{experimental_study/figures/raw_data.pdf}
     \end{center}
-    \caption[Raw data for \glsentrylong{nvc}'s dynamics]{
-        Raw data for the \glsentrylong{nvc}'s dynamics.
-        The $y$-axis shows the normalised \glsentrylong{pl} of the \gls{nvc}, 
+    \caption[Raw data for nitrogen-vacancy centre's dynamics]{
+        Raw data for the \acrlong{nvc}'s dynamics.
+        The $y$-axis shows the normalised \acrlong{pl} of the \gls{nvc}, 
         equivalently the \gls{likelihood} $\Pr(0 | \ho, t)$. 
     }
     \label{fig:nv_raw_data}
@@ -558,7 +558,7 @@ Moverover this distribution supports hypotheses where each parameter is zero:
 \section{Exploration strategy}\label{sec:exp_es}
 We may now turn to the specific implementation details by which \gls{qmla} is applied to the study this \gls{nvc} system. 
 Recalling the terminology of \gls{qmla} from \cref{chapter:qmla}, 
-    we design an \glsentryfull{es} specifically for the system under study. 
+    we design an \acrfull{es} specifically for the system under study. 
 The \gls{es} will account for the details listed in this chapter so far, in summary: 
 \begin{easylist}[itemize]
     & we aim to assign a model, $\hp$, to the \gls{nvc} to describe its decoherence processes
@@ -581,7 +581,7 @@ In this case, we exploit some intuition and prior knowledge of how such systems 
     to design a bespoke model generation subroutine:
     we can think of this as a midway point between the completely specified \glspl{es} used 
     for identifying the underlying lattices from a prescribed set in \cref{chapter:lattices}, 
-    and the entirely general \glsentrylong{ga} which does not restrict model generation, of \cref{chapter:ga}.
+    and the entirely general \acrlong{ga} which does not restrict model generation, of \cref{chapter:ga}.
 We use the standard structure of \glspl{et} introduced in \cref{sec:exploration_strategies}, 
     where models are placed on consecutive branches, $\mu$, and branches are consolidated by pairwise comparisons between all models on $\mu$, 
     where comparisons are computed through \glspl{bf}.
@@ -708,7 +708,7 @@ The experiment was run with increasing $t$ for the duration of the first decay o
 As discussed in \cref{sec:heuristic}, usually it is helpful to allow an \gls{edh} to
     choose the experimental controls, including the evoltuion time, $t$, against which 
     the model is trained at each experiment;
-    the default \glsentryfull{pgh} attempts to select $t$ at the upper boundary of times 
+    the default \acrfull{pgh} attempts to select $t$ at the upper boundary of times 
     where the model is expected to be predictive, such as to maximise the information gained by the experiment (see \cref{sec:pgh}). 
 Here, however, we can not allow the \gls{edh} to select arbitrary $t$, 
     since we do not have data beyond $t_{\textrm{max}}$. 
@@ -795,8 +795,8 @@ In general, the \glspl{champion model} from each instance are highly predictive:
 
 \begin{figure}
     \includegraphics[width=0.95\textwidth]{experimental_study/figures/experimental_qmla_analysis.pdf}
-    \caption[QMLA applied to experimental \glsentrylong{nvc} system]{
-        \gls{qmla} results on simulated and experimental data, describing a \glsentryfull{nvc} system.
+    \caption[QMLA applied to experimental nitrogen-vacancy centre system]{
+        \gls{qmla} results on simulated and experimental data, describing a \acrfull{nvc} system.
         Figure reproduced from \cite{gentile2020learning}. 
         \textbf{a}, 
         The carbon lattice providing the outer environment for the NV centre, along with the
@@ -822,11 +822,11 @@ In general, the \glspl{champion model} from each instance are highly predictive:
         \textbf{e}, 
         Simulated \glspl{likelihood}  reproduced by the model with the highest  \gls{win rate}  ($\hat{S}_{x,y,z}\hat{A}_{z}$, turquoise), 
             compared with corresponding NV-centre system experimental data 
-            (red dots, extracted from the observed \glsentrylong{pl} of the first Hahn echo decay). 
+            (red dots, extracted from the observed \acrlong{pl} of the first Hahn echo decay). 
         Error bars are smaller than the dots.
         The shaded area indicates the $67\%$ confidence region of likelihoods predicted from the instances where $\hp=\hat{S}_{x,y,z}\hat{A}_{z}$
         \textbf{f}, 
-        A single QMLA \gls{instance} against experimental data in \textbf{(e)}, depicted as a \glsentrylong{dag}.
+        A single QMLA \gls{instance} against experimental data in \textbf{(e)}, depicted as a \acrlong{dag}.
         The thin end of each edge points to the favoured model; 
         the colour of the edges depict the strength of evidence, $\log_{10}\mathcal{B}$, where $\mathcal{B}$ is the \gls{bf} between those two models.
         Champions of each layer, $\huc$, are in light brown, whereas the global champion $\hp$
@@ -870,7 +870,7 @@ Finally we display the model search as a \gls{dag} in \cref{fig:exp_qmla_analysi
     where models are represented on nodes on the graph's layers (equivalent to \gls{et} branches), 
     and their parents are resident on the branch immediately above their own.
 Comparisons between models, $\hi, \hj$,  are shown as edges between nodes on the graph, 
-    coloured by the strength of evidence of the outcome, i.e. the \glsentrylong{bf}, $\bij$. 
+    coloured by the strength of evidence of the outcome, i.e. the \acrlong{bf}, $\bij$. 
 Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     the set of branch champions are consolidated to determine the global champion, $\hp_C$. 
 \subsection{Analysis}\label{sec:exp_qmla_analysis}
@@ -887,7 +887,7 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     during any of the 100 \glspl{instance} on either simulated or experimental data.
     IDs of candidate models are on the vertical axis, and labels for the terms on the horizontal axis.
     The \gls{true model} $\hat{H}_0$ for the simulated case is highlighted in green and a subset of credible models in blue, 
-    i.e. models which may reasonbaly be expected to describe the targeted \glsentryfull{nvc} from theoretical arguments.
+    i.e. models which may reasonbaly be expected to describe the targeted \acrfull{nvc} from theoretical arguments.
     \textbf{Right}: number of wins for each of the candidate models out of $100$ independent \gls{qmla} \glspl{run}. 
     Cases adopting simulated data are shown by empty bars, with those using the experimental dataset shown by green bars.
     \figtableref

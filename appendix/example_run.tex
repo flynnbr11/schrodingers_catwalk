@@ -1,5 +1,5 @@
-Here we provide a complete example of how to run the \glsentryfull{qmla} framework, 
-    including how to implement a custom \glsentryfull{es}, 
+Here we provide a complete example of how to run the \acrfull{qmla} framework, 
+    including how to implement a custom \acrfull{es}, 
     and generate/interpret analysis.
 Note: these examples are included in the \gls{qmla} documentation in a format that may be easier to follow -- 
     where possible, we recommend readers follow the \ttt{Tutorial} section of \cite{qmla_docs}.
@@ -212,7 +212,7 @@ So the target model in \cref{eqn:example_es_true_ham} will be given by
 $$ \ttt{pauliSet\_1J2\_zJz\_d4+pauliSet\_2J3\_zJz\_d4+pauliSet\_3J4\_zJz\_d4}. $$
 
 Adapting the template \gls{es} slightly, we can define a model generation strategy with a small number of hard coded 
-    candidate models introduced at the first branch of the \glsentrylong{et}. 
+    candidate models introduced at the first branch of the \acrlong{et}. 
 We will also set the parameters of the terms which are present in $\ho$, as well as the range in which to search parameters.
 Keeping the \ttt{import}s at the top of the \ttt{example.py}, rewrite the \gls{es} as: 
 
@@ -306,7 +306,7 @@ Next we show some examples of the available plots.
 
 \subsection{Model analysis}
 
-We have just run \glsentryfull{qhl} for the model in \cref{eqn:example_es_true_ham} for a single instance, 
+We have just run \acrfull{qhl} for the model in \cref{eqn:example_es_true_ham} for a single instance, 
     using a reasonable number of particles and experiments, so we expect to have trained the model well. 
 \Gls{instance}-level results are stored (e.g. for the instance with \ttt{qmla\_id=1}) in \ttt{Jan\_01/01\_23/instances/qmla\_1}.
 Individual models' insights can be found in \ttt{model\_training}, 
@@ -374,8 +374,8 @@ cd results/Jan_01/01_23/instances/qmla_1
 \end{lstlisting}
 
 Figures of interest here show the composition of the models (\cref{fig:qmla_model_composition}), 
-    as well as the \glsentrylongpl{bf} between candidates (\cref{fig:qmla_bayes_factors}). 
-Individual model comparisons -- i.e. \glsentryfull{bf} -- 
+    as well as the \acrlongpl{bf} between candidates (\cref{fig:qmla_bayes_factors}). 
+Individual model comparisons -- i.e. \acrfull{bf} -- 
     are shown in \cref{fig:qmla_bayes_factor_comparison}, 
     with the dynamics of all candidates shown in \cref{fig:qmla_branch_dynamics}. 
 The probes used during the training of all candidates are also plotted  (\cref{fig:qmla_training_probes}).
@@ -413,7 +413,7 @@ The probes used during the training of all candidates are also plotted  (\cref{f
         and its subdirectories. 
         \textbf{(a)} \ttt{composition\_of\_models}: constituent terms of all considered models, indexed by their model IDs.
         Here model 3 is $\ho$. 
-        \textbf{(b)} \ttt{bayes\_factors}: \glsentryfull{bf} comparisons between all models. 
+        \textbf{(b)} \ttt{bayes\_factors}: \acrfull{bf} comparisons between all models. 
         \glspl{bf} are read as $B_{i,j}$ where $i$ is the model with lower ID, 
             e.g. $B_{1,2}$ rather than $B_{2,1}$. 
             Thus $B_{ij} > 0 \ (<0)$ indicates $\hat{H}_i$ \ ($\hat{H}_j$), i.e. the model on the $y$-axis ($x$-axis) 
@@ -632,7 +632,7 @@ When all jobs have finished, results are stored as in the local case,
 \par 
 
 \section{Customising exploratino strategies}
-User interaction with the \gls{qmla} codebase should be achieveable primarily through the \glsentryfull{es} framework. 
+User interaction with the \gls{qmla} codebase should be achieveable primarily through the \acrfull{es} framework. 
 Throughout the algorithm(s) available, \gls{qmla} calls upon the \gls{es} before determining how to proceed. 
 The usual mechanism through which the actions of \gls{qmla} are directed, 
     is to set attributes of the \gls{es} class:
@@ -645,7 +645,7 @@ Most such methods need not be replaced, however, with the exception of \ttt{gene
     which is the most important aspect of any \gls{es}: 
     it determines which models are built and tested by \gls{qmla}. 
 This method allows the user to impose any logic desired in constructing models;
-    it is called after the completion of every branch of the  \glsentrylong{et} on the \gls{es}. 
+    it is called after the completion of every branch of the  \acrlong{et} on the \gls{es}. 
 \par 
 
 \subsection{Greedy search}\label{sec:greedy_search}
@@ -796,10 +796,10 @@ Outputs can again be found in the \glspl{instance} subdirectory, including a map
         \includegraphics[scale=0.75]{appendix/figures/greedy_search/graphs_of_branches_ExampleGreedySearch.pdf}
     }
     \end{center}
-    \caption[Greedy \glsentrylong{es}]{
-        Greedy \glsentrylong{es}. 
+    \caption[Greedy exploration strategy]{
+        Greedy \acrlong{es}. 
         \textbf{(a)}, \ttt{composition\_of\_models}. 
-        \textbf{b}, \ttt{graphs\_of\_branches\_ExampleGreedySearch}: shows which models reside on each branches of the \glsentrylong{et}. 
+        \textbf{b}, \ttt{graphs\_of\_branches\_ExampleGreedySearch}: shows which models reside on each branches of the \acrlong{et}. 
         Models are coloured by their $\fs$, and edges represent the \gls{bf} between models. 
         The first four branches are equivalent to those in \cref{fig:greedy_exploration_strategy} ,
         while the final branch considers the set of branch champions, in order to determine the overall champion. 
@@ -971,10 +971,10 @@ with corresponding results in \cref{fig:example_es_tiered_greedy}.
         \includegraphics{appendix/figures/tiered_search//graphs_of_branches_ExampleGreedySearchTiered.pdf}
     }
     \end{center}
-    \caption[Tiered greedy \glsentrylong{es}]{
-        Tiered greedy \glsentrylong{es}. 
+    \caption[Tiered greedy exploration strategy]{
+        Tiered greedy \acrlong{es}. 
         \textbf{(a)}, \ttt{composition\_of\_models}. 
-        \textbf{b}, \ttt{graphs\_of\_branches\_ExampleGreedySearchTiered}: shows which models reside on each branches of the \glsentrylong{et}. 
+        \textbf{b}, \ttt{graphs\_of\_branches\_ExampleGreedySearchTiered}: shows which models reside on each branches of the \acrlong{et}. 
         Models are coloured by their $\fs$, and edges represent the \gls{bf} between models. 
         In each tier, three branches greedily add terms, and a fourth branch considers the champions of the first three branches
         in order to nominate a tier champion. 
