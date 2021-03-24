@@ -115,7 +115,9 @@
 \newacronym{np}{NP}{Nondeterministic Polynomial}
 \newacronym{gpu}{GPU}{graphics processing unit}
 \newacronym{cpu}{CPU}{central processing unit}
-\newacronym{qc}{QC}{quantum computer}
+\newacronym[
+    description={quantum computer, \cref{sec:quantum_computation}}
+]{qc}{QC}{quantum computer}
 \newacronym{nn}{NN}{neural network}
 \newacronym{vqe}{VQE}{variational quantum eigensolver}
 \newacronym{pbs}{PBS}{portable batch system}
@@ -172,7 +174,7 @@
 \newglossaryentry{probe}
 {
     name=probe,
-    description={Input state, $\ket{\psi}$, into which the target system is initialised, before unitary evolution.},
+    description={Input state, $\ket{\psi}$, into which the target system is initialised, before unitary evolution, \cref{sec:probes}.},
     plural={probes},
 }
 \newglossaryentry{volume}
@@ -198,7 +200,9 @@
 \newglossaryentry{win rate}
 {
     name=win rate,
-    description={For a given candidate model, the fraction of \glspl{instance} within a \gls{run} which nominated it as champion.}
+    description={The fraction of \glspl{instance} for which a given candidate \gls{model} was nominated as \gls{champion}
+        within a \gls{run} of \acrshort{qmla}.
+    }
 }
 \newglossaryentry{success rate}
 {
@@ -208,8 +212,9 @@
 \newglossaryentry{true model}
 {
     name={true model} ,
-    description={$\ho$, the model which correctly describes the target system, \gls{q}. $\ho$ is known for simulated \gls{q} 
-    but not known precisely for experimental systems.}
+    description={The model which correctly describes the target system. 
+        \gls{ho} is known for simulated \gls{q} but not known precisely for experimental systems.
+    }
 }
 
 \newglossaryentry{run}
@@ -239,6 +244,13 @@
     name=$Q$,
     description={Quantum system which is the target of \acrshort{qmla}, i.e. the system to be characterised.}
 }
+
+\newglossaryentry{ho}
+{
+    name=$\hat{H}_0$,
+    description={\Gls{true model} for the target system, \gls{q}; i.e. the \gls{model} form which \acrshort{qmla} is attempting to discover in a given \gls{instance}.}
+}
+
 
 \newglossaryentry{term}
 {
