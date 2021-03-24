@@ -142,3 +142,11 @@
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
+
+\usepackage{afterpage}
+\newcommand\myemptypage{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage
+    }

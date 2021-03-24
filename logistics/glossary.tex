@@ -28,7 +28,9 @@
 ]{ml}{ML}{machine learning}
 \newacronym{rl}{RL}{reinforcement learning}
 \newacronym{ai}{AI}{artificial intelligence}
-\newacronym{qml}{QML}{quantum machine learning}
+\newacronym[
+    description={quantum machine learning, \cref{sec:quantum_machine_learning}}
+]{qml}{QML}{quantum machine learning}
 \newacronym{nv}{NV}{nitrogen-vacancy}
 \newacronym[
     description={nitrogen-vacancy centre, \cref{sec:nv_centres}}
@@ -86,7 +88,9 @@
 \newacronym[
     description={quantum likelihood estimation, \cref{sec:likelihood}}
 ]{qle}{QLE}{quantum likelihood estimation}
-\newacronym{cle}{CLE}{classical likelihood estimation}
+\newacronym[
+    description={classical likelihood estimation, \cref{sec:likelihood}}
+]{cle}{CLE}{classical likelihood estimation}
 \newacronym{hpd}{HPD}{high particle density}
 \newacronym{mvee}{MVEE}{minimum volume enclosing ellipsoid}
 \newacronym[
@@ -101,7 +105,9 @@
 \newacronym[
     description={exploration strategy, \cref{sec:exploration_strategies}}
 ]{es}{ES}{exploration strategy}
-\newacronym{of}{OF}{objective function}
+\newacronym[
+    description={objective function, \cref{sec:performance_metrics}}
+]{of}{OF}{objective function}
 \newacronym{carbon}{$C$}{carbon}
 \newacronym{nitrogen}{$^{14}N$}{nitrogen-14}
 \newacronym{pl}{PL}{photoluminescence}
@@ -149,24 +155,24 @@
 \newglossaryentry{model search}
 {
     name=model search,
-    description={Exploration through the \gls{model space} performed by \acrshort{qmla}, where the direction of the search is determined by the \gls{es}.}
+    description={Exploration through the \gls{model space} performed by \acrshort{qmla}, where the progression of the search is determined by the \acrshort{es}.}
 }
 
 \newglossaryentry{spawn}
 {
     name=spawn,
-    description={Process by which new models are generated, ususally by combining previously considered models.}
+    description={Process by which new models are generated within an \acrshort{es}, ususally by combining previously considered models.}
 }
 
 \newglossaryentry{likelihood}
 {
     name=likelihood,
-    description={Value that represents how likely a hypothesis is. Usually used in the context of likelihood estiamation, \cref{sec:likelihood}.}
+    description={Value that represents how likely a hypothesis is; usually used in the context of likelihood estiamation, \cref{sec:likelihood}.}
 }
 \newglossaryentry{probe}
 {
     name=probe,
-    description={Input \gls{probe} state, $\ket{\psi}$, which the target system is initialised to, before unitary evolution.},
+    description={Input state, $\ket{\psi}$, into which the target system is initialised, before unitary evolution.},
     plural={probes},
 }
 \newglossaryentry{volume}
@@ -187,7 +193,7 @@
 \newglossaryentry{model space}
 {
     name=model space,
-    description={Abstract space containing all descriptions (within defined constraints such as dimension) of the system as models.}
+    description={Abstract space containing all descriptions (within defined constraints such as dimension) of the system as \glspl{model}.}
 }
 \newglossaryentry{win rate}
 {
@@ -231,14 +237,14 @@
 \newglossaryentry{q}
 {
     name=$Q$,
-    description={Quantum system which is the target of \glsentrylong{qmla}, i.e. the system to be characterised.}
+    description={Quantum system which is the target of \acrshort{qmla}, i.e. the system to be characterised.}
 }
 
 \newglossaryentry{term}
 {
     name=term,
     description={Individual constituent of a model, 
-    e.g. a single operator within a sum of operators, which in total describe a Hamiltonian.
+    e.g. a single operator within a sum of operators, which in total describe a Hamiltonian, \cref{sec:models}.
     }
 }
 
@@ -254,7 +260,7 @@
 {
     name=chromosome,
     description={
-        A single candidate, in the space of valid solutions to the posed problem in a genetic algorithm.
+        A single candidate, in the space of valid solutions to the posed problem in a genetic algorithm, \cref{sec:genetic_algorithms}.
     }
 }
 
