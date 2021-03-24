@@ -1,7 +1,16 @@
 \glsresetall
-A sensible first case study for the \gls{qmla} framework is to prescribe a set of models, 
-    where we know that the \gls{true model} is among them, or at least that we would be satisfied with 
-    approximating $\ho$ as the best model in the set. 
+A sensible first case study for \gls{qmla} is to search within a closed space of models
+    targeting some typical quantum systems; 
+    in particular we consider Ising, Heisenberg and Hubbard formalisms as a test-bed for the \gls{qmla} framework. 
+We can prescribe a set of models for \gls{qmla} to consider, $\mathbb{H}$,
+    from which it will choose a \gls{champion model}, $\hp$.
+By including the \gls{true model}, $\ho \in \mathbb{H}$, 
+    then \gls{qmla} should perform well at retrieiving $\hp=\ho$,
+    provided its core assumptions are reliable, 
+    i.e. that model training, comparison and selection are 
+    feasible on meaningful models.
+\par 
+
 This application can be useful, for example, for expedited device calibration:
     suppose we wish to characterise a new, \emph{untrustued} quantum simulator/device, $S_u$, 
     and we have access to a \emph{trusted}\footnotemark \  simulator, $S_t$. 
@@ -29,8 +38,13 @@ We test the protocol by varying the physical systems it aims to represent,
     underlying the target system, when allowed explore several families.  
 
 \section{Lattices}\label{sec:lattices}
-We first consider \gls{q} as some lattice, where \gls{qmla} attempts to identify the structure of the lattice. 
-The set of viable models then comprises alternative lattices.
+In each case examined in this chapter, \gls{qmla} will aim to identify the \gls{true model}, $\ho$, 
+    determined by a series of target systems, \gls{q}.
+\gls{q} represents some physical configuration; we specify the configuration of 
+    all models through unique \emph{lattices}. 
+The goal of \gls{qmla} is then to identify the structure of the true lattice,
+% We first consider \gls{q} as some lattice, where \gls{qmla} attempts to identify the structure of the lattice. 
+    while the set of viable models are specified by alternative lattices.
 Due to simluation constraints, because we train models through exact unitary evolution, 
     we are restricted to $\sim8$-qubit Hamiltonians, so we only consider lattices which can 
     be simulated in this limit. 
@@ -314,6 +328,7 @@ We summarise these cases in \cref{table:ising_models}.
         as in \cref{eqn:ising_standard_form}. 
         (a,b) show the parameter estimates' progression against training experiments, 
             with the corresponding term labelling the $y$-axis. 
+        The parameters are presented in arbitrary units of energy. 
         (c) shows the \gls{volume} of the parameter distribution at each experiment, 
             as well as the evolution time chosen by the \gls{edh}. 
         \figtableref
@@ -327,11 +342,12 @@ We summarise these cases in \cref{table:ising_models}.
         \includegraphics{theoretical_study/figures/fully_param_ising_qhl.pdf}
     \end{center}
     \caption[\Glsentrylong{qhl} for the fully parameterised Ising model]{
-        \Acrlong{qhl} fort the fully parameterised Ising model, 
+        \Acrlong{qhl} for the fully parameterised Ising model, 
             where every interaction between pairs of sites are assigned unique parameters, 
             as in \cref{eqn:ising_fully_parameterised}. 
         (a)-(f) show the parameter estimates' progression against training experiments, 
             with the corresponding term labelling the $y$-axis. 
+            The parameters are presented in arbitrary units of energy. 
         (g) shows the \gls{volume} of the parameter distribution at each experiment, 
             as well as the evolution time chosen by the \gls{edh}.  
         \figtableref
@@ -355,23 +371,25 @@ We summarise these cases in \cref{table:ising_models}.
 \end{figure}
 
 
-We first construct models under each of these forms to verify \gls{qhl} is capable of learning in this regime. 
-Training for the standard Ising model is shown in \cref{fig:ising_two_param_learning}, 
-    while the fully paramterised model is shown in \cref{fig:ising_fully_parameterised}. 
+We first construct models under each of these forms to verify \gls{qhl} is capable of learning in this regime:
+    we train using the standard Ising model (\cref{eqn:ising_terms} as $\ho$ in \cref{fig:ising_two_param_learning}),
+    and separately using the fully parameterised model (\cref{eqn:ising_fully_parameterised} as $\ho$ in \cref{fig:ising_fully_parameterised}).
 Ultimately, these two cases give the same Hamiltonian when we set $J_{\bkl} = J; \ h_k = h \ \forall k,l$.
 The fully parameterised model will learn the same parameters as the standard Ising model,
     and we can take the \gls{bf} between them to determine which parameterisation is favourable.
-Encouragingly, both models learned the parameters to high precision, although neither model converged; 
-    the \gls{volume} continues to reduce exponentially in both cases.
-This outcome is common: it can be impractical to seek saturation in the model training phase for every model, 
+Encouragingly, both models learned the parameters to high precision, although neither model converged,
+    i.e. the \gls{volume} continues to reduce exponentially in both cases.
+This outcome is common: training is not guaranteed to converge\footnotemark, 
+    so it can be impractical to seek saturation in the training phase for every model, 
     since this may require a very large number of experiments and particles. 
+\footnotetext{When the model being trained is $\ho$, the volume may not saturate until numerical precision is reached.}
 It would be preferable for each model's parameterisation to have converged before comparing them, 
     but in practice this is infeasible due to the indefinite resources required; 
     model comparisons must rely on limited training schedules which are presumed to reflect the overall ability of 
     the models to capture \gls{q}'s dynamics. 
 We will see throughout this thesis\footnotemark \ that the choice of such training resources, namely $\Ne, \Np$, 
     has a large impact on the outcome of \gls{qmla}, for example through misleading comparisons between models 
-    in the case where the better model's training was under performant``'. 
+    in the case where the better model's training was under performant. 
 This capacity for error is mitigated by combining many \glspl{instance} together in 
     a \gls{qmla} \gls{run}, such that any conclusions drawn rely on the average performance, 
     where strong models are likely to perform better overall, even given access to limited resources. 
@@ -625,8 +643,8 @@ For example, an empty 2-site lattice $\ket{\psi_0}$ is acted on by a creation op
             $3$ & $2$ & $\uparrow$ & $3$ \\
             $4$ & $2$ & $\downarrow$ & $4$ \\
              & \vdots &  & \\
-            $2N -1$ & $N$ & $\downarrow$ & $2N-1$ \\
-            $2N$ & $N$ & $\uparrow$ & $2N$ \\
+            $2N -1$ & $N$ & $\uparrow$ & $2N-1$ \\
+            $2N$ & $N$ & $\downarrow$ & $2N$ \\
         \end{tabular}
     \end{center}
     \caption[Jordan Wigner mode/qubit indices]{Jordan Wigner mode/qubit indices.}
@@ -766,11 +784,11 @@ This can likely be attributed to the training resources provided:
 In the next section we investigate whether increasing $\Ne, \Np$ leads to higher success rates in general, 
     and find a strong correlation between training resources and \gls{qmla} success rate. 
 We therefore expect that the results for large target models could be improved by drastically increasing the training resources, 
-    although for pracitcality, we do not perform such a test.
+    although for practicality, we do not perform such a test.
 
 \par 
 
-\begin{figure}[t]
+\begin{figure}
     \begin{center}
         \includegraphics{theoretical_study/figures/lattice_successes_two_column.pdf}
     \end{center}
@@ -787,10 +805,13 @@ We therefore expect that the results for large target models could be improved b
     \label{fig:lattice_success_rates}
 \end{figure}    
 
-We take this test case as evidence that the \gls{bf} is a fair mechanism by which to distinguish between models. 
+
+While there is compelling evidence that \glspl{bf} can be used for model selection in general \cite{berger1996intrinsic}, 
+    this straightforward test verifies that the \gls{bf} is a fair mechanism by which to distinguish between 
+    models in the context of candidate descriptions for quantum systems. 
 In general it will not be possible to prescribe the set of models to test, 
-    although this might serve as a straightforward mechanism for the calibration of quantum devices:
-    suspected miscalibrations can be used in the design of such a set of models, 
+    although this might serve as a straightforward mechanism for the calibration of quantum devices.
+Suspected miscalibrations can be used in the design of such a set of models, 
     along with a target $\ho$ which the device should be able to implement. 
 By testing such a prescribed set and determining $\hp$, 
     we can map the miscalibration between the intended and actual operations. 
@@ -830,18 +851,21 @@ This functionality permits \glspl{et} of different underlying physical assumptio
 For instance, in order to examine the target system, \gls{q}, 
     we can independently run \glspl{es} for each of the Ising, Heisenberg and Hubbard model \emph{families}:
     \gls{qmla} first deems the most appropriate model under each formalism, $\hp_S$,
-    before consolidating $\{\hp_S\}$ and decalring the global \gls{champion model}, $\hp$. 
+    before consolidating $\{\hp_S\}$ and declaring the global \gls{champion model}, $\hp$. 
 $\hp$ therefore encodes which family best describes the system of interest, \gls{q}:
     even if the precise model is not found, $\hp \neq \ho$, we can still classify the 
     model family -- i.e. the underlying physical mechanism -- which is most useful for describing \gls{q}. 
 \par 
 
-Earlier in this chapter, we alluded to a fundamental question in the discussion of model training/comparison 
+Earlier in this chapter, we alluded to a fundamental question in the discussion of model training and comparison 
     through Bayesian inference, as underlies \gls{qhl}:
-    to what extent do training resources -- the number of experiments performed, $\Ne$, and the number of particles used during \gls{qhl}, $\Np$ -- 
-    undermine trained models, and what resources should be granted in order to retrieve reliable outcomes?
+    to what extent is a trained model undermined by its \emph{limited} training resources\footnotemark, 
+    and what resources should be granted in order to retrieve reliable outcomes?
 As usual in \gls{ml} methods, this represents a trade-off between the results of the algorithm 
-    against training time and the computational resources required.
+    against training time and computational resources required.
+\footnotetext{
+    Recall the main resources for model training: the number of experiments performed, $\Ne$, and the number of particles used during \gls{qhl}, $\Np$.
+}
 \par
 
 We combine the task of family classification 
@@ -856,13 +880,18 @@ In this case, we vary the target model $\ho$ as deriving again from the lattices
     compared with increasing resources, $\Ne$ and $\Np$. 
 As expected, a clear trend demonstrates that the success rates scale with resources,
     which we can leverage in practice in two core ways.
-Firstly, we can simply by ensure that the training regime for models is sufficient that model comparisons can be trusted, 
-    i.e. if \gls{qmla} does not give clear results, increase $\Ne, \Np$.
-Secondly, we can mitigate the unpredictable failures of \gls{qmla} by running many \glspl{instance} per \gls{run}:
+Firstly, we can simply ensure that the training regime for models is sufficiently robust, 
+    such that we can reasonably expect models to have trained well, and therefore model comparisons can be trusted.
+If \gls{qmla} does not give clear results, then, we may expect a clearer outcome from increasing $\Ne, \Np$.
+Secondly, we can mitigate the unpredictable\footnotemark failures of \gls{qmla} by running many \glspl{instance} per \gls{run}:
     one (or few \glspl{instance}) in a scarce-resource training regime are prone to error, 
     so in cases where we are unsure whether the resources provided are sufficient, 
     we must run enough independent \glspl{instance} to overcome these artefacts. 
-
+\footnotetext{
+    \gls{qmla} depends on several probabilistic processes which can cause misleading outcomes; 
+    these are highlighted in \cref{sec:usage}. 
+}
+\par 
 
 \gls{qmla}'s capacity to classify the family of model to which \gls{q} belongs suggests powerful 
     future applications of the framework, namely to automatically discover the type of physics underlying 
