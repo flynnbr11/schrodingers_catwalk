@@ -1,5 +1,6 @@
 \glsresetall
-The \gls{qmla} framework lends itself easily to the family of optimsation techniques called \emph{evolutionary algorithms}, 
+called \emph{evolutionary algorithms}, 
+The \gls{qmla} framework lends itself easily to the family of metaheuristic optimisation techniques 
     where individuals, sampled from a population of candidates, are considered as solutions to the given problem.
 Candidates are batched in \emph{generations},
     such that iterative generations aim to efficiently search the available population
@@ -38,10 +39,10 @@ Ultimately, the conceived role of a \gls{ga} within \gls{qmla} is to generate th
     on successive branches\footnote{Branches in \gls{qmla} and generations of the \acrlong{ga} are equivalent here.} 
     of an \gls{et} as depicted in \cref{fig:qmla_overview}.
 The apparatus within \gls{qmla} which facilitates novel model generation techniques is the \acrfull{es}.
-Here we will design an \gls{es} which acts in cooperation with a \gls{ga}:
-    the \gls{es} specifies that consolidation of a generation $\mu$ involve evaluating the \emph{fitness}, 
-    $g_i$, of each candidate, $\hi$, via the chosen \gls{of}; 
-    the \gls{ga} then maps $\{g_i\}$ of each $\hi \in \mu$ to a selection probability, 
+Here we will design an \gls{es} which acts in cooperation with a \gls{ga}.
+The \gls{es} specifies that consolidation of a generation $\mu$ involves evaluating the \emph{fitness}, 
+    $g_i$, of each candidate, $\hi$, via the chosen \gls{of}.
+The \gls{ga} then maps $\{g_i\}$ of each $\hi \in \mu$ to a selection probability, 
     and composes new candidates via crossover, \cref{sec:reproduction}. 
 Recall from \cref{sec:model_generation}, that we capture the space of available terms as $\termset$, 
     i.e. we list -- in advance -- the feasible terms which may be included in candidate models\footnotemark, 
@@ -374,7 +375,7 @@ In \cref{table:objective_functions},
 \begin{table}    
     \input{theoretical_study/figures/obj_fnc_table.tex} % TODO fix latex errors in table
     \caption[Objective function examples]{
-        Examples of how each objective function, $g$ as described in \cref{sec:inverse_ll} to \cref{sec:elo},
+        Examples of how each \gls{objective function}, $g$ as described in \cref{sec:inverse_ll} to \cref{sec:elo},
             assign selection probability (denoted \%) to the same set of candidate models, $\{\hi\}$ listed in \cref{eqn:obj_fnc_eg_models}, 
             when attempting to learn data from $\ho$. 
         Intermediate quantities, e.g. $w_i^A$, $g_i^p$ are described in the section of the main text describing the corresponding \gls{of}.
@@ -390,7 +391,9 @@ In \cref{table:objective_functions},
 \end{table}
 
 \subsection{Inverse log-likelihood}\label{sec:inverse_ll}
-$\tll_{i}$, defined in \cref{eqn:log_total_likelihood}, can be thought of as a measure of the success of a given model at explaining data from any set of experiments, $\expset$. 
+$\tll_{i}$, defined in \cref{eqn:log_total_likelihood}, can be thought of as a measure of the 
+    ability of a given model to reproduce a given dataset $expdata$ from experiments $\expset$.     
+% success of a given model at explaining data from any set of experiments, $\expset$. 
 This can be immediately interpreted as an \gls{of}, provided each candidate model 
     computes a meaningful \gls{tltl}, requiring that they are all based on the same set of experiments, $\expset_v$,
     which are designed explicitly for the purpose of model evaluation. 
@@ -452,7 +455,7 @@ The level of punishment for poorly performing models is likely too drastic:
 Instead we compute a straightforward quantity related to \gls{aic},
 \begin{equation}
     \label{eqn:akaike_fitness}
-    g_i^{A} = \left(\frac{1}{AICc_i}\right)^2,
+    g_i^{A} = \left(\frac{1}{AICC_i}\right)^2,
 \end{equation}
     where we square the inverse \gls{aicc} to amplify the difference in quality between models, 
     such that stronger models are rewarded.
@@ -601,7 +604,7 @@ Finally, it does not account for the cardinality, $k_i$, of the candidate models
     this could result in favouring severely overfitting models in order to 
     gain marginal improvement in residuals.
 
-\subsection{Bayes factor enhanced Elo-ratings}\label{sec:elo}
+\subsection{Bayes factor enhanced Elo ratings}\label{sec:elo}
 A popular tool for rating individual competitors in sports and games is the \emph{Elo rating} scheme, 
     e.g. used to rate chess players and soccer teams \cite{elo1978rating, fifa_elo}, 
     also finding application in the study of animal hierarchies \cite{neumann2011assessing}. 
@@ -652,7 +655,7 @@ As such, this is a fairer mechanism than \gls{bf} points,
     if $\hj$ is already known to be a strong or poor model, 
     then $\Delta R_i$ proportionally changes the credence we assign to $\hi$. 
 It achieves this by first computing the \emph{expected} result of a given comparison
-    with respect to each model, based on the current ratings, 
+    with respect to each model, with an exponential response to the differnece in their current ratings, 
 
 \begin{subequations}
     \label{eqn:elo_expected_score}
@@ -926,7 +929,9 @@ We will analyse the \gls{ges} from four perspectives:
         \includegraphics{theoretical_study/figures/single_generation_ratings_progression.pdf}
     \end{center}
     \caption[Single model within a single generation of QMLA genetic algorithm]{
-        Progression of \acrlong{bfeer}  for a single candidate, $\hi$, within a single generation.
+        Progression of \acrlong{bfeer} for a single candidate, $\hi$, within a single generation.
+        The $x$-axis marks successive comparisons for $\hi$ against 12 of the 60 contemporary models in the same generation;
+        the models against which $\hi$ compete are set by the edges of a random regular graph with models as vertices. 
         \textbf{a}, The \glspl{bf} between $\hi$ and some opponents, $\{\hj\}$, 
             from the perspective where $\hi$ \emph{wins} given $\bij > 1 \Rightarrow \log_{10}\bij > 0$, 
             and \emph{loses} otherwise. 
@@ -963,6 +968,8 @@ For example, the sixth comparison finds $\hj$ as the superior model,
     \caption[Ratings of all models in a single genetic algorithm generation]{
         Ratings of all $N_m=60$ models in a single \acrlong{ga} generation.
         Each line represents a unique model and is coloured by the $\fs$ of that model. 
+        The $x$-axis marks successive comparisons for a given model against 12 of the 60 
+            contemporary models in the same generation. 
         \textbf{Inset}, the selection probabilities resulting from the final ratings of this generation. 
         Only $tau=\nicefrac{1}{3}$ of models are assigned selection probability, 
             while the remaining poorer-performing models are discarded. 
@@ -992,10 +999,10 @@ $N_m$ models are required to populate the next generation:
     \caption[Instance of QMLA genetic algorithm]{
         A single \gls{instance} of the \gls{qmla} \acrlong{}{ga}.
         \textbf{a}, Ratings of all models for the first four generations. 
-        Each line in each generation represents a model by its $\fs$. 
+        Each line in each generation represents a model by its $\fs$ through colour. 
         Horizontal dotted lines show the starting rating at that generation. 
         \textbf{b}, Gene pool progression for $N_m=60, N_g=15$. 
-        Each tile at each generation represents a model by its $\fs$. 
+        Each tile at each generation represents a model by its $\fs$ through colour. 
         \figtableref
     }
     \label{fig:ga_instance}
@@ -1031,7 +1038,7 @@ Consequently, even in \glspl{instance} where the precise model, $\ho$, is not id
         \textbf{(d)}, Hinton diagram showing the rate at which each term is found in the winning model. 
             The size of the blocks show the frequency with which they are found, while the colour indicates 
             whether that term was (not) in the \gls{true model} in blue (red).
-            Terms represetn couplings between two qubits, e.g $\s_{(1, 3)}^{x}$ 
+            Terms represent couplings between two qubits, e.g $\s_{(1, 3)}^{x}$ 
                 couples the first and third qubits along the $x$-axis. 
             Available terms involve four qubits with full connectivity, resulting in 18 unique terms 
             (terms with black rectangles are not considered by the \gls{ga}).
@@ -1083,5 +1090,7 @@ For instance, implementation of a four--qubit model
 \gls{qmla} can effectively reconstruct which operations were and were not faithfully computed,
     i.e. determine in which operations the device failed to perform the intended calculations,
     allowing for the calibration of said device. 
-The extension of \gls{qmla} to the characterisation of real quantum devices is one of the main 
-    recommendations for future research in the scope of the \gls{qmla} framework beyond this thesis.  
+The extension of \gls{qmla} to the characterisation of real quantum devices is one of the 
+    % main recommendations 
+    most promising applications 
+    for future research in the scope of the \gls{qmla} framework beyond this thesis.  
