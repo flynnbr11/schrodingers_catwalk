@@ -233,7 +233,7 @@ Verifying this hypothesis will allow us to incorporate statistical tools into th
 In \cref{fig:bf_by_fscore}, we show the relationships between $\fs$ and \gls{bf} for various conditions. 
 Firstly, under a standard training regime with full \gls{bf} comparisons between all pairs, 
     we see that in most cases, the model with higher $\fs$ is favoured by \gls{bf}.
-In \cref{fig:bf_by_fscore}b, we run a complete model training subroutine, but compute the \gls{bf} based on fewer experiments and particles 
+In \cref{fig:bf_by_fscore}b, we run a complete model training subroutine, but compute the \gls{bf} based on fewer experiments and \glspl{particle} 
     (retaining a fraction $\Np^{\prime} = 0.2\Np, \ \Ne^{\prime} = 0.2\Ne$ for comparisons).
 This verifies an earlier claim from \cref{sec:experiments_for_bf}: 
     although the strength of evidence is weaker given reduced \gls{bf} resources, 
@@ -271,10 +271,10 @@ Note that the time saving reported between full and partial connectivity between
         Visualisation is curtailed to $\log_{10} \bij = \pm 50$. 
         \textbf{a}, Models are trained with $\Ne=500, \Np=2500$,
             and all available data is used in the calculation of \glspl{bf}. 
-        \textbf{b}, $\Ne=500, \Np=2500$ using only a fraction (0.2) of experiments/particles for \gls{bf} calculations. 
+        \textbf{b}, $\Ne=500, \Np=2500$ using only a fraction (0.2) of experiments/\glspl{particle} for \gls{bf} calculations. 
         \textbf{c}, $\Ne=1000, \Np=5000$, using all available data in the calculation of \glspl{bf}. 
         \textbf{d}, $\Ne=500, \Np=2500$, comparing only a subset of pairs of models through \glspl{bf}, 
-            and using only a fraction ($0.2$) of experiments/particles for those calculations. 
+            and using only a fraction ($0.2$) of experiments/\glspl{particle} for those calculations. 
             This pairwise comparison strategy is used for the \gls{of} in \cref{sec:elo}. 
         \textbf{Inset}, timings for each approach in seconds, with $t=1\textrm{hr}$ marked vertically in blue. 
         \figtableref
@@ -504,8 +504,8 @@ We can utilise this facility by computing the \gls{bf} between all
     i.e. compute ${N_m \choose 2}$ \gls{bf}s. 
 Note that this is computationally expensive: 
     in order to train $\hi$ on $\expset_j$ requires a further $\lvert \expset_j \rvert$ experiments, 
-    each requiring $N_P$ particles\footnote{Caveat the reduction in overhead outlined in \cref{sec:experiments_for_bf}.}, 
-    where each particle corresponds to a unitary evolution and therefore the caluclation of a matrix exponential. 
+    each requiring $N_P$ \glspl{particle}\footnote{Caveat the reduction in overhead outlined in \cref{sec:experiments_for_bf}.}, 
+    where each \gls{particle} corresponds to a unitary evolution and therefore the caluclation of a matrix exponential. 
 The size of the \gls{model space} is then quite a heavy disadvantage: 
     examining $N_g$ generations requires $N_g \times {N_m \choose 2}$ \gls{bf} calculations for complete assessment. 
 In the case where all pairwise \gls{bf} are performed, 
@@ -545,7 +545,7 @@ Note here we truncate $\mu$, meaning we remove the worse-performing models and r
 However, it too overlooks the nuanced perspective available through the total statistical evidence gathered by the series of \glspl{bf}. 
 
 \subsection{Residuals}\label{sec:residuals}
-Recall at each experiment, $N_P$ particles are compared against a single experimental datum, $d$. 
+Recall at each experiment, $N_P$ \glspl{particle} are compared against a single experimental datum, $d$. 
 By definition, $d$ is the binary outcome of the measurement on \gls{q} under experimental conditions $e$.
 That is, $d$ encodes the answer to the question: 
     after time $t$ under Hamiltonian evolution, did \gls{q} project onto 
@@ -560,8 +560,8 @@ For consistency with QInfer \cite{qinfer-1_0} -- on which \gls{qmla}'s code base
     we call the expectation value for the system $\Pr_Q(0)$;
     the same quantity can be computed for each particle, called $\Pr_p(0)$.
 Likewise, we can simulate this quantity for each particle, $\Pr_p(0 | e)$. 
-This allows us to calculate the \emph{residual} between the system and individual particles' \glspl{likelihood}, $r_p^e$; 
-    we can hence compute the mean residual across all particles in a single experiment $r^e$:
+This allows us to calculate the \emph{residual} between the system and individual \glspl{particle}' \glspl{likelihood}, $r_p^e$; 
+    we can hence compute the mean residual across all \glspl{particle} in a single experiment $r^e$:
 \begin{align}
     \label{eqn:particle_residual}
     \begin{split}
@@ -571,7 +571,7 @@ This allows us to calculate the \emph{residual} between the system and individua
 \end{align}
 \par 
 
-Residuals capture how closely the particle distribution reproduced the dynamics from \gls{q}:
+Residuals capture how closely the \gls{particle} distribution reproduced the dynamics from \gls{q}:
     $r^{e}_{p} = 0$ indicates perfect preditiction, while $r^e_p=1$ is completely incorrect. 
 We can therefore maximise the quantity $1-r$ to find the best model, 
     using the \gls{of}

@@ -568,7 +568,7 @@ exploration_strategy="ExampleBasic"
 When submitting jobs to schedulers like \gls{pbs}, we must specify the time required, 
     so that it can determine a fair distribution of resources among users. 
 We must therefore \emph{estimate} the time it will take for an \gls{instance} to complete:
-    clearly this is strongly dependent on the numbers of experiments ($\Ne$) and particles ($\Np$), 
+    clearly this is strongly dependent on the numbers of experiments (\gls{nexp}) and particles (\gls{nprt}), 
     and the number of models which must be trained. 
 \gls{qmla} attempts to determine a reasonable time to request based on the \ttt{max\_num\_models\_by\_shape}
     attribute of the \gls{es}, by calling \ttt{QMLA/scripts/time\_required\_calculation.py}. 

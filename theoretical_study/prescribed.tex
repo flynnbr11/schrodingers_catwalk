@@ -16,7 +16,7 @@ This application can be useful, for example, for expedited device calibration:
     and we have access to a \emph{trusted}\footnotemark \  simulator, $S_t$. 
 In order to perform this calibration, 
     we treat $S_u$ as the system, \gls{q}, i.e. we call upon it to retrieve the datum $d$ in \cref{eqn:likelihood}, 
-    where the calculation of the \glspl{likelihood}  for each particle are computed through $S_t$. 
+    where the calculation of the \glspl{likelihood}  for each \gls{particle} are computed through $S_t$. 
 If $S_u$ is reliable, the data from its calculations will be consistent with some $\ho$ of our choosing. 
 Conversely, miscalibrations will mainfest as imperfectly implemented gates/steps in the calculation of the system's likelihood, 
     and so would result in data inconsistent with $\ho$. 
@@ -381,13 +381,13 @@ Encouragingly, both models learned the parameters to high precision, although ne
     i.e. the \gls{volume} continues to reduce exponentially in both cases.
 This outcome is common: training is not guaranteed to converge\footnotemark, 
     so it can be impractical to seek saturation in the training phase for every model, 
-    since this may require a very large number of experiments and particles. 
+    since this may require a very large number of experiments and \glspl{particle}. 
 \footnotetext{When the model being trained is $\ho$, the volume may not saturate until numerical precision is reached.}
 It would be preferable for each model's parameterisation to have converged before comparing them, 
     but in practice this is infeasible due to the indefinite resources required; 
     model comparisons must rely on limited training schedules which are presumed to reflect the overall ability of 
     the models to capture \gls{q}'s dynamics. 
-We will see throughout this thesis\footnotemark \ that the choice of such training resources, namely $\Ne, \Np$, 
+We will see throughout this thesis\footnotemark \ that the choice of such training resources, namely \gls{nexp}, \gls{nprt}, 
     has a large impact on the outcome of \gls{qmla}, for example through misleading comparisons between models 
     in the case where the better model's training was under performant. 
 This capacity for error is mitigated by combining many \glspl{instance} together in 
@@ -781,7 +781,7 @@ This can likely be attributed to the training resources provided:
     here models are trained with $\Ne=1000 \Np=4000$, 
     which are clearly sufficient for training models of few qubits/parameters, 
     but may not allow larger models to train well.  
-In the next section we investigate whether increasing $\Ne, \Np$ leads to higher success rates in general, 
+In the next section we investigate whether increasing \gls{nexp}, \gls{nprt} leads to higher success rates in general, 
     and find a strong correlation between training resources and \gls{qmla} success rate. 
 We therefore expect that the results for large target models could be improved by drastically increasing the training resources, 
     although for practicality, we do not perform such a test.
@@ -834,7 +834,7 @@ In the ideal case, where it is mostly believed the device works,
         Each latttice in each famility is tested as $\ho$ in five \glspl{instance}, so there are 75 \glspl{instance} per datapoint. 
         The success rates are shown for \gls{qmla} identifiyng the correct model precisely (blue),
             as well as classifying the correct model family (orange), 
-            against the numbers of experiments and particles used to train each candidate model. 
+            against the numbers of experiments and \glspl{particle} used to train each candidate model. 
         \figtableref
     }
     \label{fig:family_classification}
@@ -864,7 +864,7 @@ Earlier in this chapter, we alluded to a fundamental question in the discussion 
 As usual in \gls{ml} methods, this represents a trade-off between the results of the algorithm 
     against training time and computational resources required.
 \footnotetext{
-    Recall the main resources for model training: the number of experiments performed, $\Ne$, and the number of particles used during \gls{qhl}, $\Np$.
+    Recall the main resources for model training: the number of experiments performed, \gls{nexp}, and the number of \glspl{particle} used during \gls{qhl}, \gls{nprt}.
 }
 \par
 
@@ -877,12 +877,12 @@ In this case, we vary the target model $\ho$ as deriving again from the lattices
     while the \gls{es} for the Hubbard model only consider (a-c). 
 \cref{fig:family_classification} shows the rate at which the precise $\ho$ is identified, 
     as well as the rate with which family of $\ho$ is classified, 
-    compared with increasing resources, $\Ne$ and $\Np$. 
+    compared with increasing resources, \gls{nexp} and \gls{nprt}. 
 As expected, a clear trend demonstrates that the success rates scale with resources,
     which we can leverage in practice in two core ways.
 Firstly, we can simply ensure that the training regime for models is sufficiently robust, 
     such that we can reasonably expect models to have trained well, and therefore model comparisons can be trusted.
-If \gls{qmla} does not give clear results, then, we may expect a clearer outcome from increasing $\Ne, \Np$.
+If \gls{qmla} does not give clear results, then, we may expect a clearer outcome from increasing \gls{nexp}, \gls{nprt}.
 Secondly, we can mitigate the unpredictable\footnotemark failures of \gls{qmla} by running many \glspl{instance} per \gls{run}:
     one (or few \glspl{instance}) in a scarce-resource training regime are prone to error, 
     so in cases where we are unsure whether the resources provided are sufficient, 

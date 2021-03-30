@@ -362,12 +362,12 @@ Crucially, this separation allows us to perform data-heavy calculations independ
 The tasks which actually implement the calculations (\cref{sec:sw_algorithm}) are captured by standalone \emph{remote} functions. 
 These functions receive instructions such as \ttt{train model 10}; 
     they then contact the database for the set of shared settings, 
-    such as $\Ne, \Np$ and the set of probes, 
+    such as \gls{nexp}, \gls{nprt} and the set of probes, 
     before performing the task, and then send the compressed result, $R_{10}$, to the database for storage.  
 
 \par 
 To achieve this separation between calculation and analysis, we use a redis database \cite{redis},
-    which holds the core implementation settings, e.g. $\Ne, \Np$ and the set of probes to train upon, 
+    which holds the core implementation settings, e.g. \gls{nexp}, \gls{nprt} and the set of probes to train upon, 
     as well as the compressed summaries of the outcomes of tasks.
 
 \section{Usage}\label{sec:usage}

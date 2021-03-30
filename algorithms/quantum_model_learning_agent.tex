@@ -187,8 +187,8 @@ This does not result in less predictive \gls{bf}, since we are merely removing t
 Moreover it provides a benefit in reducing the computation requirements: 
     updating each model to ensure the \gls{tltl} is based on $\expset^{\prime}=\expset_i^{\prime} \cup \expset_j^{\prime}$
     requires only half the computation time, 
-    which can be further reduced by lowering the number of particles used during the update, $\Np^{\prime}$, 
-    which will give a similar result as using $\Np$, assuming the posterior has converged.
+    which can be further reduced by lowering the number of \glspl{particle} used during the update, $\Np^{\prime}$, 
+    which will give a similar result as using \gls{nprt}, assuming the posterior has converged.
 We will verify this claim later in \cref{sec:bf_by_f_score}, in the context of real examples.
 \par 
 
@@ -410,7 +410,7 @@ For example where the target system is an untrusted quantum simulator to be char
     we decide some $\ho$ in advance:
     the model training subroutine calls for \glspl{likelihood}, 
     those corresponding to $\ho$ are computed $S_u$, 
-    while particles' \glspl{likelihood} are computed on $S_t$. 
+    while \glspl{particle}' \glspl{likelihood} are computed on $S_t$. 
 
 \subsection{Modular functionality}\label{sec:modular_functionality}
 Finally, there are a number of fundamenetal subroutines which are called upon throughout the \gls{qmla} algorithm. 
@@ -738,15 +738,15 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
 
     \KwIn{$\hat{H}_i$ \tcp*[1]{Hamiltonian model attempting to reproduce data from $\hat{H}_0$ }}
     \KwIn{$\pra$ \tcp*[1]{probability distribution for $\al = \al_0 $}}
-    \KwIn{$\Ne$ \tcp*[1]{number of experiments to iterate learning procedure for}}
-    \KwIn{$\Np$ \tcp*[1]{number of particles to draw from $\pra$}}
+    \KwIn{\gls{nexp} \tcp*[1]{number of experiments to iterate learning procedure for}}
+    \KwIn{\gls{nprt} \tcp*[1]{number of \glspl{particle} to draw from $\pra$}}
     \KwIn{\ttt{$\Lambda(\pra)$} \tcp*[1]{Heuristic algorithm which designs experiments}}
-    \KwIn{\ttt{RS($\pra$)} \tcp*[1]{Resampling algorithm for redrawing particles}}
+    \KwIn{\ttt{RS($\pra$)} \tcp*[1]{Resampling algorithm for redrawing \glspl{particle}}}
 
     \KwOut{$\al^{\prime}$ \tcp*[1]{estimate of Hamiltonian parameters}}\;
 
 
-    Sample $\Np$ times from $\pra \gets \mathcal{P}$ \tcp*[1]{particles}\;
+    Sample \gls{nprt} times from $\pra \gets \mathcal{P}$ \tcp*[1]{\glspl{particle}}\;
     \For{
         $p \in \mathcal{P}$ 
     }{
@@ -759,7 +759,7 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
         \For{
             $p \in \mathcal{P}$ 
         }{
-            Retrieve particle $p \gets \al_p$
+            Retrieve \gls{particle} $p \gets \al_p$
             
             Prepare $Q$ in $\ket{\psi}$, evolve and measure after $t \gets d$ \tcp*[1]{datum}
             
@@ -772,7 +772,7 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
             \tcp*[1]{check whether to resample (are weights too small?)}
         }{
             $\ttt{RS}(\pra) \gets \mathcal{P}$
-            \tcp*[1]{Redraw particles via resampling algorithm}
+            \tcp*[1]{Redraw \glspl{particle} via resampling algorithm}
             \For{
                 $p \in \mathcal{P}$ 
             }{

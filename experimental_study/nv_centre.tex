@@ -479,7 +479,7 @@ The hyperfine terms to be entertained by \gls{qmla} are then
 \footnotetext{
     This limitation arises from the requirement to compute the total evolution of the global state, 
     involving calculation of $e^{-i\h t}$, i.e. the characterisation of an $n_q$-qubit model depends on 
-    classical exponentiation of the $2^{n_q} \times 2^{n_q}$ Hamiltonian for each particle and experiment in \gls{cle}, 
+    classical exponentiation of the $2^{n_q} \times 2^{n_q}$ Hamiltonian for each \gls{particle} and experiment in \gls{cle}, 
     which is a prohibitive expense. 
 }
 \par 
@@ -663,7 +663,7 @@ A common charge against \gls{qmla} supposes to first write down the most complex
     train it fully, and then infer which terms are negligible, in a similar process to the champion reduction test outlined here. 
 While this may be feasible in the case described here, with $N_t=9$ and a closed term set, 
     it is unscalable: adding just a second nuclear site increases the model search to a space of $N_t=15$.
-Models of higher cardinality ($|\al|$) demand higher $\Ne, \Np$ to train well, so immediately trainng the most involved model would 
+Models of higher cardinality ($|\al|$) demand higher \gls{nexp}, \gls{nprt} to train well, so immediately trainng the most involved model would 
     require infeasible resources\footnotemark, and risks significantly overfitting the data. 
 It seems more appropriate to work ``from the ground up'', testing terms and only keeping those justified, 
     rather than training all terms and attempting to decouple their effects post-hoc. 
@@ -738,7 +738,7 @@ Accounting for these, we construct an \gls{edh} which mixes the robust, adaptive
     useful for refining an initially broad $\Pr(\al)$,
     with a primitive, linear time-selection, useful to ensure the trained parameters at least
     attempt to account for the physics we are actually interested in. 
-That is, with each model trained for $\Ne$ experiments, 
+That is, with each model trained for \gls{nexp} experiments, 
     we train according to the standard \gls{pgh} for the first $\nicefrac{\Ne}{2}$, 
     but force the training to mediate over the available data for the latter $\nicefrac{\Ne}{2}$. 
 \par 
