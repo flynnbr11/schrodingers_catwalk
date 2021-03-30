@@ -17,7 +17,7 @@ Unlike the generic aspects of \glspl{ga} described in \cref{sec:genetic_algorith
     in the context of \gls{qmla}, we must deviate from default mechanisms. 
 The overarching goal of \gls{qmla} --
     to characterise some black box quantum system, \gls{q} --
-    proceeds by designing and performing experiments upon \gls{q} which enable us to improve 
+    proceeds by designing and performing \glspl{experiment} upon \gls{q} which enable us to improve 
     the modelling of $\ho$. 
 Nothing described so far provides a natural \gls{of}, upon which \glspl{ga} rely 
     to assess the suitability of candidates relative to contemporaries.
@@ -233,7 +233,7 @@ Verifying this hypothesis will allow us to incorporate statistical tools into th
 In \cref{fig:bf_by_fscore}, we show the relationships between $\fs$ and \gls{bf} for various conditions. 
 Firstly, under a standard training regime with full \gls{bf} comparisons between all pairs, 
     we see that in most cases, the model with higher $\fs$ is favoured by \gls{bf}.
-In \cref{fig:bf_by_fscore}b, we run a complete model training subroutine, but compute the \gls{bf} based on fewer experiments and \glspl{particle} 
+In \cref{fig:bf_by_fscore}b, we run a complete model training subroutine, but compute the \gls{bf} based on fewer \glspl{experiment} and \glspl{particle} 
     (retaining a fraction $\Np^{\prime} = 0.2\Np, \ \Ne^{\prime} = 0.2\Ne$ for comparisons).
 This verifies an earlier claim from \cref{sec:experiments_for_bf}: 
     although the strength of evidence is weaker given reduced \gls{bf} resources, 
@@ -271,10 +271,10 @@ Note that the time saving reported between full and partial connectivity between
         Visualisation is curtailed to $\log_{10} \bij = \pm 50$. 
         \textbf{a}, Models are trained with $\Ne=500, \Np=2500$,
             and all available data is used in the calculation of \glspl{bf}. 
-        \textbf{b}, $\Ne=500, \Np=2500$ using only a fraction (0.2) of experiments/\glspl{particle} for \gls{bf} calculations. 
+        \textbf{b}, $\Ne=500, \Np=2500$ using only a fraction (0.2) of \glspl{experiment}/\glspl{particle} for \gls{bf} calculations. 
         \textbf{c}, $\Ne=1000, \Np=5000$, using all available data in the calculation of \glspl{bf}. 
         \textbf{d}, $\Ne=500, \Np=2500$, comparing only a subset of pairs of models through \glspl{bf}, 
-            and using only a fraction ($0.2$) of experiments/\glspl{particle} for those calculations. 
+            and using only a fraction ($0.2$) of \glspl{experiment}/\glspl{particle} for those calculations. 
             This pairwise comparison strategy is used for the \gls{of} in \cref{sec:elo}. 
         \textbf{Inset}, timings for each approach in seconds, with $t=1\textrm{hr}$ marked vertically in blue. 
         \figtableref
@@ -348,7 +348,7 @@ For each $\hi$, we may refer to
 \begin{easylist}[itemize]\label{list:obj_fnc_terms}
     & $\tll_i$, \acrfull{tltl},  introduced in \cref{sec:total_log_total_likelihood};
     & $k_i$, the model's cardinality, i.e. number of terms in its parameterisation;
-    & $\expset_i$, the bespoke set of experiments composed by the \acrlong{edh} (\cref{sec:heuristic}) solely for trainng $\hi$;
+    & $\expset_i$, the bespoke set of \glspl{experiment} composed by the \acrlong{edh} (\cref{sec:heuristic}) solely for trainng $\hi$;
     & $n = |\expset_i|$, the number of samples (datapoints) used in trainng $\hi$. 
 \end{easylist}
 In \cref{table:objective_functions}, 
@@ -392,10 +392,10 @@ In \cref{table:objective_functions},
 
 \subsection{Inverse log-likelihood}\label{sec:inverse_ll}
 $\tll_{i}$, defined in \cref{eqn:log_total_likelihood}, can be thought of as a measure of the 
-    ability of a given model to reproduce a given dataset $expdata$ from experiments $\expset$.     
-% success of a given model at explaining data from any set of experiments, $\expset$. 
+    ability of a given model to reproduce a given dataset $expdata$ from \glspl{experiment} $\expset$.     
+% success of a given model at explaining data from any set of \glspl{experiment}, $\expset$. 
 This can be immediately interpreted as an \gls{of}, provided each candidate model 
-    computes a meaningful \gls{tltl}, requiring that they are all based on the same set of experiments, $\expset_v$,
+    computes a meaningful \gls{tltl}, requiring that they are all based on the same set of \glspl{experiment}, $\expset_v$,
     which are designed explicitly for the purpose of model evaluation. 
 \par 
 
@@ -409,7 +409,7 @@ This can be immediately interpreted as an \gls{of}, provided each candidate mode
 In our tests, Eqn. \ref{eqn:obj_log_likelihood} is found to be too generous to poor models, 
     assigning them non-negligible probability. 
 Its primary flaw, however, is its reliance on $\expset_v$: 
-    in order that the \gls{tltl} is significant, it must be based on meaningful experiments, 
+    in order that the \gls{tltl} is significant, it must be based on meaningful \glspl{experiment}, 
     the design of which can not be gauranteed in advance, or at least risks introducing strong bias
     towards some models. 
 
@@ -495,7 +495,7 @@ A cornerstone of model selection within \gls{qmla} is the calculation of \glspl{
 We can compute the pairwise \gls{bf} between two candidate models, $\bij$, according to Eqn. \ref{eqn:bf_succinct}.
 $\bij$ can be based on some evaluation dataset, $\expset_v$, but can also be calculated from $\expset_i \cup \expset_j$: 
     this is a strong advantage since the resulting insight (Eqn. \ref{eqn:bf_cases}) is based on 
-    experiments which were bespoke to both $\hi, \hj$. 
+    \glspl{experiment} which were bespoke to both $\hi, \hj$. 
 As such we can be confident that this insight accurately points us to the stronger of two candidate models. 
 \par 
 
@@ -503,7 +503,7 @@ We can utilise this facility by computing the \gls{bf} between all
     pairs of models in a set of $N_m$ candidates $\{\hi\}$, 
     i.e. compute ${N_m \choose 2}$ \gls{bf}s. 
 Note that this is computationally expensive: 
-    in order to train $\hi$ on $\expset_j$ requires a further $\lvert \expset_j \rvert$ experiments, 
+    in order to train $\hi$ on $\expset_j$ requires a further $\lvert \expset_j \rvert$ \glspl{experiment}, 
     each requiring $N_P$ \glspl{particle}\footnote{Caveat the reduction in overhead outlined in \cref{sec:experiments_for_bf}.}, 
     where each \gls{particle} corresponds to a unitary evolution and therefore the caluclation of a matrix exponential. 
 The size of the \gls{model space} is then quite a heavy disadvantage: 
@@ -553,7 +553,7 @@ That is, $d$ encodes the answer to the question:
 \par 
 In practice we often have access to the complete \gls{likelihood}, 
     i.e. rather than a binary value, we have a number representing the probability that 
-    \gls{q} will project on to $d=0$ for a given experiment $e$, $\Pr_Q(0 | e)$. 
+    \gls{q} will project on to $d=0$ for a given \gls{experiment} $e$, $\Pr_Q(0 | e)$. 
 The likelihood -- in this case equivalent to the expectation value -- 
     for \gls{q} is usually given by $\absval{ \bra{\psi} e^{-i\ho t} \ket{\psi} }^2$.
 For consistency with QInfer \cite{qinfer-1_0} -- on which \gls{qmla}'s code base extends --
@@ -561,7 +561,7 @@ For consistency with QInfer \cite{qinfer-1_0} -- on which \gls{qmla}'s code base
     the same quantity can be computed for each particle, called $\Pr_p(0)$.
 Likewise, we can simulate this quantity for each particle, $\Pr_p(0 | e)$. 
 This allows us to calculate the \emph{residual} between the system and individual \glspl{particle}' \glspl{likelihood}, $r_p^e$; 
-    we can hence compute the mean residual across all \glspl{particle} in a single experiment $r^e$:
+    we can hence compute the mean residual across all \glspl{particle} in a single \gls{experiment} $r^e$:
 \begin{align}
     \label{eqn:particle_residual}
     \begin{split}

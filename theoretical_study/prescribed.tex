@@ -326,7 +326,7 @@ We summarise these cases in \cref{table:ising_models}.
     \caption[\Glsentrylong{qhl} for the standard Ising model]{
         \Acrlong{qhl} for the standard Ising model, where terms are grouped by their functionality, 
         as in \cref{eqn:ising_standard_form}. 
-        (a,b) show the parameter estimates' progression against training experiments, 
+        (a,b) show the parameter estimates' progression against training \glspl{experiment}, 
             with the corresponding term labelling the $y$-axis. 
         The parameters are presented in arbitrary units of energy. 
         (c) shows the \gls{volume} of the parameter distribution at each experiment, 
@@ -345,7 +345,7 @@ We summarise these cases in \cref{table:ising_models}.
         \Acrlong{qhl} for the fully parameterised Ising model, 
             where every interaction between pairs of sites are assigned unique parameters, 
             as in \cref{eqn:ising_fully_parameterised}. 
-        (a)-(f) show the parameter estimates' progression against training experiments, 
+        (a)-(f) show the parameter estimates' progression against training \glspl{experiment}, 
             with the corresponding term labelling the $y$-axis. 
             The parameters are presented in arbitrary units of energy. 
         (g) shows the \gls{volume} of the parameter distribution at each experiment, 
@@ -381,7 +381,7 @@ Encouragingly, both models learned the parameters to high precision, although ne
     i.e. the \gls{volume} continues to reduce exponentially in both cases.
 This outcome is common: training is not guaranteed to converge\footnotemark, 
     so it can be impractical to seek saturation in the training phase for every model, 
-    since this may require a very large number of experiments and \glspl{particle}. 
+    since this may require a very large number of \glspl{experiment} and \glspl{particle}. 
 \footnotetext{When the model being trained is $\ho$, the volume may not saturate until numerical precision is reached.}
 It would be preferable for each model's parameterisation to have converged before comparing them, 
     but in practice this is infeasible due to the indefinite resources required; 
@@ -834,7 +834,7 @@ In the ideal case, where it is mostly believed the device works,
         Each latttice in each famility is tested as $\ho$ in five \glspl{instance}, so there are 75 \glspl{instance} per datapoint. 
         The success rates are shown for \gls{qmla} identifiyng the correct model precisely (blue),
             as well as classifying the correct model family (orange), 
-            against the numbers of experiments and \glspl{particle} used to train each candidate model. 
+            against the numbers of \glspl{experiment} and \glspl{particle} used to train each candidate model. 
         \figtableref
     }
     \label{fig:family_classification}
@@ -864,7 +864,7 @@ Earlier in this chapter, we alluded to a fundamental question in the discussion 
 As usual in \gls{ml} methods, this represents a trade-off between the results of the algorithm 
     against training time and computational resources required.
 \footnotetext{
-    Recall the main resources for model training: the number of experiments performed, \gls{nexp}, and the number of \glspl{particle} used during \gls{qhl}, \gls{nprt}.
+    Recall the main resources for model training: the number of \glspl{experiment} performed, \gls{nexp}, and the number of \glspl{particle} used during \gls{qhl}, \gls{nprt}.
 }
 \par
 

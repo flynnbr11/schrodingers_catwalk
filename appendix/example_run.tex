@@ -85,7 +85,7 @@ which should give something like \cref{fig:terminal_redis}.
 
 In a text editor, open \ttt{qmla\_test/QMLA/launch/local\_launch.sh}; 
     here we will ensure that we are running the \gls{qhl} algorithm, 
-    with 5 experiments and 20 particles, on the \gls{es} named \ttt{TestInstall}.
+    with 5 \glspl{experiment} and 20 particles, on the \gls{es} named \ttt{TestInstall}.
 Ensure the first few lines of \ttt{local\_launch.sh} read:
 
 \begin{lstlisting}[
@@ -101,7 +101,7 @@ Ensure the first few lines of \ttt{local\_launch.sh} read:
 num_instances=2 # number of instances in run
 run_qhl=0 # perform QHL on known (true) model
 run_qhl_multi_model=0 # perform QHL for defined list of models
-experiments=2 # number of experiments
+\glspl{experiment}=2 # number of \glspl{experiment}
 particles=10 # number of particles
 plot_level=5
 
@@ -274,7 +274,7 @@ To run\footnotemark \ the example \gls{es} for a meaningful test,
     language=Bash
 ]
 particles=2000
-experiments=500
+\glspl{experiment}=500
 run_qhl=1
 exploration_strategy=ExampleBasic
 \end{lstlisting}
@@ -283,7 +283,7 @@ Run locally again as in \cref{listing:launch_example};
     then move to the \gls{results directory} as in \cref{listing:results_directory}. 
 \footnotetext{
     Note this will take up to 15 minutes to run. 
-    This can be reduced by lowering the values of \ttt{particles}, \ttt{experiments}, 
+    This can be reduced by lowering the values of \ttt{particles}, \ttt{\glspl{experiment}}, 
     which is sufficient for testing but note that the outcomes will be less effective 
     than those presented in the figures of this section.
 }
@@ -307,7 +307,7 @@ Next we show some examples of the available plots.
 \subsection{Model analysis}
 
 We have just run \acrfull{qhl} for the model in \cref{eqn:example_es_true_ham} for a single instance, 
-    using a reasonable number of particles and experiments, so we expect to have trained the model well. 
+    using a reasonable number of particles and \glspl{experiment}, so we expect to have trained the model well. 
 \Gls{instance}-level results are stored (e.g. for the instance with \ttt{qmla\_id=1}) in \ttt{Jan\_01/01\_23/instances/qmla\_1}.
 Individual models' insights can be found in \ttt{model\_training}, 
     e.g. the model's \ttt{learning\_summary} \cref{fig:qmla_learning_summary}, and \ttt{dynamics} in \cref{fig:qmla_model_dynamics}.
@@ -330,8 +330,8 @@ Individual models' insights can be found in \ttt{model\_training},
         \textbf{a} \ttt{learning\_summary\_1}. 
         Displays the outcome of \gls{qhl} for the given model:
         Subfigures (a)-(c) show the estimates of the parameters; 
-        (d) shows the total parameterisation \gls{volume} against experiments trained upon, 
-        along with the evolution times used for those experiments. 
+        (d) shows the total parameterisation \gls{volume} against \glspl{experiment} trained upon, 
+        along with the evolution times used for those \glspl{experiment}. 
         \textbf{(b)} \ttt{dynamics\_1} The model's attempt at reproducing dynamics from $\ho$. 
     }
     \label{fig:model_analysis}
@@ -355,7 +355,7 @@ Reconfigure a subset of the settings in the \ttt{local\_launch.sh} script (\cref
     caption={\ttt{local\_launch} configuration for QMLA.},
     language=Bash
 ]
-experiments=250
+\glspl{experiment}=250
 particles=1000
 run_qhl=0
 exploration_strategy=ExampleBasic
@@ -420,7 +420,7 @@ The probes used during the training of all candidates are also plotted  (\cref{f
             is the stronger model.
         \textbf{(c)} \ttt{comparisons/BF\_1\_3}: direct comparison between models with IDs 1 and 3, 
             showing their reproduction of the system dynamics (red dots, \gls{q}), 
-            as well as the times (experiments) against which the \gls{bf} was calculated. 
+            as well as the times (\glspl{experiment}) against which the \gls{bf} was calculated. 
         \textbf{(d)} \ttt{branches/dynamics\_branch\_1}: dynamics of all models considered on the branch
         compared with system dynamics (red dots, \gls{q}). 
         \textbf{(e)} \ttt{probes\_bloch\_sphere}: probes used for training models in this \gls{instance} (only showing 1-qubit versions).
@@ -457,7 +457,7 @@ First, reconfigure some settings of \cref{listing:local_launch} and launch again
     language=Bash
 ]
 num_instances=10
-experiments=20
+\glspl{experiment}=20
 particles=100
 run_qhl=0
 exploration_strategy=ExampleBasic
@@ -551,7 +551,7 @@ Open the parallel launch script, \ttt{QMLA/launch/parallel\_launch.sh}, and prep
 num_instances=10 # number of \glspl{instance} in run
 run_qhl=0 # perform QHL on known (true) model
 run_qhl_multi_model=0 # perform QHL for defined list of models
-experiments=250
+\glspl{experiment}=250
 particles=1000
 plot_level=5
 
@@ -568,7 +568,7 @@ exploration_strategy="ExampleBasic"
 When submitting jobs to schedulers like \gls{pbs}, we must specify the time required, 
     so that it can determine a fair distribution of resources among users. 
 We must therefore \emph{estimate} the time it will take for an \gls{instance} to complete:
-    clearly this is strongly dependent on the numbers of experiments (\gls{nexp}) and particles (\gls{nprt}), 
+    clearly this is strongly dependent on the numbers of \glspl{experiment} (\gls{nexp}) and particles (\gls{nprt}), 
     and the number of models which must be trained. 
 \gls{qmla} attempts to determine a reasonable time to request based on the \ttt{max\_num\_models\_by\_shape}
     attribute of the \gls{es}, by calling \ttt{QMLA/scripts/time\_required\_calculation.py}. 

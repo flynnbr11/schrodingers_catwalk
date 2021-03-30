@@ -80,12 +80,12 @@ Of course it is first necessary to ensure that each model has
     i.e. they should undergo the process in \cref{chapter:qhl}.
 It is statistically meaningful to compare models via their \gls{tltl}, $\tll_i$, 
     if and only if they have considered the same data, 
-    i.e. if models have each attempted to account for the same set of experiments, $\expset$ \cite{kass1995bayes}.
+    i.e. if models have each attempted to account for the same set of \glspl{experiment}, $\expset$ \cite{kass1995bayes}.
 \par 
 
 We can then exploit direct pairwise comparisons between models,  
     by imposing that both models' \gls{tltl} are computed based 
-    on \emph{any} shared set of experiments $\expset$, 
+    on \emph{any} shared set of \glspl{experiment} $\expset$, 
     with corresponding measurements $\expdata = \{ d_{e}\}_{e \in \expset}$.
 Pairwise comparisons can then be quantified by the \gls{bf},
 \begin{equation}
@@ -94,13 +94,13 @@ Pairwise comparisons can then be quantified by the \gls{bf},
 \end{equation}
 Intuitively, we see that the \gls{bf} is the ratio of the likelihood, i.e. the performance, 
     of model $\hi$'s attempt to account for the data set $\expdata$ observed following the 
-    experiment set $\expset$, against the same \gls{likelihood} for model $\hj$.
+    \gls{experiment} set $\expset$, against the same \gls{likelihood} for model $\hj$.
 \glspl{bf} are known to be statistically signicative of the stronger model 
     from a pair when both models attempt to explain observed data,
     while favouring models of low cardinality, thereby supressing overfitting models. 
 \par 
 
-We have that, for independent experiments, and recalling \cref{eqn:total_likelihood}, 
+We have that, for independent \glspl{experiment}, and recalling \cref{eqn:total_likelihood}, 
 \begin{align}
     \begin{split}
         \Pr(\expdata | \hi; \expset) &= \Pr(d_n | \hi; e_n) \times \Pr(d_{n-1} | \hi; e_{n-1}) \times \dots \times \Pr(d_0 | \hi; e_0) \\
@@ -136,7 +136,7 @@ So we can write
 \end{equation}
 
 
-This is simply the exponential of the difference between two models' total log-likelihoods when presented the same set of experiments. 
+This is simply the exponential of the difference between two models' total log-likelihoods when presented the same set of \glspl{experiment}. 
 Intuitively, if $\hi$ performs well, and therefore has a high \gls{tltl}, $\tll_{i}=-10$, 
     and $\hj$ performs worse with $\tll_{j}=-100$, then $B_{ij} = e^{-10-(-100)} = e^{90} \gg 1$.
 Conversely for $\tll_{i}=-100, \tll_{j}=-10$, then $B_{ij} = e^{-90} \ll 1$. 
@@ -161,7 +161,7 @@ For example, for a fixed set of models,
 
 \subsection{Experiment sets}\label{sec:experiments_for_bf}
 As mentioned it is necessary for the \gls{tltl} of both models in a \gls{bf} calculation to
-    refer to the same set of experiments, $\expset$. 
+    refer to the same set of \glspl{experiment}, $\expset$. 
 There are a number of ways to achieve this, 
     which we briefly summarise here for reference later. 
 \par 
@@ -172,7 +172,7 @@ During training (the \gls{qhl} subroutine), candidate model $\hi$ is trained aga
 The simplest method to compute the \gls{bf} is to enforce $\expset=\expset_i \cup \expset_j$ 
     in \cref{eqn:bayes_factors}, i.e. to cross-train $\hi$ using the data designed specifically for training $\hj$, 
     and vice versa. 
-This is a valid approach because it challenges each model to attempt to explain experiments
+This is a valid approach because it challenges each model to attempt to explain \glspl{experiment}
     designed explicitly for its competitor,   
     at which only truly accurate models are likely to succeed. 
 \par 
@@ -180,10 +180,10 @@ A second approach builds on the first, but incorporates \emph{burn--in} time in 
     this is a standard technique in the evaluation of \gls{ml} models whereby its earliest iterations 
     are discounted for evaluation so as not to skew its metrics, 
     ensuring the evaluation reflects the strength of the model. 
-In \gls{bf}, we achieve this by basing the \gls{tltl} only on a subset of the training experiments. 
-For example, the latter half of experiments designed during the training of $\hi$, $\expset_i^{\prime}$. 
+In \gls{bf}, we achieve this by basing the \gls{tltl} only on a subset of the training \glspl{experiment}. 
+For example, the latter half of \glspl{experiment} designed during the training of $\hi$, $\expset_i^{\prime}$. 
 This does not result in less predictive \gls{bf}, since we are merely removing the 
-    noisy segments of the training for each model, e.g. the first half of experiments in \cref{fig:param_learning_vary_particles}. 
+    noisy segments of the training for each model, e.g. the first half of \glspl{experiment} in \cref{fig:param_learning_vary_particles}. 
 Moreover it provides a benefit in reducing the computation requirements: 
     updating each model to ensure the \gls{tltl} is based on $\expset^{\prime}=\expset_i^{\prime} \cup \expset_j^{\prime}$
     requires only half the computation time, 
@@ -192,7 +192,7 @@ Moreover it provides a benefit in reducing the computation requirements:
 We will verify this claim later in \cref{sec:bf_by_f_score}, in the context of real examples.
 \par 
 
-A final option is to design a set of \emph{evaluation} experiments, $\expset_v$, 
+A final option is to design a set of \emph{evaluation} \glspl{experiment}, $\expset_v$, 
     that are valid for a broad variety of models, and so will not favour any particular model.
 Again, this is a common technique in \gls{ml}: to use one set of data for training models, 
     and a second, unseen dataset for evaluation. 
@@ -201,22 +201,22 @@ This is clearly a favourable approach:
     we can automatically select the strongest model based solely on their \glspl{tltl}, 
     meaning we do not have to perform further computationally-expensive updates, 
     as required to cross-train on opponents' 
-    experiments during \gls{bf} calculation. 
+    \glspl{experiment} during \gls{bf} calculation. 
 However, it does impose on the user to design a \emph{fair} $\expset_v$, 
     requiring unbiased \gls{probe} states $\{\ket{\psi}\}$ and times $\{t\}$ on a timescale 
     which is meaningful to the system under consideration. 
-For example, experiments with $t > T_2$, the decoherence time of the system, 
+For example, \glspl{experiment} with $t > T_2$, the decoherence time of the system, 
     would result in measurements which offer little information, 
     and hence it would be difficult to extract evidence in favour of any 
-    model from experiments in this domain.
+    model from \glspl{experiment} in this domain.
 It is difficult to know, or even estimate, such meaningful time scales a priori,
     so it is difficult for a user to design $\expset_v$. 
 Additionally, the training regime each model undergoes during \gls{qhl}
-    is designed to provide adaptive experiments that take into account
+    is designed to provide adaptive \glspl{experiment} that take into account
     the specific model entertained, to choose an optimal set of evolution times, 
     so it is likely that the set of times in $\expset_i$ is \emph{reasonable} by default. 
 This approach would be favoured in principle, in the case where such constraints can be accounted for,
-    e.g. an experiment repeated in a laboratory where the available 
+    e.g. an \gls{experiment} repeated in a laboratory where the available 
     \gls{probe} states are limited and the timescale achievable is understood. 
      
 % %%%%%%%%%%% PROTOCOL %%%%%%%%%%%     
@@ -456,7 +456,7 @@ These can be chosen to match the requirements of the user, and are set via the \
 
     \item[\acrlong{edh}] \ 
     
-    The method through which to design bespoke experiments to maximise the information 
+    The method through which to design bespoke \glspl{experiment} to maximise the information 
         on which models are individually trained, described in \cref{sec:heuristic}.
     \begin{easylist}
         && In particular, in this work the experimental controls consist solely of $\{ \ket{\psi}, t \}$. 
@@ -592,7 +592,7 @@ More precisely, we can view individual models as \emph{learning agents} accordin
     \begin{easylist}[itemize]
         & a \emph{problem generator}: designs actions in an attempt to learn about the system -- this is precisely the role of the \gls{edh};
         & a \emph{performance element}: implements the designed actions and measures the outcome
-            -- the measurement of a datum following the experiment chosen by the \gls{edh}; 
+            -- the measurement of a datum following the \gls{experiment} chosen by the \gls{edh}; 
         & a \emph{critic}: the likleihood function informs whether the designed action (experiment) was successful; 
         & a \emph{learning element}: the updates to the weights and overall parameter distribution improve the model's performance over time. 
     \end{easylist}
@@ -738,9 +738,9 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
 
     \KwIn{$\hat{H}_i$ \tcp*[1]{Hamiltonian model attempting to reproduce data from $\hat{H}_0$ }}
     \KwIn{$\pra$ \tcp*[1]{probability distribution for $\al = \al_0 $}}
-    \KwIn{\gls{nexp} \tcp*[1]{number of experiments to iterate learning procedure for}}
+    \KwIn{\gls{nexp} \tcp*[1]{number of \glspl{experiment} to iterate learning procedure for}}
     \KwIn{\gls{nprt} \tcp*[1]{number of \glspl{particle} to draw from $\pra$}}
-    \KwIn{\ttt{$\Lambda(\pra)$} \tcp*[1]{Heuristic algorithm which designs experiments}}
+    \KwIn{\ttt{$\Lambda(\pra)$} \tcp*[1]{Heuristic algorithm which designs \glspl{experiment}}}
     \KwIn{\ttt{RS($\pra$)} \tcp*[1]{Resampling algorithm for redrawing \glspl{particle}}}
 
     \KwOut{$\al^{\prime}$ \tcp*[1]{estimate of Hamiltonian parameters}}\;
@@ -795,15 +795,15 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
     \DontPrintSemicolon
     \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulateable quantum system.}}
     \KwIn{ $\hat{H}_j^{\prime}, \hat{H}_k^{\prime}$ \tcp*[1]{Hamiltonian models after training (i.e. $\al_j, \al_k$ already optimised), on which to compare performance.}}
-    \KwIn{ $\expset_j, \expset_k$ \tcp*[1]{experiments on which $\hat{H}_j^{\prime}$ and $\hat{H}_k^{\prime}$ were trained during QHL.}}
+    \KwIn{ $\expset_j, \expset_k$ \tcp*[1]{\glspl{experiment} on which $\hat{H}_j^{\prime}$ and $\hat{H}_k^{\prime}$ were trained during QHL.}}
     
     \KwOut{$B_{jk}$ \tcp*[1]{Bayes factor between two candidate Hamiltonians}}\;
           
-    $\expset = \{ \expset_j \cup \expset_k \}$ \tcp*[1]{common experiments for fair comparison}\;
+    $\expset = \{ \expset_j \cup \expset_k \}$ \tcp*[1]{common \glspl{experiment} for fair comparison}\;
     \For{$\hat{H}_i^{\prime} \in  \{\hat{H}_j^{\prime}, \hat{H}_k^{\prime}$ \} }{
         $\tll_{i} = 0$ \tcp*[1]{total log-likelihood of $\hat{H}_i$} 
         \For{$e \in \expset$}{
-            $e \gets t, \ket{\psi}$ \tcp*[1]{assign time and \gls{probe} from experiment control set}\;
+            $e \gets t, \ket{\psi}$ \tcp*[1]{assign time and \gls{probe} from \gls{experiment} control set}\;
 
             Prepare $Q$ in $\ket{\psi}$, evolve and measure after $t \gets d$ \tcp*[1]{datum}\;
 

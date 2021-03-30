@@ -212,7 +212,7 @@ For short evolution times, i.e. in the first decay of the \gls{nvc}, the spin is
 % We have decided to characterise the hyperfine interactions of the \gls{nvc} which dominate its decoherence process:
 %     these interactions are evident most strongly at very short timescales \cite{childress2006coherent}. 
 % To isolate the effects of the hyperfine interactions, 
-%     we run \emph{Hahn echo} experiments, which are known to emphasise weak interactions.
+%     we run \emph{Hahn echo} \glspl{experiment}, which are known to emphasise weak interactions.
 % Hahn echo sequences attempt to decouple the spin's dynamics from the nuclear bath
     % \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}
     % providing a helpful platform for studying residual contributions of terms in \cref{eqn:nv_terms}.
@@ -243,7 +243,7 @@ By varying the evolution time, $t$, used within the Hahn echo sequence, we can m
 We vary $t$ up to $t \sim 4 \mu s$ in intervals of $\Delta t = 50 ns$, 
     so we have 425 data points. 
 Note the data for the studied \gls{nvc} is taken once and analysed offline, 
-    i.e. \gls{qmla} does not have complete authority to design experiments 
+    i.e. \gls{qmla} does not have complete authority to design \glspl{experiment} 
     to run on the \gls{nvc}, although it can aim to choose the most informative $t$ 
     available in the predefined set; we will discuss the consequences of this restriction 
     later in this chapter. 
@@ -566,8 +566,8 @@ The \gls{es} will account for the details listed in this chapter so far, in summ
     & we use a 2-qubit approximation
     && the first qubit represent the spin itself
     && the second qubit represents the environment in which the \gls{nvc} resides
-    & we query the \gls{nvc} by performing Hahn echo experiments (\cref{fig:hahn_bloch_spheres})
-    & the outcome of those experiments are thought of as the system's \glspl{likelihood}  (\cref{fig:nv_raw_data})
+    & we query the \gls{nvc} by performing Hahn echo \glspl{experiment} (\cref{fig:hahn_bloch_spheres})
+    & the outcome of those \glspl{experiment} are thought of as the system's \glspl{likelihood}  (\cref{fig:nv_raw_data})
     & candidate models are composed of the terms defined in \cref{eqn:nv_terms}
     && \glspl{likelihood}  are used for the training of individual candidate models through \gls{qhl}
     && we assign approximate ranges to the scalar parameters corresponding to each term based on theoretical arguments
@@ -738,7 +738,7 @@ Accounting for these, we construct an \gls{edh} which mixes the robust, adaptive
     useful for refining an initially broad $\Pr(\al)$,
     with a primitive, linear time-selection, useful to ensure the trained parameters at least
     attempt to account for the physics we are actually interested in. 
-That is, with each model trained for \gls{nexp} experiments, 
+That is, with each model trained for \gls{nexp} \glspl{experiment}, 
     we train according to the standard \gls{pgh} for the first $\nicefrac{\Ne}{2}$, 
     but force the training to mediate over the available data for the latter $\nicefrac{\Ne}{2}$. 
 \par 

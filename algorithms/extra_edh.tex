@@ -5,7 +5,7 @@ One early candidate for a viable \gls{edh} was
 \begin{equation}
     t_k = \bk{\frac{9}{8}}^k, 
 \end{equation}
-    where $k$ is the experiment number. 
+    where $k$ is the \gls{experiment} number. 
 This forces \gls{qhl} to consider exponentially-increasing times, irrespective of its current state of knowledge. 
 
 \subsubsection{Fixed set}
@@ -41,10 +41,10 @@ While \gls{pgh} uses the Euclidean distance, we can instead consider, for exampl
 \subsubsection{Volume adaptive \gls{pgh}}
 Where it is suspected that \gls{pgh} is performing poorly, it is feasible to force the \gls{edh} to consider orders of magnitude 
     greater or smaller than the distance $d(\al_i, \al_j)$.
-We include a heuristic which tracks the change in \gls{volume} across experiments, 
+We include a heuristic which tracks the change in \gls{volume} across \glspl{experiment}, 
     given by $\Delta V = 1 - \nicefrac{V^{\prime}}{V}$, where $V$ is the \gls{volume} of the prior
     and $V^{\prime}$ is the \gls{volume} of the posterior, 
-    noting that several experiments may elapse between measuring $V, V^{\prime}$,
+    noting that several \glspl{experiment} may elapse between measuring $V, V^{\prime}$,
     such that we can interpret
 \begin{align}
     \label{eqn:volume_adaptive_cases}
@@ -62,15 +62,15 @@ We include a heuristic which tracks the change in \gls{volume} across experiment
     \label{eqn:volume_adaptive_pgh}
     t_k = \kappa_k \frac{1}{d(\al_i, \al_j)},
 \end{equation}
-    where $\kappa_k$ is a scalar set for each experiment $k$, initially set as $\kappa_0=1$.
-For example, if $\Delta V > 0.2$ across a small number of experiments (say 10), 
-    we see that the \gls{volume} has reduced by $20\%$ over 10 experiments, which is a strong rate of learning, 
+    where $\kappa_k$ is a scalar set for each \gls{experiment} $k$, initially set as $\kappa_0=1$.
+For example, if $\Delta V > 0.2$ across a small number of \glspl{experiment} (say 10), 
+    we see that the \gls{volume} has reduced by $20\%$ over 10 \glspl{experiment}, which is a strong rate of learning, 
     so we retain $\kappa_k = \kappa_{k-1}$. 
 Conversely, $\Delta V = 0.01$ indicates that the learning has stalled, 
     to compensate, we set $\kappa_{k} = 10 \kappa_{k-1}$, 
-    such that \gls{smc} challenges $\pra$ to explain much more challenging experiments.
+    such that \gls{smc} challenges $\pra$ to explain much more challenging \glspl{experiment}.
 Likewise, in the case where $\pra$ disimproves significantly, say $\Delta V < -0.2$, 
-    we can force the heuristic to design conservative experiments by setting $\kappa_k = \nicefrac{\kappa_{k-1}}{10}$. 
+    we can force the heuristic to design conservative \glspl{experiment} by setting $\kappa_k = \nicefrac{\kappa_{k-1}}{10}$. 
 % Q: is this silly? does loschmidt echo mean high times can never be learned from?
 
 \subsubsection{Sampled order of magnitude}
