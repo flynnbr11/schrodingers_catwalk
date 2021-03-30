@@ -272,28 +272,28 @@ The final step of \gls{qmla} is then to consolidate the set of champion models f
     \end{center}
     \caption[Quantum Model Learning Agent overview]{
         Schematic of \acrfull{qmla}. 
-        \textbf{(a-d)} \Gls{model search} phase within an \acrfull{es}.
-        \textbf{(a)} Models are placed as (empty, purple) nodes on the \emph{active branch} $\mu$, 
+        \textbf{a-d,} \Gls{model search} phase within an \acrfull{es}.
+        \textbf{a,} Models are placed as (empty, purple) nodes on the \emph{active branch} $\mu$, 
             where each model is a sum of terms $\hat{t}_k$ multiplied by corrresponding scalar parameters $\alpha_k$. 
-        \textbf{(b)} Each active model is trained according to a subroutine such as 
+        \textbf{b,} Each active model is trained according to a subroutine such as 
             \acrlong{qhl} to optimise $\al_i$, 
             resulting in the trained $\hat{H}(\al_i^{\prime})$ (filled purple node). 
-        \textbf{(c)} $\mu$ is consolidated, i.e. models are evaluated relative to other
+        \textbf{c,} $\mu$ is consolidated, i.e. models are evaluated relative to other
             models on $\mu$, according to the consolidation mechanism specificed by the \gls{es}.
             In this example, pairwise Bayes factors, $B_{ij}$, between $\hi, \hj$ are computed, 
             resulting in the election of a single branch champion $\hat{H}_C^{\mu}$ (bronze). 
-        \textbf{(d)} A new set of models are \emph{spawned} according to the chosen
+        \textbf{d,} A new set of models are \emph{spawned} according to the chosen
             \gls{es}'s model generation strategy.
             In this example, models are spawned from a single parent. 
             The newly spawned models are placed on the next branch, $\mu+1$, 
             iterating back to \textbf{(a)}.
-        \textbf{(e-f)} Higher level of entire QMLA procedure.
-        \textbf{(e)} The  \gls{model search}  phase for a unique \gls{es} is presented on an \emph{\acrlong{et}}. 
+        \textbf{e-f,} Higher level of entire QMLA procedure.
+        \textbf{e,} The  \gls{model search}  phase for a unique \gls{es} is presented on an \emph{\acrlong{et}}. 
             Multiple \gls{es} can operate in parallel, e.g. assuming different underlying physics, 
             so the overall \gls{qmla} procedure involves a \emph{forest search} across multiple \glspl{et}.
             Each \gls{es} nominates a champion, $\hat{H}_{S}^{\prime}$ (silver), 
             after consolidating its branch champions (bronze). 
-        \textbf{(f)} $\hat{H}_{S}^{\prime}$ from each of the above \glspl{et} are gathered on a single branch, 
+        \textbf{f,} $\hat{H}_{S}^{\prime}$ from each of the above \glspl{et} are gathered on a single branch, 
             which is consolidated to give the final \gls{champion model}, $\hp$ (gold). 
     }
     \label{fig:qmla_overview}
@@ -475,7 +475,7 @@ These can be chosen to match the requirements of the user, and are set via the \
 
     \item[Model training prior] \ 
     
-    Specify the structure of the prior distribution, e.g. Fig. \cref{fig:qhl_smc}(a)
+    Specify the structure of the prior distribution, e.g. Fig. \cref{fig:qhl_smc}\textbf{(a)}.
     \begin{easylist}
         && Set the initial mean and width of each parameter separately to define the prior multi-dimensional $\Pr(\al)$.
     \end{easylist} 

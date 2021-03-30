@@ -183,14 +183,14 @@ We represent these concepts in a simplified format in \cref{fig:nv_centre_energy
     \caption[States of spin qubit at each stage of Hahn echo sequence]{
         States of spin qubit at each stage of Hahn echo sequence.
         
-        \textbf{(a)} The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
-        \textbf{(b)} We apply a rotation about the $y$-axis (i.e. a \acrfull{mw} pulse), 
+        \textbf{a,} The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
+        \textbf{b,} We apply a rotation about the $y$-axis (i.e. a \acrfull{mw} pulse), 
             yielding the state $\ket{\psi_1} = \ket{+}$. 
-        \textbf{(c)} The system is allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
-        \textbf{(d)} We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
+        \textbf{c,} The system is allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
+        \textbf{d,} We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
         $\ket{\psi_3} = e^{-i\pi \s_y}e^{-i\ho t}\ket{+}$.
-        \textbf{(e)} Again the system evolves according to interactions with the environment, this time for $t^{\prime} = 2t$.
-        \textbf{(f)} We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
+        \textbf{e,} Again the system evolves according to interactions with the environment, this time for $t^{\prime} = 2t$.
+        \textbf{f,} We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
             projecting it upon $\ket{0}$.
         Here $\ket{\psi_5}$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
         i.e. along the $z$-axis. 
@@ -839,7 +839,7 @@ Then, considering the performance of the algorithm on whole,
     where the simulation assumes\footnotemark \ $\ho = \hat{S}_{xyz} \hat{A}_z$, 
     The set of models selected most frequently are shown in \cref{fig:exp_qmla_analysis}\textbf{(c)},
     and each model is trained with $\Ne=1000, \Np=3000$,
-    with the \glspl{volume} of those models (in the experimental case) shown in  \cref{fig:exp_qmla_analysis}\textbf{(d)}.
+    with the \glspl{volume} of those models (in the experimental case) shown in  \cref{fig:exp_qmla_analysis}\textbf{d}.
 \footnotetext{
     Here we work backwards by setting the target model as that which \gls{qmla} deemed most appropriate for the available data.
     We posit that this choice is arbitrary and doesn't fundamentally change the discussion of this chapter, 
@@ -883,12 +883,12 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     \caption[
         Models considered by QMLA for simulated/experimental nitrogen-vacancy centre data, and their win rates
     ]{
-    \textbf{Left}: map of the various Hamiltonian terms included in each of the possible 40 candidate models explored by \gls{qmla}
+    \textbf{Left,} map of the various Hamiltonian terms included in each of the possible 40 candidate models explored by \gls{qmla}
     during any of the 100 \glspl{instance} on either simulated or experimental data.
     IDs of candidate models are on the vertical axis, and labels for the terms on the horizontal axis.
     The \gls{true model} $\hat{H}_0$ for the simulated case is highlighted in green and a subset of credible models in blue, 
     i.e. models which may reasonbaly be expected to describe the targeted \acrfull{nvc} from theoretical arguments.
-    \textbf{Right}: number of wins for each of the candidate models out of $100$ independent \gls{qmla} \glspl{run}. 
+    \textbf{Right,} number of wins for each of the candidate models out of $100$ independent \gls{qmla} \glspl{run}. 
     Cases adopting simulated data are shown by empty bars, with those using the experimental dataset shown by green bars.
     \figtableref
     } 
@@ -911,13 +911,13 @@ We highlight a number of \emph{credible} models which we deem especially valid a
     \begin{tabular}{@{}c@{}}
         \includegraphics[scale=0.99]{experimental_study/figures/reproduced_dyamics_sim.pdf}
     \end{tabular}
-    \\ \small \textbf{a,} Simulated data
+    \\ \small \textbf{(a)} Simulated data
     \centering
 
     \begin{tabular}{@{}c@{}}
         \includegraphics[scale=0.99]{experimental_study/figures/reproduced_dyamics_exp.pdf}
     \end{tabular}
-    \\ \small \textbf{b,} Experimental data
+    \\ \small \textbf{(b)} Experimental data
 
     \caption[Dynamics reproduced by QMLA champion models for simulated/experimental data]{
         Dynamics reproduced by various \gls{qmla} \glspl{champion model} for \textbf{(a)} simulated and \textbf{(b)} experimental data. 
@@ -980,7 +980,7 @@ In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitat
         \centering
         \includegraphics[width=0.7\textwidth]{experimental_study/figures/params_simulation.pdf}
     \end{tabular}
-    \\ \small \textbf{a,} Simluated QMLA instances. Red dotted lines show the true parameters.
+    \\ \small \textbf{(a)} Simluated QMLA instances. Red dotted lines show the true parameters.
     
     \centering
     \begin{tabular}{@{}c@{}}
@@ -988,7 +988,7 @@ In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitat
         \includegraphics[width=0.7\textwidth]{experimental_study/figures/params_experimental.pdf}
     \end{tabular}
     \\
-    \small \textbf{b,} Experimental QMLA instances.
+    \small \textbf{(b)} Experimental QMLA instances.
     \caption[
         Histograms for parameters learned by QMLA champion models on simulated and experimental data
     ]{

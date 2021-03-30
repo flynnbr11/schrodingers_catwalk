@@ -150,18 +150,18 @@ In effect, hypotheses (\glspl{particle}) which are found to be highly likely are
         Crosses represent \glspl{particle}, while the distribution $\Pr(\alpha_p)$ for each 
             parameter can be seen along the top and right-hand-sides of each subplot. 
         Both parameters are assigned a uniform probability distribution $\mathcal{U}(0,1)$, representing our prior knowledge of the system. 
-        \textbf{(a),} \gls{smc} samples \gls{nprt} \glspl{particle} from the initial joint probability distribution, 
+        \textbf{a,} \gls{smc} samples \gls{nprt} \glspl{particle} from the initial joint probability distribution, 
             with \glspl{particle} uniformly spread across the unit square, each assigned the starting \emph{weight} $w_0$. 
             At each \gls{experiment} $e$, each of these \glspl{particle}' \gls{likelihood} is computed according to \cref{eqn:particle_bayes_rule}
             and its weight is updated by \cref{eqn:qhl_weights}.
-        \textbf{(b),} after 9 \glspl{experiment}, the weights of the sampled \glspl{particle} are sufficiently informative that we know we can 
+        \textbf{b,} after 9 \glspl{experiment}, the weights of the sampled \glspl{particle} are sufficiently informative that we know we can 
             discard some \glspl{particle} while most likely retaining the true parameters. 
-        \textbf{(c),} \gls{smc} resamples according the current $\Pr(\al)$, 
+        \textbf{c,} \gls{smc} resamples according the current $\Pr(\al)$, 
             i.e. having accounted for the \glspl{experiment} and \glspl{likelihood}  observed to date, 
             a new batch of \gls{nprt} \glspl{particle} are drawn, and each reassigned weight $w_0$, 
             irrespective of their weight prior to resampling.  
-        \textbf{(d, e),} Afer further \glspl{experiment} and resamplings, \gls{smc} narrows $\Pr(\al)$ to a region around the true parameters. 
-        \textbf{(f),} The final \emph{posterior} distribution consists of two narrow distributions centred on $\alpha_x$ and $\alpha_y$. 
+        \textbf{d-e,} Afer further \glspl{experiment} and resamplings, \gls{smc} narrows $\Pr(\al)$ to a region around the true parameters. 
+        \textbf{f,} The final \emph{posterior} distribution consists of two narrow distributions centred on $\alpha_x$ and $\alpha_y$. 
         By taking the mean of the posterior distribution, we approximate the parameters of interest as $\al^{\prime}$. 
     }
     \label{fig:qhl_smc}
@@ -473,10 +473,10 @@ In all cases \cref{eqn:log_total_likelihood} is negative,
         Parameter learning for the analyitcal \gls{likelihood} \cref{eqn:analytical_likleihood}
         for varying numbers of \glspl{particle} \gls{nprt}, for $\Ne=500$. 
         For $\Np=2000$, we show the resampler threshold set to $r=0.5$ and $r=0.9$. 
-        (a) the parameter estimate, i.e. $\bar{\omega}$, the mean of the posterior distribution after each experiment, 
+        \textbf{a,} the parameter estimate, i.e. $\bar{\omega}$, the mean of the posterior distribution after each experiment, 
         approaching $\omega_0=7.75$ (dashed line), where the prior is centred on $\omega=50 \pm 25$. 
-        Decrease in (b) volume, $V$, (c) quadratic loss, $L_Q$, 
-        and (d) evolution time, $t$, are shown against \gls{experiment} number.
+        Decrease in \textbf{(b)} volume, $V$, \textbf{(c)} quadratic loss, $L_Q$, 
+        and \textbf{(d)} evolution time, $t$, are shown against \gls{experiment} number.
         \figtableref
     }
     \label{fig:param_learning_vary_particles}
@@ -654,7 +654,7 @@ Each $\hi$ have randomly chosen parameters implicitly assigned to each term.
         \includegraphics{algorithms/figures/heuristic_comparisons.pdf}
     \end{center}
     \caption[Effect on model training of the experiment design heuristic]{
-        The \gls{volume} and evolution times of various models when trained through \gls{qhl} using different \glspl{edh}.
+        The \gls{volume} (top) and evolution times (bottom) of various models when trained through \gls{qhl} using different \glspl{edh}.
         We show models of various complexity and dimension, each trained using four heuristics, 
         outlined in the main text.
         \figtableref
