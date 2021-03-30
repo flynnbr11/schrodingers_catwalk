@@ -1,9 +1,9 @@
 \glsresetall
 First suggested in \cite{Granade:2012kj} and since developed \cite{wiebe2014qhlpra, Wiebe:2014qhl} 
     and implemented \cite{gentile2020learning, wang2017experimental}, 
-\gls{qhl} is a machine learning algorithm for the optimisation of a given Hamiltonian parameterisation 
+\gls{qhl} is a machine learning algorithm for the optimisation of a given \gls{hamiltonian} parameterisation 
     against a quantum system whose model is known a priori. 
-Given a target quantum system, \gls{q}, known to be described by some Hamiltonian $\hat{H}(\vec{\alpha})$, 
+Given a target quantum system, \gls{q}, known to be described by some \gls{hamiltonian} $\hat{H}(\vec{\alpha})$, 
     \gls{qhl} optimises $\vec{\alpha}$.
 This is achieved by interrogating \gls{q} and comparing its outputs against proposals $\vec{\alpha}_p$. 
 In particular, an \gls{experiment} is designed, consisting of an input state, $\ket{\psi}$, and an evolution time, $t$.
@@ -42,7 +42,7 @@ once\footnote{Experimentally, this may involve repeating a measurement many time
 The parameter vectors sampled are called \emph{\glspl{particle}}: there are \gls{nprt} \glspl{particle} used per experiment. 
 Each \gls{particle} used incurs one further calculation of the \gls{likelihood} function -- 
     this calculation, on a classical computer, is exponential in the number of qubits of the model under consideration
-    (because each unitary evolution relies on the exponential of the $2^n \times 2^n$ Hamiltonian matrix of $n$ qubits). 
+    (because each unitary evolution relies on the exponential of the $2^n \times 2^n$ \gls{hamiltonian} matrix of $n$ qubits). 
 Likewise, each additional \gls{experiment} incurs the cost of calculation of \gls{nprt} \glspl{particle}, 
     so the total cost of running \gls{qhl} to train a model is $\propto \Ne \Np$.
 It is therefore preferable to use as few \glspl{particle} and \glspl{experiment} as possible, 
@@ -64,7 +64,7 @@ It is stated as
         \frac{ \Pr( \textrm{data} | \textrm{hypothesis} ) \times \Pr( \textrm{hypothesis} )}{ \Pr(\textrm{data})}.
     \end{equation}
 \par 
-We wish to represent our knowledge of Hamiltonian parameters with a distribution, $\Pr(\al)$:
+We wish to represent our knowledge of \gls{hamiltonian} parameters with a distribution, $\Pr(\al)$:
     in this case hypotheses $\al$ attempt to describe data, $\expdata$, measured from the target quantum system,  
     from a set of \glspl{experiment} $\expset$, so we can rewrite Bayes' rule as 
 \begin{equation}\label{eqn:qhl_bayes_rule}
@@ -143,7 +143,7 @@ In effect, hypotheses (\glspl{particle}) which are found to be highly likely are
     \subfloat{
         \includegraphics{algorithms/figures/smc_demo/cbar.pdf}
     }
-    \caption[Quantum Hamiltonian learning via sequential Monte Carlo]{
+    \caption[Quantum \gls{hamiltonian} learning via sequential Monte Carlo]{
         \Acrfull{qhl} via \gls{smc}. 
         The studied model has two terms, $\{\sx, \sy\}$ with true parameters $\alpha_{x}=0.9, \alpha_y=0.15$ (dahsed lines), 
             with resources $\Ne=500, \Np=2000$ for training the model. 
@@ -193,7 +193,7 @@ Usually, we set $r_t=0.5$, although this \gls{hyperparameter} can have a large i
     see \cref{fig:param_learning_vary_particles}.
 \par 
 This procedure is easiest understood through the example presented in \cref{fig:qhl_smc}, 
-    where a two-parameter Hamiltonian is learned starting from a uniform distribution. 
+    where a two-parameter \gls{hamiltonian} is learned starting from a uniform distribution. 
 $\Np=2000$ \glspl{particle} are used to propose hypotheses distributed evenly throughout the parameter space, 
     each of which are subject to weight updates as outined above. 
 In this example, after 9 \glspl{experiment} the \glspl{particle} around the diagonal ($x=y$) are deemed unlikely, 
@@ -220,7 +220,7 @@ When we have retrieved a datum, $d$, from \gls{q}, we can compute the probabilit
 \par 
 
 In some cases, it is feasible to derive the closed form of the \gls{likelihood}, 
-    for example as a simple expression in terms of the Hamiltonian parameters, 
+    for example as a simple expression in terms of the \gls{hamiltonian} parameters, 
     which we will exemplify in \cref{sec:analytical_likelihood}. 
 Closed form likelihoods allow for rapidly testing hypothetical parameters for comparison against 
     the observed data, so \gls{qhl} can feasibly be run with high \gls{nexp}, \gls{nprt}.  
@@ -229,20 +229,20 @@ In general, however, it is not possible to derive the closed form of the likelih
     which can be done either on a classical or quantum simulator. 
 The case where the \gls{likelihood} is computed on a quantum simulator is referred to as \gls{qle}
     \cite{Wiebe:2014qhl, wang2017experimental},
-    and can leverage any algorithm for the calculation of Hamiltonian dynamics to achieve \emph{quantum speedup}
-    \cite{berry2015hamiltonian, childs2018toward}. %TODO references for Hamiltonian dynamics
+    and can leverage any algorithm for the calculation of \gls{hamiltonian} dynamics to achieve \emph{quantum speedup}
+    \cite{berry2015hamiltonian, childs2018toward}. %TODO references for \gls{hamiltonian} dynamics
 \par 
 In this thesis, we do not implement the presented algorithms on quantum hardware,
     instead investigating their performance using idealised classical simulations, i.e. \gls{cle}. 
 The reliance on classical resources demands that \cref{eqn:likelihood} be computed explicitly, 
     notably involving the matrix exponential $e^{-i\hat{H}(\al_p) t}$.
-Since the Hamiltonian matrix scales with the size of the simulated system,
-    running \gls{qhl} for an $n$-qubit systems requires exponentiation of its $2^n \times 2^n$ Hamiltonian matrix, 
+Since the \gls{hamiltonian} matrix scales with the size of the simulated system,
+    running \gls{qhl} for an $n$-qubit systems requires exponentiation of its $2^n \times 2^n$ \gls{hamiltonian} matrix, 
     in order to compute the exact likelihoods required for learning. 
 This overhead restricts the applicability of \gls{cle}: 
-    $n=11$-qubit systems' Hamiltonians exhaust the memory capacity of most conventional classical computers.
+    $n=11$-qubit systems' \glspl{hamiltonian} exhaust the memory capacity of most conventional classical computers.
 In practice, \gls{qhl} is limited by the computation of the total $\Ne\Np$ matrix exponentials required for training:
-    we will only entertain systems which can be represented by Hamiltonians of up to $n=8$ qubits. 
+    we will only entertain systems which can be represented by \glspl{hamiltonian} of up to $n=8$ qubits. 
 In principle, larger systems could be condensed for simulation on available classical resources, 
     or those resources used more efficiently \cite{rudi2020approximating}, 
     but the remit of this thesis can be fulfilled with demonstrations in the domain $n\leq8$ qubits, 
@@ -274,7 +274,7 @@ Usually we will refer to the case where \gls{q} is projeced onto the input state
 
 
 \subsection{Interactive quantum likelihood estimation}\label{sec:iqle}
-A fundamental result in \gls{qm} -- the \gls{le} -- shows that marginally differing Hamiltonians 
+A fundamental result in \gls{qm} -- the \gls{le} -- shows that marginally differing \glspl{hamiltonian} 
     produce exponentially diverging evolutions,  undermining the basis of \gls{qle}, 
     i.e. that the likelihood function can inform Bayesian updates to a paramater distribution. 
 The \gls{le} concerns the result when \gls{q} is prepared in some initial state $\ket{\psi}$, 
@@ -288,9 +288,9 @@ The \gls{le} -- or the \emph{fidelity} -- is given by
 \end{equation}
 \par
 
-$M(t)$ is dictated by the \emph{similarity} between the two Hamiltonians.
+$M(t)$ is dictated by the \emph{similarity} between the two \glspl{hamiltonian}.
 If $\hat{H}_{+} = \hat{H}_{-}$, then $M(t) = 1$, while $\|\hat{H}_{+} - \hat{H}_{-} \|_2 > 0$ yields $M(t) < 1$, 
-    indicating disagreement between the two Hamiltonians. 
+    indicating disagreement between the two \glspl{hamiltonian}. 
 The fidelity is characterised by a number of distinct regions, depending on the evolution time, $t$:
 \begin{align}
     \label{eqn:loschmidt_ranges}
@@ -301,7 +301,7 @@ The fidelity is characterised by a number of distinct regions, depending on the 
         \nicefrac{1}{\| \hat{H} \|}, & t \geq t_{s}
     \end{cases}
 \end{align}
-    where $\|\hat{H}\|$ is the dimension of the Hamiltonians, and $t_c, t_{s}$ are bounds on the evolution time marking the transition between the 
+    where $\|\hat{H}\|$ is the dimension of the \glspl{hamiltonian}, and $t_c, t_{s}$ are bounds on the evolution time marking the transition between the 
     \emph{parabolic decay}, \emph{asymptotic decay} and \emph{saturation} of the echo \cite{goussev2012loschmidt}. 
 $t_c$ and $t_s$ generally depend on the similarity between $\hat{H}_+$ and $\hat{H}_{-}$: 
     intuitively, as $\|\hat{H}_+ - \hat{H}_{-}\|_2$ decreases, the echo does not saturate until higher evolution times. 
@@ -348,9 +348,9 @@ The remaining application for \gls{iqle}, and correspondingly \gls{qhl},
     which can realise such coherent channels \cite{wang2017experimental}. 
 
 \subsection{Analytical likelihood}\label{sec:analytical_likelihood}
-For some Hamiltonians, we can derive an analytical \gls{likelihood} function to describe their dynamics
+For some \glspl{hamiltonian}, we can derive an analytical \gls{likelihood} function to describe their dynamics
     \cite{sergeevich2011characterization, ferrie2013best}.
-For instance, the Hamiltonian for an oscillating electron spin in a \acrlong{nvc} 
+For instance, the \gls{hamiltonian} for an oscillating electron spin in a \acrlong{nvc} 
     is given by
     \begin{equation}
         \label{eqn:analytical_hamiltonian}
@@ -556,7 +556,7 @@ Note \gls{pgh} does not specify the \gls{probe}, so is coupled with a \gls{probe
     a complete \gls{edh}.
 \par
 
-The principle of \gls{pgh} is that the uncertainty of the posterior limits how well the Hamiltonian is currently 
+The principle of \gls{pgh} is that the uncertainty of the posterior limits how well the \gls{hamiltonian} is currently 
     approximated, and therefore limits the evolution time for which the posterior can be expected to 
     reasonably mimic $\ho$\footnotemark.
 \footnotetext{
@@ -596,7 +596,7 @@ The experimental evolution time for \gls{experiment} $k$ is then given by
 
 \subsection{Alternative experiment design heuristics}\label{sec:alt_heuristics}
 The \gls{edh} can be specified to the requirements of the target system; 
-    we test four examples of customised \glspl{edh} against four target Hamiltonians.
+    we test four examples of customised \glspl{edh} against four target \glspl{hamiltonian}.
 Here the \gls{edh} must only design the evolution time for the experiment, 
     with \gls{probe} design discussed in the next section. 
 The heuristics tested are:
@@ -623,7 +623,7 @@ We demonstrate the influence of the \gls{edh} on the training procedure
     by testing models\footnotemark \ of various complexity amd dimension in \cref{fig:heuristics_test}.
 \footnotetext{
     Note the models designed here are not intended to represent physically meaningful situations, 
-    but merely to serve as examples of simulatable Hamiltonians. 
+    but merely to serve as examples of simulatable \glspl{hamiltonian}. 
 }
 In particular, we first test a simple 1-qubit model, \cref{eqn:qhl_test_model_1}; 
     followed by more complicated 1-qubit model, \cref{eqn:qhl_test_model_2};

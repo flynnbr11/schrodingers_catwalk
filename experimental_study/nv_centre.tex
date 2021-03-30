@@ -2,7 +2,7 @@
 It is of primary interest to apply the \gls{qmla} algorithm to real-life, experimental systems. 
 In this chapter we devise an \gls{es} to operate in conjunction with experimental data 
     in order to characterise an electron spin in an \gls{nvc} in diamond.
-In particular, we model, through Hamiltonian terms, interactions between the spin and 
+In particular, we model, through \gls{hamiltonian} terms, interactions between the spin and 
     the spin bath in which it resides,
     so that \gls{qmla} is finding an effective model for the open system dynamics.
 \par
@@ -268,7 +268,7 @@ We take the axis of the \gls{nvc}, i.e. the axis connecting the \gls{nitrogen} w
 While the \gls{nvc} is subject to myriad interactions which result in decoherence,
     we choose to focus on its dominant interactions with proximal environmental nuclei. 
 These interactions are characterised by hyperfine terms \cite{smeltzer201113c}.
-The overall Hamiltonian for such systems, where the set of nuclear sites is $\{\chi\}$,
+The overall \gls{hamiltonian} for such systems, where the set of nuclear sites is $\{\chi\}$,
     is given by 
 
 \begin{equation}
@@ -479,7 +479,7 @@ The hyperfine terms to be entertained by \gls{qmla} are then
 \footnotetext{
     This limitation arises from the requirement to compute the total evolution of the global state, 
     involving calculation of $e^{-i\h t}$, i.e. the characterisation of an $n_q$-qubit model depends on 
-    classical exponentiation of the $2^{n_q} \times 2^{n_q}$ Hamiltonian for each \gls{particle} and experiment in \gls{cle}, 
+    classical exponentiation of the $2^{n_q} \times 2^{n_q}$ \gls{hamiltonian} for each \gls{particle} and experiment in \gls{cle}, 
     which is a prohibitive expense. 
 }
 \par 
@@ -809,7 +809,7 @@ In general, the \glspl{champion model} from each instance are highly predictive:
         The \emph{under-parameterised} \emph{ (over-parameterised)} class refers to models with less (more) 
         parameters than $\ho$. 
         \emph{Correct} indicates that exactly $\ho$ was found. 
-        The \emph{mis-parameterised} class groups models with the same parametrisation cardinality as $\ho$, but different Hamiltonian terms. 
+        The \emph{mis-parameterised} class groups models with the same parametrisation cardinality as $\ho$, but different \gls{hamiltonian} terms. 
         \textbf{Inset}, Histogram of occurrences of $R^2$ values for each retrieved $\hp$ 
         against a sampling of datapoints from $\ho$.
         The blue vertical line groups together all those instance champions with $R^2<0$, and the median $R^2=0.84$ is shown as a red dotted line.
@@ -883,7 +883,7 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     \caption[
         Models considered by QMLA for simulated/experimental nitrogen-vacancy centre data, and their win rates
     ]{
-    \textbf{Left,} map of the various Hamiltonian terms included in each of the possible 40 candidate models explored by \gls{qmla}
+    \textbf{Left,} map of the various \gls{hamiltonian} terms included in each of the possible 40 candidate models explored by \gls{qmla}
     during any of the 100 \glspl{instance} on either simulated or experimental data.
     IDs of candidate models are on the vertical axis, and labels for the terms on the horizontal axis.
     The \gls{true model} $\hat{H}_0$ for the simulated case is highlighted in green and a subset of credible models in blue, 

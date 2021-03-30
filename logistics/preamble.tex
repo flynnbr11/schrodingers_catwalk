@@ -51,6 +51,15 @@
 \crefname{postulatei}{postulate}{postulates}
 
 %%%%%%%%%%%%% Nonstandard packages %%%%%%%%%%%%%
+% \usepackage[
+%   style=long,
+%   % style=altlongragged4col, 
+%   nolist, 
+%   nonumberlist,
+%   nopostdot,
+%   acronym,
+%   toc=true, 
+% ]{glossaries}
 \usepackage[
   style=long,
   % style=altlongragged4col, 
@@ -59,10 +68,26 @@
   nopostdot,
   acronym,
   toc=true, 
-]{glossaries}
+]{glossaries-extra}
+\GlsXtrEnableLinkCounting[subsection]{general,acronym}
+
+% \renewcommand*{\glslinkpresetkeys}{%
+%  \ifnum\GlsXtrLinkCounterValue{\glslabel}>1
+%   \setkeys{glslink}{color=black}%
+%  \fi
+% }
+\renewcommand*{\glslinkpresetkeys}{%
+ \ifnum\GlsXtrLinkCounterValue{\glslabel}>1
+  \setkeys{glslink}{hyper=false}%
+ \fi
+}
+
+
+
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}
 \setlength\glsdescwidth{0.8\hsize}
 % \setabbreviationstyle{long-short-desc} % this should make acronyms tidier but requires glossaries-extra
+
 
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \usepackage{braket}

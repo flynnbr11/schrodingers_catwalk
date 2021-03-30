@@ -157,7 +157,7 @@ Taken together, we have
     $\ket{\psi(t_0)}$ is the wavefunction at $t_0$, such that $t > t_0$, 
     $\hbar = 1.054 \times 10^{-34}$ is the reduced Planck constant and 
     $\ho$ is the \emph{Hamiltonian} of \gls{q}. 
-For brevity we generally refer to $t_0 = 0$, and absorb $\hbar$ into $\ho$, which will later manifest in the Hamiltonian scalar parameters. 
+For brevity we generally refer to $t_0 = 0$, and absorb $\hbar$ into $\ho$, which will later manifest in the \gls{hamiltonian} scalar parameters. 
 \cref{eqn:schrodinger} is the most general form of \emph{\schrodinger equation}, 
     otherwise known as the \emph{time-dependent} \schrodinger equation; 
     we include it as \Cref{postulate:schrodinger_eqn} when describing the fundamentals of \gls{qm} (\cref{sec:postulates}), 
@@ -180,25 +180,25 @@ $\hat{U}(t)$ then describes the unitary evolution of the wavefunction of a
 \par 
 
 \subsection{Hamiltonians}\label{sec:hamiltonians}
-In the previous section we introduced the Hamiltonian of \gls{q} as the generator of its 
+In the previous section we introduced the \gls{hamiltonian} of \gls{q} as the generator of its 
     time evolution dynamics;
-    Hamiltonians are of primary importance in this thesis, so it is worth pausing to consider their physical meaning. 
+    \glspl{hamiltonian} are of primary importance in this thesis, so it is worth pausing to consider their physical meaning. 
 We saw in \cref{eqn:hamiltonian_hermiticity} that $\ho$ is Hermitian;
-    the Hamiltonian is the observable operator (see \Crefrange{postulate:eigenvalues}{postulate:hermiticity} in \cref{sec:postulates}) 
+    the \gls{hamiltonian} is the observable operator (see \Crefrange{postulate:eigenvalues}{postulate:hermiticity} in \cref{sec:postulates}) 
     associated with the system's total energy, 
     i.e. the permitted energy levels of the system are given by the eigenfunctions of $\ho$. 
 \par 
 
 The quantum Hamiltonian, $\ho$, is analogous to the \emph{classical} Hamiltonian, 
     which captures all the interactions of a given classical system which contribute to its time evolution.
-Knowing the classical Hamiltonian and the initial conditions -- position and momentum -- 
+Knowing the classical \gls{hamiltonian} and the initial conditions -- position and momentum -- 
     Hamilton's equations of motion allow for the calcaultion of those quantities for the particle 
     in question an infintesimal time later \cite{susskind2014classical}.    
 Likewise, knowledge of the initial wavefunction, $\ket{\psi(t_0)}$, and the system's quantum Hamiltonian, $\ho$, 
     the quantum equation of motion -- namely the \schrodinger equation, \cref{eqn:schrodinger} -- 
     permits the calculation of the wavefunction at later times.
-As such the Hamiltonian must consist of all processes which influence the evolution of \gls{q};
-    we will later break the Hamiltonian into independent \emph{terms} which each correspond to unique physical interactions
+As such the \gls{hamiltonian} must consist of all processes which influence the evolution of \gls{q};
+    we will later break the \gls{hamiltonian} into independent \emph{terms} which each correspond to unique physical interactions
     \gls{q} is subject to, in \cref{sec:models}. 
 We can think that each process/interaction \gls{q} undergoes contributes to its total energy,
     giving intuition as to why its eigenvalues are the energy levels. 
@@ -206,14 +206,14 @@ We can think that each process/interaction \gls{q} undergoes contributes to its 
 % \footnotetext{
 %     Aside: the author shares a hometown with the mathematician for whom it is named, William Rowan Hamilton. 
 %     It is hoped that, after another 150 years, the next physicist from Trim, Co. Meath, Ireland might 
-%     profitably use knowledge of Hamiltonians on a functional quantum computer.} 
+%     profitably use knowledge of \glspl{hamiltonian} on a functional quantum computer.} 
 % }
 
-Hamiltonians describe \emph{closed} quantum systems, 
+\glspl{hamiltonian} describe \emph{closed} quantum systems, 
     i.e. where \emph{all} processes and interactions which influence \gls{q} are accounted for. 
 Realistic quantum systems are influenced by a myriad of proximal systems, 
     and it is therefore infeasible to analytically account for them all. 
-Instead, \emph{open} quantum systems' dynamics are described by Lindbladian operators, which encompass the Hamiltonian form. 
+Instead, \emph{open} quantum systems' dynamics are described by Lindbladian operators, which encompass the \gls{hamiltonian} form. 
 The Lindblad master equation is a generalisation of the \schrodinger equation, 
     providing the equation of motion for open quantum systems \cite{breuer2002theory, manzano2020short}.
 In this thesis we only consider closed models for quantum systems;

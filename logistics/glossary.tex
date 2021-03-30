@@ -17,8 +17,8 @@
     description={quantum mechanics, \cref{chapter:qm}}
 ]{qm}{QM}{quantum mechanics}
 \newacronym[
-    description={quantum Hamiltonian learning, \cref{chapter:qhl}.}
-]{qhl}{QHL}{quantum Hamiltonian learning}
+    description={quantum \gls{hamiltonian} learning, \cref{chapter:qhl}.}
+]{qhl}{QHL}{quantum \gls{hamiltonian} learning}
 \newacronym[
     description={Bayes factor, \cref{sec:bayes_factors}}
 ]{bf}{BF}{Bayes factor}
@@ -248,7 +248,9 @@
 \newglossaryentry{ho}
 {
     name=$\hat{H}_0$,
-    description={\Gls{true model} for the target system, \gls{q}; i.e. the \gls{model} form which \acrshort{qmla} is attempting to discover in a given \gls{instance}.}
+    description={\Gls{true model} for the target system, \gls{q}; 
+        i.e. the \gls{hamiltonian} \gls{model} form which \acrshort{qmla} is attempting to discover in a given \gls{instance}.
+    }
 }
 
 \newglossaryentry{nexp}
@@ -273,6 +275,13 @@
     hypothesis about \gls{q}, \cref{sec:smc}.
     }
 }
+
+\newglossaryentry{hamiltonian}
+{
+    name=Hamiltonian,
+    description={Mathematical structure which captures all interactions to which a quantum system is subject, \cref{sec:hamiltonians}.}
+}
+
 
 \newglossaryentry{term}
 {

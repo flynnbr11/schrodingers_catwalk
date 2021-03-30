@@ -46,16 +46,16 @@ The goal of \gls{qmla} is then to identify the structure of the true lattice,
 % We first consider \gls{q} as some lattice, where \gls{qmla} attempts to identify the structure of the lattice. 
     while the set of viable models are specified by alternative lattices.
 Due to simluation constraints, because we train models through exact unitary evolution, 
-    we are restricted to $\sim8$-qubit Hamiltonians, so we only consider lattices which can 
+    we are restricted to $\sim8$-qubit \glspl{hamiltonian}, so we only consider lattices which can 
     be simulated in this limit. 
 The \gls{es} in this chapter is then simply to propose a set of models with no further model generation, 
     with comparisons between all pairs of models through \glspl{bf}.
 \par
 
-Connectivity between lattice sites is achieved within the specific Hamiltonian formalisms
+Connectivity between lattice sites is achieved within the specific \gls{hamiltonian} formalisms
     introduced in the following sections, 
     although in general we write $\mathcal{C} = \{\bkl \}$ as the set of connected pairs $\bkl$, 
-    such that the Hamiltonian for a given lattice can be thought of as 
+    such that the \gls{hamiltonian} for a given lattice can be thought of as 
     some function of its configuration, $\hat{H}\bk{\al, \mathcal{C}}$, 
     where $\al$ is the usual vector of multiplicative parameters corresponding to each term in the Hamiltonian.
 Then, we can specify candidate models only by their $\mathcal{C}$, 
@@ -374,7 +374,7 @@ We summarise these cases in \cref{table:ising_models}.
 We first construct models under each of these forms to verify \gls{qhl} is capable of learning in this regime:
     we train using the standard Ising model (\cref{eqn:ising_terms} as $\ho$ in \cref{fig:ising_two_param_learning}),
     and separately using the fully parameterised model (\cref{eqn:ising_fully_parameterised} as $\ho$ in \cref{fig:ising_fully_parameterised}).
-Ultimately, these two cases give the same Hamiltonian when we set $J_{\bkl} = J; \ h_k = h \ \forall k,l$.
+Ultimately, these two cases give the same \gls{hamiltonian} when we set $J_{\bkl} = J; \ h_k = h \ \forall k,l$.
 The fully parameterised model will learn the same parameters as the standard Ising model,
     and we can take the \gls{bf} between them to determine which parameterisation is favourable.
 Encouragingly, both models learned the parameters to high precision, although neither model converged,
@@ -409,7 +409,7 @@ This serves as a good \emph{sanity check}, confirming our expectation that
 
 
 \section{Heisenberg model}\label{sec:heisenberg}
-Generalising the Ising model, the Heisenberg Hamiltonian is another model for magnetic systems consisting of a set of 
+Generalising the Ising model, the Heisenberg \gls{hamiltonian} is another model for magnetic systems consisting of a set of 
     spins on a lattice \cite{greiner2012thermodynamics}. 
 It builds on the Ising model by additionally considering the spins' rotations about the $x$- and $y$-axes, generally stated as 
 \begin{equation}

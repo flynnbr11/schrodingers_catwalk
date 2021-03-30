@@ -1,18 +1,18 @@
 \glsresetall
 
 A \emph{model} is the mathematical description of a quantum system of interest, \gls{q}.
-In \cref{chapter:qhl}, we discussed a number of systems in terms of their Hamiltonian descriptions,
+In \cref{chapter:qhl}, we discussed a number of systems in terms of their \gls{hamiltonian} descriptions,
     although in general the description of a quantum system need not be Hamiltonian, 
     e.g. Lindbladian models describe open quantum systems, 
     so we will generically refer to the \emph{\gls{model}} of \gls{q} throughout. 
 \par 
 
 \gls{qmla} is an algorithm that builds upon the concept at the heart of \cref{chapter:qhl},
-    i.e. applying \gls{ml} to the characterisation of Hamiltonians.
+    i.e. applying \gls{ml} to the characterisation of \glspl{hamiltonian}.
 The extension, and central question of \gls{qmla} is:
     if we do not know the structure of the model which describes a target quantum system, 
     can we still learn about the physics of the system?
-That is, we remove the assumption about the form of the Hamiltonian model, 
+That is, we remove the assumption about the form of the \gls{hamiltonian} model, 
     and attempt to uncover which \emph{\glspl{term}} constitute the Hamiltonian, 
     and in so doing, learn the interactions the system is subject to. 
 \par 
@@ -26,7 +26,7 @@ We will first introduce some concepts which will prove useful when discussing \g
 % %%%%%%%%%%% MODELS %%%%%%%%%%% 
 \section{Models}\label{sec:models}
 \Glspl{model} are simply the mathematical objects which can be used to predict the behaviour of a system. 
-In this thesis, \glspl{model} are synonymous with Hamiltonians,
+In this thesis, \glspl{model} are synonymous with \glspl{hamiltonian},
     composed of a set of \emph{\glspl{term}}, $\termset = \{ \hat{t} \}$, 
     where each $\hat{t}$ is a matrix. 
 Each term is assosiated with a multiplicative scalar, which may be referred to as that term's \emph{parameter}: 
@@ -221,7 +221,7 @@ This approach would be favoured in principle, in the case where such constraints
      
 % %%%%%%%%%%% PROTOCOL %%%%%%%%%%%     
 \section{Quantum model learning agent protocol}\label{sec:qmla_protocol}
-Given a target quantum system, \gls{q}, described by some \emph{true} Hamiltonian model, $\ho$, 
+Given a target quantum system, \gls{q}, described by some \emph{true} \gls{hamiltonian} model, $\ho$, 
     \gls{qmla} distills a model $\hp \approx \ho$.
 We can think of \gls{qmla} as a forest search algorithm\footnotemark:
     consisting of a number of trees, each of which can have an arbitrary number of branches, 
@@ -553,7 +553,7 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
     
     Can mean any description of a quantum system which captures the interactions it is subject to. 
     \begin{easylist}[itemize]
-        && Here we exclusively consider Hamiltonian models, but Lindbladian models can also be considered as generators of quantum dynamics. 
+        && Here we exclusively consider \gls{hamiltonian} models, but Lindbladian models can also be considered as generators of quantum dynamics. 
     \end{easylist}
     \item[Model training] \
     
@@ -731,7 +731,7 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
 
 
 \begin{algorithm}
-    \caption{Quantum Hamiltonian Learning}
+    \caption{Quantum \gls{hamiltonian} Learning}
     \label{alg:qhl}
     \DontPrintSemicolon
     \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulatable quantum system, described by $\ho$}}
@@ -743,7 +743,7 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
     \KwIn{\ttt{$\Lambda(\pra)$} \tcp*[1]{Heuristic algorithm which designs \glspl{experiment}}}
     \KwIn{\ttt{RS($\pra$)} \tcp*[1]{Resampling algorithm for redrawing \glspl{particle}}}
 
-    \KwOut{$\al^{\prime}$ \tcp*[1]{estimate of Hamiltonian parameters}}\;
+    \KwOut{$\al^{\prime}$ \tcp*[1]{estimate of \gls{hamiltonian} parameters}}\;
 
 
     Sample \gls{nprt} times from $\pra \gets \mathcal{P}$ \tcp*[1]{\glspl{particle}}\;
@@ -797,7 +797,7 @@ The  \gls{model search}  iteself is listed in \cref{alg:model_search},
     \KwIn{ $\hat{H}_j^{\prime}, \hat{H}_k^{\prime}$ \tcp*[1]{Hamiltonian models after training (i.e. $\al_j, \al_k$ already optimised), on which to compare performance.}}
     \KwIn{ $\expset_j, \expset_k$ \tcp*[1]{\glspl{experiment} on which $\hat{H}_j^{\prime}$ and $\hat{H}_k^{\prime}$ were trained during QHL.}}
     
-    \KwOut{$B_{jk}$ \tcp*[1]{Bayes factor between two candidate Hamiltonians}}\;
+    \KwOut{$B_{jk}$ \tcp*[1]{Bayes factor between two candidate \glspl{hamiltonian}}}\;
           
     $\expset = \{ \expset_j \cup \expset_k \}$ \tcp*[1]{common \glspl{experiment} for fair comparison}\;
     \For{$\hat{H}_i^{\prime} \in  \{\hat{H}_j^{\prime}, \hat{H}_k^{\prime}$ \} }{
