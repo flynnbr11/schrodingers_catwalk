@@ -1,4 +1,11 @@
-\documentclass[12pt, a4paper, oneside, dottedtoc, openright]{scrbook}
+\documentclass[
+  12pt, 
+  a4paper, 
+  oneside, 
+  dottedtoc, 
+  openany,
+  % openright
+]{scrbook}
 
 % Load packages and other commands from preamble
 \input{logistics/preamble.tex}
@@ -11,6 +18,7 @@
 % Compile main document
 \begin{document}
   \input{front_back_matter/title_page}
+  % \input{front_back_matter/opening_page}
 
   % Add content to include in this build
   \iftoggle{development_mode}{

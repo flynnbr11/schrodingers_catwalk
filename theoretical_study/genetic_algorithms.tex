@@ -372,10 +372,13 @@ In \cref{table:objective_functions},
     \end{align}
 \end{equation}
 
+
 \begin{table}    
+    \begin{center}
     \input{theoretical_study/figures/obj_fnc_table.tex} % TODO fix latex errors in table
+    \end{center}
     \caption[Objective function examples]{
-        Examples of how each \gls{objective function}, $g$ as described in \cref{sec:inverse_ll} to \cref{sec:elo},
+        Examples of how each \acrfull{of}, $g$ as described in \cref{sec:inverse_ll} to \cref{sec:elo},
             assign selection probability (denoted \%) to the same set of candidate models, $\{\hi\}$ listed in \cref{eqn:obj_fnc_eg_models}, 
             when attempting to learn data from $\ho$. 
         Intermediate quantities, e.g. $w_i^A$, $g_i^p$ are described in the section of the main text describing the corresponding \gls{of}.
@@ -1003,7 +1006,7 @@ $N_m$ models are required to populate the next generation:
         \includegraphics{theoretical_study/figures/gen_alg_instance_combined.pdf}
     \end{center}
     \caption[Instance of QMLA genetic algorithm]{
-        A single \gls{instance} of the \gls{qmla} \acrlong{}{ga}.
+        A single \gls{instance} of the \gls{qmla} \acrlong{ga}.
         \textbf{a}, Ratings of all models for the first four generations. 
         Each line in each generation represents a model by its $\fs$ through colour. 
         Horizontal dotted lines show the starting rating at that generation. 

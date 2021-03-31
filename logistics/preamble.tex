@@ -77,7 +77,6 @@
   \setkeys{glslink}{hyper=false}%
  \fi
 }
-\preto\chapter{\glsresetall}
 
 
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}
@@ -111,6 +110,16 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \usepackage{rotating}
+
+
+\pagestyle{scrheadings} % <--- Affects the page header 
+                        % and page number in the footer.
+\clearscrheadfoot
+\ohead{\rightmark}  % comment this line and uncomment the next
+                    % to switch to `chapter name` in the heading
+%\ohead{\leftmark}  % comment out to 
+
+\cfoot[\pagemark]{\pagemark}
 
 % Ensure chapter/part numbers are legible and formatted 
 \titleformat{\chapter}[display]  
