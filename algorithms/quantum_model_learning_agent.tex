@@ -629,8 +629,7 @@ The  \gls{model search}  itself is listed in \cref{alg:model_search},
     \label{alg:qmla}
     \DontPrintSemicolon
     \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulateable quantum system}}
-    \KwIn{ $\mathbb{S}$ \tcp*[1]{set of exploration strategies}}\;
-
+    \KwIn{ $\mathbb{S}$ \tcp*[1]{set of exploration strategies}}
     \KwOut{$\hat{H}^{\prime}$ \tcp*[1]{\gls{champion model}}}\;
     
     $\mathbb{H}_c \gets \{\}$\;   
@@ -649,15 +648,14 @@ The  \gls{model search}  itself is listed in \cref{alg:model_search},
     \label{alg:model_search}
     \DontPrintSemicolon
     \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulateable quantum system}}
-    \KwIn{ $S$ \tcp*[1]{exploration strategy: collection of rules/subroutines}}\;
-
+    \KwIn{ $S$ \tcp*[1]{exploration strategy: collection of rules/subroutines}}
     \KwOut{$\hat{H}_{S}^{\prime}$ \tcp*[1]{exploration strategy's nominated \gls{champion model}}}\;
      
     $\nu \gets \{\}$
 
     $\mathbb{H}_c \gets \{\}$\;   
     \While{ \ttt{!S.terminate()} }{
-        $\mu \gets $ \ttt{S.generate\_models($\nu$)} \tcp*[1]{spawn new models, e.g. \cref{alg:generate_models}}\; 
+        $\mu \gets $ \ttt{S.generate\_models($\nu$)} \tcp*[1]{spawn new models, e.g. \cref{alg:generate_models}}
 
         \For{ $\hi \in \mu$}{
             $\hi^{\prime} \gets $ \ttt{S.train($\hi$)} \tcp*[1]{train candidate model, e.g. \cref{alg:qhl}}
@@ -743,17 +741,16 @@ The  \gls{model search}  itself is listed in \cref{alg:model_search},
     \label{alg:qhl}
     \DontPrintSemicolon
     \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulatable quantum system, described by $\ho$}}
-
     \KwIn{$\hat{H}_i$ \tcp*[1]{\gls{hamiltonian} model attempting to reproduce data from $\hat{H}_0$ }}
     \KwIn{$\pra$ \tcp*[1]{probability distribution for $\al = \al_0 $}}
     \KwIn{\gls{nexp} \tcp*[1]{number of \glspl{experiment} to iterate learning procedure for}}
     \KwIn{\gls{nprt} \tcp*[1]{number of \glspl{particle} to draw from $\pra$}}
     \KwIn{\ttt{$\Lambda(\pra)$} \tcp*[1]{\acrlong{edh}}}
-    \KwIn{\ttt{RS($\pra$)} \tcp*[1]{resampling algorithm for redrawing \glspl{particle}}}
+    \KwIn{\ttt{RS($\pra, \Np$)} \tcp*[1]{resampling algorithm for redrawing $\Np$ \glspl{particle} from $\Pr(\al)$}}
 
     \KwOut{$\al^{\prime}$ \tcp*[1]{estimate of \gls{hamiltonian} parameters}}\;
 
-    $\mathcal{P} \gets$ \ttt{sample($\pra, \Np$)} \tcp*[1]{sample \glspl{particle} from prior}
+    $\mathcal{P} \gets$ \ttt{RS}$(\pra, \Np)$ \tcp*[1]{sample \glspl{particle} from prior}
 
     \For{
         $p \in \mathcal{P}$ 
@@ -778,7 +775,7 @@ The  \gls{model search}  itself is listed in \cref{alg:model_search},
             $ 1 / \sum_p w_p^2 < \Np/2$
             \tcp*[1]{check whether to resample (are weights too small?)}
         }{
-            $\ttt{RS}(\pra) \gets \mathcal{P}$
+            $\mathcal{P} \gets$ \ttt{RS}$(\pra, \Np)$
             \tcp*[1]{redraw \glspl{particle} via resampling algorithm}
             \For{
                 $p \in \mathcal{P}$ 

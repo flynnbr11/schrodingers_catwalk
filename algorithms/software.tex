@@ -37,10 +37,10 @@ We can then utilise the \ttt{Footballer} class to store information about an \em
 \par 
 
 A fundamental concept in object-oriented programming is \emph{inheritance} between objects, 
-    such that a \emph{child} object inherits/ properties of its \emph{parent}.
+    such that a \emph{child} object inherits properties of its \emph{parent}.
 In general, a parent object can be thought of as an abstract concept, 
     which provides basic functionality and reasonable default properties,
-    while a child object can specify further details. 
+    while a child object can incorporate specific requirements.
 For example, an \ttt{Athlete} class can act as a parent to the \ttt{Footballer} class, 
     where the \ttt{Athlete} class holds core information such as date of birth. 
 This allows for the \ttt{Athlete} class to be recycled as the \emph{base} class for other child classes
@@ -108,7 +108,7 @@ class Footballer(Athlete):
         self, 
         footed,
         team, 
-        size = 'medium',
+        size='medium',
         **kwargs
     ):
         # Pass arguments to the parent class
@@ -165,11 +165,11 @@ mickey.summarise()
             blue are \emph{functions/methods} 
             and green are \emph{classes}. 
         Objects are grouped broady, with double lines showing communication channels between (groups of) objects. 
-        \textbf{Infrastructure}: functions for the implementation of model training/comparisons on 
+        \textbf{Infrastructure,} functions for the implementation of model training/comparisons on 
             a remote compute server, \cref{sec:infrastructure}.
-        \textbf{Algorithm}: implementation of the iterative procedures and decision-making 
+        \textbf{Algorithm,} implementation of the iterative procedures and decision-making 
         laid out in \cref{chapter:qmla}. The algorithmic controls are detailed in \cref{sec:sw_algorithm}. 
-        \textbf{Application}: inter-changeable data/functionality for the unique requirements 
+        \textbf{Application,} inter-changeable data/functionality for the unique requirements 
         of a given target system, \cref{sec:application}. 
         Users wishing to customise \gls{qmla} must choose a valid implementation for each object in this segment
             but need not alter any of the underlying framework.
@@ -216,8 +216,8 @@ Our base \gls{es} class uses sensible defaults for this modular functionality,
         As described in \cref{sec:likelihood}, the \gls{likelihood} is the means by which \gls{qhl} 
             trains candidate models.
         By default, \gls{qhl} calls a subroutine to compute \cref{eqn:likelihood}. 
-        This can be replaced by any function which, given a Hamiltonian, evolution time and \gls{probe} state, 
-        returns the likelihood, according to the experiment you wish to simulate. 
+        This can be replaced by any function which, given a \gls{hamiltonian}, evolution time and \gls{probe} state, 
+        returns the \gls{likelihood}, according to the desired experiment for simulation.
         For example, in \cref{chapter:nv}, the data on which models are trained comes from experimental measurements, 
             so we replace the \gls{likelihood} function with a calculation corresponding to the experimental procedure. 
     & \Gls{probe} generation. 
@@ -238,8 +238,8 @@ Our base \gls{es} class uses sensible defaults for this modular functionality,
 
 Additionally, applications require a series of settings for the model training phase, 
     such as the \glspl{hyperparameter} required by the resampling algorithm, \cite{liu2001combined}, 
-    as well as detailing the true (target) model, $\ho$, in the case where \gls{q} is a simulated quantum system.
-We can also specify some \gls{es}-specific analyses to examine its internal performance, 
+    as well as detailing the \gls{true model}, $\ho$, in the case where \gls{q} is simulated.
+We can also direct \gls{qmla} to perform \gls{es}-specific analyses to examine its internal performance, 
     although this is generally required during development/testing, and less useful thereafter. 
 
 \subsection{Algorithm}\label{sec:sw_algorithm}
@@ -255,12 +255,12 @@ The core \gls{qmla} class manages the database of models and their comparisons,
     \includegraphics{algorithms/figures/parallel_architecture.pdf}
     \caption[Parallel architecture for QMLA]{
         Parallel architecture for \acrfull{qmla}.
-        \textbf{Left}, \gls{qmla} generates tasks 
+        \textbf{Left,} \gls{qmla} generates tasks 
             -- either to train (blue dumbbells) or compare (green scales) models -- 
             and places them in a task queue. 
         Worker processes (depicted as computers) retrieve those tasks and compute them in parallel, 
             and interact with a database. 
-        \textbf{Right}, Distributed tasks occuring in parallel. 
+        \textbf{Right,} Distributed tasks occuring in parallel, with each process communicating with the database. 
         The left-hand process assumes the task of training the model with ID 5, $\hat{H}_5$:
             it first queries the database for a packet of core information, $M_5$, 
             which informs the model training procedure, for example the terms and parameters 
@@ -281,17 +281,17 @@ Amdahl's law stipulates that the \emph{speedup} available to any program due to 
     is limited by the portion of the program which is inherently parallelisable, versus inherently serial \cite{hill2008amdahl}.
 In \gls{qmla}, all the model training and model comparison subroutines can be run in parallel, 
     while only the administrative steps of the core \gls{qmla} algorithm are inherently serial, 
-    so \gls{qmla} can benefit greatly from parallelisation.
+    so \gls{qmla} can benefit greatly from parallelism.
 \par
 
-While there are a number of strategies for parallelising code over a cluster, 
+While there are a number of strategies for parallelising code over a cluster of individual \emph{processes}\footnote{Each process is a single \acrshort{cpu}}, 
     we use the \emph{master-worker} strategy, where one process acts as the \emph{master}, 
     determining which calculations are required at any given moment, 
-    then brokering self-contained tasks to \emph{workers}, 
+    then brokering self-contained \emph{tasks} to \emph{workers}, 
     which blindly solve a small problem, without knowledge of the wider context or algorithm \cite{hockney2019parallel}.
 The mapping here is trivial: the master of our algorithm is \gls{qmla}, 
     while workers can be used for the tasks of training and comparing models. 
-\gls{qmla} distributes tasks to \emph{worker} processes in a server, 
+\gls{qmla} distributes tasks to worker processes in a server, 
     i.e. we assume that \gls{qmla} is run on a machine with $N_c$ available parallel \emph{processes}\footnotemark. 
 One process is designated for the \gls{qmla} class alone,
     e.g. for the ranking of models and determination of the next models to tests, 
@@ -306,11 +306,11 @@ Thereafter it can perform some analysis; see \cref{sec:qmla_outputs} for further
 \gls{qmla} and all workers have shared access to a database, through which they communciate data pertaining to individual tasks \cite{redis}. 
 We use a simple \emph{task queue} for the distribution of jobs: 
     \gls{qmla} adds tasks to the queue and any available worker can take the next job and compute it \cite{redis_queue}.
-The queue can be access by only one thread at a time, to ensure tasks are not duplicated. 
+The queue can be accessed by only one thread at a time, to ensure tasks are not duplicated. 
 There are two types of task for workers:
 \begin{easylist}
     & to train a candidate model, $\hi$:
-        the worker first requests some essenital information about the model from the database, 
+        the worker first requests some essential information about the model from the database, 
         e.g. the name, terms and prior associated with the model, packaged in $M_i$;
         following completion, the worker compresses the result, $R_i$, and sends it to the database for storage. 
     & to compare two models, $\hi, \hj$: 
@@ -323,8 +323,8 @@ It is worth noting that tasks are completely independent, so some worker process
     may compute comparisons while others train models simultaneously, 
     although the comparison between $\hi, \hj$ can not begin until both $R_i, R_j$ are available. 
 To ensure tasks are not launched in advance of their dependencies, we enforce a \emph{blocking} protocol, 
-    whereby new batches of jobs are not released until the master receives all the results of jobs on which the new tasks depend.
-\gls{qmla} simply waits until all models on a given branch have been trained before queueing comparisons 
+    whereby new batches of jobs are not released until the master receives all the results of jobs on which the new tasks depend:
+    \gls{qmla} simply waits until all models on a given branch have been trained before queueing comparisons 
     on that branch.
 \par
 
@@ -332,12 +332,11 @@ Models are assigned a unique ID upon creation,
     and are uniquely described by their name, represented as a string in the \gls{qmla} class, 
     such that newly proposed models can be checked against the set of previously considered models 
     before being added to the database. 
-\gls{qmla} can hence check whether a proposed model, $\hi$ has already been trained, 
+\gls{qmla} can hence check whether a proposed model, $\hi$, has already been trained, 
     in which case it does not resubmit the model, but instead relies on the existing result, $R_i$. 
 Likewise \gls{qmla} can check for the presence of any comparison result, $C_{ij}$, 
     before submitting the comparison as a new task, 
     ensuring we do not duplicate expensive calculation. 
-\par 
 We depict the structure of this parallel architecture, and the master-worker strategy, in \cref{fig:parallel}.
 
 \subsection{Infrastructure}\label{sec:infrastructure}
@@ -364,8 +363,6 @@ These functions receive instructions such as \ttt{train model 10};
     they then contact the database for the set of shared settings, 
     such as \gls{nexp}, \gls{nprt} and the set of probes, 
     before performing the task, and then send the compressed result, $R_{10}$, to the database for storage.  
-
-\par 
 To achieve this separation between calculation and analysis, we use a redis database \cite{redis},
     which holds the core implementation settings, e.g. \gls{nexp}, \gls{nprt} and the set of probes to train upon, 
     as well as the compressed summaries of the outcomes of tasks.
@@ -390,7 +387,7 @@ Moreover, the model design subroutine is not gauranteed to exploit the aspects o
 
 Overall then, 
     it is pertinent to run the entire \gls{qmla} algorithm repeatedly and gather statistics about its performance and outcomes, 
-    rather than making definitive claims about \gls{q} based on a single \emph{instance} of the algorithm. 
+    rather than making definitive claims about \gls{q} based on a single implementation.
 We say that a single implementation of \gls{qmla} is an \emph{\gls{instance}},
     and $N_r$ \glspl{instance} are grouped in a \emph{\gls{run}}.
 \Glspl{instance} can be realised in parallel, 
@@ -412,6 +409,8 @@ Note, however, that neither the  \gls{win rate}  nor \gls{success rate} are sing
 
 The \gls{qmla} codebase is available at \cite{flynn2021QMLA},  
     with complete documentation including a tutorial at \cite{qmla_docs}. 
+We show how to design a custom \gls{es} and incorporate it within \gls{qmla}, 
+    and deploy the computation on a cluster in \cref{apdx:software_eg}.
 
 \subsection{Outputs and analysis}\label{sec:qmla_outputs}
 When a \gls{run} is launched, \gls{qmla} generates a \emph{\gls{results directory}} unique to that \gls{run}, 
@@ -464,9 +463,9 @@ Results are categorised across the levels of the framework, the most important o
 
     \item[\Acrlong{es}] \ 
     
-    Figures specific to the \gls{es}
+    Analysis specific to the \gls{es}.
     \begin{easylist}
-        && model generation metrics.
+        && For example, model generation metrics.
     \end{easylist}
 \end{description}
 \par 
