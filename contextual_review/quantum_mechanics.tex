@@ -36,14 +36,14 @@ One proposal\footnotemark \ for the equation of motion
 Although the \schrodinger equation is a \emph{postulate} of \gls{qm}, 
     i.e. can act as a starting point for \gls{qm} (see \cref{sec:postulates}), 
     we will sketch a brief, informal derivation to elucidate its meaning
-    following \cite{susskind2014quantum},
+    following \cite{susskind2014quantum}.
 We have yet to describe the structure of the wavefunction, which we will do in \cref{sec:quantum_info},
     but here we will represent wavefunctions using \emph{Dirac notation} (\cref{sec:dirac_notation}), 
     and can think of them generically as vectors, i.e. $\Psi(t) \rightarrow \ket{\psi(t)}$. 
 Suppose we have two such wavefunctions, $\ket{\phi(t)}, \ket{\psi(t)}$ which are functions of time $t > t_0$.
 We start with the assumption that \emph{similarity} is conserved between two wavefunctions,
     if they undergo the same transformation 
-    (Susskind's \emph{minus first} law of classical mechanics \cite{susskind2014quantum})
+    (Susskind's \emph{minus first} law of classical mechanics \cite{susskind2014quantum}),
 
 \begin{equation}
     \label{eqn:conservation_simularity}
@@ -105,7 +105,7 @@ We suppose the form of the offset, so we can write
     scaled by the reduced Planck constant, $\hbar = 1.054 \times 10^{-34}$.
 In other words, the operator $\ho$ is, generically, the generator of the evolution/dynamics of \gls{q}:
     any difference between $\ket{\psi(t_0)}$ and $\ket{\psi(t)}$ arises solely due to $\ho$. 
-So far there is no restriction on $\ho$\footnotemark.
+So far there is no restriction\footnotemark \ on $\ho$.
     \footnotetext{
         We do restrict $\ho$ to the same dimension as the Hilbert space in question;
         the concept of Hilbert space will be defined in \cref{sec:quantum_info}, 
@@ -194,8 +194,8 @@ We saw in \cref{eqn:hamiltonian_hermiticity} that $\ho$ is Hermitian;
 The quantum Hamiltonian, $\ho$, is analogous to the \emph{classical} Hamiltonian, 
     which captures all the interactions of a given classical system which contribute to its time evolution.
 Knowing the classical \gls{hamiltonian} and the initial conditions -- position and momentum -- 
-    Hamilton's equations of motion allow for the calcaultion of those quantities for the particle 
-    in question an infintesimal time later \cite{susskind2014classical}.    
+    Hamilton's equations of motion allow for the calculation of those quantities for the particle 
+    in question an infinitesimal time later \cite{susskind2014classical}.    
 Likewise, knowledge of the initial wavefunction, $\ket{\psi(t_0)}$, and the system's quantum Hamiltonian, $\ho$, 
     the quantum equation of motion -- namely the \schrodinger equation, \cref{eqn:schrodinger} -- 
     permits the calculation of the wavefunction at later times.
@@ -220,7 +220,7 @@ The Lindblad master equation is a generalisation of the \schrodinger equation,
     providing the equation of motion for open quantum systems \cite{breuer2002theory, manzano2020short}.
 In this thesis we only consider closed models for quantum systems;
     for meaningful impact of the techniques presented here, it will be necessary to expand them to account for the open system dynamics of realistic experiments.
-We do, however, show initial progress towards this endeavour by modelling a physical system through a closed Hamiltonian, \cref{chapter:nv}.
+We do, however, show initial progress towards this endeavour by modelling a physical system through a closed Hamiltonian in \cref{chapter:nv}.
 \par 
 
 %%%%%%%%%%%%% QUANTUM INFORMATION %%%%%%%%%%%%%
@@ -247,7 +247,7 @@ In general\footnotemark, a state can be seen as a \emph{superposition} across th
 
 The cornerstone of \gls{qm} is the effect of \emph{measurement} on quantum systems: 
     in general \gls{q} can be seen as occupying a multitude of eigenstates as in \cref{eqn:state_vector};
-    observing the system forces $\ket{\psi}$ into a definite occupation of a single eigenstate,
+    observing the system forces $\ket{\psi}$ into definite occupation of a single eigenstate,
     where the \emph{probability} that it is measured in each eigenstate $\ket{v_i}$ is given by $\absval{\alpha_i}^2$, 
     according to Born's rule \cite{born1926quantenmechanik}.
 $\alpha_i$ are hence named \emph{probability amplitudes} since they inform the probability of measuring the corresponding eigenstate. 
@@ -362,7 +362,7 @@ In general an $n$-dimensional vector is rotated by an $n \times n$ matrix;
     we require a $2\times2$ operator.
 One-qubit operators have the effect of rotating the state vector, 
     which we can again visualise on the Bloch sphere.
-By thinking of qubits generically with respect to any basis, we can encode information in the qubit's amplitudes,
+By thinking of qubits generically with respect to any basis, we can encode \emph{information} in the qubit's amplitudes,
     by performing operations (or \emph{gates}) upon the qubit, we change the information, 
     i.e. we can design information processing techniques leveraging the infrastructure -- states, operators and measurement -- of \gls{qm}. 
 \par 
@@ -408,14 +408,14 @@ The Pauli matrices are observable;
     in particular, the eigenstates of $\sz$ are the $Z$-basis states:
     $\sz \ket{0} = \ket{0}; \sz \ket{1} = - \ket{1}$.
 Recalling the earlier claim that the two-level quantum system (e.g. $H$ and $V$ polarisation of a photon)
-    can be mapped to eigenvectors\footnotemark \ of an obserable operator to form a qubit, 
+    can be mapped to eigenstates of an obserable operator to form a qubit, 
     we term the $Z$-basis the \emph{computational} basis.
 By defining the computational basis, we ground abstract computational reasoning in the physical realisation:
-    anywhere throughout this thesis where the basis states $\ket{0}, \ket{1}$ are referenced, 
+    anywhere throughout this thesis where the basis states $\{\ket{0}, \ket{1}\}$ are referenced, 
     we mean the eigenstates of the physical axis which is defined as the $Z$-axis for the system in question. 
-\footnotetext{
-    The terms \emph{eigenstate}, \emph{eigenfunction} and \emph{eigenvector} are interchangeable.
-}
+% \footnotetext{
+%     The terms \emph{eigenstate}, \emph{eigenfunction} and \emph{eigenstate} are interchangeable.
+% }
 In the computational basis, then, a qubit can be specified as
 \begin{equation}
     \label{eqn:computational_qubit}
@@ -469,8 +469,8 @@ Multipartite systems can exhibit the strictly non-classical phenomenon of \emph{
     \label{fig:expectation_values}
 \end{figure}
 
-Upon measurement, the state vector of \gls{q} has amplitude associated with only one eigenvector. 
-On average, however, the eigenvector to which it would collapse encodes statistical insight on the 
+Upon measurement, the state vector of \gls{q} has amplitude associated with only one eigenstate. 
+On average, however, the eigenstate to which it would collapse encodes statistical insight on the 
     state prior to measurement. 
 In other words, if we prepared $\ket{\psi}$ and measured it -- via some observable, $\hat{A}$ -- 
     and repeat the procedure $N$ times, 
@@ -481,7 +481,7 @@ In other words, if we prepared $\ket{\psi}$ and measured it -- via some observab
     \braket{\hat{A}} = \braket{\psi | \hat{A} | \psi} = \sum\limits_{i} \alpha_i \braket{v_i | \hat{A} | v_i},  
 \end{equation}
     where $\braket{\hat{A}}$ is the \gls{expectation value} (average) for the observable $\hat{A}$; 
-    $\ket{v_i}$ are the eigenvectors of $\hat{A}$, and $\alpha_i \in \mathbb{C}$ are the proability amplitudes
+    $\ket{v_i}$ are the eigenstates of $\hat{A}$, and $\alpha_i \in \mathbb{C}$ are the proability amplitudes
     associated with each $\ket{v_i}$ when the state $\ket{\psi}$ is represented as in \cref{eqn:state_vector}.
 We show some examples of \glspl{expectation value} for the observable Pauli matrices in \cref{fig:expectation_values}. 
 \par 
@@ -506,8 +506,8 @@ Applications range from enhanced sensing and metrology \cite{giovannetti2004quan
     to highly-secure communication and cryptography protocols \cite{bennett2020quantum, ekert1991quantum, gisin2002quantum}.
 The initial motivation for the development of quantum technologies, however, 
     was the  observation that simulating nature at a quantum level would require 
-    exponential resources and is therefore only feasible given controllable quantum systems,
-    which can accurately emulate the true dynamics \cite{feynman1982simulating, manin1980vychislimoe, benioff1980computer, benioff1982quantum}. 
+    exponential resources on a classical device, and is therefore only feasible given controllable quantum systems,
+    which can accurately emulate their true dynamics \cite{feynman1982simulating, manin1980vychislimoe, benioff1980computer, benioff1982quantum}. 
 
 \par 
 The notion of controlling quantum systems to mimic the dynamics of natural quantum systems is tantamount to 
@@ -564,7 +564,7 @@ Any two-level quantum system can be used as a qubit, so a range of platforms hav
     && difficult to engineer substantial coherence times, although there has been significant recent progress 
         \cite{martinis2014ucsb, wendin2017quantum},
         e.g. $T_1 \sim \mathcal{O}(\textrm{ms})$ in \cite{pop2014coherent};
-    && require cryogenic temperatures for operation \cite{devoret2004superconducting};
+    && require cryogenic temperatures for operation, demanding expensive and cumbersome infrastructure \cite{devoret2004superconducting};
     && arbitrary qubit connectivity at scale is yet to be demonstrated \cite{kjaergaard2020superconducting};
     && methods for the fabrication of medium-to-large scale devices required for fault tolerant 
         quantum computation are not yet known \cite{gambetta2017building}.        
@@ -610,7 +610,7 @@ Our restriction to classical resources leads to a few remarks:
 
 The remit of this thesis -- given these limitations --
     is therefore to robustly test the presented algorithms,
-    and provide a benchmark achieved through classical facilities, 
-    against which the same algorithm can be run in conjunction with quantum hardware. 
+    and provide benchmarks achieved through classical facilities, 
+    against which the same algorithms can be run in conjunction with quantum hardware. 
 
 \par 
