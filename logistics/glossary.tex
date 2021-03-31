@@ -294,28 +294,26 @@
 \newglossaryentry{results directory}
 {
     name={results directory},
-    description={
-        Directory to which the data and analysis for a given \gls{run} of \acrshort{qmla} are stored.
+    description={Directory to which the data and analysis for a given \gls{run} of \acrshort{qmla} are stored.
     }
 }
 
 \newglossaryentry{chromosome}
 {
     name=chromosome,
-    description={
-        A single candidate, in the space of valid solutions to the posed problem in a genetic algorithm, \cref{sec:genetic_algorithms}.
+    description={A single candidate, in the space of valid solutions to the posed problem in a genetic algorithm, \cref{sec:genetic_algorithms}.
     }
 }
 
 \newglossaryentry{gene}
 {
     name=gene,
-    description={
-        Individual element within a \gls{chromosome}.
+    description={Individual element within a \gls{chromosome}.
     }
 }
 
 
 %%%%%%%%%%% MAKE - keep at bottom of file %%%%%%%%%%%
+\RestoreAcronyms
 \makeglossaries
-% \setacronymstyle{long-short-desc}
+\preto\chapter{\glsresetall}

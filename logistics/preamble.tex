@@ -60,6 +60,7 @@
 %   acronym,
 %   toc=true, 
 % ]{glossaries}
+
 \usepackage[
   style=long,
   % style=altlongragged4col, 
@@ -69,19 +70,14 @@
   acronym,
   toc=true, 
 ]{glossaries-extra}
+% TODO get glsrestall links working again: check https://tex.stackexchange.com/questions/590724/equivalent-of-glsresetall-in-glossaries-extra
 \GlsXtrEnableLinkCounting[subsection]{general,acronym}
-
-% \renewcommand*{\glslinkpresetkeys}{%
-%  \ifnum\GlsXtrLinkCounterValue{\glslabel}>1
-%   \setkeys{glslink}{color=black}%
-%  \fi
-% }
 \renewcommand*{\glslinkpresetkeys}{%
  \ifnum\GlsXtrLinkCounterValue{\glslabel}>1
   \setkeys{glslink}{hyper=false}%
  \fi
 }
-
+\preto\chapter{\glsresetall}
 
 
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}
