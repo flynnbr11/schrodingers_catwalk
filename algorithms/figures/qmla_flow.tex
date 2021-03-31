@@ -102,8 +102,8 @@
     \end{center}
     
     \caption[Interface between QMLA and a single exploration strategy]{
-        Interface between \acrfull{qmla} and a single \acrfull{es}
-        The main components are the \gls{es}, model training subroutine, target quantum system (i.e. black box, \gls{q}), 
+        Interface between \acrfull{qmla} and a single \acrfull{es}.
+        The main components are the \gls{es}, model training subroutine, target quantum system \gls{q}, 
         and (quantum) simulator. 
         The main steps of the algorithm, shown in red with arrows denoting data transferred during that step, are as follows.
         \textbf{1}, QMLA retrieves decision infrastructure from ES, such as the consolidation mechanism and termination criteria.
@@ -114,12 +114,14 @@
         \textbf{3}, QMLA assigns a new branch $(\mu \gets \mu + 1)$ and places the newly proposed models upon it.
         \textbf{4}, Model training subroutine (here quantum \gls{hamiltonian} learning), performed independently for each model $\hi \in \mu$; 
         \textbf{4a}, QMLA passes $\hi$ to the model trainer; 
-        \textbf{4b}, construct a prior distribution $P_i$ describing the model's parameterisation $\vec{\alpha}_i$;
+        \textbf{4b}, construct a prior distribution $\Pr_{i}(\al)$ describing the model's parameterisation $\vec{\alpha}_i$;
         \textbf{4c}, design \gls{experiment} $e$ to perform on \gls{q} to optimise $\vec{\alpha}_i$;
         \textbf{4d}, perform $e$ on \gls{q} to retrieve a datum $d$;
-        \textbf{4e}, simulate $e$ for \glspl{particle} $\{ \vec{\alpha}_1, \dots , \vec{\alpha}_N \}$ 
-            sampled from $P_i$ to retrieve a \emph{likelihood} $\lk_{e}$;
-        \textbf{4e}, update the prior $P_i$ based on $(d, \lk_{e})$.
+        \textbf{4e}, simulate $e$ for \glspl{particle} $\{ \vec{\alpha}_1, \dots , \vec{\alpha}_{N_p} \}$ 
+            sampled from $\Pr_{i}(\al)$ to retrieve \glspl{likelihood} for each particle 
+            $\{\lk_{e}^{j}\}_{j \in \left(1, \dots N_P\right)} $;
+        \textbf{4e}, update the prior $\Pr_{i}(\al)$ based on 
+            $ \{(d, \lk_{e}^j) \}_{j \in \left( 1, \dots, N_P \right)}$.
         \textbf{5}, Evaluate and rank $\hi \in \mu$ according to the ES's consolidation mechanism.
         \textbf{6}, Check ES's termination criteria; if reached, proceed to \textbf{(7)}, otherwise return to \textbf{(2)}.
         \textbf{7}, Nominate \gls{champion model}, $\hp_{S}$.        

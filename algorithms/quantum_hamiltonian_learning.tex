@@ -427,7 +427,7 @@ $\lk_{e}$ are strictly positive, and because the natural logarithm is a monotoni
 Note, we know the initial weights are normalised,
 
 \begin{equation}
-    w_p^0 = \frac{1}{\Np} & \implies \sum_p^{\Np} w_p^0 = 1,
+    w_p^0 = \frac{1}{\Np}  \implies \sum_p^{\Np} w_p^0 = 1,
     \label{eqn:normalised_weights}
 \end{equation}
     so we can see 
@@ -729,13 +729,15 @@ $\Psi$ can be generated with respect to the individual learning problem as we wi
             \includegraphics{algorithms/figures/training_probes.pdf}
         }
     \end{center}
-    \caption[Training using varying probes]{
-        Training using varying probes.
+    \caption[Training through QHL with varying probes]{
+        Training through \gls{qhl} with varying probes.
         \textbf{Top,} Probes used,
         $\Psi = \{ \ket{0}^{\otimes n} \}$ (blue);
         $\Psi = \{ \ket{+}^{\otimes n} \}$ (orange);
         $\Psi$ constructed from tomographic probes (green);
         $\Psi$ random (red). 
+        We show the 1-qubit probes on the Bloch sphere, 
+            though probes are constructed up to $n$-qubits in each case. 
         \textbf{Bottom,} 
         \Gls{volume} of various models, 
             listed in \cref{eqn:qhl_test_models}, 
@@ -778,7 +780,7 @@ However, for model comparison purposes in general,
     it is helpful to have a universal set of probes, $\Psi$, upon which all models are trained. 
 The use of $\Psi$ minimises systematic bias towards particlar models, 
     which might arise from probes which serves as favourable bases for a subset of models, 
-    for example $\ket{+}$ in \cref{fig:probes_test}\textbf(a)}. 
+    for example $\ket{+}$ in \cref{fig:probes_test}\textbf{(a)}. 
 Careful consideration should be given to $N_{\psi}$ in the choice of the \gls{probe} generator, 
     since it is important to ensure probes robustly test the parameterisation across the entire Hilbert space.
 It is also necessary that \gls{smc} has sufficient opportunity to learn within a given subspace before moving to the next, 
