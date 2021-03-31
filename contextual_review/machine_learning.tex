@@ -23,8 +23,8 @@ Similarly to the remit of \cref{chapter:qm}, here we do not provide an exhaustiv
 
 \section{Classical machine learning}\label{sec:classical_ml}
 
-The first step in any \gls{ml} application is to consider the types of available data,
-    with respect to the ensemble of known algorithms. 
+The first step in any \gls{ml} application is to consider the ensemble of known algorithms, 
+    with respect to the available data.
 Classical \gls{ml} is usually described in three categories:
     \emph{supervised learning}, \emph{unsupervised learning} and \emph{reinforcement learning}.  
 These categories are broadly based on the format of data on which the insight can be built;
@@ -51,22 +51,26 @@ The output is a predictive tool which aims to reconstruct the classes of unseen 
 There are a number of families of algorithms even within the broad category of supervised \gls{ml},
     we define them as follows.
 \begin{description}
-    \item[Classification] 
-        algorithms aim to produce models which can assign unseen instances to the most appropriate label,
+    \item[Classification] \ 
+    
+        Algorithms that aim to produce models which can assign unseen instances to the most appropriate label,
         from a fixed set of available labels  \cite{kotsiantis2007supervised}.
-        \begin{easylist}
-            && e.g. labels indicate animals' species, and the feature vector for each sample (data point) 
+        \begin{easylist}[itemize]
+            && For example, labels indicate animals' species, and the feature vector for each sample (data point) 
             encodes the animals' height, weight, number of legs, etc. 
         \end{easylist}
-    \item[Regression] models capture the formulaic relationship -- which can be either linear or polynamial -- 
-            between numerical features a target scalar value, 
+    \item[Regression] \ 
+    
+        Models which capture the formulaic relationship -- either linear or polynamial -- 
+            between numerical features and a target scalar value, 
             by determining coefficients for each feature. 
         \begin{easylist} 
-            && e.g. $y$ is the salary of employees in a company, and the feature vector consists of 
+            && For example, $y$ is the salary of employees in a company, and the feature vector consists of 
             the individual employees' age, seniority, experience in years, etc. 
         \end{easylist}
 
-    \item[Neural networks]
+    \item[Neural networks] \ 
+    
         \emph{Universal function approximators}\footnotemark.
         \footnotetext{Including {deep learning} networks \cite{hinton2006fast}.}
         By invoking a set of linear and non-linear transformations on input data, 
@@ -78,15 +82,17 @@ There are a number of families of algorithms even within the broad category of s
             && For example, input \emph{neurons}\footnotemark \ encode the pixel values of images. 
             The neural network can be used to classify the objects it detects within the image. 
         \end{easylist}
-    \item[ Support Vector Machines ]
+
+    \item[ Support Vector Machines ] \ 
+        
         Distinguish similar data points by projecting data into higher dimensional space,
         and therein finding the hypersurface which separates classes \cite{boser1992training}.
         \begin{easylist}
             && Usually used for classification tasks.
             && For data $\mathcal{D} \in \mathbb{R}^n$, a hypersurface in $\mathbb{R}^{n-1}$, 
                 can be drawn arbitrarilily through the space (e.g. a 2D plane in a 3D space).
-            && Unseen data can then classified by which the partition they reside in when projected into the $n$-dimensional space.
-            && The task of the \glspl{svm} is to orient the hypersurface in such a way as to separate distinct classes.                 
+            && Unseen data can then classified by which partition they reside in when projected into the $n$-dimensional space.
+            && The task of the support vector machine is to orient the hypersurface in such a way as to separate distinct classes.                 
         \end{easylist}
 \end{description}
 
@@ -106,18 +112,8 @@ The remaining (20\%) of samples, $\mathcal{D}_v$, are retained for the evaluatio
 The evalutation thus captures how the model can be expected to perform on future, unlabelled data. 
 \par 
 
-\subsection{Performance metrics}\label{sec:performance_metrics}
-\begin{figure}
-    \begin{center}
-        \includegraphics{contextual_review/figures/confusion_matrix.pdf}
-    \end{center}
-    \caption[Confusion matrix]{
-        Confusion matrix showing the meaning of 
-        \acrlong{tp}, \acrlong{tn}, \acrlong{fp} and \acrlong{fn}.
-    }
-    \label{fig:confusion_matrix}
-\end{figure}
-The fair assessment of algorithms is achieved through a number of \emph{performance metrics}.
+\subsubsection{Performance metrics}\label{sec:performance_metrics}
+The fair assessment of supervised methods can be achieved through a number of \emph{performance metrics}.
 In each supervised \gls{ml} algorithm, the machine attempts to learn the structure of $f$ that optimises some internal \gls{of}, 
     e.g. minimising the average distance between predicted and target labels for regression, $\sum\limits_{d \in \mathcal{D}_t} y_d - y^{\prime}_d$.
 To assess the resultant model, we introduce a number of \emph{performance metrics}, 
@@ -132,13 +128,25 @@ Likewise, for numerical targets, the difference $\absval{y_i - y_i^{\prime}}$
     for each sample cumulatively indicate the strength of the model. 
 \par 
 
+
+
 There are a large number of quantities and performance metrics against which to judge models' outputs.
 In binary classification, we care about whether the model predicts that a given feature is present,
     and whether it predicts features incorrectly. 
 For example, the model aims to classify whether or not a dog is present in an image. 
 These type of binary predictions have four outcomes, which can be summarised in a \emph{confusion matrix} (\cref{fig:confusion_matrix}), 
     defined as in \cref{table:classification_metrics}.
-
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics{contextual_review/figures/confusion_matrix.pdf}
+    \end{center}
+    \caption[Confusion matrix]{
+        Confusion matrix showing the meaning of 
+        \acrlong{tp}, \acrlong{tn}, \acrlong{fp} and \acrlong{fn}.
+    }
+    \label{fig:confusion_matrix}
+\end{figure}
+    
 \begin{table}[H]
     \begin{center}
     \begin{tabular}{lcc}
@@ -188,7 +196,7 @@ We can use the concepts of \cref{table:classification_metrics} to define a serie
 Each metric has clear advantages, but consider also their drawbacks:
 \begin{easylist}[itemize]
     & Accuracy can be extremely misleading. 
-        For example, consider in a dataset of 10,000 samples, of which only 100 contain the feature of interest.
+        For example, consider a dataset of 10,000 samples, of which only 100 contain the feature of interest.
         A binary model which predicts every instance as \ttt{False} will achieve $\tn=9,900, \fn=100$, 
             receiving an overall $\textrm{accuracy}=99\%$, despite not having found a single positive sample. 
         This is clearly not useful in identifying the minority of cases of actual interest. 
@@ -217,7 +225,7 @@ A quantity which captures both of these is the $F_{\beta}$-score,
         \textrm{precision} \times \textrm{sensitivity} }{
         \left(\beta^2\times\textrm{precision}\right) + \textrm{sensitivity}},
 \end{equation}
-where $\beta \in \mathbb{R}$ is the relative weight of priority of sensitivity with respect to precision precision. 
+where $\beta \in \mathbb{R}$ is the relative weight of priority of sensitivity with respect to precision. 
 In particular, considering precision and sensitivity as equally important, i.e. $\beta=1$, 
     we have the $\fs$, 
 \begin{equation}
@@ -254,25 +262,33 @@ Although we do not utilise these methods in this thesis, we briefly summarise th
     again, we can further compartmentalise methods under this umbrella as follows \cite{geron2019hands}. 
 
 \begin{description}
-    \item[Clustering] Finding datapoints which are similar to each other, according to some distance metric.
+    \item[Clustering] \ 
+    
+    Finding datapoints which are similar to each other, according to some distance metric.
     \begin{easylist}
-        && e.g. online retailers grouping together customers with similar preferences, in order to tailor advertising campaigns. 
+        && For example, online retailers grouping together customers with similar preferences, in order to tailor advertising campaigns. 
     \end{easylist}
-    \item[Dimensionality reduction] Reducing the feature vector of each sample in a dataset to essential components,
+    \item[Dimensionality reduction] \ 
+    
+    Reducing the feature vector of each sample in a dataset to its essential components,
         which may be amalgamations of original features, while retaining structure within the data.
     \begin{easylist}
         && This can be used for visualisation to allow for inspection of complex datasets, 
         e.g. plotting users of a social network as nodes on a 2D map, where distinct social groups
         are kept distant. 
     \end{easylist}
-    \item[Association learning] Discover correlations among data. 
+    \item[Association learning] \ 
+    
+    Discover correlations among data. 
     \begin{easylist}
         && For instance, a supermarket may find that purchasers of certain products are likely also to buy others, 
             providing actionable insight.
             For example, purchases involving bread also include butter in $50\%$ of cases, 
             so positioning these nearby may increase sales by reminding consumers of their compatibility. 
     \end{easylist}
-    \item[Semi-supervised learning] Combine elements of supervised and unsupervised algorithms, 
+    \item[Semi-supervised learning] \ 
+    
+    Combine elements of supervised and unsupervised algorithms, 
         to achieve a task beyond the remit of either alone. 
         This often means classifying data where only occur a small subset of the total dataset is labelled. 
     \begin{easylist}
@@ -285,14 +301,14 @@ Although we do not utilise these methods in this thesis, we briefly summarise th
 \par 
 
 \subsection{Reinforcement learning}
-A third category of \gls{ml} algorithms are \acrfull{rl}. 
+A third category of \gls{ml} algorithms are reinforcement learning.
 These are methods where an \emph{agent} interacts with some environment, 
     and refines a \emph{policy} for reacting to different stimuli. 
 As such, the agent can, in principle, deal with a wide array of situations. 
 These methods underly technologies such as self-driving cars, 
     which inspect their surroundings through \emph{sensors};
-    compute an \emph{action} according to the policy; 
-    implement that action through \emph{actuators}.
+    compute an \emph{action} according to the policy, 
+    and implement that action through \emph{actuators}.
 Following an action, the agent senses whether that action was beneficial or detrimental, 
     and receives a \emph{reward} or \emph{punishment} accordingly. 
 Highly rewarded actions are likely to be repeated in future, allowing the agent to learn what response is 
@@ -301,47 +317,52 @@ Highly rewarded actions are likely to be repeated in future, allowing the agent 
     while braking at a green light is punished. 
 \par 
 The concept of a machine's \emph{agency} is an ongoing discussion in the \gls{ml} community \cite{franklin1996agent, wooldridge2009introduction}, 
-    and will be important in this thesis when we define our model learning protocol as an agent, 
+    and will be important in this thesis when we define our model learning protocol as an agent;
     we will revisit the concept in \cref{sec:agency}.
 
 \section{Quantum machine learning}\label{sec:quantum_machine_learning}
-\begin{figure}
-    \begin{center}
-        \includegraphics{contextual_review/figures/qml_types.pdf}
-    \end{center}
-    \caption[Types of quantum machine learning]{Types of \acrlong{qml}.}
-    \label{fig:qml_types}
-\end{figure}
 A growing domain is the development of \gls{ml} algorithms which run on quantum hardware, 
     or exploit data from quantum systems; generally referred to as \acrfull{qml} \cite{biamonte2017quantum, adcock2015advances}. 
 There are a number of methodologies which are referred to as \gls{qml};
     for clarity, we define the main branches here, as shown in \cref{fig:qml_types}. 
 
 \begin{description}\label{description:qml}
-    \item[Classical machine learning] 
-        refers to standard \gls{ml} as described in \cref{sec:classical_ml}, i.e. where the processors are \glspl{cpu} or \glspl{gpu}, 
+    \item[Classical machine learning] \ 
+
+        Standard \gls{ml} as described in \cref{sec:classical_ml}, i.e. where the processors are \glspl{cpu} or \glspl{gpu}, 
             and the applications are not of specific interest to problems in the quantum domain. 
         Recently, this branch has encompassed quantum \emph{inspired} \gls{ml}, which still target classical problems, 
             but use subroutines which were orginally found in the context of \gls{qml} \cite{tang2019quantum}.
 
-    \item[Quantum enhanced machine learning] 
+    \item[Quantum enhanced machine learning] \
+    
         A quantum co-processor is leveraged on classical data for some provable speedup,
         i.e. data that could otherwise be processed purely classically, is encoded, loaded onto and processed by quantum hardware.
         The quantum counterparts of classical \gls{ml} algorithms aim to solve the same problems, 
-            e.g. as \glspl{nn} \cite{schuld2014quest, cao2017quantum} and principle component analysis \cite{lloyd2014quantum}. 
+            e.g. as neural networks \cite{schuld2014quest, cao2017quantum} and principal component analysis \cite{lloyd2014quantum}. 
 
-    \item[Classical learning for quantum systems] 
+    \item[Classical learning for quantum systems] \ 
+    
         Classical processors are employed to extract insight on problems arising from quantum systems, 
             e.g. data is taken from a quantum system and analysed via purely classical methods.
             For instance, methods which aim to represent quantum states efficiently by leveraging 
-            \glspl{nn} \cite{carleo2017solving, torlai2018neural}. 
+            neural networks \cite{carleo2017solving, torlai2018neural}. 
 
-    \item[Complete quantum machine learning] 
+    \item[Complete quantum machine learning] \ 
+
         Data of a quantum nature is processed -- at least partially -- by quantum processors. 
         The most common technique here is \gls{vqe}, which simulates quantum systems on \glspl{qc}, 
         in order to retrieve quantum systems' ground states \cite{peruzzo2014variational}.
         The algorithm relies on a classical optimisation routine, but was devised explicitly for implementation on quantum hardware. 
 \end{description}
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics{contextual_review/figures/qml_types.pdf}
+    \end{center}
+    \caption[Types of quantum machine learning]{Types of \acrlong{qml}.}
+    \label{fig:qml_types}
+\end{figure}
+
 \par 
 
 The algorithms described in \cref{part:algorithms} and the applications in \crefrange{part:theoretical_study}{part:experimental_study}
@@ -390,7 +411,7 @@ Given access to the population, $\population$,
     && call this group of candidates the first generation, $\mu$. 
     & \label{ga:loop} Evaluate each candidate $\gamma_j \in \mu$
     && each $\gamma_j$ is assigned a fitness, $g_j$;
-    && the fitness is computed through an objective function acting on the candidate, i.e. $g_j = g(\gamma_j)$. 
+    && the fitness is computed through an \gls{of}, $g$ acting on the candidate, i.e. $g_j = g(\gamma_j)$. 
     & Map the fitnesses of each candidate, $\{g_j\}$, to selection probabilities for each candidate, $\{s_j\}$
     && e.g. by normalising the fitnesses, or by removing some poorly-performing candidates and then normalising. 
     & Generate the next generation of candidates
@@ -411,7 +432,7 @@ Given access to the population, $\population$,
     \label{alg:ga}
     \DontPrintSemicolon
     \KwIn{ $\population$ \tcp*[1]{Population of candidate solutions to given problem}}
-    \KwIn{ $g()$ \tcp*[1]{objective funtion}}
+    \KwIn{ $g()$ \tcp*[1]{function to compute objective funtion}}
     \KwIn{ $\ttt{map\_g\_to\_s}()$ \tcp*[1]{function to map fitness to selection probability}}
     \KwIn{ $\ttt{select\_parents}()$ \tcp*[1]{function to select parents among generation}}
     \KwIn{ $\ttt{crossover}()$ \tcp*[1]{function to cross over two parents to produce offspring}}
@@ -436,7 +457,7 @@ Given access to the population, $\population$,
         \While{$| \mu | < N_m$}{
             $p_1, p_2 \gets \ttt{select\_parents}(\{s_j\})$ \tcp*[1]{choose parents based on candidates' $s_j$}
             $c_1, c_2 \gets \ttt{crossover}(p_1,p_2)$ \tcp*[1]{generate offspring candidates based on parents}
-            $c_1, c_2 \gets \ttt{mutate}(c_1,c_2)$ \tcp*[1]{possibly mutate offspring}
+            $c_1, c_2 \gets \ttt{mutate}(c_1,c_2)$ \tcp*[1]{probabilistically mutate offspring}
 
             \For{$c \in \{c_1, c_2\}$ }{
                 \If{$c \notin \mu$}{
@@ -456,13 +477,12 @@ Given access to the population, $\population$,
 \par 
 
 Candidates are manifested as \emph{\glspl{chromosome}}, i.e. strings of fixed length, 
-    whose entries, called  \emph{\glspl{gene}}, each represent some element of the system.
+    whose entries, called  \emph{\glspl{gene}}, each represent some proposed element of the system.
 In general, \glspl{gene} can have continuous values, although usually, and for all purposes in this thesis, 
     genes are binary, capturing simply whether or not the \gls{gene}'s corresponding feature is present 
     in the \gls{chromosome}. 
 
-\subsection{Example: knapsack problem}\label{sec:knapsack}
-\begin{figure}
+\begin{figure}[t]
     \begin{center}
         \includegraphics[width=\textwidth]{theoretical_study/figures/knapsack_schematic.pdf}
     \end{center}
@@ -474,12 +494,12 @@ In general, \glspl{gene} can have continuous values, although usually, and for a
         The objective is to find the subset of objects which maximise the total value, 
         while not exceeding the capacity of the knapsack. 
         \textbf{Right}, An example chromosome, i.e. candidate $\gamma_j$, where the bits of the chromosome indicate 
-            whether the corresponding object is included, allowing for calculation of the total weight and value of 
-            the candidate solution, $w_{j}, v_{j}$. 
+            whether the corresponding object is included, allowing for calculation of the total weight $w_j$ and value $v_j$ of 
+            the candidate solution. 
     }
 
 \end{figure}
-
+\subsection{Illustrative example: knapsack problem}\label{sec:knapsack}
 One commonly referenced combinatorial optimisation problem is the \emph{knacksack problem},
     which we will use to elucidate the abstract concepts described so far, 
     and introduce further concepts with immediate illustration. 
@@ -499,6 +519,7 @@ For example, with $n=6$,
     \vec{\gamma}_j = \irow{1 & 0 & 0 & 0 & 0 & 1} \Longrightarrow  \gamma_j = \ttt{100001} 
 \end{equation} 
 indicates a set of objects consisting only of those indexed first and last, with none of the intermediate objects included. 
+
 
 \par
 The fitness of any candidate is then given by the total value of that configuration of objects, $v_j = \vec{v} \cdot \vec{\gamma}_j$, 
@@ -561,20 +582,6 @@ This would still require $10^{12}$ seconds to solve absolutely,
 
 
 \subsection{Selection mechanism}
-\begin{figure}
-    \begin{center}
-        \includegraphics{theoretical_study/figures/knapsack_roulette.pdf}
-    \end{center}
-    \caption[Roulette wheels for selection]{
-        Roulette wheels showing selection probability $s_i$ for corresponding candidates $\gamma_i$. 
-        Colours here only distinguish candidates, they do not encode any information. 
-        \textbf{a}, All valid candidates are assigned selection probability based on their value in \cref{table:knapsack_candidates}. 
-        \textbf{b}, The set of potential parents is truncated to include only the strongest five candidates. 
-        \textbf{c}, After one parent ($\gamma_2$) has been chosen, it is removed from the roulette wheel and the remaining
-         candidates' probabilities are renormalised for the selection of the second parent. 
-    }
-    \label{fig:knapsack_roulette}
-\end{figure}
 
 A key subroutine of every \gls{ga} is the mechanism through which it nominates candidates from generation $\mu$ 
 as parents to offsping candidates in $\mu+1$ \cite{luke11}. 
@@ -593,17 +600,17 @@ Among the viable schemes for selecting individual parents from $\mu$  are
 
 We will only detail the mechanism used in later applications within this thesis: 
     fitness proportional selection, known as \emph{roulette selection} \cite{luke11}. 
-This is a straightforward strategy where we directly map candidates' fitness, $g_i$ to a selection probability, $s_i$,
+This is a straightforward strategy where we directly map candidates' fitness, $g_j$ to a selection probability, $s_j$,
     simply by normalising $\{g_i\}$, 
     allowing us to visualise a roulette wheel of uneven wedges, each of which correspond to a candidate. 
 Then we need only conceptually spin the roulette wheel to select the first parent, $\gamma_{p_1}$. 
-We then remove $\gamma_{p_1}$ from the set of potential parents, renormalise the remaining $\{s_i\}$, 
+We then remove $\gamma_{p_1}$ from the set of potential parents, renormalise the remaining $\{s_j\}$, 
     and spin the wheel again to choose the second parent, $\gamma_{p_2}$. 
 The roulette selection is shown in \cref{fig:knapsack_roulette}.
 \par 
 
 In practice, we repeat the roulette selection process outlined until the next generation is filled, 
-    usually we have $|\mu| = N_m$, and desire that every generation should contain the same 
+    usually we have $|\mu| = N_m$, and desire that every generation should contain
     $N_m$ candidates, so we repeat the roulette selection $\nicefrac{N_m}{2}$ times per generation, 
     since every pair of parents yields two offspring.
 It is important that meaningful differences in fitness are reflected by the selection probability, 
@@ -612,6 +619,22 @@ It is important that meaningful differences in fitness are reflected by the sele
 We therefore wish to reduce the set of potential parents to ensure high quality offspring:
     we truncate $\mu$ with rate $\tau$ to retain only the $\tau N_m$ highest-fitness candidates as selectable parents.
 \par 
+
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics{theoretical_study/figures/knapsack_roulette.pdf}
+    \end{center}
+    \caption[Roulette wheels for selection]{
+        Roulette wheels showing selection probability $s_j$ for corresponding candidates $\gamma_j$. 
+        Colours here only distinguish candidates, they do not encode any information. 
+        \textbf{a}, All valid candidates are assigned selection probability based on their value in \cref{table:knapsack_candidates}. 
+        \textbf{b}, The set of potential parents is truncated to include only the strongest five candidates. 
+        \textbf{c}, After one parent ($\gamma_2$) has been chosen, it is removed from the roulette wheel and the remaining
+         candidates' probabilities are renormalised for the selection of the second parent. 
+    }
+    \label{fig:knapsack_roulette}
+\end{figure}
+
 
 \subsection{Reproduction}
 \label{sec:reproduction}
@@ -635,13 +658,14 @@ When a pair of parents have been nominated by the selection mechanism above,
     i.e. to produce offspring which should inherit and improve upon the properties of their parents. 
 Here we use a \emph{one-point crossover}, whereby the two parent chromosomes are mixed together 
     to form two offspring, about a single point, $\kappa$.
-For candidates of $n$ genes, $\gamma_{c_1}$ ($\gamma_{c_2}$) is produced when
-    the first $\kappa$ genes of $\gamma_{p_1}$ ($\gamma_{p_2}$) are conjoined with the latter $n - \kappa$ genes of $\gamma_{p_2}$ ($\gamma_{p_2}$).
+For candidates of $n$ genes, $\gamma_{c_1}$ is produced when
+    the first $\kappa$ genes of $\gamma_{p_1}$ are conjoined with the latter $n - \kappa$ genes of $\gamma_{p_2}$;
+    likewise $\gamma_{c_2}$ consists of the first $n-\kappa$ genes of $\gamma_{p_2}$ conjoined with the latter $\kappa$ genes of $\gamma_{p_1}$.
 Often $\kappa$ is restricted to the midpoint of the chromosomes, although in general it need not be: 
     we will instead consider $\kappa \in \left( \frac{n}{4}, \frac{3n}{4} \right)$, 
     e.g. with $n=12$, $\kappa \in (3, 9)$. 
 The one-point crossover is shown for $n=6$ with $\kappa=3$ in \cref{fig:gen_alg_reproduction}, 
-    recalling the chromosome structure from \cref{sec:knapsack}.
+    recalling the chromosome structure from \cref{fig:gen_alg_reproduction}.
 \par 
 By allowing $\kappa$ other than the midpoint, we drastically increase the number of combinations of parents available for reproduction. 
 Finally, then, parent selection is done by constructing a database of pairs of potentital parents with all available crossover points, 
@@ -650,7 +674,7 @@ This is conceptually equivalent to selection via roulette wheel as above.
 Recalling the fitnesses (values) of \cref{table:knapsack_candidates}, we generate the parent selection database
     in \cref{table:selection_database}.
 
-\begin{table}
+\begin{table}[t]
     \begin{center}
         \begin{tabular}{cccc}
             Parent 1 & Parent 2 & $\kappa$ & $s_{ij}$ \\

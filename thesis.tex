@@ -13,19 +13,18 @@
 \input{logistics/glossary.tex}
 
 \providetoggle{development_mode}
-\settoggle{development_mode}{false}
+\settoggle{development_mode}{true}
 
 % Compile main document
 \begin{document}
   \input{front_back_matter/title_page}
-  % \input{front_back_matter/opening_page}
 
   % Add content to include in this build
   \iftoggle{development_mode}{
     % partial document - development
     \input{logistics/front_matter.tex}
     \input{logistics/development_layout.tex}
-    \input{logistics/appendix_layout.tex}
+    % \input{logistics/appendix_layout.tex}
   }{
     % full document
     \input{logistics/front_matter.tex}
