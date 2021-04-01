@@ -227,19 +227,19 @@ A quantity which captures both of these is the $F_{\beta}$-score,
 \end{equation}
 where $\beta \in \mathbb{R}$ is the relative weight of priority of sensitivity with respect to precision. 
 In particular, considering precision and sensitivity as equally important, i.e. $\beta=1$, 
-    we have the $\fs$, 
+    we have the \gls{fscore}, 
 \begin{equation}
     \label{eqn:f_score_def}
     f_1 = \frac{2 \times \textrm{precision} \times \textrm{sensitivity} }{\textrm{precision} + \textrm{sensitivity}}.
 \end{equation}
-For examples of how $\fs$ balances these considerations, see \cref{table:f1_example}.
+For examples of how \gls{fscore} balances these considerations, see \cref{table:f1_example}.
 \par
 
 \begin{table}
     \centering
     \begin{tabular}{|ccc|cc|c|}
         \hline
-        \Acrlong{tp} & \Acrlong{fn} & \Acrlong{fp} & Precision & Sensitivity & $\fs$  \\
+        \Acrlong{tp} & \Acrlong{fn} & \Acrlong{fp} & Precision & Sensitivity & \gls{fscore}  \\
         \hline
         \rule{0pt}{3ex} 500 & 500 & 1000 & 33 & 50 & $ (\frac{2 \times 33 \times 50 }{33 + 50 }) = 37 $ \\
         \rule{0pt}{3ex} 500 & 500 & 500 & 50 & 50 & $( \frac{2 \times 50 \times 50 }{50 + 50 } ) = 50 $ \\

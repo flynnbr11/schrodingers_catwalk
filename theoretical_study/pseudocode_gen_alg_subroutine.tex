@@ -2,9 +2,15 @@
     \caption{\gls{es} subroutine: \ttt{generate\_models} via genetic algorithm}
     \label{alg:ga_generate_models}
     \DontPrintSemicolon
-    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}\
+    \KwIn{ $\nu$ \tcp*[1]{information about models considered to date}}
     \KwIn{ $\tau$ \tcp*[1]{truncation rate}}\;
-    \KwIn{ $g(\hi)$ \tcp*[1]{objective function that can act on any model $\hi$}}\;
+    \KwIn{ $g(\hi)$ \tcp*[1]{objective function that can act on any model $\hi$}}
+    \KwIn{ \ttt{rank()} \tcp*[1]{function to rank models relative to each other}}
+    \KwIn{ \ttt{truncate()} \tcp*[1]{function to truncate set of models}}
+    \KwIn{ \ttt{normalise()} \tcp*[1]{function to normalise models' scores}}
+    \KwIn{ \ttt{roulette()} \tcp*[1]{function to select models through roulette}}
+    \KwIn{ \ttt{crossover()} \tcp*[1]{function to crossover two parents to produce offspring}}
+    \KwIn{ \ttt{mutate()} \tcp*[1]{function to mutate offspring probabilistically}}\;
 
     \KwOut{$\mathbb{H}$ \tcp*[1]{set of models}}\;
     
