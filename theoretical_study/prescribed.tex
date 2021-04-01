@@ -18,12 +18,12 @@ In order to perform this calibration,
     we treat $S_u$ as the system, \gls{q}, i.e. we call upon it to retrieve the datum $d$ in \cref{eqn:likelihood}, 
     where the calculation of the \glspl{likelihood}  for each \gls{particle} are computed through $S_t$. 
 If $S_u$ is reliable, the data from its calculations will be consistent with some $\ho$ of our choosing. 
-Conversely, miscalibrations will mainfest as imperfectly implemented gates/steps in the calculation of the system's likelihood, 
+Conversely, miscalibrations can mainfest as imperfectly implemented gates/steps in the calculation of the system's \gls{likelihood}, 
     and so would result in data inconsistent with $\ho$. 
 Therefore, if we can prescribe the most likely miscalibrations, it may be feasible to compose a set 
     of models, $\mathbb{H}$, which represent those cases, and search for $\hp$ only within $\mathbb{H}$,
     to identify the dominant error mechanism(s). 
-For example, by encoding in $\ho$ the connections between every pair of qubits on the device qubits,
+For example, by encoding in $\ho$ the connections between every pair of qubits on the device,
     we can compose candidate models of restricted connectivity, for instance where some pairs of qubits are disconnected, 
     and hence discover whether the device allows arbitrary two-qubit gates, 
     and which pairs are disallowed. 
@@ -48,8 +48,9 @@ The goal of \gls{qmla} is then to identify the structure of the true lattice,
 Due to simluation constraints, because we train models through exact unitary evolution, 
     we are restricted to $\sim8$-qubit \glspl{hamiltonian}, so we only consider lattices which can 
     be simulated in this limit. 
-The \gls{es} in this chapter is then simply to propose a set of models with no further model generation, 
-    with comparisons between all pairs of models through \glspl{bf}.
+The \gls{es} in this chapter is then simply to propose a set of models $\mathbb{H}$,
+    with no further model generation, 
+    and comparisons between all pairs of models through \glspl{bf}.
 \par
 
 Connectivity between lattice sites is achieved within the specific \gls{hamiltonian} formalisms
@@ -181,7 +182,7 @@ The interaction term\footnotemark \ indicates the class of magnetism of the pair
     \end{cases}
 \end{equation}
 If all interaction pairs are described by the same case in \cref{eqn:ising_magnetism_cases}, 
-    the entire system can be said belong to that class of magnetism. 
+    the entire system can be seen as belonging to that class of magnetism. 
 
 \footnotetext{
     Note: the terms $J_{kl}$ is often presented as $-J_{kl}$ in \cref{eqn:ising_standard_form}, 
@@ -195,9 +196,9 @@ If all interaction pairs are described by the same case in \cref{eqn:ising_magne
 \subsection{Note on optimising the Ising model}\label{sec:ising_optimisation}
 Many treatments of the Ising model seek to find the ground state
     of the system by optimising the configuration of spins in the system. 
-This involves treating the Ising model classically, 
+This involves treating the Ising model \emph{classically}, 
     effectively by neglecting the transverse magnetic field term $(h_k \rightarrow 0)$,
-    such that the ground state is found by minimising the energy function
+    such that the ground state is found by minimising the energy function is given by
 \begin{equation}
     \label{eqn:ising_energy_function}
     E_I = \braket{\psi | H_I | \psi} = 
@@ -226,10 +227,10 @@ So, by restricting the individual spins to $\ket{\psi_k} \in \{\ket{+}, \ket{-}\
     we can equivalently consider every spin $s_k$ in the system
     as a binary variable $s_k \in \{\pm 1\}$,
     i.e. $s_k s_l = \pm 1$ in \cref{eqn:ising_spin_cases},
-    such that the energy function
+    such that the energy function,
 \begin{equation}
     \label{eqn:ising_energy}
-    E_I(\mathcal{S}) = \braket{ \psi | \hat{H}_I | \psi } = \sum\limits_{\bkl \in \cc} J_{kl} \ \ s_k s_l
+    E_I(\mathcal{S}) = \braket{ \psi | \hat{H}_I | \psi } = \sum\limits_{\bkl \in \cc} J_{kl} \ \ s_k s_l,
 \end{equation}
     can be minimised by optimising the configuration $\mathcal{S} = s_1, \dots, s_N$, when the interaction terms $\{J_{\bkl}\}$ are known.
 The optimal configuration $\mathcal{S}_0$ can then be mapped to a 
@@ -272,7 +273,7 @@ In the first case, we can represent the Ising model for a given lattice configur
 \begin{subequations}
     \label{eqn:ising_terms}
     \begin{equation}
-        \vec{\alpha}_{I} = \irow{ J & h }
+        \vec{\alpha}_{I} = \irow{ J & h };
     \end{equation}
     \begin{equation}
         \terms_I = \icol{ 
@@ -287,7 +288,7 @@ In the more general second case, termed the \emph{fully parameterised} Ising mod
 \begin{subequations}
     \label{eqn:ising_fully_parameterised}
     \begin{equation}
-        \alpha_{I} = \{ J_{k,l}, \ h_k \}_{\bkl \in \cc}
+        \alpha_{I} = \{ J_{k,l}, \ h_k \}_{\bkl \in \cc};
     \end{equation}
     \begin{equation}
         \termset_I = \left\{ 
@@ -300,7 +301,7 @@ In the more general second case, termed the \emph{fully parameterised} Ising mod
     and $h_k$ associated with each field term, $\s_k$. 
 We summarise these cases in \cref{table:ising_models}.
 
-\begin{table}[H]
+\begin{table}[h]
     \begin{center}
         \begin{tabular}{crr}
              & $J_{\bkl}$  & $h_{k}$ \\
@@ -319,7 +320,6 @@ We summarise these cases in \cref{table:ising_models}.
 
 \begin{figure}[t]
     \begin{center}
-        % \QMLAfig{Nov_18/13_56/standard_ising_qhl.pdf}
         \includegraphics{theoretical_study/figures/standard_ising_qhl.pdf}
     \end{center}
 
@@ -328,9 +328,9 @@ We summarise these cases in \cref{table:ising_models}.
         as in \cref{eqn:ising_standard_form}. 
         \textbf{a-b,} the parameter estimates' progression against training \glspl{experiment}, 
             with the corresponding term labelling the $y$-axis. 
-        The parameters are presented in arbitrary units of energy. 
+        The parameters and volume are presented in arbitrary units of energy. 
         \textbf{c,} the \gls{volume} of the parameter distribution at each experiment, 
-            as well as the evolution time chosen by the \gls{edh}. 
+            as well as the evolution time chosen by the \acrlong{edh}. 
         \figtableref
     }
     \label{fig:ising_two_param_learning}
@@ -338,7 +338,6 @@ We summarise these cases in \cref{table:ising_models}.
 
 \begin{figure}
     \begin{center}
-        % \QMLAfig{Nov_18/13_56/fully_param_ising_qhl.pdf}
         \includegraphics{theoretical_study/figures/fully_param_ising_qhl.pdf}
     \end{center}
     \caption[\Glsentrylong{qhl} for the fully parameterised Ising model]{
@@ -347,7 +346,7 @@ We summarise these cases in \cref{table:ising_models}.
             as in \cref{eqn:ising_fully_parameterised}. 
         \textbf{a-f}, the parameter estimates' progression against training \glspl{experiment}, 
             with the corresponding term labelling the $y$-axis. 
-            The parameters are presented in arbitrary units of energy. 
+            The parameters and volume are presented in arbitrary units of energy. 
         \textbf{g,} the \gls{volume} of the parameter distribution at each experiment, 
             as well as the evolution time chosen by the \gls{edh}.  
         \figtableref
@@ -382,7 +381,7 @@ Encouragingly, both models learned the parameters to high precision, although ne
 This outcome is common: training is not guaranteed to converge\footnotemark, 
     so it can be impractical to seek saturation in the training phase for every model, 
     since this may require a very large number of \glspl{experiment} and \glspl{particle}. 
-\footnotetext{When the model being trained is $\ho$, the volume may not saturate until numerical precision is reached.}
+\footnotetext{When the model being trained is $\ho$, the volume may not saturate until numerical precision is reached \cite{Wiebe:2014qhl}.}
 It would be preferable for each model's parameterisation to have converged before comparing them, 
     but in practice this is infeasible due to the indefinite resources required; 
     model comparisons must rely on limited training schedules which are presumed to reflect the overall ability of 
@@ -405,7 +404,7 @@ The dynamics produced by both models are shown in \cref{fig:ising_model_types_dy
     by a \gls{bf} of $\mathcal{B} = 10^{19}$.
 This serves as a good \emph{sanity check}, confirming our expectation that 
     the \gls{bf} will favour the simpler model (i.e. fewer parameters) even when both models 
-    are trained to a high precision to very similar parmaeters, and are difficult to distinguish through human intuition. 
+    are trained to a high precision to very similar parameters, and are difficult to distinguish through human intuition. 
 
 
 \section{Heisenberg model}\label{sec:heisenberg}
@@ -425,7 +424,7 @@ We can consider a number of formulations of the Heisenberg model, by considering
     parameters are completely unique for each pair of spins in each axis, 
     or  are shared by pairs of spins.
 We list a number of prominent representations within the family of Heisenberg models in \cref{table:heisenberg_models}. 
-\begin{table}[H]
+\begin{table}[h]
     \begin{center}
         \begin{tabular}{crrrr}
              & $J^{x}_{kl}$ & $J^{y}_{kl}$ & $J^{z}_{kl}$ & $h_{k}$ \\
@@ -448,13 +447,13 @@ Again, there are a number of possibile models to test,
     although we can reasonably expect these to follow the same arguments as for the Ising model cases: 
     increasing generality -- at the expense of larger parameter dimension -- 
     requires more resources to learn to a reasonable level.    
-In \cref{chapter:ga} we will consider the fully parameterised model, 
-    but here focus on the more restrictive Heisenberg-XYZ model:
-    the parameters and terms of interest are then captured by \cref{eqn:heisenberg_terms}.
+We will consider the fully parameterised model in \cref{chapter:ga};
+    here however we will focus on the more restrictive Heisenberg-XYZ model,
+    suc that the parameters and terms of interest are then captured by \cref{eqn:heisenberg_terms}.
 
 \begin{subequations}
     \begin{equation}
-        \al_{H} = \irow{ J^x & J^y & J^z & h}    
+        \al_{H} = \irow{ J^x & J^y & J^z & h};
     \end{equation}
 
     \begin{equation}
@@ -504,10 +503,10 @@ The Hubbard model is generally stated in second quantisation as
 Again, we can achieve differing physics by controlling whether the parameters are shared (e.g. $t_{\bkl}^s$), 
     with similar consequences to the Ising and Heisenberg models, where additional parameterisation
     comes at the expense of slower/worse performance in training. 
-We list a subset of possible configurations in \cref{table:hubbard_model_types}, 
+We list a subset of possible configurations in \cref{table:hubbard_model_types};
     again here we will use the standard form for the remainder of this chapter, \cref{eqn:hubbard_terms}. 
 
-\begin{table}[H]
+\begin{table}[h]
     \begin{center}
         \begin{tabular}{crrrr}
                 & $t^{\uparrow}_{\bkl}$& $t^{\downarrow}_{\bkl}$ & $U_k$ & $\mu_k$ \\
@@ -526,7 +525,7 @@ We list a subset of possible configurations in \cref{table:hubbard_model_types},
 
 \begin{subequations}
     \begin{equation}
-        \al_{FH} = \irow{ t^{\uparrow} & t^{\downarrow} & U & \mu}
+        \al_{FH} = \irow{ t^{\uparrow} & t^{\downarrow} & U & \mu};
     \end{equation}
     
     \begin{equation}
@@ -587,7 +586,7 @@ In the Hubbard model, we assign a mode for each combination of spin $s \in \{\up
 
 In particular, since fermions obey the Pauli exclusion principle, 
     i.e. every spin/site can be occupied by at most one electron, and we can view them as two-level systems, 
-    so we have $n_{sk} \in \{0, 1\} \forall s, k$,     
+    so we have $n_{sk} \in \{0, 1\} \forall s, k$.     
 We therefore use a similar system to the number basis: 
     a qubit registered as $\ket{0}$ corresponds to an empty mode, while $\ket{1}$ holds a fermion. 
 Empty lattices are thus given by $\ket{0}^{\otimes 2N}$. 
@@ -670,24 +669,24 @@ Therefore, in the design of probes for training Hubbard models,
     we can generate probes in the subspace spanned by half-filled states. 
 
 \section{Model learning for lattices}
-Finally, then, we can use the lattice systems introduced in \cref{sec:lattices,sec:ising,sec:heisenberg,sec:hubbard}
-    as first case studies for \gls{qmla}. 
+Finally, then, we can use the model formalisms introduced in \cref{sec:lattices,sec:ising,sec:heisenberg,sec:hubbard}
+    as first case studies for \gls{qmla}, in conjunction with the set of lattices $\mathbb{C}$ shown in \cref{fig:lattices}. 
 Each $\cc \in \mathbb{C}$ can specify a unique model under their standard forms:
     \cref{eqn:ising_terms} for Ising, \cref{eqn:heisenberg_terms} for Heisenberg 
     and \cref{eqn:hubbard_terms} for Hubbard models.     
-We can then devise a simple \gls{es} which only tests the models corresponding to lattices in $\mathbb{C}$, 
-    with no further model generation, i.e. \cref{alg:lattice_exploration_strategy}, 
+We can then devise a simple \acrfull+{es} which only tests the models corresponding to lattices in $\mathbb{C}$, 
+    with no further model generation, \cref{alg:lattice_exploration_strategy}, 
     and compares every pair of models through \glspl{bf}, 
     deeming the champion as that which wins the largest number of comparisons, 
-    as in \cref{alg:lattice_exploration_strategy_consolidation}.
+    \cref{alg:lattice_exploration_strategy_consolidation}.
 
 \begin{algorithm}
     \caption{Lattice exploration strategy: model generation}
     \label{alg:lattice_exploration_strategy}
     \DontPrintSemicolon
-    \KwIn{ $\mathbb{C}$ \tcp*[1]{Set of lattice configurations}}
+    \KwIn{ $\mathbb{C}$ \tcp*[1]{set of lattice configurations}}
 
-    \KwOut{$\{ \hi \}$ \tcp*[1]{Set of models to tests}}\;
+    \KwOut{$\{ \hi \}$ \tcp*[1]{set of models to test}}\;
 
     $\mathbb{H}$ = \{ \}\;
     \For{$\cc \in \mathbb{C}$}{
@@ -701,20 +700,20 @@ We can then devise a simple \gls{es} which only tests the models corresponding t
     \caption{Lattice exploration strategy: consolidation}
     \label{alg:lattice_exploration_strategy_consolidation}
     \DontPrintSemicolon
-    \KwIn{ $\mathbb{H}$ \tcp*[1]{Set of trained models}}
+    \KwIn{ $\mathbb{H}$ \tcp*[1]{set of trained models}}
 
-    \KwOut{$\hp$ \tcp*[1]{Favoured model}}\;
+    \KwOut{$\hp$ \tcp*[1]{favoured model}}\;
 
     \For{ $\hi \in \mathbb{H}$}{
-        $s_i \gets 0 $ \tcp*[1]{Score for every model}
+        $s_i \gets 0 $ \tcp*[1]{score for every model}
     }
 
     \For{$\hi \in \mathbb{H}$}{
         \For{$\hj \in \mathbb{H}\setminus \{\hi\}$}{
-            $\bij \gets BF(\hi, \hj)$ \tcp*[1]{Compute Bayes factor via \cref{alg:bayes_factor}}
+            $\bij \gets BF(\hi, \hj)$ \tcp*[1]{compute Bayes factor via \cref{alg:bayes_factor}}
 
             \If{$\bij > 1$}{
-                $s_i \gets s_i + 1$ \tcp*[1]{$\hi$'s score increases if it is the stronger model}
+                $s_i \gets s_i + 1$ \tcp*[1]{$\hi$'s score increases if it is favoured by the \gls{bf}}
             }
         }
     }
@@ -725,22 +724,25 @@ We can then devise a simple \gls{es} which only tests the models corresponding t
 
 
 \begin{figure}
-    % \QMLAfig{Nov_19/12_04/lattice_qmla_summary.pdf}
     \begin{center}
         \includegraphics{theoretical_study/figures/lattice_qmla_summary.pdf}
     \end{center}
     \caption[QMLA for prescribed set of lattices under Ising formalism]{
         \gls{qmla} for prescribed set of lattices under Ising formalism. 
-        The lattice indices correspond to those in \cref{fig:lattices}, 
+        The lattice indices correspond to those in \cref{fig:lattices},
+            indexed by the legend in \textbf{(e)},  
             and the true system is given by lattice $d$. 
-        \textbf{a-b,} the decrease in \gls{volume} for each model's training phase (spread over two plots for readibility).
+        \textbf{a-b,} the decrease in \gls{volume} for each model's training phase 
+            (in abitrary energy units, spread over two plots for readibility).
         \textbf{c-d,} trained models are used to reproduce dynamics, compared with the dynamics of the
-            true system (red dots). 
-        \textbf{e,} Heatmap of $\log_{10} \bij$ between every pair of models. The \gls{bf} is read as 
-        $i$ versus $j$, where $i$ is the model on the $y$-axis and $j$ is the model on the $x$-axis. 
+            \gls{true model} (red dots). 
+        \textbf{e,} Heatmap of $\log_{10} \bij$ between every pair of models. 
+        Each tile gives the \gls{bf} between a pair of models, $\left(\hi, \hj\right)$. 
+        The \gls{bf} is read as 
+        $\hi$ versus $\hj$, where $\hi$ is the model on the $y$-axis and $\hj$ is the model on the $x$-axis. 
         $\log_{10} \bij > 0$ (green) favours the model listed on the $y$-axis;
         $\log_{10} \bij < 0$ (purple) favours the model listed on the $x$-axis.
-        The inset shows the number of \gls{bf} comparisons won by each model, i.e. the models' scores. 
+        \textbf{Inset,} the number of \gls{bf} comparisons won by each lattice, i.e. the models' scores. 
         \figtableref
     }
     \label{fig:lattice_qmla_eg}
@@ -752,10 +754,28 @@ We run \gls{qmla} by training the ten models corresponding to the ten lattices, 
     comparing the models predictive power, \cref{fig:lattice_qmla_eg}\textbf{c-d},
     through \gls{bf} (\cref{fig:lattice_qmla_eg}\textbf{e}), 
     and choosing the model which wins the largest number of \gls{bf} contests. 
-In this example, $\ho$ is stronger than every alternative model according to the \glspl{bf}, 
+In this example, $\ho$ is stronger than every alternative model according to the \glspl{bf},
+    where the lattice \emph{d} wins all nine of its \gls{bf} comparisons, 
     and is hence determined as $\hp$. 
 
 \section{Complete QMLA run for lattice sets}
+\begin{figure}
+    \begin{center}
+        \includegraphics{theoretical_study/figures/lattice_successes_two_column.pdf}
+    \end{center}
+    \caption[QMLA success rates for lattices]{
+        Rates of success for \gls{qmla} under various conditions. 
+        Each lattice is set as the \gls{true model} $\ho$ for ten independent instances. 
+        In each instance, the \gls{es} considers the available lattices 
+            (\textbf{a-j} for Ising and Heisenberg cases and \textbf{a-e} for the Hubbard case), 
+            and selects a \gls{champion model} $\hp$ as that most consistent with data generated by $\ho$. 
+        The figure displays the rate at which each lattice is correctly identified as $\ho$
+            under standard Ising, Heisenberg and Hubbard formalisms. 
+        \figtableref
+    }
+    \label{fig:lattice_success_rates}
+\end{figure}
+
 In order to test \gls{qmla} robustly, 
     we can use each of the lattices shown in \cref{fig:lattices} to specify $\ho$, 
     to ensure the algorithm is capable of finding the underlying model of arbitrary complexity, 
@@ -774,36 +794,18 @@ Moreover, we can extend this test to the Heisenberg and Hubbard formalisms;
 By running 10 independent \gls{qmla} \glspl{instance} for each lattice under each formalism,
     we can gauge the success rate of the algorithm for distinguishing basic lattices from each other. 
 We present the result of these tests in \cref{fig:lattice_success_rates},   
-    finding in all cases that \gls{qmla} identifies $\ho$ with success rates at least $70\%$. 
+    finding in all cases that \gls{qmla} identifies $\ho$ with \glspl{success rate} at least $70\%$. 
 A general trend appears to emerge -- especially in the case of the Hubbard model --
     where target models of higher dimension are identified less often. 
 This can likely be attributed to the training resources provided:
-    here models are trained with $\Ne=1000 \Np=4000$, 
+    here models are trained with $\Ne=1000, \ \Np=4000$, 
     which are clearly sufficient for training models of few qubits/parameters, 
     but may not allow larger models to train well.  
-In the next section we investigate whether increasing \gls{nexp}, \gls{nprt} leads to higher success rates in general, 
-    and find a strong correlation between training resources and \gls{qmla} success rate. 
+In the next section we investigate whether increasing \gls{nexp}, \gls{nprt} leads to higher \glspl{success rate} in general, 
+    and find a strong correlation between training resources and \gls{qmla} \gls{success rate}. 
 We therefore expect that the results for large target models could be improved by drastically increasing the training resources, 
     although for practicality, we do not perform such a test.
-
 \par 
-
-\begin{figure}
-    \begin{center}
-        \includegraphics{theoretical_study/figures/lattice_successes_two_column.pdf}
-    \end{center}
-    \caption[QMLA success rates for lattices]{
-        Rates of success for \gls{qmla} under various conditions. 
-        Each lattice is set as the \gls{true model} $\ho$ for ten independent instances. 
-        In each instance, the \gls{es} considers the available lattices 
-            (\textbf{a-j} for Ising and Heisenberg cases and \textbf{a-e} for the Hubbard case), 
-            and selects a \gls{champion model} $\hp$ as that most consistent with data generated by $\ho$. 
-        The figure displays the rate at which each lattice is correctly identified as $\ho$
-            under standard Ising, Heisenberg and Hubbard formalisms. 
-        \figtableref
-    }
-    \label{fig:lattice_success_rates}
-\end{figure}    
 
 
 While there is compelling evidence that \glspl{bf} can be used for model selection in general \cite{berger1996intrinsic}, 
@@ -821,26 +823,7 @@ In the ideal case, where it is mostly believed the device works,
     it may be sufficient verification that the device behaves as desired, 
     or at least part thereof. 
 
-\section{Model family classification}\label{sec:family_classification}
-\begin{figure}[t]
-    \begin{center}
-        \includegraphics{theoretical_study/figures/model_family_search.pdf}
-    \end{center}
-    \caption[QMLA outcomes for varying training resources]{
-        \gls{qmla} outcomes for varying training resources. 
-        Independent \glspl{es} are implemented for Ising, Heisenberg and Hubbard families, 
-            with $\ho$ cycling through lattices (a-f) for the Ising and Heisenberg cases, 
-            and (a-c) for the Hubbard case, where lattices' connectivity are as depicted in \cref{fig:lattices}.
-        Each latttice in each famility is tested as $\ho$ in five \glspl{instance}, so there are 75 \glspl{instance} per datapoint. 
-        The success rates are shown for \gls{qmla} identifiyng the correct model precisely (blue),
-            as well as classifying the correct model family (orange), 
-            against the numbers of \glspl{experiment} and \glspl{particle} used to train each candidate model. 
-        \figtableref
-    }
-    \label{fig:family_classification}
-\end{figure}
-
-
+    
 
 \glsreset{es}
 \glsreset{et}
@@ -848,11 +831,11 @@ Recall from \cref{sec:qmla_protocol} (and \cref{fig:qmla_overview}\textbf{(e)}) 
     can grow multiple \glspl{et} concurrently, each corresponding to a unique \gls{es}. 
 This functionality permits \glspl{et} of different underlying physical assumptions, 
     and can therefore be used to examine alternative formalisms in parallel.
-For instance, in order to examine the target system, \gls{q}, 
+For instance, in order to examine \gls{q}, 
     we can independently run \glspl{es} for each of the Ising, Heisenberg and Hubbard model \emph{families}:
     \gls{qmla} first deems the most appropriate model under each formalism, $\hp_S$,
     before consolidating $\{\hp_S\}$ and declaring the global \gls{champion model}, $\hp$. 
-$\hp$ therefore encodes which family best describes the system of interest, \gls{q}:
+$\hp$ therefore encodes which family best describes the system of interest:
     even if the precise model is not found, $\hp \neq \ho$, we can still classify the 
     model family -- i.e. the underlying physical mechanism -- which is most useful for describing \gls{q}. 
 \par 
@@ -868,6 +851,26 @@ As usual in \gls{ml} methods, this represents a trade-off between the results of
 }
 \par
 
+\section{Model family classification}\label{sec:family_classification}
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics{theoretical_study/figures/model_family_search.pdf}
+    \end{center}
+    \caption[QMLA outcomes for varying training resources]{
+        \gls{qmla} outcomes for varying training resources. 
+        Independent \glspl{es} are implemented for Ising, Heisenberg and Hubbard families, 
+            with $\ho$ cycling through lattices (\emph{a-f}) for the Ising and Heisenberg cases, 
+            and (\emph{a-c}) for the Hubbard case, where lattices' connectivity are as depicted in \cref{fig:lattices}.
+        Each latttice in each family is tested as $\ho$ in five \glspl{instance}, so there are 75 \glspl{instance} per datapoint. 
+        The success rates are shown for \gls{qmla} identifying the correct model precisely (blue),
+            as well as classifying the correct model family (orange), 
+            against the numbers of \glspl{experiment} and \glspl{particle} used to train each candidate model. 
+        \figtableref
+    }
+    \label{fig:family_classification}
+\end{figure}
+
+
 We combine the task of family classification 
     with non-exhaustive testing of the tradeoff between resources and outcomes.
 In this case, we vary the target model $\ho$ as deriving again from the lattices in 
@@ -880,10 +883,10 @@ In this case, we vary the target model $\ho$ as deriving again from the lattices
     compared with increasing resources, \gls{nexp} and \gls{nprt}. 
 As expected, a clear trend demonstrates that the success rates scale with resources,
     which we can leverage in practice in two core ways.
-Firstly, we can simply ensure that the training regime for models is sufficiently robust, 
-    such that we can reasonably expect models to have trained well, and therefore model comparisons can be trusted.
+First, we can ensure that the training regime for models is sufficiently robust 
+    that we can reasonably expect models to have trained well, and therefore model comparisons can be trusted.
 If \gls{qmla} does not give clear results, then, we may expect a clearer outcome from increasing \gls{nexp}, \gls{nprt}.
-Secondly, we can mitigate the unpredictable\footnotemark failures of \gls{qmla} by running many \glspl{instance} per \gls{run}:
+Secondly, we can mitigate the unpredictable\footnotemark \ failures of \gls{qmla} by running many \glspl{instance} per \gls{run}:
     one (or few \glspl{instance}) in a scarce-resource training regime are prone to error, 
     so in cases where we are unsure whether the resources provided are sufficient, 
     we must run enough independent \glspl{instance} to overcome these artefacts. 

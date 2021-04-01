@@ -608,10 +608,10 @@ Finally, it does not account for the cardinality, $k_i$, of the candidate models
     gain marginal improvement in residuals.
 
 \subsection{Bayes factor enhanced Elo ratings}\label{sec:elo}
-A popular tool for rating individual competitors in sports and games is the \emph{Elo rating} scheme, 
+A popular tool for rating individual competitors in sports and games is the \emph{\gls{Elo rating}} system, 
     e.g. used to rate chess players and soccer teams \cite{elo1978rating, fifa_elo}, 
     also finding application in the study of animal hierarchies \cite{neumann2011assessing}. 
-Elo ratings allow for evaluating the relative quality of individuals 
+\glspl{Elo rating} allow for evaluating the relative quality of individuals 
     based on incomplete pairwise competitions, 
     e.g. despite two football teams having never played against each other before, 
     it is possible to quantify the difference in quality between those teams, 
@@ -623,7 +623,7 @@ There is a direct a parallel between these types of competitions and \gls{qmla}:
     in order to determine the strongest. 
 
 \par 
-Elo ratings are transitive: given some interconnectivity in a generation, 
+\glspl{Elo rating} are transitive: given some interconnectivity in a generation, 
     we need not compare \emph{every} pair of models in order to 
     make meaningful claims about which are strongest;
     it is sufficient to perform a subset of comparisons, 
@@ -645,7 +645,7 @@ For $N_m=60$, we find $l_{max}=2$,
     
 \par 
 
-The Elo rating scheme is a nonlinear points transfer system, as follows: 
+The \gls{Elo rating} scheme is a nonlinear points transfer system, as follows: 
     upon creation, $\hi$ is assigned a rating $R_i$; 
     every comparison with a competitor $\hj$ results in $\bij$; 
     $R_i$ is updated according to the known strength of its competitor, $R_j$, 
@@ -694,7 +694,7 @@ In standard Elo schemes this is a fixed constant,
 That is, similarly to the interpretation of Eqn. \ref{eqn:bf_cases}, 
     we use the evidence in favour of the winning model to transfer points from the loser to the winner,
     albeit we temper the effect by instead using $\eta = \log_{10}(B_{ij})$, since \gls{bf} can give very large numbers. 
-In total, then, following the comparison between models $\hi, \hj$, we can perform the Elo rating update
+In total, then, following the comparison between models $\hi, \hj$, we can perform the \gls{Elo rating} update
 \begin{equation}
     \label{eqn:elo_update}
     R_i^{\prime} = R_i + \log_{10}(B_{ij}) \left(S_i - \frac{1}{1 + 10^{\frac{R_j - R_i}{400}}}\right).
@@ -705,9 +705,9 @@ This procedure is easiest to understand by following the example in Table \ref{t
     \centering
     \input{theoretical_study/figures/elo_example.tex}
     \caption[Example of Elo rating updates]{
-        Example of Elo rating updates. 
+        Example of \gls{Elo rating} updates. 
         We have two models, where $\h_a$ is initially believed to be a stronger candidate than $\h_b$, 
-            i.e. has a higher starting Elo rating, $R_i$.     
+            i.e. has a higher starting \gls{Elo rating}, $R_i$.     
         We demonstrate the effect when there is strong evidence\footnotemark \ in favour of either model through \gls{bf} comparison, $\bij \sim 10^{100}$. 
         In the first case, $\h_a$ defeats $\h_b$, as firmly expected according to their initial ratings,
             so the corresponding reward (cost) for $\h_a$ ($\h_b$) is relatively small.
@@ -731,8 +731,8 @@ Here we impose details specific to the \gls{qmla} \gls{ga}:
 These are called \emph{elite} models, $\hat{H}_e^1, \hat{H}_e^2$. 
 This poses the strong possibility for a form of generational wealth:
     if elite models have already existed for several generations, 
-    their Elo ratings will be higher than all alternatives by defintion. 
-Instead, we would prefer that newly spawned models can overtake the Elo rating of elite models. 
+    their \glspl{Elo rating} will be higher than all alternatives by defintion. 
+Instead, we would prefer that newly spawned models can overtake the \gls{Elo rating} of elite models. 
 To resolve this, at each generation, all models -- including $\hat{H}_e^1, \hat{H}_e^2$ -- 
     are assigned the same initial rating, $R_i^0=1000$. 
 
@@ -754,7 +754,7 @@ To resolve this, at each generation, all models -- including $\hat{H}_e^1, \hat{
 
 \par 
 In order to derive a meaningful selection probability for each candidate, 
-    we must first ground the raw Elo rating at each generation $\mu$:
+    we must first ground the raw \gls{Elo rating} at each generation $\mu$:
     we subtract the lowest rating among the entertained models, $R_{\textrm{min}}^{\mu}$.
 This serves to ensure the range of remaining $R_i$ represent only by the difference between
     models as assessed within $\mu$: 

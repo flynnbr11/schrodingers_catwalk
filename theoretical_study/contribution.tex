@@ -1,35 +1,34 @@
 \addcontentsline{toc}{chapter}{Overview and contributions}
-
 In this part, we examine a series of theoretical quantum systems, 
-    to assess the usefulness of the \gls{qmla} protocol described in \cref{part:algorithms}.
+    to assess the usefulness of the \gls+{qmla} protocol described in \cref{part:algorithms}.
 The results presented here will be made public in \cite{flynn2021Quantum}.
 \par 
 \vspace{1cm}
 
 We begin in \cref{chapter:lattices} with ideal systems described by lattice models 
     under standard formalisms, i.e. Ising, Heisenberg and Hubbard models. 
-This serves as a first test of the \gls{qmla} framework under reasonably straightforward
+This serves as a first test of the \acrshort{qmla} framework under reasonably straightforward
     conditions, where a small number of candidate models are proposed in advance, 
     with the \gls{true model} gauranteed to be among them. 
-We then show that \gls{qmla} is also capable of classifying the family to which a target system belongs, 
+We then show that \acrshort{qmla} is also capable of classifying the family to which a target system belongs, 
     i.e. whether it should be considered within Ising, Heisenberg or Hubbard formalisms. 
 The initial idea for this chapter was proposed by Dr. Raffaele Santagati, 
     and refined together with Dr. Andreas Gentile and myself. 
-I modified the \gls{qmla} software for this application, 
-    ran the \glspl{instance} and analysed the data. 
+I modified the \acrshort{qmla} software for this application, 
+    ran the \glspl+{instance} and analysed the data. 
 The figures presented are my own.
 
 \par 
 \vspace{1cm}
-In \cref{chapter:ga} we consider more general application of the \gls{qmla} protocol, 
-    searching through model spaces comprising over 250,000 valid candidate models. 
-We explore these spaces efficiently by incorporating a \acrfull{ga} in \gls{qmla}. 
-I proposed \glspl{ga} for the study of large model spaces, 
+In \cref{chapter:ga} we consider more general application of the \acrshort{qmla} protocol, 
+    searching through \glspl{model space} comprising over 250,000 valid candidate models. 
+We explore these spaces efficiently by incorporating a \acrlong{ga} within \acrshort{qmla}. 
+I proposed \acrlongpl{ga} for the study of large \glspl{model space}, 
     and performed the initial \gls{hyperparameter} tuning. 
-I devised the numerous \glspl{of} considered, 
+I devised the numerous \acrlongpl{of} considered, 
     and in particular the combination of \acrlongpl{bf}
-    with Elo ratings for a bespoke \gls{of} which takes advantage of \gls{qmla}'s core strengths. 
-I built \gls{ga} infrastructure into the \gls{qmla} software, 
+    with \glspl{Elo rating} for a bespoke \acrlong{of} which takes advantage of \acrshort{qmla}'s core strengths. 
+I built the \acrlong{ga} infrastructure into the \acrshort{qmla} software, 
     ran the \glspl{instance} presented, and analysed the data.
 The figures presented are my own. 
 \par 
