@@ -1,7 +1,7 @@
 
 It is of primary interest to apply the \gls{qmla} algorithm to real-life, experimental systems. 
 In this chapter we devise an \gls{es} to operate in conjunction with experimental data 
-    in order to characterise an electron spin in an \gls{nvc} in diamond.
+    in order to characterise an electron spin in a \gls{nvc} in diamond.
 In particular, we model, through \gls{hamiltonian} terms, interactions between the spin and 
     the spin bath in which it resides,
     so that \gls{qmla} is finding an effective model for the open system dynamics.
@@ -12,14 +12,14 @@ Here we will first introduce a basic picture of \glspl{nvc},
     for thorough descriptions of the underlying physics, readers are referred to \cite{doherty2013nitrogen}.
 We next discuss the target system with respect to its modelling, 
     determining the suitable terms which \emph{might} represent the \gls{nvc}'s interactions, 
-    to inform the starting point for the \gls{qmla}.
+    to inform the starting point for \gls{qmla}.
 Finally we describe the implementation of an \gls{es} for the examination of the \gls{nvc},
     and the results of the \gls{qmla} procedure. 
 
 \section{Nitrogen-vacancy centre}
 \label{sec:nv_centres}
 
-\Acrfullpl{nv} are point defects in diamond, 
+Nitrogen vacancies are point defects in diamond, 
     occuring intrinsically (naturally) \cite{davies1976optical} or extrinsically (synthetically) \cite{meijer2005generation, edmonds2012production}.
 A substitutional \gls{nitrogen} isotope is embedded in a lattice of carbon atoms in diamond, 
     adjacent to a lattice vacancy, 
@@ -28,7 +28,7 @@ Of the \gls{nitrogen} atom's five valence electrons, three bond with nearby \gls
     the remaining two unbonded electrons couple with the lattice vacancy, 
     forming a triplet state, considered as the \gls{nvc}. 
 We can experimentally drive the outer electron, moving the \gls{nvc} between energy levels characterised by the triplet. 
-In this section we descib how we can exploit those energy levels in order to define a mechanism by which to 
+In this section we describe how we can exploit those energy levels in order to define a mechanism by which to 
     prepare and implement gates on the controlled system, a readout procedure and a computational basis.
 
 \par 
@@ -50,7 +50,7 @@ For the purposes of computation,
     we choose the ground state and one of the excited states as the two levels of a qubit. 
 We designate the states $\ket{m_s=0}_g$ and $\ket{m_s=-1}_g$ as the computational basis states $\ket{0}, \ket{1}$ respectively, 
     such that we have defined a qubit and computational basis, \cref{fig:nv_centre_energy_levels}d.
-We also require a reliable mechanism by which we can be confident that our qubit is in a definite state, 
+We also require a reliable mechanism through which we can be confident that our qubit is in a definite state, 
     to serve as the starting point of computation: 
     usually qubits are initialised to $\ket{0}$, 
     so here we aim to prepare the \gls{nvc} in $\ket{m_s=0}_g$.
@@ -62,11 +62,11 @@ That is, when the \gls{nvc} is excited to the $\ket{m_s=0}_e$ level, the dominan
     so after decay it ends in $\ket{m_s=0}_g$. 
 On the other hand, if the \gls{nvc} had been excited instead to $\ket{m_s=\pm1}_e$,
     the dominant decay process is through a meta-stable/shelving state, 
-    which does not preserve spin, so in this case it also ultimately decays to the $\ket{m_s=0}_g$.
+    which does not preserve spin, so in this case it also ultimately decays to the $\ket{m_s=0}_g$, \cref{fig:nv_centre_energy_levels}\textbf{(c)}.
 Therefore, irrespective of the initial state, 
     by shining the green laser on the \gls{nvc} and exciting it into any of the states in the excited manifold, 
     after decay it is most likely that it has been prepared in $\ket{m_s=0}_g = \ket{0}$, 
-    providing us a starting point from which to perform computation.
+    providing a starting point from which to perform computation.
 \par 
 
 The difference in energy between our defined computational basis states $\ket{0}$ and $\ket{1}$ is 
@@ -85,16 +85,16 @@ We depict these cycles in \cref{fig:nv_centre_energy_levels}c.
         \includegraphics[width=0.95\linewidth]{experimental_study/figures/nv_centre_cartoon.pdf}
     \end{center}
     \caption[\Glsentrylong{nvc} energy levels]{
-        Simplified depiction of energy levels of the \acrlong{nvc}, corresponding to its triplet state. 
+        Simplified depiction of energy levels of the \glsxtrlong{nvc}, corresponding to its triplet state. 
         \textbf{a}, With no external magnetic field, the system has excited and ground-state manifolds, 
             each of which consist of two energy levels depending on the magnetic spin, $m_s$.
         \textbf{b}, In the presence of a magnetic field (purple, $B$), the magnetic spins have distinct energy levels, 
             i.e. Zeeman splitting giving distinct $m_s$. 
         States are denoted by their magnetic spin, $m_s$ and subscripted by their manifold ($e$ for excited and $g$ for ground-state). 
-        \textbf{c},  Application of a \SI{532}{\nano\metre} laser (green arrow) excites the \acrlong{nvc} from any of the states in the 
+        \textbf{c},  Application of a \SI{532}{\nano\metre} laser (green arrow) excites the \glsxtrlong{nvc} from any of the states in the 
             ground state manifold into the excited manifold. 
         The dominant decay mechanism for the excited states are shown: 
-            (i) $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ (\acrlong{pl}, red) through the emission of a photon at \SI{637}{\nano\metre});
+            (i) $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ (\glsxtrlong{pl}, red) through the emission of a photon at \SI{637}{\nano\metre});
             (ii) $\ket{m_s=\pm 1}_e \rightarrow \ket{m_s=0}_g$ (dotted grey lines) via the shelving manifold which allows for non-spin-preserving transition, 
             emitting a photon in the infrared (not shown).
         \textbf{d}, Computational basis states $\ket{0}$ and $\ket{1}$ are assigned to the two lowest energy states.
@@ -119,7 +119,7 @@ We also know that the decay $\ket{m_s=0}_e \rightarrow \ket{m_s=0}_g$ is spin pr
 On the contrary, when the $\ket{m_s=-1}_g$ is excited, 
     spin is also preserved, so it goes to $\ket{m_s=-1}_e$, 
     but $\ket{m_s=-1}_e$ decays through the shelving state as outlined earlier, 
-    \emph{without} the emission of a red photon (the decay gives out infrared instead). 
+    \emph{without} the emission of a red photon (the decay emits out infrared radiation instead). 
 We can hence infer the population of $\ket{m_s=-1}_g$ at the time of query by the fraction of incidents which don't 
     emit a photon \cite{knauer2016photonic}.
 That is, say we first calibrate the system by retaining the green laser for some time: 
@@ -130,7 +130,7 @@ Then, excitation from the same laser results in the excitation to $\ket{m_s=0}_e
     we benchmark the population of $\ket{0}$ when nothing else has happened as $p_0$. 
 Now, when we apply gates (i.e. \gls{mw} pulses) to the \gls{nvc}, 
     we can similarly read out the population of $\ket{0}$ as $p_0^{\prime}$,
-    and infer that the \gls{likelihood} that the \gls{nvc} is found in the initial state $\ket{0}$ is $\nicefrac{p_o^{\prime}}{p_0}$. 
+    and infer that the likelihood that the \gls{nvc} is found in the initial state $\ket{0}$ is $\nicefrac{p_o^{\prime}}{p_0}$. 
 We can use this quantity as the  \gls{likelihood} within \gls{qle}, allowing us to learn from the \gls{nvc},
     as we will discuss in the next sections. 
 
@@ -149,7 +149,7 @@ In summary then, by assigning basis states $\ket{0}, \ket{1}$ to energy levels o
     we are able to ensure the preparation of the \gls{nvc} in $\ket{0}$ by first shining a green laser on the \gls{nvc}. 
 We can then apply \gls{mw} radiation to achieve quantum logical gates on the system, 
     and read out the final state of the system, again by shining a green laser
-    and observing the \acrlong{pl} (i.e. the emitted photons), and inferring the population level of each basis state. 
+    and observing the \gls{pl} (i.e. the emitted photons), and inferring the population level of each basis state. 
 We represent these concepts in a simplified format in \cref{fig:nv_centre_energy_levels}. 
 
 \subsection{Experimental procedure}
@@ -182,9 +182,8 @@ We represent these concepts in a simplified format in \cref{fig:nv_centre_energy
     \end{center}
     \caption[States of spin qubit at each stage of Hahn echo sequence]{
         States of spin qubit at each stage of Hahn echo sequence.
-        
         \textbf{a,} The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
-        \textbf{b,} We apply a rotation about the $y$-axis (i.e. a \acrfull{mw} pulse), 
+        \textbf{b,} We apply a rotation about the $y$-axis (i.e. a \glsxtrfull+{mw} pulse), 
             yielding the state $\ket{\psi_1} = \ket{+}$. 
         \textbf{c,} The system is allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
         \textbf{d,} We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
@@ -194,7 +193,7 @@ We represent these concepts in a simplified format in \cref{fig:nv_centre_energy
             projecting it upon $\ket{0}$.
         Here $\ket{\psi_5}$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
         i.e. along the $z$-axis. 
-        The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \acrlong{pl}. 
+        The spin is read out from $\ket{\psi_5}$ via the \gls{nvc}'s \glsxtrlong{pl}. 
         Here $\ho = 0.25 \ \s_y$ was evolved for $t=0.5$ (arbitrary units), 
         and the final state overlap with the initial state, 
         i.e. the \gls{likelihood} of measuring the spin in $\ket{0}$ is $\Pr(0 | \ho, t) = 0.865$. 
@@ -240,21 +239,21 @@ That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{
 
 By varying the evolution time, $t$, used within the Hahn echo sequence, we can map the \gls{likelihood} against time, 
     which we can view as capturing the \emph{dynamics} of the \gls{nvc} spin, \cref{fig:nv_raw_data}.
-We vary $t$ up to $t \sim 4 \mu s$ in intervals of $\Delta t = 50 ns$, 
+We vary the evolution time up to $t \sim 4 \mu s$ in intervals of $\Delta t = 50 \SI{}{\nano\second}$, 
     so we have 425 data points. 
 Note the data for the studied \gls{nvc} is taken once and analysed offline, 
     i.e. \gls{qmla} does not have complete authority to design \glspl{experiment} 
     to run on the \gls{nvc}, although it can aim to choose the most informative $t$ 
     available in the predefined set; we will discuss the consequences of this restriction 
-    later in this chapter. 
+    in \cref{sec:nv_constraints}. 
 
 \begin{figure}[t]
     \begin{center}
         \includegraphics{experimental_study/figures/raw_data.pdf}
     \end{center}
     \caption[Raw data for nitrogen-vacancy centre's dynamics]{
-        Raw data for the \acrlong{nvc}'s dynamics.
-        The $y$-axis shows the normalised \acrlong{pl} of the \gls{nvc}, 
+        Raw data for the \glsxtrlong{nvc}'s dynamics.
+        The $y$-axis shows the normalised \glsxtrlong{pl} of the \gls{nvc}, 
         equivalently the \gls{likelihood} $\Pr(0 | \ho, t)$. 
     }
     \label{fig:nv_raw_data}
@@ -268,8 +267,8 @@ We take the axis of the \gls{nvc}, i.e. the axis connecting the \gls{nitrogen} w
 While the \gls{nvc} is subject to myriad interactions which result in decoherence,
     we choose to focus on its dominant interactions with proximal environmental nuclei. 
 These interactions are characterised by hyperfine terms \cite{smeltzer201113c}.
-The overall \gls{hamiltonian} for such systems, where the set of nuclear sites is $\{\chi\}$,
-    is given by 
+The complete \gls{hamiltonian} for such systems, where the set of nuclear sites is $\{\chi\}$,
+    is expected to be given by 
 
 \begin{equation}
     \label{eqn:nv_ham_full}
@@ -290,7 +289,9 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
     as well as approximations which enable us to drastically reduce the space of terms to consider for inclusion in $\hp$. 
 
 \begin{description}
-    \item[Isolated-spin terms] describe the spin independent of the environmental nuclei
+    \item[Isolated-spin terms] \
+    
+    Describe the spin independent of the environmental nuclei
     \begin{easylist}[itemize]
     && $\Delta_{\textrm{gs}} \hat{S}_z^2$: 
         the \emph{zero-field} splitting, or ground state splitting between the computational basis states.
@@ -304,7 +305,7 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
         where $\mu_B$ is the Bohr magneton and $g$ is the electron $g$-factor 
         ($\approx 2$, simplified from the $g$-factor tensor).
         Misalignment of the magnetic field is a decoherence effect, 
-        so one core aim of \gls{qmla} here is to identify whether such terms dominate.
+        so one core aim of \gls{qmla} in this setting is to identify whether such terms dominate.
     \end{easylist}
     
     \item[Hyperfine terms] \ 
@@ -318,7 +319,9 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
         so is essential to any model aiming to capture those dynamics. 
     \end{easylist}
 
-    \item[Bath-only terms] describe the other nuceli independent of the spin
+    \item[Bath-only terms] \
+    
+    Describe the other nuceli independent of the spin
     \begin{easylist}        
     && $P \hat{I}_z^2 $: the quadrupole splitting, which provides another constant shift, 
         and is therefore not of interest when modelling the spin's decoherence, and can be neglected.
@@ -345,7 +348,7 @@ Given that we are modelling the spin's decoherence,
     so we can immediately drop the bath-only terms, 
     by assuming the bath is static apart from its interactions with the \gls{nvc}. 
 This is a usual assumption in the treatment of open system dynamics, 
-    to allow for focus on the dominant interactions for the system of interest \cite{breuer2002theory}. 
+    to allow for focus on the dominant interactions in the processes of interest \cite{breuer2002theory}. 
 Additionally, since the zero field splitting contributes a constant shift in energy, 
     we can safely omit it by moving to the rotating frame. 
 We are then left only with the second and third terms of \cref{eqn:nv_ham_full}, 
@@ -480,7 +483,7 @@ The hyperfine terms to be entertained by \gls{qmla} are then
     This limitation arises from the requirement to compute the total evolution of the global state, 
     involving calculation of $e^{-i\h t}$, i.e. the characterisation of an $n_q$-qubit model depends on 
     classical exponentiation of the $2^{n_q} \times 2^{n_q}$ \gls{hamiltonian} for each \gls{particle} and experiment in \gls{cle}, 
-    which is a prohibitive expense. 
+    which is a prohibitively expense. 
 }
 \par 
 
@@ -488,7 +491,7 @@ Finally, combining \cref{eqn:exp_spin_terms} and \cref{eqn:exp_hf_terms},
     we have the full set of terms to incorporate into the \gls{es} for the \gls{qmla} \gls{model search}: 
 
 \begin{equation}
-    \termset_{NV} = \left\{
+    \termset_{\textrm{NV}} = \left\{
     \begin{align}
         & \hat{S}_x, && \hat{S}_y, && \hat{S}_z, \\
         & \hat{S}_x\I_x, && \hat{S}_y\I_y, && \hat{S}_z\I_z, \\
@@ -505,11 +508,11 @@ Terms which affect only the spin act only on the first qubit, $\hat{S}_i = \hat{
     where $\s_i$ is the Pauli operator giving rotation about the $i$-axis, and 
     $\ident$ is the one-qubit identity matrix. 
 Retaining the hyperfine notation, for the expectedly-dominant diagonal terms, we denote $\hat{A}_i = \hat{S}_i^{(1)} \I_i^{(2)} = \s_i \otimes \s_i$. 
-We refer to the less-dominant off-diagonal terms as \emph{transverse} terms, $\hat{T}_{kl} = \hat{S}_k^{(1)} \I_l^{2} = \s_k \otimes \s_l$. 
+We refer to the transverse terms as $\hat{T}_{kl} = \hat{S}_k^{(1)} \I_l^{2} = \s_k \otimes \s_l$. 
 We can hence rewrite \cref{eqn:nv_terms_verbose} as 
 \begin{equation}
     \label{eqn:nv_terms}
-    \termset_{NV} = \left\{ 
+    \termset_{\textrm{NV}} = \left\{ 
         \begin{split}    
             &\hat{S}_x, && \hat{S}_y,  && \hat{S}_z, \\
             &\hat{A}_x,  && \hat{A}_y,  && \hat{A}_z, \\
@@ -527,7 +530,7 @@ We also use a succinct representation for brevity, e.g. $\hat{S}_{xy}\hat{A}_z =
 Recall from \cref{chapter:qmla} that each model considered must be trained independently, 
     where the purpose of model training is to optimise the parameter vector $\al$ which characterises the model. 
 For example, the model 
-    $\hi = \hat{S}_{x,y} \hat{A}_{z} = \alpha_1 \hat{S}_x  + \alpha_2 \hat{S}_y + \alpha_3 \hat{S}_3$,
+    $\hi = \hat{S}_{x,y} \hat{A}_{z} = \alpha_1 \hat{S}_x  + \alpha_2 \hat{S}_y + \alpha_3 \hat{A}_z$,
     is trained to retrieve the optimal $\al^{\prime} = \irow{\alpha_1^{\prime} & \alpha_2^{\prime} & \alpha_3^{\prime}}$. 
 Models are trained through \gls{qhl}, described in \cref{chapter:qhl}, 
     which iteratively updates a probability distribution for the associated parameters, $\Pr(\al)$. 
@@ -551,26 +554,26 @@ The non axial hyperfine terms, i.e. the transverse terms $\hat{T}_{kl}$ are not 
 We utilise this prior understanding of the system to inform the parameter range used for training candidate models:
     for each of the terms in \cref{eqn:nv_terms}, we will adopt a normal prior distribution of $4 \pm 1.5\SI{}{\mega\hertz}$. 
 This range is sufficiently specific to ensure the training subroutine operates in a physically meaningful -- 
-    and likely appropriate -- space, whlie also broad enough to allow for significant differences between expectation and reality.
-Moverover this distribution supports hypotheses where each parameter is zero:
+    and likely appropriate -- space, while also broad enough to allow for significant differences between expectation and reality.
+Moreover this distribution supports hypotheses where each parameter is zero:
     if these prove favourable, negligible contributions can be identified and excluded from the model.
 
 \section{Exploration strategy}\label{sec:exp_es}
-We may now turn to the specific implementation details by which \gls{qmla} is applied to the study this \gls{nvc} system. 
+We may now turn to the specific implementation details by which \gls{qmla} is applied to the study of this \gls{nvc} system. 
 Recalling the terminology of \gls{qmla} from \cref{chapter:qmla}, 
     we design an \acrfull{es} specifically for the system under study. 
 The \gls{es} will account for the details listed in this chapter so far, in summary: 
 \begin{easylist}[itemize]
     & we aim to assign a model, $\hp$, to the \gls{nvc} to describe its decoherence processes
-    && we especially focus on its hyperfine interactions
+    && we especially focus on its hyperfine interactions;
     & we use a 2-qubit approximation
-    && the first qubit represent the spin itself
-    && the second qubit represents the environment in which the \gls{nvc} resides
-    & we query the \gls{nvc} by performing Hahn echo \glspl{experiment} (\cref{fig:hahn_bloch_spheres})
-    & the outcome of those \glspl{experiment} are thought of as the system's \glspl{likelihood}  (\cref{fig:nv_raw_data})
+    && the first qubit represent the spin itself;
+    && the second qubit represents the environment in which the \gls{nvc} resides;
+    & we query the \gls{nvc} by performing Hahn echo \glspl{experiment} (\cref{fig:hahn_bloch_spheres});
+    & the outcome of those \glspl{experiment} are thought of as the system's \glspl{likelihood}  (\cref{fig:nv_raw_data});
     & candidate models are composed of the terms defined in \cref{eqn:nv_terms}
-    && \glspl{likelihood}  are used for the training of individual candidate models through \gls{qhl}
-    && we assign approximate ranges to the scalar parameters corresponding to each term based on theoretical arguments
+    && \glspl{likelihood}  are used for the training of individual candidate models through \gls{qhl};
+    && we assign approximate ranges to the scalar parameters corresponding to each term based on theoretical arguments;
     &&& those parameters are to be learned precisely by \gls{qhl}.
 \end{easylist}   
 \par 
@@ -581,7 +584,7 @@ In this case, we exploit some intuition and prior knowledge of how such systems 
     to design a bespoke model generation subroutine:
     we can think of this as a midway point between the completely specified \glspl{es} used 
     for identifying the underlying lattices from a prescribed set in \cref{chapter:lattices}, 
-    and the entirely general \acrlong{ga} which does not restrict model generation, of \cref{chapter:ga}.
+    and the entirely general \glsxtrlong+{ga} which does not restrict model generation, of \cref{chapter:ga}.
 We use the standard structure of \glspl{et} introduced in \cref{sec:exploration_strategies}, 
     where models are placed on consecutive branches, $\mu$, and branches are consolidated by pairwise comparisons between all models on $\mu$, 
     where comparisons are computed through \glspl{bf}.
@@ -594,7 +597,7 @@ The outcome of consolidation on $\mu$ is the determination of a single \emph{bra
         \includegraphics[width=0.5\textwidth]{experimental_study/figures/greedy_search.pdf}
     \end{center}
     \caption[Greedy model search]{
-        Greedy model search. 
+        Greedy \gls{model search}. 
         Models (purple) are placed on branches, trained and consolidated (green) as in \cref{fig:qmla_overview}, 
             with the branch champion spawning (red) candidates to place on the subsequent branch.  
         Branches are grouped in tiers, correspdoning to levels of approximation:
@@ -614,7 +617,7 @@ We break the \gls{et} into three distinct tiers, each corresponding to an intuit
 Within each tier, terms are added greedily to the previous branch's champion, $\hat{H}_{C(\mu)}$.
 So, the first branch is given by $\mu = \{ \hat{S}_x, \hat{S}_y, \hat{S}_z\}$;
     say $\hat{H}_{C(\mu)} = \hat{S}_y$, then $\mu + 1$  determines that $\hat{S}_x, \hat{S}_z$ 
-    are not yet considerd, so it constructs the models $\hat{S}_{x,y}, \hat{S}_{y,z}$, e.g. \cref{fig:greedy_search}. 
+    are not yet considerd, so it constructs the models $\{\hat{S}_{x,y}, \hat{S}_{y,z}\}$, e.g. \cref{fig:greedy_search}. 
 After exhausting all tiers, we consolidate the set of branch champions, $\mathbb{H}_C = \{ \h_{C(\mu)}\}$, 
     to determine the best model considered globally, $\hp$.  
 \par 
@@ -622,10 +625,10 @@ After exhausting all tiers, we consolidate the set of branch champions, $\mathbb
 Clearly, this growth rule is partially deterministic, insofar as some models are gauranteed to be considered, 
     while others are not reachable.
 Indeed, the space of available models are heavily constrained, in particular models in later tiers will 
-    always involve all of the tier 1 models, e.g. $\hat{S}_{x}\hat{A}_{y}$ can not occur organically. 
+    always involve all of the tier 1 terms, e.g. $\hat{S}_{x}\hat{A}_{y}$ can not occur organically. 
 In general, restrictions of this kind undermine the \gls{es} and are considered a weakness.
-To account for this, we add a final test of reducibility on the champion model, 
-    tiggered if any of the parameters of $\al^{\prime}$ are potentially negligible, 
+To account for this, we add a final test of reducibility on the \gls{champion model}, 
+    triggered if any of the parameters of $\al^{\prime}$ are potentially negligible, 
     i.e. the posterior distribution of any parameter assigns credibility to the hypothesis that the parameter is 0.
 This champion reducibility test simply removes the negligible-parmeter terms from $\hp$, 
     yielding a reduced global champion, $\hp_r$.
@@ -662,8 +665,8 @@ This leads to some important remarks:
 A common charge against \gls{qmla} supposes to first write down the most complex model, 
     train it fully, and then infer which terms are negligible, in a similar process to the champion reduction test outlined here. 
 While this may be feasible in the case described here, with $N_t=9$ and a closed term set, 
-    it is unscalable: adding just a second nuclear site increases the model search to a space of $N_t=15$.
-Models of higher cardinality ($|\al|$) demand higher \gls{nexp}, \gls{nprt} to train well, so immediately trainng the most involved model would 
+    it is unscalable: adding just a second nuclear site increases the \gls{model search} to a space of $N_t=15$.
+Models of higher cardinality ($|\al|$) demand higher \gls{nexp}, \gls{nprt} to train well, so immediately training the most involved model would 
     require infeasible resources\footnotemark, and risks significantly overfitting the data. 
 It seems more appropriate to work ``from the ground up'', testing terms and only keeping those justified, 
     rather than training all terms and attempting to decouple their effects post-hoc. 
@@ -688,7 +691,7 @@ We vary the target $\ho$, among a series of ten models,
     which are all valid models achievable by the \gls{es}. 
 
 
-\section{Experiment design constraints}
+\section{Experiment design constraints}\label{sec:nv_constraints}
 Moving to analyse the experimental setup, there are a number of constraints which we must account for in 
     training models. 
 Firstly, the $\nicefrac{\pi}{2}$-pulse applied to the prepared qubit ($\ket{\psi_0} \rightarrow \ket{\psi_1}$ in \cref{fig:hahn_bloch_spheres})
@@ -708,8 +711,8 @@ The experiment was run with increasing $t$ for the duration of the first decay o
 As discussed in \cref{sec:heuristic}, usually it is helpful to allow an \gls{edh} to
     choose the experimental controls, including the evoltuion time, $t$, against which 
     the model is trained at each experiment;
-    the default \acrfull{pgh} attempts to select $t$ at the upper boundary of times 
-    where the model is expected to be predictive, such as to maximise the information gained by the experiment (see \cref{sec:pgh}). 
+    the default \gls{pgh} attempts to select $t$ at the upper boundary of times 
+    where the model is expected to be predictive, to maximise the information gained by the experiment (see \cref{sec:pgh}). 
 Here, however, we can not allow the \gls{edh} to select arbitrary $t$, 
     since we do not have data beyond $t_{\textrm{max}}$. 
 
@@ -734,7 +737,7 @@ We require a custom \gls{edh} to account for the constraints outlined,
         even if their parameter distribution is insufficiently narrow to yield those times naturally. 
 \end{easylist}
 
-Accounting for these, we construct an \gls{edh} which mixes the robust, adaptive nature of \gls{pgh}, 
+Accounting for these, we construct an \gls{edh} which mixes the robust, adaptive nature of \gls+{pgh}, 
     useful for refining an initially broad $\Pr(\al)$,
     with a primitive, linear time-selection, useful to ensure the trained parameters at least
     attempt to account for the physics we are actually interested in. 
@@ -756,10 +759,11 @@ In preliminary analysis we run 500 \glspl{instance} with varying $\ho$,
     we see that in $\sim50\%$ of \glspl{instance} the correct cardinality is found,  
     rising to $\sim86\%$ by allowing $\pm1$ term, \cref{fig:exp_qmla_analysis}\textbf{(b)}. 
 In general, the \glspl{champion model} from each instance are highly predictive: 
-    the median coefficient of determination between the systems' and corresponding \glspl{champion model}' data is 
+    the median \emph{coefficient of determination} between the systems' and corresponding \glspl{champion model}' data is 
     $R^2 = 0.84$. 
 \par 
 
+\setlength{\tabcolsep}{8pt}
 \begin{table}[t]
     \centering
     \begin{tabular}{cllrr}
@@ -797,10 +801,10 @@ In general, the \glspl{champion model} from each instance are highly predictive:
     \thisfloatpagestyle{empty} % caption goes over page number so supressing it
     \includegraphics[width=0.95\textwidth]{experimental_study/figures/experimental_qmla_analysis.pdf}
     \caption[QMLA applied to experimental nitrogen-vacancy centre system]{
-        \gls{qmla} results on simulated and experimental data, describing a \acrfull{nvc} system.
+        \gls{qmla} results on simulated and experimental data, describing a \glsxtrfull{nvc} system.
         Figure reproduced from \cite{gentile2020learning}. 
         \textbf{a}, 
-        The carbon lattice providing the outer environment for the NV centre, along with the
+        The carbon lattice providing the outer environment for the \gls{nvc}, along with the
         time evolution of the electron spin state (represented on a Bloch sphere) during the pulses for the Hahn echo sequences. 
         These steps are expanded in \cref{fig:hahn_bloch_spheres}, although here the final $\pi/2$ pulse is omitted.  
         \textbf{b}, 
@@ -818,26 +822,26 @@ In general, the \glspl{champion model} from each instance are highly predictive:
         Win rates of the top four models for 100 \gls{qmla} instances, against both simulated and experimental data. 
         On experimental data, $\ho$ is unknown, while simulations use $\ho = \SxyzAz$.
         \textbf{d}, 
-        Total \gls{volume} spanned by the parameters' probability distribution across progressive epochs, for the models in \textbf{(c)}. 
-        The shaded area show the $67\%$ confidence region of volumes, taken from instances where those models were deemed $\hp$.
+        Total \gls+{volume} spanned by the parameters' probability distribution across progressive epochs, for the models in \textbf{(c)}. 
+        The shaded area show the $67\%$ confidence region of \glspl{volume}, taken from instances where those models were deemed $\hp$.
         \textbf{e}, 
         Simulated \glspl{likelihood}  reproduced by the model with the highest  \gls{win rate}  ($\hat{S}_{x,y,z}\hat{A}_{z}$, turquoise), 
             compared with corresponding NV-centre system experimental data 
-            (red dots, extracted from the observed \acrlong{pl} of the first Hahn echo decay). 
+            (red dots, extracted from the observed \glsxtrlong{pl} of the first Hahn echo decay). 
         Error bars are smaller than the dots.
         The shaded area indicates the $67\%$ confidence region of likelihoods predicted from the instances where $\hp=\hat{S}_{x,y,z}\hat{A}_{z}$
         \textbf{f}, 
-        A single QMLA \gls{instance} against experimental data in \textbf{(e)}, depicted as a \acrlong{dag}.
+        A single QMLA \gls{instance} depicted as a \glsxtrlong{dag}.
         The thin end of each edge points to the favoured model; 
         the colour of the edges depict the strength of evidence, $\log_{10}\mathcal{B}$, where $\mathcal{B}$ is the \gls{bf} between those two models.
-        Champions of each layer, $\huc$, are in light brown, whereas the global champion $\hp$
+        Champions of each layer, $\hat{H}_{C(\mu)}$, are in light brown, whereas the global champion $\hp$
         is in orange and all other candidate models are grey.
     }
     \label{fig:exp_qmla_analysis}
 \end{figure}
 Then, considering the performance of the algorithm on whole, 
     we perform \glspl{run} of 100 \glspl{instance} on the exerpimental data as well as simulated data,
-    where the simulation assumes\footnotemark \ $\ho = \hat{S}_{xyz} \hat{A}_z$, 
+    where the simulation assumes\footnotemark \ $\ho = \hat{S}_{xyz} \hat{A}_z$.
     The set of models selected most frequently are shown in \cref{fig:exp_qmla_analysis}\textbf{(c)},
     and each model is trained with $\Ne=1000, \Np=3000$,
     with the \glspl{volume} of those models (in the experimental case) shown in  \cref{fig:exp_qmla_analysis}\textbf{d}.
@@ -854,24 +858,26 @@ It is noteworthy that even in the simulated case, the same models mislead \gls{q
 \footnotetext{Alternatively, that the same systematic error misdirects the search in both cases.}
 These models are defensible with respect to the descriptions of \cref{sec:target_system}, 
     since in each case they detect the interaction between the spin qubit and the environmental qubit, 
-    i.e. the hyperfine terms $\hat{A}_i$, especially $\hat{A}_z$ which occurs in 97\% (99\%) of \glspl{champion model}. 
+    i.e. the hyperfine terms $\hat{A}_i$, especially $\hat{A}_z$ which occurs in 97\% (99\%) of \glspl{champion model}, 
+    reported in \cref{table:win_rates_r_squareds}. 
 We discuss some physical insights from these results in \cref{sec:exp_qmla_analysis}.   
 \par 
 
-The most frequently identified model, $\hp = \SxyzAz$, is found in $45\%$ ($61\%$) of instances:
+The most frequently identified model, $\hp = \SxyzAz$, is found in $45\%$ ($61\%$) of instances
+    on experimental (simualted) data:
     we show its attempt to reproduce the dynamics of \cref{fig:nv_raw_data} in \cref{fig:exp_qmla_analysis}\textbf{(e)}, 
     showing excellent agreement with the raw data, with $R^2=0.82$. 
 This serves as an essential sanity check: 
     we can intuitively see that \gls{qmla} has distilled a model which captures at least \emph{some} 
     of the most important physical interactions the target \gls{nvc} system is subject to; 
-    otherwise we would not see such clear overlap between the prediced and true dynamics. 
+    otherwise we would not see such clear overlap between the predicted and true dynamics. 
 \par 
 
-Finally we display the model search as a \gls{dag} in \cref{fig:exp_qmla_analysis}\textbf{(f)}, 
+Finally we display the \gls{model search} as a \gls{dag} in \cref{fig:exp_qmla_analysis}\textbf{(f)}, 
     where models are represented on nodes on the graph's layers (equivalent to \gls{et} branches), 
     and their parents are resident on the branch immediately above their own.
-Comparisons between models, $\hi, \hj$,  are shown as edges between nodes on the graph, 
-    coloured by the strength of evidence of the outcome, i.e. the \acrlong{bf}, $\bij$. 
+Comparisons between models, $\left(\hi, \hj\right)$,  are shown as edges between nodes on the graph, 
+    coloured by the strength of evidence of the outcome, i.e. the \glsxtrlong{bf}, $\bij$. 
 Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     the set of branch champions are consolidated to determine the global champion, $\hp_C$. 
 \subsection{Analysis}\label{sec:exp_qmla_analysis}
@@ -888,7 +894,7 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     during any of the 100 \glspl{instance} on either simulated or experimental data.
     IDs of candidate models are on the vertical axis, and labels for the terms on the horizontal axis.
     The \gls{true model} $\hat{H}_0$ for the simulated case is highlighted in green and a subset of credible models in blue, 
-    i.e. models which may reasonbaly be expected to describe the targeted \acrfull{nvc} from theoretical arguments.
+    i.e. models which may reasonbaly be expected to describe the targeted \glsxtrlong+{nvc} from theoretical arguments.
     \textbf{Right,} number of wins for each of the candidate models out of $100$ independent \gls{qmla} \glspl{run}. 
     Cases adopting simulated data are shown by empty bars, with those using the experimental dataset shown by green bars.
     \figtableref
@@ -897,7 +903,8 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     % /home/bf16951/Dropbox/QML_share_stateofart/PAPER/Figures/SuppMat/multi_instance_analysis notebook
 \end{figure}
 
-Considering the \glspl{run} summarised in \cref{fig:exp_qmla_analysis}, here we will present some further perspectives.
+Here we offer some further perspectives, 
+    considering the \glspl{run} summarised in \cref{fig:exp_qmla_analysis}.
 \cref{fig:nv_model_composition} first details all models considered in the 200 \glspl{instance} 
     comprising the experimental and simulated \gls{qmla} \glspl{run}, 
     as well as the  \gls{win rate}  of each model. 
@@ -940,32 +947,34 @@ We see that each model faithfully captures the essential dynamics arising from t
     approximation of $\ho$, if not the absolute \gls{true model}.
 \par 
 
-
-
-
 The key insight promised by \gls{qmla} is to identfiy the interactions present in the studied system, 
     which in this case was the decoherence processes of an \gls{nvc}.
-In \cref{fig:nv_learned_params} we show the number of times each of the terms permitted, i.e. those in \cref{eqn:nv_terms},
+In \cref{fig:nv_learned_params} we show the number of times each of the terms permitted, 
+    i.e. $\hat{t} \in \termset_{\textrm{NV}}$ from \cref{eqn:nv_terms},
     are included in the \gls{champion model},
     as well as the distribution of parameter estimates for those terms. 
-From the simulated case, we see that those terms which are in $\ho$, i.e. $\termset_0$, are found in almost all instances.
-Furthermore, while some terms are erroneoulsy found in $>40\%$ of instances, 
-    they are found with less than a quarter of the frequency of the true terms,
-    so these may be reasonably ruled out in post-processing the \gls{qmla} results. 
+From the simulated case, we see that those terms which are in $\ho$, i.e. $\hat{t} \in \termset_0$, are found in almost all instances.
+Furthermore, while most instances find a \gls{champion model} which includes some erroneous term(s), 
+    each $\hat{t} \notin \termset_0$ is found with less than a quarter of the frequency of those $\hat{t} \in \termset_0$.
+Hence terms outside of $\termset_0$ may be reasonably ruled out in post-processing the \gls{qmla} results, 
+    by manually considering the relative frequency with which each term is found. 
 The inaccurate terms found most often are seen to have (almost) negligible parameters:
     in conjunction with domain expertise, users can determine whether the inclusion of these terms 
     are meaningful or simply artefacts of slight overfitting.
 In the experimental \gls{run}, on the other hand, we see a similar gulf in frequency between some terms.
 Namely, $\{ \hat{S}_x, \hat{S}_y, \hat{S}_z, \hat{A}_z \}$ are found in over $50$ \glspl{instance} \emph{more} than all other terms:
     we therefore conclude that those terms contribute most strongly to the \gls{nvc}'s decoherence process.
+The resultant model, $\hat{S}_{xyz}\hat{A}_{z}$ is in agreement with theoretical expectations, 
+    and shows that we can describe the intricate processes involved in decoherence through a relatively simple 
+    \gls{hamiltonian}, proving that \gls{qmla} can perform an important role in aiding the understanding of quantum systems.  
 \par 
 
 We have thus characterised the interactions which dominate the decoherence process for a given \gls{nvc}. 
-In doing so, we identified not only the terms present, but also the strength (i.e. parameteres) of those terms. 
+In doing so, we identified not only the terms present, but also the strength (i.e. parameters) of those terms. 
 Automated characterisation of quantum systems will be essential in the development of quantum technologies, 
     whether for calibration of controlled devices, or alignment of experimental systems for optimal results. 
 While this demonstration must be understood in the context of its limitations, 
-    e.g. the restricted basis studied, and the constrained model space searched, 
+    e.g. the restricted basis studied, and the constrained \gls{model space} searched, 
     it represents a crucial proof of principle that \gls{qmla} is applicable to the task 
     of automated quantum system characterisation. 
 In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitations mentioned here. 
@@ -976,6 +985,7 @@ In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitat
 %     roughly twice the predicted value of $2.7\mhz$. 
 
 \begin{figure}
+    \thisfloatpagestyle{empty} % caption goes over page number so supressing it
     \centering
     \begin{tabular}{@{}c@{}}
         \centering
@@ -993,7 +1003,10 @@ In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitat
     \caption[
         Histograms for parameters learned by QMLA champion models on simulated and experimental data
     ]{
-        Histograms for parameters learned by \gls{qmla} \glspl{champion model} on (\textbf{a}) simulated  and (\textbf{b}) experimental data. 
+        Parameter values for terms found by \gls{qmla}. 
+        For each term found within the \gls{champion model} of at least one \gls{instance} of \gls{qmla}, 
+            a histogram is shown for the values of the term's associated parameter.
+        The terms are listed along the top of each subplot with results for (\textbf{a}) simulated  and (\textbf{b}) experimental data. 
         Blue dotted lines indicate the median for that parameter, while red dotted lines give the true parameter in the simulated case. 
         Grey blocks show the number of champion models which found the parameter to have that value,
         and the number listed in the legend reports the total number of \glspl{champion model} which contained that term.

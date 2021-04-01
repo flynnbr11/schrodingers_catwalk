@@ -235,7 +235,7 @@ In particular, considering precision and sensitivity as equally important, i.e. 
 For examples of how \gls{fscore} balances these considerations, see \cref{table:f1_example}.
 \par
 
-\begin{table}
+\begin{table}[t]
     \centering
     \begin{tabular}{|ccc|cc|c|}
         \hline
@@ -247,8 +247,8 @@ For examples of how \gls{fscore} balances these considerations, see \cref{table:
         \rule{0pt}{3ex} 1000  & 0 & 0 & 100 & 100 & $ (\frac{2 \times 100 \times 100}{100 + 100}) = 100 $ \\
         \hline
     \end{tabular}
-    \caption[$\fs$ examples]{
-        Examples of how \fs behaves for varying \acrlong{tp}, \acrlong{fn} and \acrlong{fp}. 
+    \caption[$F_1$-score examples]{
+        Examples of how \gls{fscore} behaves for varying \acrlong{tp}, \acrlong{fn} and \acrlong{fp}. 
     }
     \label{table:f1_example}
 \end{table}
