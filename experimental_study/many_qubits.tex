@@ -10,6 +10,7 @@ Here we will simulate the target system, allowing us to make definite statements
 \par 
 
 \section{Target system}
+
 \begin{figure}
     \begin{center}
         \includegraphics{experimental_study/figures/nv_revival_raw_data.pdf}
@@ -30,23 +31,71 @@ The effects of nuclear spins are expected to manifest at higher times than those
 Such effects can also be highlighted by Hahn echo measurements, 
     as in \cref{fig:hahn_bloch_spheres}, 
     except reversing the evoluting by $t^{\prime} = t$ instead of $t^{\prime} = 2t$
-    \cite{childress2006coherent, breuer2002theory}, so our simulations will use this measurement scheme. 
+    \cite{breuer2002theory, childress2006coherent}, so our simulations will use this measurement scheme. 
     % TODO reference that explicitly says Hahn t=t' gives long-time dynamics
 \par 
 
 Since we are simulating the target system, we may choose the approximation we wish to invoke. 
-To set $\ho$, we use the \emph{secular} approximation, i.e. we assume the magnetic field is perfectly aligned along 
-    the $z$-axis \cite{rowan1965electron}:
-    recalling \cref{eqn:nv_ham_full}, the \gls{nvc} spin qubit rotates only about the $z$-axis, 
+Starting from the \gls{hamiltonian} expected to describe \glspl{nvc} in \cite{smeltzer201113c}, 
+    we again exclude the zero-field and quadrupole splitting (as in \cref{eqn:nv_ham_full}),
+    and assume the complete \gls{hamiltonian} to describe the long-time dynamics of an \gls{nvc}, 
+\begin{equation}
+    \label{eqn:complete_long_dynamics_nv_model}
+    \hat{H}_{\textrm{long}} =
+    \mu_B g \mathbf{B} \cdot \mathbf{S} 
+    + \gamma \cdot \mathbf{B} \cdot \mathbf{I} 
+    + \mathbf{A} \cdot \mathbf{S} \cdot \mathbf{I},
+\end{equation}
+    where\footnotemark 
+\begin{easylist}[itemize]
+    & $\mu_B = 9.274 \times 10^{-24} \SI{}{\joule\per\tesla}$ is the Bohr magneton;
+    & $g \approx 2$ is the electron $g$-factor;
+    & $\mathbf{B}$ is the magnetic field with magnitude $B=\SI{11}{\milli\tesla}$;
+    & $\mathbf{S}$ is the total electron spin operator;
+    & $\mathbf{I}$ is the total nuclear spin operator.
+    & $\gamma$ is gyromagnetic ratio, 
+        with dominant axial contributions from $^{13}C$ of $\gamma_z = \SI{10.8}{\mega\hertz\per\tesla}$
+        and nonaxial contribution from proximal nuclei of $\gamma_x = \gamma_y = \SI{42.6}{\mega\hertz\per\tesla}$ \cite{kubala2016hyperpolarized};
+    & $\mathbf{A}$ is the hyperfine tensor, coupling the electron with the nuceli, 
+        here we take it to consist of $A = A_x = A_y = A_z = \SI{0.2}{\mega\hertz}$ \cite{felton2009hyperfine}.
+\end{easylist}
+\footnotetext{Note: the parameter values used here do not necessarily correspond to a physical system as they are 
+    taken from a range of sources.
+    The precise values should not matter to the discussion, but are intended to generate dynamics using realistic values, 
+    which are similar to a genuine system, by inspection of \cref{fig:nv_revival_raw}.
+}
+
+We perform the same mapping to qubits as in \cref{sec:target_system}:
+    we let the first qubit represent the electron, 
+    and reduce the spin tensors to sums over nuclear sites, $\{\chi\}$.
+The complete model is then given by 
+
+\begin{equation}
+    \label{eqn:many_qubit_full_model}
+    \begin{split}
+    \hat{H}_{\textrm{long}} =
+        & \mu_B g B \sum\limits_{w \in \{x,y,z\}} \hat{S}_w 
+        \\ &+ A \sum\limits_{w \in \{x,y,z\}} \sum\limits_{ \chi \in \{\chi\} } \hat{S}_w \cdot \hat{A}_w^{\chi} 
+        \\ &+ B \sum\limits_{w \in \{x,y,z\}} \gamma_w \sum\limits_{\chi \in \{\chi\} } \hat{I}_w^{\chi}.
+    \end{split}
+\end{equation}
+
+\par 
+
+For the purpose of testing \gls{qmla}, we can choose a subset of terms from \cref{eqn:many_qubit_full_model} to 
+    consitute the \gls{true model}: to set $\ho$, we use the \emph{secular} approximation, 
+    i.e. we assume the magnetic field is perfectly aligned along the $z$-axis \cite{rowan1965electron}.
+In the secular approximation, the \gls{nvc} spin qubit rotates only about the $z$-axis, 
     and coupling between the \gls{nvc} and nuclear qubits are only via $\hat{S}_z \cdot \hat{A}_z^{\chi}$.
 Here we will include the effect of the nuclear spins' rotations, which are much weaker and only inluence the \gls{nvc}'s decoherence at long times. 
-In total then, the set of nuclear spins, $\{\chi\}$, are mapped to $n_s$ qubits:
+In total then, the set of nuclear spins, $\{\chi\}$, are mapped to $n_s$ qubits, 
+    and we define the \gls{true model} as 
 \begin{equation}
     \ho = \hat{S}_z 
     + \sum\limits_{ j=2 }^{n_q} \hat{S}_z \cdot \hat{A}_z^{j} 
-    + \sum\limits_{w \in \{x,y,z\}} \sum\limits_{ j=2 }^{n_q} \hat{I}_w^{j}.
+    + \sum\limits_{w \in \{x,y,z\}} \sum\limits_{ j=2 }^{n_q} \hat{I}_w^{j},
 \end{equation}
-
+    with the parameters of \cref{eqn:many_qubit_full_model} now absorbed, listed in \cref{table:nv_gen_alg_term_params}.
 For simplicity, we restate this in terms only of the Pauli matrices,
     where the first qubit refers to the \gls{nvc} and the remaining qubits give the interactions and nuclear terms.
 \begin{equation}
@@ -55,13 +104,14 @@ For simplicity, we restate this in terms only of the Pauli matrices,
     + \sum\limits_{ j=2 }^{n_q} \sz^1 \sz^j 
     + \sum\limits_{w \in \{x,y,z\}} \sum\limits_{ j=2 }^{n_q} \hat{\sigma}_w^j,
 \end{equation}
-    so in total, $\termset_0$ has 1 term for the \gls{nvc} qubit, $n_s$ terms for hyperfine couplings
+    so in total, the set of terms for \gls{q}, $\termset_0$, has 1 term for the \gls{nvc} qubit, $n_s$ terms for hyperfine couplings
     and $3n_s$ terms for the nuclei: $\absval{\termset_0} = 1 + 4n_s$.
 \par 
 
 We set the goal of \gls{qmla} as finding the approximation of \cref{eqn:nv_gen_alg_target},
     by allowing it to consider a wider set of terms. 
-The permissible terms are then all spin rotation terms, 
+The permissible terms are then all terms from \cref{eqn:many_qubit_full_model}, 
+    i.e. the spin rotation terms about all axes, 
     as well as all nuclei rotation terms, and the coupling terms:
 \begin{equation}
     \termset = \left\{ 
@@ -81,27 +131,31 @@ In total, $\absval{\termset} = 3 + 3n_s^{\prime} + 3 n_s^{\prime} = 3 + 6 n_s^{\
 We set the system parameters based on theoretical predictions, listed in \cref{table:nv_gen_alg_term_params}.
 
 \par 
-
-\begin{table}
+\setlength{\tabcolsep}{6.5pt}
+\begin{table}[t]
     \begin{tabular}{cclrr}
         Term & $\hat{t}$ & Meaning & Parameter (Hz) & $ \in \ho$ \\
         \hline
         \\
-        $\hat{S}_x$ & $\sx^1$ & \gls{nvc} rotation about $x$-axis & $ 2\times 10^9 $ & No \\
-        $\hat{S}_y$ & $\sy^1$ & \gls{nvc} rotation about $y$-axis & $ 2\times 10^9 $ & No \\
-        $\hat{S}_z$ & $\sz^1$ & \gls{nvc} rotation about $z$-axis & $ 2\times 10^9 $ & Yes \\
+        $\hat{S}_x$ & $\sx^1$ & electron spin rotation about $x$-axis & $ 2\times 10^9 $ & No \\
+        $\hat{S}_y$ & $\sy^1$ & electron spin rotation about $y$-axis & $ 2\times 10^9 $ & No \\
+        $\hat{S}_z$ & $\sz^1$ & electron spin rotation about $z$-axis & $ 2\times 10^9 $ & Yes \\
         \\
-        $\hat{S}_x \cdot \hat{A}_x^j$ & $\sx^1 \sx^j$ & Coupling b/w spin and $j^{th}$ nuclear qubit about $x$-axis & $ 0.2 \times 10^6 $ & No \\
-        $\hat{S}_y \cdot \hat{A}_y^j$ & $\sy^1 \sy^j$ & Coupling b/w spin and $j^{th}$ nuclear qubit about $y$-axis & $ 0.2 \times 10^6 $ & No \\
-        $\hat{S}_z \cdot \hat{A}_z^j$ & $\sz^1 \sz^j$ & Coupling b/w spin and $j^{th}$ nuclear qubit about $z$-axis & $ 0.2 \times 10^6 $ & Yes \\
+        $\hat{S}_x \cdot \hat{A}_x^j$ & $\sx^1 \sx^j$ & hyperfine coupling with $j^{th}$ nuclear qubit, $x$-axis & $ 0.2 \times 10^6 $ & No \\
+        $\hat{S}_y \cdot \hat{A}_y^j$ & $\sy^1 \sy^j$ & hyperfine coupling with $j^{th}$ nuclear qubit, $y$-axis & $ 0.2 \times 10^6 $ & No \\
+        $\hat{S}_z \cdot \hat{A}_z^j$ & $\sz^1 \sz^j$ & hyperfine coupling with $j^{th}$ nuclear qubit, $z$-axis & $ 0.2 \times 10^6 $ & Yes \\
         \\
         $\hat{I}_x^j$ & $\sx^j$ & $j^{th}$ nuclear spin rotation about $x$-axis & $ 66\times 10^3$ & Yes \\
         $\hat{I}_y^j$ & $\sy^j$ & $j^{th}$ nuclear spin rotation about $y$-axis & $ 66\times 10^3 $ & Yes \\
         $\hat{I}_z^j$ & $\sz^j$ & $j^{th}$ nuclear spin rotation about $z$-axis & $ 15\times 10^3 $ & Yes \\
         \hline 
     \end{tabular}
-    \caption[Extended nitrogen-vacancy centre model terms]{
-        Extended \gls{nvc} model terms
+    \caption[Terms used in modelling the extended nitrogen-vacancy centre systems]{
+        Terms used in modelling the extended \glsxtrlong{nvc} systems.
+        Each term is permitted in the \gls{model search} from expectations about the system under study. 
+        The succinct representaton is listsed as $\hat{t}$, along with an interpretation of the term's physical contribution to the system. 
+        The parameter values used in simulations can be found from from the listings of \cref{eqn:complete_long_dynamics_nv_model}. 
+        The presence of the term in the \gls{true model} is indicated in the final column. 
     }
     \label{table:nv_gen_alg_term_params}
 \end{table}
@@ -111,23 +165,21 @@ Our aim is to test \gls{qmla}, so the choice of $n_s$ and $n_s^{\prime}$ are arb
     so that, from \cref{eqn:nv_gen_alg_target},  $\absval{\termset_0} = 13$,
     and we allow candidates to consider $n_s^{\prime}=5$, 
     so $\absval{\termset} = 33$. 
-\par 
-
 In the most general sense, irrespective of the underlying physics we are simulating, 
     here \gls{qmla} is aiming to identify the 13 terms truly present in \gls{q}, 
     while searching the space of 33 permissible terms. 
 Without imposing any restrictions on which combinations of terms are allowed, 
     each term is simply either in $\hp$ or not, so can be thought of as binary variables:
-    the total \gls{model space} is therefore of size $2^{33} \approx 10^{10}$. 
+    the total \gls{model space} is therefore of size $2^{\absval{\termset}}=2^{33} \approx 10^{10}$. 
 
 \section{Genetic algorithm}
 \Glspl{ga} provide a robust and thoroughly tested paradigm for searching large candidate spaces; 
-    this is a natural framework through which we can explore such an unresetricted model space. 
-We have already extensively discussed the formalism of \glspl{ga} in \cref{chapter:ga}, 
-    and specifically in the context of \gls{qmla} in \cref{sec:ga_adaptation_to_qmla}.
-Here we will use the same \gls{es} as described in \cref{chapter:ga}, 
+    this is a natural framework through which we can explore such an unrestricted model space. 
+We have already extensively discussed the formalism of \glspl{ga} in \cref{sec:genetic_algorithms}, 
+    and specifically in the context of \gls{qmla} in \cref{chapter:ga}.
+Here we will use the same \gls{es} as described in \cref{sec:ga_adaptation_to_qmla}, 
     i.e. where model generation is driven by a \gls{ga}, 
-    and models are cast to chromosomes. 
+    and models are cast to \glspl{chromosome}. 
 In particular, candidate model's fitness will be computed from the residuals
     between their and the sytem's dynamics, described fully in \cref{sec:residuals}. 
 This \acrfull{of} relies on the definition of a validation dataset, $\expset_v$,
@@ -161,10 +213,10 @@ Our primary goal in this chapter is to validate \gls{qmla}'s performance in a
     very large \gls{model space}, with over $10^{10}$ valid candidates. 
 Our focus, then, is on model generation, and not concerned with parameter learning:
     we do \emph{not} train models individually, but rather we assume access to a \emph{perfect} parameter learning subroutine.
-That is, for each candidate considered, we simply assume knowledge of its parameters, $\al$. 
+That is, for each candidate considered, we simply assume knowledge of its parameters, $\al_i$. 
 This assumption is a major caveat to the results of this chapter: 
     no such perfect training scheme is known, 
-    so it remains to examine the detrimental effects of imprecisely finding $\al^{\prime} \approx \al$. 
+    so it remains to examine the detrimental effects of imprecisely finding $\al^{\prime}_i \approx \al_i$. 
 Moreover, while it is possible to extract information on the nuclear qubits from measuring only the 
     \gls{nvc} qubit, as in the Hahn echo measurements, 
     it is uncertain whether any technique can simultaneously detect parameters of significantly varying orders of magnitude.
@@ -176,14 +228,14 @@ Therefore we must caution that the results presented here,
     while demonstrating that \gls{qmla} \emph{can} operate in large model spaces, 
     are not immediately applicable to experimental systems, 
     since there are outstanding challenges in the assessment of individual candidates, 
-    which must be overcome before the technique outlined can realisitcally succeed. 
+    which must be overcome before the technique outlined can realistically succeed. 
 
 
 \subsection{Results}
 At the \gls{instance} level, we can see that the gene pool tends towards models of higher quality, 
-    captured\footnotemark \ by their \gls{fscore}, \cref{fig:nv_ga_instance}\textbf{a}. 
+    captured\footnotemark \ by their \gls{fscore}, \cref{fig:nv_ga_instance}\textbf{(a)}. 
 The improvement in modelling is reflected in the branch champions' predictive power at 
-    reproducing data generated by the system, \cref{fig:nv_ga_instance}\textbf{b}. 
+    reproducing data generated by the system, \cref{fig:nv_ga_instance}\textbf{(b)}. 
 \footnotetext{The use of \gls{fscore} as a figure of merit for candidate models in the \gls{qmla} search is described in \cref{sec:f_score}.}
 \begin{figure}
     \begin{center}
@@ -203,10 +255,10 @@ The improvement in modelling is reflected in the branch champions' predictive po
 
 Considering the overall \gls{run}, 
     we see that \gls{qmla} is searching in a vast \gls{model space} where randomly sampled models
-    have poor \gls{fscore} on average, \cref{fig:nv_ga_run_models}\textbf{a}. 
+    have poor \gls{fscore} on average, \cref{fig:nv_ga_run_models}\textbf{(a)}. 
 \gls{qmla} efficiently explores the space by quickly moving into a 
     subspace of high \gls{fscore}, nominating $\hp = \ho$ precisely in $85\%$ of instances,
-    \cref{fig:nv_ga_run_models}\textbf{b,c}.
+    \cref{fig:nv_ga_run_models}\textbf{(b,c)}.
 The number of times each of the terms considered, \cref{eqn:nv_ga_terms}, 
     are present in $\ho$ offers the most important insight from \gls{qmla}, 
     namely the evidence in favour of each term's presence, 
@@ -217,6 +269,18 @@ Here, $\hat{t} \in \termset_0$ are found in $\geq 94\%$ of instances,
 Such a discrepency, as well as the \glspl{win rate} for the models, 
     allows for the clear declaration of the model $\ho$ as the favoured representation 
     for the quantum system. 
+\par 
+
+By simulating a realistic system, we have hereby shown \gls{qmla}'s ability to operate on physically meaningful data
+    in large \glspl{model space}. 
+The \gls{model search} guided by a \gls{ga} instructs \gls{qmla} to consider only $\sim1000$ models out of the 
+    total space of $\sim10^{10}$, 
+    clearly showing a drastic speedup in characterising \gls{q} when compared with brute force search.
+This demonstration is moderated by the presumptions which enabled us to perform simulations quickly
+    and assume perfect outcomes from model training. 
+However, taken together with the results of examining experimental data from \cref{chapter:nv}, 
+    and the earlier confirmations of \gls{qmla}'s operating principles in \cref{part:theoretical_study}, 
+    \gls{qmla} shows promise for characterising genuine small-to-medium quantum systems in the near future. 
 
 \begin{figure}
     \begin{center}
