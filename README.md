@@ -17,7 +17,7 @@ Models of quantum systems are particularly difficult to design and test,
     owing to the huge computational resources required to represent them accurately.
 In this thesis, we introduce and develop an algorithm to characterise quantum systems efficiently, 
     by inferring a model consistent with their observed dynamics.
-The \emph{Quantum Model Learning Agent} (QMLA) is an extensible framework which permits 
+The *Quantum Model Learning Agent* (QMLA) is an extensible framework which permits 
     the study of any quantum system of interest, 
     by combining quantum simulation with state of the art machine learning.
 QMLA iteratively proposes candidate models and trains them against the target system,
@@ -81,6 +81,7 @@ The figure reproduction table lists
 
 ### Data
 Data used in the preparation of figures used in the thesis can be [downloaded as a ZIP file here](https://drive.google.com/file/d/1tSMhjMccnvDvZGocN9avpbAvbpHhiWY8/view?usp=sharing).
+
 Notes:
 * The data set is quite large (ZIP is 5GB and unzipped 11GB).
 * Some figures presented in the thesis do correspond directly to automated QMLA analysis, but the run reported in the [Figure Configuration Table](https://github.com/flynnbr11/schrodingers_catwalk/blob/main/appendix/figures/figure_implementations.md) was analysed offline, so the figure does not exist in the dataset. 

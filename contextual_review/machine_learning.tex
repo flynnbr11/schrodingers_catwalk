@@ -147,7 +147,7 @@ These type of binary predictions have four outcomes, which can be summarised in 
     \label{fig:confusion_matrix}
 \end{figure}
     
-\begin{table}[H]
+\begin{table}[h]
     \begin{center}
     \begin{tabular}{lcc}
         & $y$ has feature & $y^{\prime}$ has feature \\
@@ -431,7 +431,7 @@ Given access to the population, $\population$,
     \caption{Genetic algorithm}
     \label{alg:ga}
     \DontPrintSemicolon
-    \KwIn{ $\population$ \tcp*[1]{Population of candidate solutions to given problem}}
+    \KwIn{ $\population$ \tcp*[1]{population of candidate solutions to given problem}}
     \KwIn{ $g()$ \tcp*[1]{function to compute objective funtion}}
     \KwIn{ $\ttt{map\_g\_to\_s}()$ \tcp*[1]{function to map fitness to selection probability}}
     \KwIn{ $\ttt{select\_parents}()$ \tcp*[1]{function to select parents among generation}}
@@ -482,23 +482,6 @@ In general, \glspl{gene} can have continuous values, although usually, and for a
     genes are binary, capturing simply whether or not the \gls{gene}'s corresponding feature is present 
     in the \gls{chromosome}. 
 
-\begin{figure}[t]
-    \begin{center}
-        \includegraphics[width=\textwidth]{theoretical_study/figures/knapsack_schematic.pdf}
-    \end{center}
-    \caption[Knapsack problem]{
-        Depiction of the knapsack problem.
-        \textbf{Left}, A knapsack which can hold any number of objects but is constrained by the total weight it can support, 
-        $w_{max} = 50$. 
-        \textbf{Centre}, A set of objects are available, each with associated weight, $w$, and value $v$. 
-        The objective is to find the subset of objects which maximise the total value, 
-        while not exceeding the capacity of the knapsack. 
-        \textbf{Right}, An example chromosome, i.e. candidate $\gamma_j$, where the bits of the chromosome indicate 
-            whether the corresponding object is included, allowing for calculation of the total weight $w_j$ and value $v_j$ of 
-            the candidate solution. 
-    }
-
-\end{figure}
 \subsection{Illustrative example: knapsack problem}\label{sec:knapsack}
 One commonly referenced combinatorial optimisation problem is the \emph{knacksack problem},
     which we will use to elucidate the abstract concepts described so far, 
@@ -519,7 +502,23 @@ For example, with $n=6$,
     \vec{\gamma}_j = \irow{1 & 0 & 0 & 0 & 0 & 1} \Longrightarrow  \gamma_j = \ttt{100001} 
 \end{equation} 
 indicates a set of objects consisting only of those indexed first and last, with none of the intermediate objects included. 
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics[width=\textwidth]{theoretical_study/figures/knapsack_schematic.pdf}
+    \end{center}
+    \caption[Knapsack problem]{
+        Depiction of the knapsack problem.
+        \textbf{Left}, A knapsack which can hold any number of objects but is constrained by the total weight it can support, 
+        $w_{max} = 50$. 
+        \textbf{Centre}, A set of objects are available, each with associated weight, $w$, and value $v$. 
+        The objective is to find the subset of objects which maximise the total value, 
+        while not exceeding the capacity of the knapsack. 
+        \textbf{Right}, An example chromosome, i.e. candidate $\gamma_j$, where the bits of the chromosome indicate 
+            whether the corresponding object is included, allowing for calculation of the total weight $w_j$ and value $v_j$ of 
+            the candidate solution. 
+    }
 
+\end{figure}
 
 \par
 The fitness of any candidate is then given by the total value of that configuration of objects, $v_j = \vec{v} \cdot \vec{\gamma}_j$, 
@@ -582,6 +581,20 @@ This would still require $10^{12}$ seconds to solve absolutely,
 
 
 \subsection{Selection mechanism}
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics{theoretical_study/figures/knapsack_roulette.pdf}
+    \end{center}
+    \caption[Roulette wheels for selection]{
+        Roulette wheels showing selection probability $s_j$ for corresponding candidates $\gamma_j$. 
+        Colours here only distinguish candidates, they do not encode any information. 
+        \textbf{a}, All valid candidates are assigned selection probability based on their value in \cref{table:knapsack_candidates}. 
+        \textbf{b}, The set of potential parents is truncated to include only the strongest five candidates. 
+        \textbf{c}, After one parent ($\gamma_2$) has been chosen, it is removed from the roulette wheel and the remaining
+         candidates' probabilities are renormalised for the selection of the second parent. 
+    }
+    \label{fig:knapsack_roulette}
+\end{figure}
 
 A key subroutine of every \gls{ga} is the mechanism through which it nominates candidates from generation $\mu$ 
 as parents to offsping candidates in $\mu+1$ \cite{luke11}. 
@@ -620,25 +633,40 @@ We therefore wish to reduce the set of potential parents to ensure high quality 
     we truncate $\mu$ with rate $\tau$ to retain only the $\tau N_m$ highest-fitness candidates as selectable parents.
 \par 
 
-\begin{figure}[t]
+\begin{table}
     \begin{center}
-        \includegraphics{theoretical_study/figures/knapsack_roulette.pdf}
-    \end{center}
-    \caption[Roulette wheels for selection]{
-        Roulette wheels showing selection probability $s_j$ for corresponding candidates $\gamma_j$. 
-        Colours here only distinguish candidates, they do not encode any information. 
-        \textbf{a}, All valid candidates are assigned selection probability based on their value in \cref{table:knapsack_candidates}. 
-        \textbf{b}, The set of potential parents is truncated to include only the strongest five candidates. 
-        \textbf{c}, After one parent ($\gamma_2$) has been chosen, it is removed from the roulette wheel and the remaining
-         candidates' probabilities are renormalised for the selection of the second parent. 
-    }
-    \label{fig:knapsack_roulette}
-\end{figure}
+        \begin{tabular}{cccc}
+            Parent 1 & Parent 2 & $\kappa$ & $s_{ij}$ \\
+            \hline 
+            $\gamma_2$ & $\gamma_3$ & 2 & $11,187 \ (=113 \times 99 )$ \\
+            $\gamma_2$ & $\gamma_3$ & 3 & $11,187$ \\
+            $\gamma_2$ & $\gamma_3$ & 4 & $11,187$ \\
 
+            $\gamma_2$ & $\gamma_4$ & 2 & $10,735 \ (=113 \times 95)$ \\
+            $\gamma_2$ & $\gamma_4$ & 3 & $10,735$ \\
+            $\gamma_2$ & $\gamma_4$ & 4 & $10,735$ \\
+
+             & & \vdots & \\
+
+            $\gamma_5$ & $\gamma_7$ & 2 & $7,743 \ (=89 \times 87)$ \\
+            $\gamma_5$ & $\gamma_7$ & 3 & $7,743$ \\
+            $\gamma_5$ & $\gamma_7$ & 4 & $7,743$ \\
+
+        \end{tabular}
+    \end{center}
+    \caption[Genetic algorithm parent selection database]{
+        Example of parent selection database. 
+        Pairs of parents are selected together, with the (unnormalised) selection probability, $s_{ij}$, 
+        given by the product of the individual candidates' fitnesses. 
+        Pairs of parents are repeated in the database for differing $\kappa$, 
+            and all $\kappa$ are equally likely. 
+    }
+    \label{table:selection_database}
+\end{table}
 
 \subsection{Reproduction}
 \label{sec:reproduction}
-\begin{figure}
+\begin{figure}[t]
     \begin{center}
         \includegraphics{theoretical_study/figures/chromosomes.pdf}
     \end{center}
@@ -674,37 +702,6 @@ This is conceptually equivalent to selection via roulette wheel as above.
 Recalling the fitnesses (values) of \cref{table:knapsack_candidates}, we generate the parent selection database
     in \cref{table:selection_database}.
 
-\begin{table}[t]
-    \begin{center}
-        \begin{tabular}{cccc}
-            Parent 1 & Parent 2 & $\kappa$ & $s_{ij}$ \\
-            \hline 
-            $\gamma_2$ & $\gamma_3$ & 2 & $11,187 \ (=113 \times 99 )$ \\
-            $\gamma_2$ & $\gamma_3$ & 3 & $11,187$ \\
-            $\gamma_2$ & $\gamma_3$ & 4 & $11,187$ \\
-
-            $\gamma_2$ & $\gamma_4$ & 2 & $10,735 \ (=113 \times 95)$ \\
-            $\gamma_2$ & $\gamma_4$ & 3 & $10,735$ \\
-            $\gamma_2$ & $\gamma_4$ & 4 & $10,735$ \\
-
-             & & \vdots & \\
-
-            $\gamma_5$ & $\gamma_7$ & 2 & $7,743 \ (=89 \times 87)$ \\
-            $\gamma_5$ & $\gamma_7$ & 3 & $7,743$ \\
-            $\gamma_5$ & $\gamma_7$ & 4 & $7,743$ \\
-
-        \end{tabular}
-    \end{center}
-    \caption[Genetic algorithm parent selection database]{
-        Example of parent selection database. 
-        Pairs of parents are selected together, with the (unnormalised) selection probability, $s_{ij}$, 
-        given by the product of the individual candidates' fitnesses. 
-        Pairs of parents are repeated in the database for differing $\kappa$, 
-            and all $\kappa$ are equally likely. 
-    }
-    \label{table:selection_database}
-\end{table}
-    
 
 The \gls{ga} maintains diversity in the subspace of $\population$ it studies, 
     by \emph{mutating} some of the newly proposed offspring candidates. 
