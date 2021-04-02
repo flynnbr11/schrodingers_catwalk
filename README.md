@@ -54,12 +54,12 @@ Notes:
 Corresponding to the list of publications. 
 
 * Papers
-  ** [1] The quantum model learning agent was written about in this (accepted) [Nature Physics paper](https://arxiv.org/abs/2002.06169). 
+  * [1] The quantum model learning agent was written about in this (accepted) [Nature Physics paper](https://arxiv.org/abs/2002.06169). 
 
 * Software
-  ** The QMLA framework is [available here](https::/github.com/flynnbr11/QMLA). 
-  ** Documentation, including instructions for installation, customisation and deployment, and a complete tutorial, are [available here](https://quantum-model-learning-agent.readthedocs.io/en/latest/). 
+  * The QMLA framework is [available here](https::/github.com/flynnbr11/QMLA). 
+  * Documentation, including instructions for installation, customisation and deployment, and a complete tutorial, are [available here](https://quantum-model-learning-agent.readthedocs.io/en/latest/). 
 
 * Conferences (recordings)
-  ** [Bristol Quantum Information Technology workshop 2020](https://www.youtube.com/watch?v=m0UPG0aA0gY) 
-  ** [Quantum Techniques in Machine Learning 2020](https://www.youtube.com/watch?v=MppHO9HB2is).
+  * [Bristol Quantum Information Technology workshop 2020](https://www.youtube.com/watch?v=m0UPG0aA0gY) 
+  * [Quantum Techniques in Machine Learning 2020](https://www.youtube.com/watch?v=MppHO9HB2is).
