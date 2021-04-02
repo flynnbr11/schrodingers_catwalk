@@ -969,9 +969,8 @@ We see that $\hi$'s rating is effected by whether it wins a given comparison,
 For example, the sixth comparison finds $\hj$ as the superior model, 
     but the evidence is relatively weak and $\hi, \hj$ began with similar ratings, 
     so $R_i$ is not effected drastically. 
-
-
 \par 
+
 \begin{figure}
     \begin{center}
         \includegraphics{theoretical_study/figures/single_generation_all_ratings.pdf}
@@ -985,7 +984,6 @@ For example, the sixth comparison finds $\hj$ as the superior model,
             while the remaining poorer-performing models are discarded. 
         \figtableref
     }
-    % TODO replace left of figure with version where elite models are reset to initial rating
     \label{fig:single_generation_all_ratings}
 \end{figure}
 
@@ -1018,18 +1016,6 @@ $N_m$ models are required to populate the next generation:
     \label{fig:ga_instance}
 \end{figure}
 
-We can likewise consider the quality and ratings of models across generations.
-In \cref{fig:ga_instance}\textbf{(a)} we see the ratings for models over the first 
-    four generations of a \gls{qmla} \gls{instance}:
-    the trend suggested by \cref{fig:single_generation_all_ratings} continues,
-    where models of higher \gls{fscore} tend to achieve higher \gls{bfeer}.
-The gene pool as a whole tends towards a homogeneous set of high-quality models:
-    the final generation consists only of models with $f \geq 0.85$, \cref{fig:ga_instance}\textbf{b}. 
-Consequently, even in \glspl{instance} where the precise model, $\ho$, is not identified, the \gls{champion model}
-    is highly informative, in that it captures many of the same interactions, 
-    therefore most-likely providing meaningul insight on the system's physics. 
-
-\par 
 \begin{figure}
     \begin{center}
         \includegraphics{theoretical_study/figures/gen_alg_run.pdf}
@@ -1057,12 +1043,25 @@ Consequently, even in \glspl{instance} where the precise model, $\ho$, is not id
     \label{fig:ga_run}
 \end{figure}
 
+We can likewise consider the quality and ratings of models across generations.
+In \cref{fig:ga_instance}\textbf{(a)} we see the ratings for models over the first 
+    four generations of a \gls{qmla} \gls{instance}:
+    the trend suggested by \cref{fig:single_generation_all_ratings} continues,
+    where models of higher \gls{fscore} tend to achieve higher \gls{bfeer}.
+The gene pool as a whole tends towards a homogeneous set of high-quality models:
+    the final generation consists only of models with $f \geq 0.85$, \cref{fig:ga_instance}\textbf{(b)}. 
+Consequently, even in \glspl{instance} where the precise model, $\ho$, is not identified, the \gls{champion model}
+    is highly informative, in that it captures many of the same interactions, 
+    therefore most-likely providing meaningul insight on the system's physics. 
+
+\par 
+
 Finally, to understand the performance of the \gls{qmla} algorithm overall, 
     we combine 100 independent \glspl{instance} in a \gls{run}, \cref{fig:ga_run}. 
 We see that, while the overall \gls{model space} can be characterised by a distribution 
     of models with $\bar{f} = 0.5 \pm 0.14$ (\cref{fig:ga_run}\textbf{(a)}), 
     \gls{qmla} quickly moves to the subspace of high-quality models, 
-    i.e. the models explored have median $f = 0.76 \pm 0.15$ (\cref{fig:ga_run}\textbf{b}).
+    i.e. the models explored have median $f = 0.76 \pm 0.15$ (\cref{fig:ga_run}\textbf{(b)}).
 This exploration is based on $430 \pm 45$ chromosomes per instance, 
     i.e. \gls{qmla} trains only $0.16\%$ of the $2^{18}$ permitted models. 
 Ultimately \gls{qmla} nominates \glspl{champion model} $\{ \hp \}$ with $f \geq 0.88$ in all instances, 

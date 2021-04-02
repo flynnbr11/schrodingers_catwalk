@@ -259,8 +259,7 @@ Note the data for the studied \gls{nvc} is taken once and analysed offline,
     \label{fig:nv_raw_data}
 \end{figure}
 
-
-
+\newpage
 \section{Target system}\label{sec:target_system}
 We take the axis of the \gls{nvc}, i.e. the axis connecting the \gls{nitrogen} with the 
     lattice vacancy, as the $z$-axis.
@@ -763,38 +762,6 @@ In general, the \glspl{champion model} from each instance are highly predictive:
     $R^2 = 0.84$. 
 \par 
 
-\setlength{\tabcolsep}{8pt}
-\begin{table}[t]
-    \centering
-    \begin{tabular}{cllrr}
-    \hline
-     Model & \multicolumn{2}{c}{Experiment} & \multicolumn{2}{c}{Simulation}    \\
-     & Wins   & $R^2$   & Wins   & $R^2$   \\
-    \hline
-    \\
-     $\hat{S}_{y,z}\hat{A}_{z}$                      & 9      & 0.8     & 1      & 0.26    \\
-     $\hat{S}_{y}\hat{A}_{x,z}$                      & 2      & 0.63    &        &         \\
-     $\hat{S}_{x,y,z}\hat{A}_{z}$                    & 45     & 0.86    & 61     & 0.97    \\
-     $\hat{S}_{x,y,z}\hat{A}_{y}$                    &        &         & 1      & -0.54   \\
-     $\hat{S}_{x,y,z}\hat{A}_{x,y}$                  & 3      & 0.81    &        &         \\
-     $\hat{S}_{x,y,z}\hat{A}_{y,z}$                  & 14     & 0.83    & 10     & 0.96    \\
-     $\hat{S}_{x,y,z}\hat{A}_{x,z}$                  & 6      & 0.64    & 15     & 0.99    \\
-     $\hat{S}_{x,y,z}\hat{A}_{x,y,z}$                & 2      & 0.72    & 5      & 0.97    \\
-     $\hat{S}_{x,y,z}\hat{A}_{x,z}\hat{T}_{xz}$      &        &         & 1      & 0.68    \\
-     $\hat{S}_{x,y,z}\hat{A}_{x,y,z}\hat{T}_{xz}$    &        &         & 5      & 0.77    \\
-     $\hat{S}_{y}\hat{A}_{x,y,z}\hat{T}_{xy,xz,yz}$  & 2      & 0.31    &        &         \\
-     $\hat{S}_{x,y,z}\hat{A}_{x,y,z}\hat{T}_{xy,xz}$ & 4      & 0.67    & 1      & 0.32    \\
-    \hline
-    \end{tabular}
-    \caption[
-        QMLA win rates and $R^2$ for models based on experimental data and simulations
-    ]{
-        \gls{qmla}  \glspl{win rate} and $R^2$ for models based on experimental data and simulations. 
-        We state the number of \gls{qmla} \glspl{instance} won by each model and the average $R^2$ for those \glspl{instance} as an indication of the
-        predictive power of winning models.
-    }
-    \label{table:win_rates_r_squareds}
-\end{table}
 
 
 \begin{figure}
@@ -880,9 +847,41 @@ Comparisons between models, $\left(\hi, \hj\right)$,  are shown as edges between
     coloured by the strength of evidence of the outcome, i.e. the \glsxtrlong{bf}, $\bij$. 
 Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     the set of branch champions are consolidated to determine the global champion, $\hp_C$. 
+\setlength{\tabcolsep}{8pt}
+\begin{table}[t]
+    \centering
+    \begin{tabular}{cllrr}
+    \hline
+        Model & \multicolumn{2}{c}{Experiment} & \multicolumn{2}{c}{Simulation}    \\
+        & Wins   & $R^2$   & Wins   & $R^2$   \\
+    \hline
+    \\
+        $\hat{S}_{y,z}\hat{A}_{z}$                      & 9      & 0.8     & 1      & 0.26    \\
+        $\hat{S}_{y}\hat{A}_{x,z}$                      & 2      & 0.63    &        &         \\
+        $\hat{S}_{x,y,z}\hat{A}_{z}$                    & 45     & 0.86    & 61     & 0.97    \\
+        $\hat{S}_{x,y,z}\hat{A}_{y}$                    &        &         & 1      & -0.54   \\
+        $\hat{S}_{x,y,z}\hat{A}_{x,y}$                  & 3      & 0.81    &        &         \\
+        $\hat{S}_{x,y,z}\hat{A}_{y,z}$                  & 14     & 0.83    & 10     & 0.96    \\
+        $\hat{S}_{x,y,z}\hat{A}_{x,z}$                  & 6      & 0.64    & 15     & 0.99    \\
+        $\hat{S}_{x,y,z}\hat{A}_{x,y,z}$                & 2      & 0.72    & 5      & 0.97    \\
+        $\hat{S}_{x,y,z}\hat{A}_{x,z}\hat{T}_{xz}$      &        &         & 1      & 0.68    \\
+        $\hat{S}_{x,y,z}\hat{A}_{x,y,z}\hat{T}_{xz}$    &        &         & 5      & 0.77    \\
+        $\hat{S}_{y}\hat{A}_{x,y,z}\hat{T}_{xy,xz,yz}$  & 2      & 0.31    &        &         \\
+        $\hat{S}_{x,y,z}\hat{A}_{x,y,z}\hat{T}_{xy,xz}$ & 4      & 0.67    & 1      & 0.32    \\
+    \hline
+    \end{tabular}
+    \caption[
+        QMLA win rates and $R^2$ for models based on experimental data and simulations
+    ]{
+        \gls{qmla}  \glspl{win rate} and $R^2$ for models based on experimental data and simulations. 
+        We state the number of \gls{qmla} \glspl{instance} won by each model and the average $R^2$ for those \glspl{instance} as an indication of the
+        predictive power of winning models.
+    }
+    \label{table:win_rates_r_squareds}
+\end{table}
+
+
 \subsection{Analysis}\label{sec:exp_qmla_analysis}
-
-
 \begin{figure}
     \begin{center}
         \includegraphics[width=0.6\textwidth]{experimental_study/figures/model_composition.pdf}
