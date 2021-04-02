@@ -108,9 +108,7 @@ We assign a gene to every term in $\termset$, so that candidate models are succi
 We give an example of the mapping between models and chromosomes in \cref{table:chromosome_example}.
 Given that every model is contained in the space of bit strings spanned by $N_t$ bits, 
     we can say that there are a total of $2^{N_t}$ available models in the \gls{model space}. 
-
 \input{theoretical_study/figures/qmla_chromosome.tex}
-
 
 \subsection{$F_1$-score}\label{sec:f_score}
 \glsreset{tp}
@@ -139,7 +137,7 @@ Therefore, in this context we can consider the role of \gls{qmla} as a classific
 Candidate models $\hi$ then have $\termset_i$.
 We can assess $\hi$ using standard metrics used regularly in the \gls{ml} literature, 
     which simply count the number of terms identified correctly and incorrectly:
-\newpage
+% \newpage
 \begin{easylist}[itemize]
     & \gls{tp}: number of terms in $\To$ which are in $\Ti$
     & \gls{tn}: number of terms not in $\To$ which are also not in $\Ti$
@@ -153,7 +151,20 @@ We can assess $\hi$ using standard metrics used regularly in the \gls{ml} litera
 }
 
 \par 
-
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics[width=\textwidth]{theoretical_study/figures/classication_example.pdf}
+    \end{center}
+    \caption[Classification concepts]{
+        Concepts used for classification. 
+        \textbf{a}, the set of available terms $\termset$ containing individual terms $\hat{t}_1$ to $\hat{t}_{10}$. 
+        The \gls{true model} $\ho$ is constructed from the set $\termset_0$. 
+        Suppose a candidate $\hp$ has the set $\termset^{\prime}$. 
+        \textbf{b}, the confusion matrix for $\hp$. Correctly classified terms are \acrlong{tp} and \acrlong{tn} (green), 
+            and incorrectly classified terms are \acrlong{fp} and \acrlong{tn} (red). 
+    }
+    \label{fig:classification_eg}
+\end{figure}
 \noindent These concepts -- shown in \cref{fig:classification_eg} -- allow us to define 
 
 \begin{easylist}
@@ -208,23 +219,8 @@ Our search for an effective \gls{of} can then be guided by seeking the
 We will not use \gls{fscore} within the algorithm\footnote{Except for meta-analysis in \cref{sec:hyperparameter}}, 
     i.e. to inform any steps taken by \gls{qmla}, but simply to assess its performance independently.
 
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=\textwidth]{theoretical_study/figures/classication_example.pdf}
-    \end{center}
-    \caption[Classification concepts]{
-        Concepts used for classification. 
-        \textbf{a}, the set of available terms $\termset$ containing individual terms $\hat{t}_1$ to $\hat{t}_{10}$. 
-        The \gls{true model} $\ho$ is constructed from the set $\termset_0$. 
-        Suppose a candidate $\hp$ has the set $\termset^{\prime}$. 
-        \textbf{b}, the confusion matrix for $\hp$. Correctly classified terms are \acrlong{tp} and \acrlong{tn} (green), 
-            and incorrectly classified terms are \acrlong{fp} and \acrlong{tn} (red). 
-    }
-    \label{fig:classification_eg}
-\end{figure}
-
 \input{theoretical_study/pseudocode_gen_alg_subroutine.tex}
-
+\newpage
 \subsubsection{Distinguishing \gls{fscore} through Bayes factors}\label{sec:bf_by_f_score}
 We have so far relied on \gls{bf} as the means by which to distinguish models' 
     ability to explain data from \gls{q}. 
