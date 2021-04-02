@@ -5,6 +5,42 @@ This repository holds the LaTeX source code to my PhD thesis, `Schrodinger's Cat
 
 ## Abstract
 
+Quantum technologies exploit quantum mechanical processes to achieve outcomes beyond the reach of classical machinery.
+One of their most promising applications is quantum simulation, 
+    whereby particles, atoms and molecules can be examined thoroughly for the first time, 
+    having been beyond the scope of even the most powerful supercomputers. 
+
+*Models* have been useful tools in understanding physical systems:
+    these are mathematical structures encoding physical interactions,
+    which allow us to predict how the system will behave under various conditions. 
+Models of quantum systems are particularly difficult to design and test, 
+    owing to the huge computational resources required to represent them accurately.
+In this thesis, we introduce and develop an algorithm to characterise quantum systems efficiently, 
+    by inferring a model consistent with their observed dynamics.
+The \emph{Quantum Model Learning Agent} (QMLA) is an extensible framework which permits 
+    the study of any quantum system of interest, 
+    by combining quantum simulation with state of the art machine learning.
+QMLA iteratively proposes candidate models and trains them against the target system,
+    finally declaring a single model as the best representation for the system of interest.  
+
+We describe QMLA and its implementation through open source software,
+    before testing it under a series of physical scenarios.
+First, we consider idealised theoretical systems in simulation, 
+    verifying the core principles of QMLA. 
+Next, we incorporate strategies for generating candidate models
+    by exploiting the information QMLA has gathered to date;
+    by incorporating a genetic algorithm within QMLA, 
+    we explore vast spaces of valid candidate models, with QMLA reliably identifying the precise target model.
+Finally, we apply QMLA to *realistic* quantum systems, 
+    including operating on experimental data measured from an electron spin in a nitrogen vacancy centre. 
+
+QMLA is shown to be effective in all cases studied in this thesis;
+    however, of greater interest is the platform it provides for examining quantum systems.
+QMLA can aid engineers in configuring experimental setups, 
+    facilitate calibration of near term quantum devices,
+    and ultimately enable complete characterisation of natural quantum structures.
+This thesis marks the beginning of a new line of research, 
+    into automating the understanding of quantum mechanical systems.
 
 ## In this repository
 * Tex files used to generate the thesis PDF. 
@@ -51,7 +87,7 @@ Notes:
 * All offline [figure development](https://github.com/flynnbr11/schrodingers_catwalk/tree/main/figure_development) is made available, so it is possible to reconstruct any figure from the dataset and source code. 
 
 ## Links
-Corresponding to the list of publications. 
+Corresponding to the `List of Publications`. 
 
 * Papers
   * [1] The quantum model learning agent was written about in this (accepted) [Nature Physics paper](https://arxiv.org/abs/2002.06169). 
