@@ -313,7 +313,7 @@ Individual models' insights can be found in \ttt{model\_training},
     e.g. the model's \ttt{learning\_summary} \cref{fig:qmla_learning_summary}, and \ttt{dynamics} in \cref{fig:qmla_model_dynamics}.
 \par 
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{center}
     \subfloat[]{
         \includegraphics[width=0.45\textwidth]{appendix/figures/model_analysis/learning_summary_1.pdf}
@@ -380,7 +380,7 @@ Individual model comparisons -- i.e. \acrfull{bf} --
     with the dynamics of all candidates shown in \cref{fig:qmla_branch_dynamics}. 
 The probes used during the training of all candidates are also plotted  (\cref{fig:qmla_training_probes}).
 
-\begin{figure}[H]
+\begin{figure}[ht]
     % TODO use Jan_18/13_15 without rescaling images
     \begin{center}
         \subfloat[]{
@@ -476,7 +476,7 @@ Irrespecitve of the \glspl{champion model}, the rate with which each term is fou
 The \gls{champion model} from each \gls{instance} can attempt to reproduce system dynamics: 
     we group together these reproductions for each model in \cref{fig:run_dynamics}. 
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{center}
         \subfloat[]{
             \includegraphics{appendix/figures/run_analysis/model_wins.pdf}
@@ -505,7 +505,7 @@ The \gls{champion model} from each \gls{instance} can attempt to reproduce syste
     \label{fig:run_plots}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{appendix/figures/run_analysis/dynamics.pdf}
     \end{center}
@@ -631,7 +631,7 @@ When all jobs have finished, results are stored as in the local case,
     where \ttt{analyse.sh} can be used to generate a series of automatic analyses. 
 \par 
 
-\section{Customising exploratino strategies}
+\section{Customising exploration strategies}
 User interaction with the \gls{qmla} codebase should be achieveable primarily through the \acrfull{es} framework. 
 Throughout the algorithm(s) available, \gls{qmla} calls upon the \gls{es} before determining how to proceed. 
 The usual mechanism through which the actions of \gls{qmla} are directed, 
@@ -654,7 +654,7 @@ A first non-trivial \gls{es} is to build models greedily from a set of \emph{pri
 New models are constructed by combining the previous branch champion with each of the remaining, unused terms. 
 The process is repeated until no terms remain. 
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics[scale=0.75]{appendix/figures/greedy_exploration_strategy.pdf}
     \end{center}
@@ -786,7 +786,7 @@ This \gls{run} can be implemented locally or in parallel as described above\foot
 Outputs can again be found in the \glspl{instance} subdirectory, including a map of the models generated, 
     as well as the branches they reside on, and the \glspl{bf} between candidates, \cref{fig:example_es_greedy}. 
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{center}
     \subfloat[]{
         \includegraphics[scale=0.75]{appendix/figures/greedy_search/composition_of_models.pdf}
@@ -961,7 +961,7 @@ def greedy_add(
 \end{lstlisting}
 
 with corresponding results in \cref{fig:example_es_tiered_greedy}. 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{center}
     \subfloat[]{
         \includegraphics{appendix/figures/tiered_search//composition_of_models.pdf}
