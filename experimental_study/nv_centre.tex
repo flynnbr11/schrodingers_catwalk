@@ -180,16 +180,16 @@ We represent these concepts in a simplified format in \cref{fig:nv_centre_energy
             \includegraphics[width=0.25\textwidth]{experimental_study/figures/hahn_bloch_spheres/bloch_5.pdf}
         }
     \end{center}
-    \caption[States of spin qubit at each stage of Hahn echo sequence]{
-        States of spin qubit at each stage of Hahn echo sequence.
+    \caption[States of spin qubit at each stage of Hahn echo sequence shown on the Bloch sphere]{
+        States of spin qubit at each stage of Hahn echo sequence shown on the Bloch sphere.
         \textbf{a,} The state of the \gls{nvc} spin is initialised by a green laser into state $\ket{\psi_0} = \ket{0}$. 
-        \textbf{b,} We apply a rotation about the $y$-axis (i.e. a \glsxtrfull+{mw} pulse), 
+        \textbf{b,} We apply a $\nicefrac{\pi}{2}$ rotation about the $y$-axis (i.e. a \glsxtrfull+{mw} pulse, implemented as $e^{-i \frac{\pi}{4} \s_y}$), 
             yielding the state $\ket{\psi_1} = \ket{+}$. 
         \textbf{c,} The system is allowed to evolve according to its own $\ho$ for $t$, $\ket{\psi_2} = e^{-i\ho t}\ket{+}$.
         \textbf{d,} We apply a second \gls{mw} pulse, this time for a $\pi$-rotation about the $y$-axis, 
-        $\ket{\psi_3} = e^{-i\pi \s_y}e^{-i\ho t}\ket{+}$.
-        \textbf{e,} Again the system evolves according to interactions with the environment, this time for $t^{\prime} = 2t$.
-        \textbf{f,} We apply a final \gls{mw} pulse to rotate about the $y$-axis again, 
+        $\ket{\psi_3} = e^{-i\frac{\pi}{2} \s_y}e^{-i\ho t}\ket{+}$.
+        \textbf{e,} Again the system evolves according to interactions with the environment, this time for $t^{\prime}$.
+        \textbf{f,} We apply a final $\nicefrac{\pi}{2}$ \gls{mw} pulse to rotate about the $y$-axis again, 
             projecting it upon $\ket{0}$.
         Here $\ket{\psi_5}$ is roughly half way between $\ket{0}$ and $\ket{+}$, 
         i.e. along the $z$-axis. 
@@ -201,32 +201,106 @@ We represent these concepts in a simplified format in \cref{fig:nv_centre_energy
     \label{fig:hahn_bloch_spheres}
 \end{figure}
 
-We choose to model the decoherence of the \gls{nvc} (described in \cref{sec:target_system}), 
+As our primary objective, we aim to model the decoherence and precession of the \gls{nvc} (described in \cref{sec:target_system}), 
     and therefore must implement an experimental strategy which highlights 
     the decoherence effects dominating the spin. 
-The \emph{Hahn echo sequence} is a series of operations which decouple a spin from its environment, i.e. the nuclear bath
+The \emph{Hahn echo sequence} is a series of operations which decouple a spin from the  
+    slowly varying components of its environment, i.e. the nuclear bath
     \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}.
 For short evolution times, i.e. in the first decay of the \gls{nvc}, the spin is influenced mostly by \emph{fast} decoherence processes,
     providing a platform to study the contributions of dominant decoherence effects in isolation. 
-% We have decided to characterise the hyperfine interactions of the \gls{nvc} which dominate its decoherence process:
-%     these interactions are evident most strongly at very short timescales \cite{childress2006coherent}. 
-% To isolate the effects of the hyperfine interactions, 
-%     we run \emph{Hahn echo} \glspl{experiment}, which are known to emphasise weak interactions.
-% Hahn echo sequences attempt to decouple the spin's dynamics from the nuclear bath
-    % \cite{blok2014manipulating, childress2006coherent, rowan1965electron, charnock2001combined, gentile2020Operating}
-    % providing a helpful platform for studying residual contributions of terms in \cref{eqn:nv_terms}.
+
 
 \par 
 During the Hahn echo sequence, the \gls{nvc} spin undergoes a series of evolutions -- 
     either according to application of quantum logic gates
-    or the natural evolution of the system interacting with its environment.  
-We depict the stages of the experiment in \cref{fig:hahn_bloch_spheres}, 
+    or the natural evolution of the system interacting with its environment.
+Intuitively, the stages are as follows: 
+\begin{enumerate}[label=(\alph*)]
+
+    \item Prepare spin in $\ket{0}$.
+    \item Apply a $\nicefrac{\pi}{2}$ \gls{mw} pulse. 
+    A $\pi$-pulse is a \gls{mw} pulse of sufficient duration to flip the spin completely ($\ket{0} \leftrightarrow \ket{1}$), 
+    so a $\nicefrac{\pi}{2}$-pulse generates a superposition, i.e. $\nicefrac{\pi}{2}: \ket{0} \rightarrow \ket{+}$.
+    \item The superposition precesses freely for $t$. During this time, the $\ket{1}$-component of the superposition picks
+        up a phase proportional to $t$, such that the spin is now in the state $\frac{1}{\sqrt{2}}\left( \ket{0} + e^{-i \delta t}\ket{1}\right)$. 
+    \item A \gls{mw} $\pi$-pulse is applied, which inverts the basis states, yielding the state $\frac{1}{\sqrt{2}}\left( \ket{1} + e^{-i \delta t}\ket{0}\right)$.
+    \item The spin is again allowed precess freely, here for a duration $t^{\prime}$. 
+        Again the $\ket{1}$-copmonent gains a phase $e^{-i \delta t^{\prime}}$, 
+        i.e. the spin is in the state $\frac{1}{\sqrt{2}}\left( e^{-i \delta t}\ket{0} + e^{-i \delta t^{\prime}}\ket{1} \right)$.
+    \item A final $\nicefrac{\pi}{2}$ pulse is applied, giving 
+        $\frac{1}{\sqrt{2}}\left( e^{-i \delta t}\ket{+} + e^{-i \delta t^{\prime}}\ket{-} \right)$.
+        Expanding $\ket{+}, \ket{-}$ and factoring $e^{-i \delta t}$, we get the final state
+        \begin{equation}
+            \ket{\psi_H(t, t^{\prime})} = \frac{e^{-i \delta t}}{2} \left\{ (1 + e^{-i \delta(t^{\prime} - t)})\ket{0} + (1 - e^{-i \delta(t^{\prime} - t)})\ket{1}  \right\}.    
+        \end{equation}
+\end{enumerate}
+
+If the second free evolution is run for $t^{\prime} = t$, we retrieve
+\begin{equation}
+    \ket{\psi_H(t, t^{\prime}=t)} = \frac{e^{-i \delta t}}{2} \left\{ (1 +1)\ket{0} + (1 - 1)\ket{1}  \right\} = \ket{0},    
+\end{equation}
+    i.e. the phase accumulated is effectively removed. 
+This is therefore an excellent scheme when seeking to isolate the spin from its environment, 
+    e.g. when the spin is intended to act as a qubit. 
+In practice it is impossible to decouple the environment entirely, 
+    since distant nuclei still interact with the spin, % TODO why are these not cancelled out by the same phase reversal?
+    causing decoherence on a relatively long time scale\footnotemark.
+These are what we refer to as \emph{slow} interactions: 
+    this decoupling scheme can therefore be viewed as corresponding to a model 
+    where the Hamiltonian consists solely of slow terms, 
+    enabling us to study the spin's interactions with its environment beyond 
+    the nearest \gls{carbon} atom.
+We will explore this possibility in \cref{chapter:many_qubits}.
+\footnotetext{
+    The timescales on which these interactions decohere the spin are orders of magnitude higher
+    then available through alternative decoupling schemes,
+    e.g. $T_2 = \SI{242 }{\micro\second}$ in \cite{childress2006coherent}.
+}
+\par 
+
+On the other hand, when $t^{\prime} \neq t$, the spin is instead found in the state
+\begin{equation}
+    \label{eqn:hahn_unequal_times}
+    \ket{\psi_H(t, t^{\prime}\neq t)} = \frac{e^{-i \delta t}}{2} \left\{ (1 + e^{-i \delta(t^{\prime} - t)})\ket{0} + (1 - e^{-i \delta(t^{\prime} - t)})\ket{1}  \right\}.
+\end{equation}
+
+\cref{eqn:hahn_unequal_times} has the precise form (up to the phase factor $e^{-i \delta t}$)
+    of a spin having undergone a \emph{Ramsey sequence}, 
+    i.e. a $\nicefrac{\pi}{2}$ pulse, followed by free evolution for $t$, and a final $\nicefrac{\pi}{2}$ pulse.
+That is, for $t^{\prime}\neq t$, the Hahn echo sequence behaves like 
+    a Ramsey sequence with a delay $(t^{\prime} - t)$ \cite{childress2007coherent}. 
+$\ket{\psi_H(t, t^{\prime}\neq t)}$ therefore does \emph{not} decouple the spin from its dominant dephasing contributions, 
+    but rather it reverses the dephasing due to \emph{slowly varying} components of the environment. 
+As such, this provides a platform for examining only the \emph{fast} effects on the spin, 
+    i.e. the dominant Markovian decoherence processes, which are expected to be dominated by 
+    coupling with the nearest \gls{carbon} atom of strength $\mathcal{O}(\SI{}{\mega\hertz})$. 
+\par 
+
+In \cref{chapter:many_qubits}, we consider the system more broadly, and endeavour to 
+    characterise its coupling with several nuclei, located farther from the spin than the nearest \gls{carbon},
+    i.e. the slower-varying contributions to the spin's dynamics, 
+    which an be examined via the former scheme with $t^{\prime} = t$. 
+For the remainder of this chapter, however, we will exploit the latter scheme, \cref{eqn:hahn_unequal_times}, 
+    in order to model the decoherence of the spin via its relationship with a single \gls{carbon} atom. 
+\par 
+
+To relate the experimental procedure to the parameter learning technique described in \cref{chapter:qhl}
+    which fulfils the training stage of \gls{qmla}, consider the overal Hahn echo sequence.
+We depict the stages of the experiment more generally in \cref{fig:hahn_bloch_spheres}, 
     starting from the initialised computational state, $\ket{\psi_0} = \ket{0}$,
     through to its final state which is read out through \gls{pl},
     both of which as described in \cref{sec:nv_centres}.
 In particular, the final state, $\ket{\psi}_5$, is effectively read out by projection onto $\ket{0}$;
     we can interpret the normalised \gls{pl} after evolution time $t$ as the  \gls{likelihood} 
-    that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true} Hamiltonian, $\ho$ for $t$. 
+    that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true}\footnotemark Hamiltonian, $\ho$ for $t$. 
+\footnotetext{
+    Note: we refer to the target $\ho$ as the system's \emph{true} Hamiltonian. 
+    This is a matter of convention: 
+        here $\ho$ is not the Hamiltonian of the complete \gls{nvc} system/environment, 
+        but captures only the precession and fast decoherence processes, 
+        i.e. $\ho$ is simply the name assigned to the Hamiltonian which models the interactions we aim to uncover. 
+}
 That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{likelihood}), 
     and it can be used within \gls{likelihood} estimation in order to refine a candidate model $\hj$, 
     effectively\footnotemark \ by changing the structure of 
@@ -283,7 +357,7 @@ The complete \gls{hamiltonian} for such systems, where the set of nuclear sites 
 Our overarching intention is to design an approximate model $\hp$, 
     i.e. a subset of the terms in $\hat{H}_{\textrm{full}}$ which can explain the observed dynamics 
     and decoherence of the \gls{nvc}. 
-It is therefore prudent only to retain terms which \emph{may} contribute to the spin's decoherence. 
+It is therefore prudent only to retain terms which \emph{may} contribute to the spin's decoherence and precession. 
 First, we will describe each term in \cref{eqn:nv_ham_full}, 
     as well as approximations which enable us to drastically reduce the space of terms to consider for inclusion in $\hp$. 
 
