@@ -293,7 +293,7 @@ We depict the stages of the experiment more generally in \cref{fig:hahn_bloch_sp
     both of which as described in \cref{sec:nv_centres}.
 In particular, the final state, $\ket{\psi}_5$, is effectively read out by projection onto $\ket{0}$;
     we can interpret the normalised \gls{pl} after evolution time $t$ as the  \gls{likelihood} 
-    that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true}\footnotemark Hamiltonian, $\ho$ for $t$. 
+    that the \gls{nvc} is found in $\ket{0}$ after evolution of its \emph{true}\footnotemark \ Hamiltonian, $\ho$ for $t$. 
 \footnotetext{
     Note: we refer to the target $\ho$ as the system's \emph{true} Hamiltonian. 
     This is a matter of convention: 
@@ -1042,15 +1042,6 @@ The resultant model, $\hat{S}_{xyz}\hat{A}_{z}$ is in agreement with theoretical
     \gls{hamiltonian}, proving that \gls{qmla} can perform an important role in aiding the understanding of quantum systems.  
 \par 
 
-We have thus characterised the interactions which dominate the decoherence process for a given \gls{nvc}. 
-In doing so, we identified not only the terms present, but also the strength (i.e. parameters) of those terms. 
-Automated characterisation of quantum systems will be essential in the development of quantum technologies, 
-    whether for calibration of controlled devices, or alignment of experimental systems for optimal results. 
-While this demonstration must be understood in the context of its limitations, 
-    e.g. the restricted basis studied, and the constrained \gls{model space} searched, 
-    it represents a crucial proof of principle that \gls{qmla} is applicable to the task 
-    of automated quantum system characterisation. 
-In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitations mentioned here. 
 
 % The parameters found for these terms are of the same order of magnitude as we would have predicted originally, 
 %     but disagreee in the precise value. 
@@ -1088,3 +1079,76 @@ In the next chapter, we extend \gls{qmla} in simulation, to overcome the limitat
     \label{fig:nv_learned_params}
     % /home/bf16951/Dropbox/QML_share_stateofart/Auxiliary files/QMLA plots via pandas
 \end{figure}
+
+
+\subsection{Finite size effects}
+The case examined in this chapter is fundamentally limited by the nature of the approximation: 
+    by assigning a closed Hamiltonian to the \gls{nvc}, 
+    we may never retrieve a complete description of the system. 
+Closed, conservative  dynamical systems -- with a finite spectrum of permissible states -- 
+    will return to their initial state after some finite time, 
+    according to the Poincar\'e recurrence theorem \cite{breuer2002theory}.
+For quantum systems, then, the Poincar\'e recurrence times $\{t_R\}$ correspond to the times at which 
+    the \emph{global} system's state, $\ket{\psi_g}$, returns to its starting state, 
+    $\absval{\braket{\psi_{\rm{g}}(t_R) | \psi_{\rm{g}}(0)}}^2 \approx 1$
+    \cite{gentile2020Operating}.
+Such a system is therefore expected to exhibit \emph{revivals}; 
+    in the context of quantum many-body systems,
+    this is where the system \emph{rephases} some time after it had dephased. 
+These revivals are not necessarily physical, 
+    but rather an artefact of the approximation:
+    realistic systems are seen to decohere completely after some decoherence time
+    without revivals, i.e. \emph{irreversible decoherence}. 
+The Poincar\'e recurrence time scales polynomially with the number of degrees of freedom, $n$,
+    within the closed system:  $t_R \sim n!$. 
+That is, even though the system of many interacting components \emph{will} rephase, 
+    the time required to do so may be greater than the age of the universe \cite{schlosshauer2005decoherence}. 
+Conversely, in our simplistic two-qubit model, the spectrum of eigenenergies is artifically restricted, 
+    and so revivals will appear unrealistically quickly. 
+\par 
+\cref{fig:predicted_revivals} shows the predicted revivals of $\hp = \hat{S}_{x,y,z}\hat{A}_z$, 
+    the model found by \gls{qmla} to describe the \gls{nvc} in the above analysis. 
+The predicted revivals are unlikely to correspond to further experimental data; 
+    we can see intuitively that the system had decohered completely and irreversibly 
+    after $\SI{4.2}{\micro\second}$.
+When modelling such systems in practice, these revivals are often suppressed by a 
+    time-dependent damping $e^{-\Gamma t}$, with $\Gamma$ determined phenomononoligcally,
+    in order to yield the irreversible decoherence observed in real experimental systems,
+    including the one used throughout this chapter. 
+Here our aim was to model the interactions of the \gls{nvc} spin with its nearest environmental qubit,
+    which would be undermined by including such a drastic time-dependent effect:
+    we omit this factor in this work, 
+    however it will prove important to account for this behaviour in future applications of \gls{qmla} to open systems.     
+
+\begin{figure}
+    \begin{center}
+        \includegraphics{experimental_study/figures/predicted_revivals.pdf}        
+    \end{center}
+    \caption[Predicted revivals of QMLA champion model]{
+        Predicted revivals of \gls{qmla} \gls{champion model}, $\hp$ (blue), 
+        against the experimental data (red). 
+    }
+    \label{fig:predicted_revivals}
+\end{figure}
+
+Invoking a finite-size bath to approximate the genuine open-system nature of the \gls{nvc} 
+    permits us to examine the interaction of the spin with few neighbours, 
+    sufficient to characterise the domainant decoherence processes of a system, as we have done in this chapter.
+However, the approximation can not capture all of the spin's interactions, 
+    so we are motivated to consider models involving more nuclei, 
+    and ultimately models of open quantum system. 
+In \cref{chapter:many_qubits} we consider a similar \gls{nvc} setup in simulation, 
+    to explore \gls{qmla}'s capability while relaxing the effect of the finite size bath,
+    and we note in \cref{chapter:outlook} that in order for \gls{qmla} to prove useful 
+    in characterisation genuine quantum systems, we must incorporate complete open system models. 
+
+\subsection{Outlook}
+We have thus characterised the interactions which dominate the decoherence process for a given \gls{nvc}. 
+In doing so, we identified not only the terms present, but also the strength (i.e. parameters) of those terms. 
+Automated characterisation of quantum systems will be essential in the development of quantum technologies, 
+    whether for calibration of controlled devices, or alignment of experimental systems for optimal results. 
+While this demonstration must be understood in the context of its limitations, 
+    e.g. the restricted basis studied, and the constrained \gls{model space} searched, 
+    it represents a crucial proof of principle that \gls{qmla} is applicable to the task 
+    of automated quantum system characterisation. 
+In the next chapter, we extend \gls{qmla} in simulation, to overcome some of the limitations mentioned here. 
