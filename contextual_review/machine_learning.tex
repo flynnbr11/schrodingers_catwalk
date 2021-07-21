@@ -91,7 +91,7 @@ There are a number of families of algorithms even within the broad category of s
             && Usually used for classification tasks.
             && For data $\mathcal{D} \in \mathbb{R}^n$, a hypersurface in $\mathbb{R}^{n-1}$, 
                 can be drawn arbitrarilily through the space (e.g. a 2D plane in a 3D space).
-            && Unseen data can then classified by which partition they reside in when projected into the $n$-dimensional space.
+            && Unseen data can then be classified by which partition they reside in when projected into the $n$-dimensional space.
             && The task of the support vector machine is to orient the hypersurface in such a way as to separate distinct classes.                 
         \end{easylist}
 \end{description}
@@ -204,7 +204,7 @@ Each metric has clear advantages, but consider also their drawbacks:
         That is, by predicting the feature as present in all cases, all true instances of the feature will be found, 
         however all \ttt{False} instances will be labelled as having the feature, 
         so the model has not helped separate the data.
-        The model willl yield a high rate of \gls{tp} but also a high rate of \gls{fp}. 
+        The model will yield a high rate of \gls{tp} but also a high rate of \gls{fp}. 
     & Precision can be high for extremely selective models, i.e. those which are conservative in predicting the presence of the feature.
         By predicting relatively few positive instances, it can ensure that a high proportion of its predictions are correct. 
         The absolute number of instances identified, however, is relatively low as a proportion of the total number in the dataset. 
@@ -217,7 +217,7 @@ Clearly, the performance metric must be chosen with due consideration for the ap
     model predicted they were feature-negative, it is preferable to incorrectly identify some patients as feature-positive (since they can be retested). 
 In this case, high accuracy is crucial, at the expense of precision. 
 It is appropriate to blend together these metrics, in order to derive performance metrics which balance the priorities of the outcomes.
-In general -- including in this thesis -- the most important aspects of a \gls{ml} are precision and sensitivity: 
+In general -- including in this thesis -- the most important aspects of a \gls{ml} algorithm are precision and sensitivity: 
     a model which performs well with respect to \emph{both} of these is sensitive to the feature, but precise in its predictions. 
 A quantity which captures both of these is the $F_{\beta}$-score, 
 \begin{equation}\label{eqn:f_beta}
@@ -397,7 +397,7 @@ Mutation is crucial in avoiding local optima of the \gls{of} landscape
     by maintaining diversity in the examined subspace of the population.
 \par 
 
-\glspl{ga} are not defined either as supervised or unspervised methods;
+\glspl{ga} are not defined either as supervised or unsupervised methods;
     this designation depends on the \gls{of}. 
 If candidates are evaluated with respect to labelled data, we can consider that \gls{ga} supervised, 
     otherwise unsupervised. 
@@ -415,14 +415,14 @@ Given access to the population, $\population$,
     & Map the fitnesses of each candidate, $\{g_j\}$, to selection probabilities for each candidate, $\{s_j\}$
     && e.g. by normalising the fitnesses, or by removing some poorly-performing candidates and then normalising. 
     & Generate the next generation of candidates
-    && Reset $\mu = \{ \}$;
+    && teset $\mu = \{ \}$;
     && \label{ga:select} Select pairs of parents, $\left\{\gamma_{p_1}, \gamma_{p_2}\right\}$, from $\mu$
-    &&& Each candidate's probability of being chosen is given by their $s_j$.
-    && Cross over $\left\{\gamma_{p_1}, \gamma_{p_2}\right\}$ to produce children candidates, $\left\{\gamma_{c_1}, \gamma_{c_2}\right\}$
+    &&& each candidate's probability of being chosen is given by their $s_j$;
+    && cross over $\left\{\gamma_{p_1}, \gamma_{p_2}\right\}$ to produce children candidates, $\left\{\gamma_{c_1}, \gamma_{c_2}\right\}$
     &&& mutate $\gamma_{c_1}, \gamma_{c_2}$ according to some random probabilistic process;
-    &&& keep $\gamma_{c_i}$ only if it is not already in $\mu$, to ensure $N_m$ unique candidates are tested at each generation.
+    &&& keep $\gamma_{c_i}$ only if it is not already in $\mu$, to ensure $N_m$ unique candidates are tested at each generation;
     && until $|\mu| = N_m$, iterate to step (\ref{ga:select}.
-    & Until the $N_g^{th}$ generation is reached, iterate to step \ref{ga:loop};
+    & Until the $N_g^{th}$ generation is reached, iterate to step \ref{ga:loop}.
     & The strongest candidate on the final generation is deemed the solution to the posed problem. 
 \end{easylist}
 
@@ -597,7 +597,7 @@ This would still require $10^{12}$ seconds to solve absolutely,
 \end{figure}
 
 A key subroutine of every \gls{ga} is the mechanism through which it nominates candidates from generation $\mu$ 
-as parents to offsping candidates in $\mu+1$ \cite{luke11}. 
+as parents to offspring candidates in $\mu+1$ \cite{luke11}. 
 All mechanisms have in common that they act on a set of candidates from the previous generation, 
     where each candidate, $\gamma_j$, has been evaluated and has fitness value, $g_j$. 
 Among the viable schemes for selecting individual parents from $\mu$  are
@@ -701,15 +701,16 @@ Finally, then, parent selection is done by constructing a database of pairs of p
 This is conceptually equivalent to selection via roulette wheel as above. 
 Recalling the fitnesses (values) of \cref{table:knapsack_candidates}, we generate the parent selection database
     in \cref{table:selection_database}.
-
+\par 
 
 The \gls{ga} maintains diversity in the subspace of $\population$ it studies, 
     by \emph{mutating} some of the newly proposed offspring candidates. 
 Again, there are a multitude of approaches for this step \cite{schmitt2001theory}, 
     but for brevity we only describe the one used in this thesis.
-For each proposed child candidate, $\gamma_{c}$, we probabilistically mutate each gene with some mutation rate $r_m$:
-    if a mutation occurs, the child is replaced by $\gamma_c^{\prime}$. 
-That is, $\gamma_c^{\prime}$  is added to the next generation, and $\gamma_c$ is discarded. 
+For each proposed child candidate, $\gamma_{c}$, we \emph{probabilistically} mutate each gene:
+    with some mutation rate $r_\rm{m}$, a mutation occurs and the child is replaced by $\gamma_c^{\prime}$;
+    that is, $\gamma_c^{\prime}$  is added to the next generation, and $\gamma_c$ is discarded. 
+With probability $1-r_\rm{m}$ a mutation does not occur, so $\gamma_c$ is passed to the subsequent generation. 
 $r_m$ is a \emph{hyperparameter} of the \gls{ga}:
     the performance of the algorithm can be optimised by finding the best $r_m$ 
     for a given problem. 
