@@ -58,12 +58,11 @@ That is,
     \ket{\psi(t)} = \hat{U}(t) \ket{\psi(t_0)},
 \end{equation}
     where we have not yet imposed any restrictions on $\hat{U}$. 
-We also have the \emph{dual vector} of \cref{eqn:unitary_time_evolution},
+We also have the \emph{dual vector}\footnote{see \cref{sec:linear_algebra}} of \cref{eqn:unitary_time_evolution},
 \begin{equation}
     \label{eqn:dual_unitary_evolution}
-    \bra{\psi(t)} = \bra{\psi(t_o)}\hat{U}^{\dagger},
-\end{equation}
-    see \cref{sec:linear_algebra}. 
+    \bra{\psi(t)} = \bra{\psi(t_o)}\hat{U}^{\dagger}.
+\end{equation} 
 Combining \crefrange{eqn:conservation_simularity}{eqn:dual_unitary_evolution}, 
 
 \begin{align}
@@ -119,7 +118,7 @@ Recalling the unitarity condition, and that $\lim_{\epsilon \rightarrow 0} \math
         \hat{U}^{\dag}(\epsilon) \hat{U}(\epsilon) &= \ident
         \\ 
         \Rightarrow 
-        \left( \ident + \frac{i}{\hbar} \epsilon \ho^\dag \right) \left( \ident - \frac{i}{\hbar} \epsilon \ho, \right)  &= \ident
+        \left( \ident + \frac{i}{\hbar} \epsilon \ho^\dag \right) \left( \ident - \frac{i}{\hbar} \epsilon \ho \right)  &= \ident
         \\
         \Rightarrow
         \ident +  \frac{i}{\hbar} \epsilon (\ho^{\dag} - \ho) + \mathcal{O}(\epsilon^2) &= \ident
@@ -153,11 +152,11 @@ Taking the limit as $\epsilon \rightarrow 0 $, the left hand side of the final l
 Taken together, we have 
 \begin{equation}
     \label{eqn:schrodinger}
-    \frac{d}{dt} \ket{\psi(t)} = \frac{-i}{\hbar} \ho \ket{\psi(t_0)},
+    \frac{\partial}{\partial t} \ket{\psi(t)} = \frac{-i}{\hbar} \ho \ket{\psi(t_0)},
 \end{equation}
     where $\ket{\psi(t)}$ is the wavefunction at time $t$, 
     $\ket{\psi(t_0)}$ is the wavefunction at $t_0$, such that $t > t_0$, 
-    $\hbar = 1.054 \times 10^{-34}$ is the reduced Planck constant and 
+    $\hbar$ is the reduced Planck constant and 
     $\ho$ is the \emph{Hamiltonian} of \gls{q}. 
 For brevity we generally refer to $t_0 = 0$, and absorb $\hbar$ into $\ho$, which will later manifest in the \gls{hamiltonian} scalar parameters. 
 \cref{eqn:schrodinger} is the most general form of \emph{\schrodinger equation}, 
@@ -214,8 +213,8 @@ We can think that each process/interaction \gls{q} undergoes contributes to its 
 \glspl{hamiltonian} describe \emph{closed} quantum systems, 
     i.e. where \emph{all} processes and interactions which influence \gls{q} are accounted for. 
 Realistic quantum systems are influenced by a myriad of proximal systems, 
-    and it is therefore infeasible to analytically account for them all. 
-Instead, \emph{open} quantum systems' dynamics are described by Lindbladian operators, which encompass the \gls{hamiltonian} form. 
+    and it is therefore usually infeasible to analytically account for them all. 
+Instead, \emph{open} quantum systems' dynamics can, in some cases, be described by Lindbladian operators, which encompass the \gls{hamiltonian} form. 
 The Lindblad master equation is a generalisation of the \schrodinger equation, 
     providing the equation of motion for open quantum systems \cite{breuer2002theory, manzano2020short}.
 In this thesis we only consider closed models for quantum systems;
@@ -233,7 +232,8 @@ States are vectors\footnotemark \ of complex numbers;
     i.e. $\ket{\psi} \in \hilbert$. 
 \footnotetext{We immediately use Dirac notation to represent the state; it is defined in \cref{sec:dirac_notation}.}
 The Hilbert space defines the overlap between any two vectors as the \emph{inner product}, $\braket{\psi | \phi}$ (see \cref{sec:linear_algebra}). 
-In general\footnotemark, a state can be seen as a \emph{superposition} across the system's eigenstates, $\left\{\ket{v_i}\right\}$.  
+In general\footnotemark, a state can be seen as a \emph{superposition} across a set of orthonormal states, 
+    often represented over the system's eigenstates, $\left\{\ket{v_i}\right\}$:
 \footnotetext{We expand on this brief description in \cref{sec:states}.}
 
 \begin{subequations}
@@ -247,7 +247,7 @@ In general\footnotemark, a state can be seen as a \emph{superposition} across th
 
 The cornerstone of \gls{qm} is the effect of \emph{measurement} on quantum systems: 
     in general \gls{q} can be seen as occupying a multitude of eigenstates as in \cref{eqn:state_vector};
-    observing the system forces $\ket{\psi}$ into definite occupation of a single eigenstate,
+    observing the system forces $\ket{\psi}$ into definite occupation of a measurement basis state,
     where the \emph{probability} that it is measured in each eigenstate $\ket{v_i}$ is given by $\absval{\alpha_i}^2$, 
     according to Born's rule \cite{born1926quantenmechanik}.
 $\alpha_i$ are hence named \emph{probability amplitudes} since they inform the probability of measuring the corresponding eigenstate. 
@@ -481,7 +481,7 @@ In other words, if we prepared $\ket{\psi}$ and measured it -- via some observab
     \braket{\hat{A}} = \braket{\psi | \hat{A} | \psi} = \sum\limits_{i} \alpha_i \braket{v_i | \hat{A} | v_i},  
 \end{equation}
     where $\braket{\hat{A}}$ is the \gls{expectation value} (average) for the observable $\hat{A}$; 
-    $\ket{v_i}$ are the eigenstates of $\hat{A}$, and $\alpha_i \in \mathbb{C}$ are the proability amplitudes
+    $\ket{v_i}$ are the eigenstates of $\hat{A}$, and $\alpha_i \in \mathbb{C}$ are the probability amplitudes
     associated with each $\ket{v_i}$ when the state $\ket{\psi}$ is represented as in \cref{eqn:state_vector}.
 We show some examples of \glspl{expectation value} for the observable Pauli matrices in \cref{fig:expectation_values}. 
 \par 
@@ -572,7 +572,8 @@ Any two-level quantum system can be used as a qubit, so a range of platforms hav
 
     \item[Ion traps] \cite{kielpinski2002architecture, monroe2013scaling}
     \begin{easylist}
-        && high two qubit gate fidelities, e.g. $99.9\%$ in \cite{gaebler2016high};
+    && full connectivity between pairs of qubits \cite{linke2017experimental};
+    && high two qubit gate fidelities, e.g. $99.9\%$ in \cite{gaebler2016high};
     && very high coherence times, e.g. $\mathcal{O}(10 \ \textrm{min})$ in \cite{wang2017single};
     && straightforward state preparation and readout, e.g. $99.99\%$ readout fidelity in \cite{myerson2008high};
     && long gate-times, e.g. $\mathcal{O}(\mu \textrm{s})$ in \cite{schafer2018fast};
