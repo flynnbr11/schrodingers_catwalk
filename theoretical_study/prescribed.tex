@@ -18,7 +18,7 @@ In order to perform this calibration,
     we treat $S_u$ as the system, \gls{q}, i.e. we call upon it to retrieve the datum $d$ in \cref{eqn:likelihood}, 
     where the calculation of the \glspl{likelihood}  for each \gls{particle} are computed through $S_t$. 
 If $S_u$ is reliable, the data from its calculations will be consistent with some $\ho$ of our choosing. 
-Conversely, miscalibrations can mainfest as imperfectly implemented gates/steps in the calculation of the system's \gls{likelihood}, 
+Conversely, miscalibrations can manifest as imperfectly implemented gates/steps in the calculation of the system's \gls{likelihood}, 
     and so would result in data inconsistent with $\ho$. 
 Therefore, if we can prescribe the most likely miscalibrations, it may be feasible to compose a set 
     of models, $\mathbb{H}$, which represent those cases, and search for $\hp$ only within $\mathbb{H}$,
@@ -50,7 +50,7 @@ Due to simluation constraints, because we train models through exact unitary evo
     be simulated in this limit. 
 The \gls{es} in this chapter is then simply to propose a set of models $\mathbb{H}$,
     with no further model generation, 
-    and comparisons between all pairs of models through \glspl{bf}.
+    and perform comparisons between all pairs of models through \glspl{bf}.
 \par
 
 Connectivity between lattice sites is achieved within the specific \gls{hamiltonian} formalisms
@@ -67,17 +67,17 @@ We can then summarise the set of candidate models through the descriptions of la
     corresponding to those depicted in \cref{fig:lattices}:
 \begin{easylist}[enumerate]
     \ListProperties(Numbers=l)
-    & 2-site chain
-    & 3-site chain
-    & 3-site fully connected (triangle)
-    & 4-site fully conneted (square)
-    & 4-site linearly connected (loop)
+    & 2-site chain;
+    & 3-site chain;
+    & 3-site fully connected (triangle);
+    & 4-site fully conneted (square);
+    & 4-site linearly connected (loop);
 
-    & 4-site chain
-    & 5-site chain
-    & 6-site chain
-    & 5-site fully connected (pentagon)
-    & 6-site partially connected (grid)
+    & 4-site chain;
+    & 5-site chain;
+    & 6-site chain;
+    & 5-site fully connected (pentagon);
+    & 6-site partially connected (grid).
 \end{easylist}
 
 
@@ -251,7 +251,7 @@ This mapping underlies ongoing research into quantum annealing as a computationa
 
 Crucially, our goal is \emph{not} to find the ground state of \gls{q}, 
     but instead to find the generator of its dynamics.
-Therefore, we treat the Ising \emph{quantum mechanically}:
+Therefore, we treat the Ising model \emph{quantum mechanically}:
     instead of treating \cref{eqn:ising_standard_form} as the underlying mechanism for a cost function 
     to be optimised, i.e. \cref{eqn:ising_energy}, 
     we use quantum operators and do not necessarily restrict the \gls{probe} state $\ket{\psi}$, 
@@ -260,8 +260,8 @@ Therefore, we treat the Ising \emph{quantum mechanically}:
 \subsection{Ising model cases}
 
 We consider two cases: 
-    firstly, where it is assumed that the strength of interactions $J_{k,l}$ are uniform (given by $J$);
-    and secondly, where each interaction is assigned a unique parameter ($J_{kl}$).
+    firstly, where it is assumed that the strength of interactions $\{J_{k,l}, h_k \}$ are uniform (given by $J, h$);
+    and secondly, where each interaction is assigned a unique parameter ($J_{kl}, h_k$).
 In the first case, we can represent the Ising model for a given lattice configuration $\cc$ as 
 \begin{equation}
     \label{eqn:ising_model_full}
@@ -383,8 +383,8 @@ This outcome is common: training is not guaranteed to converge\footnotemark,
     since this may require a very large number of \glspl{experiment} and \glspl{particle}. 
 \footnotetext{When the model being trained is $\ho$, the volume may not saturate until numerical precision is reached \cite{Wiebe:2014qhl}.}
 It would be preferable for each model's parameterisation to have converged before comparing them, 
-    but in practice this is infeasible due to the indefinite resources required; 
-    model comparisons must rely on limited training schedules which are presumed to reflect the overall ability of 
+    but this is infeasible due to the indefinite resources required; 
+    in practice, model comparisons must rely on limited training schedules which are presumed to reflect the overall ability of 
     the models to capture \gls{q}'s dynamics. 
 We will see throughout this thesis\footnotemark \ that the choice of such training resources, namely \gls{nexp}, \gls{nprt}, 
     has a large impact on the outcome of \gls{qmla}, for example through misleading comparisons between models 
@@ -404,13 +404,17 @@ The dynamics produced by both models are shown in \cref{fig:ising_model_types_dy
     by a \gls{bf} of $\mathcal{B} = 10^{19}$.
 This serves as a good \emph{sanity check}, confirming our expectation that 
     the \gls{bf} will favour the simpler model (i.e. fewer parameters) even when both models 
-    are trained to a high precision to very similar parameters, and are difficult to distinguish through human intuition. 
-
+    are trained to a high precision to very similar parameters, and are difficult to distinguish through human intuition\footnotemark. 
+\footnotetext{
+    Here we have deliberately described the special case where models of more- and fewer-parameters are identical, 
+    and the fewer-parameter-model can exactly reproduce the larger parameterisation. 
+    Had the true model been composed of unequal $\{J_{kl}\}$, the under-parameterised model should not be preferred.
+}
 
 \section{Heisenberg model}\label{sec:heisenberg}
 Generalising the Ising model, the Heisenberg \gls{hamiltonian} is another model for magnetic systems consisting of a set of 
     spins on a lattice \cite{greiner2012thermodynamics}. 
-It builds on the Ising model by additionally considering the spins' rotations about the $x$- and $y$-axes, generally stated as 
+It builds on the Ising model by additionally considering the spins' couplings about the $x$- and $y$-axes, generally stated as 
 \begin{equation}
     \label{eqn:heisenberg_model_general}
     \hat{H}_H(\cc) = 
@@ -449,7 +453,7 @@ Again, there are a number of possibile models to test,
     requires more resources to learn to a reasonable level.    
 We will consider the fully parameterised model in \cref{chapter:ga};
     here however we will focus on the more restrictive Heisenberg-XYZ model,
-    suc that the parameters and terms of interest are then captured by \cref{eqn:heisenberg_terms}.
+    such that the parameters and terms of interest are then captured by \cref{eqn:heisenberg_terms}.
 
 \begin{subequations}
     \begin{equation}
@@ -486,12 +490,12 @@ The Hubbard model is generally stated in second quantisation as
     \label{eqn:hubbard}
     \hat{H}_{FH}(\cc) = 
     - \sum_{s \in \{\uparrow, \downarrow\}} \sum_{ \bkl \in \mathcal{C}} t^{s}_{\bkl} \left( \hat{c}^{\dagger}_{ks} c_{ls} + \hat{c}^{\dagger}_{ls} c_{ks} \right) 
-    + \sum_{k}^{N} U_k \hat{n}{k\uparrow}\hat{n}_{k\downarrow} 
+    + \sum_{k}^{N} U_k \hat{n}_{k\uparrow}\hat{n}_{k\downarrow} 
     + \sum_{k}^{N} \mu_k \left( \hat{n}_{k\uparrow} + \hat{n}_{k\downarrow} \right)     
 \end{equation}
     where 
 \begin{easylist}[itemize]
-    & $\hat{c}_{ks}$ and $\hat{c}^{\dagger}_{ks}$ are respecitvely the fermionic annihilation and creation operators for spin $s \in \{ \uparrow, \downarrow \}$ on site $k$;
+    & $\hat{c}_{ks}$ and $\hat{c}^{\dagger}_{ks}$ are respectively the fermionic annihilation and creation operators for spin $s \in \{ \uparrow, \downarrow \}$ on site $k$;
     & $\hat{n}_{ks} = \hat{c}^{\dagger}_{ks} \hat{c}_{ks}$ is the onsite term, i.e. a counting operator to count the number of spins $s$ on site $k$;
     & $t^s_{\bkl}$ is the kinetic (hopping) term for spin $s$ between sites $k$ and $l$; 
     & $U_k$ is the onsite (repulsion) energy for site $k$;
@@ -748,11 +752,11 @@ We can then devise a simple \glsxtrfull+{es} which only tests the models corresp
     \label{fig:lattice_qmla_eg}
 \end{figure}    
 
-For example, we adopt the fully connected four site lattice ($d$ in \cref{fig:lattices})
+For example, we adopt the fully connected four site lattice (\cref{fig:lattices}\textbf{(d)})
     as the true lattice specifying $\ho$, under the Ising formalism (\cref{eqn:ising_model_full}).
-We run \gls{qmla} by training the ten models corresponding to the ten lattices,  \cref{fig:lattice_qmla_eg}\textbf{a-b};
-    comparing the models predictive power, \cref{fig:lattice_qmla_eg}\textbf{c-d},
-    through \gls{bf} (\cref{fig:lattice_qmla_eg}\textbf{e}), 
+We run \gls{qmla} by training the ten models corresponding to the ten lattices,  \cref{fig:lattice_qmla_eg}\textbf{(a-b)};
+    comparing the models predictive power, \cref{fig:lattice_qmla_eg}\textbf{(c-d)},
+    through \gls{bf} (\cref{fig:lattice_qmla_eg}\textbf{(e)}), 
     and choosing the model which wins the largest number of \gls{bf} contests. 
 In this example, $\ho$ is stronger than every alternative model according to the \glspl{bf},
     where the lattice \emph{d} wins all nine of its \gls{bf} comparisons, 
@@ -785,7 +789,7 @@ Moreover, we can extend this test to the Heisenberg and Hubbard formalisms;
     note that due to the overhead given by the \gls{jwt} (\cref{sec:jordan_wigner}), i.e. the requirement of two qubits per site, 
     we restrict study of the Hubbard model to lattices $a-e$ for practicality\footnotemark.
 \footnotetext{
-    The limitation of Hubbard models to $3$-site lattices is due to the $6$-qubit models required via the \gls{jwt}.
+    The limitation of Hubbard models to $4$-site lattices is due to the $6$-qubit models required via the \gls{jwt}.
     The primary expense of simulation is the complete unitary evolution, 
         requiring calculation of $e^{-i \hi t}$ for each particle's likelihood calculation at every training experiment. 
     Training becomes infeasible for systems requiring $\gtrapprox9$ qubits, whereas moving to $5$-site lattices would require $10$-qubit models.
@@ -846,40 +850,26 @@ Earlier in this chapter, we alluded to a fundamental question in the discussion 
     and what resources should be granted in order to retrieve reliable outcomes?
 As usual in \gls{ml} methods, this represents a trade-off between the results of the algorithm 
     against training time and computational resources required.
+This question motivates the next section, 
+    where we examine the role played by the numbers of training \glspl{experiment} and \glspl{particle},
+    in correctly identifying models. 
 \footnotetext{
-    Recall the main resources for model training: the number of \glspl{experiment} performed, \gls{nexp}, and the number of \glspl{particle} used during \gls{qhl}, \gls{nprt}.
+    Recall the main resources for model training: 
+    the number of \glspl{experiment} performed, \gls{nexp}, 
+    and the number of \glspl{particle} used during \gls{qhl}, \gls{nprt}.
 }
 \par
 
 \section{Model family classification}\label{sec:family_classification}
-\begin{figure}[t]
-    \begin{center}
-        \includegraphics{theoretical_study/figures/model_family_search.pdf}
-    \end{center}
-    \caption[QMLA outcomes for varying training resources]{
-        \gls{qmla} outcomes for varying training resources. 
-        Independent \glspl{es} are implemented for Ising, Heisenberg and Hubbard families, 
-            with $\ho$ cycling through lattices (\emph{a-f}) for the Ising and Heisenberg cases, 
-            and (\emph{a-c}) for the Hubbard case, where lattices' connectivity are as depicted in \cref{fig:lattices}.
-        Each latttice in each family is tested as $\ho$ in five \glspl{instance}, so there are 75 \glspl{instance} per datapoint. 
-        The success rates are shown for \gls{qmla} identifying the correct model precisely (blue),
-            as well as classifying the correct model family (orange), 
-            against the numbers of \glspl{experiment} and \glspl{particle} used to train each candidate model. 
-        \figtableref
-    }
-    \label{fig:family_classification}
-\end{figure}
-
-
 We combine the task of family classification 
     with non-exhaustive testing of the tradeoff between resources and outcomes.
 In this case, we vary the target model $\ho$ as deriving again from the lattices in 
     \cref{fig:lattices}, 
     however we reduce the number of tested models in each case. 
-\glspl{es} corresponding to the Ising and Heisenberg model consider lattices (a-f), 
+\glspl{es} corresponding to the Ising and Heisenberg model consider lattices \textbf{(a-f)}, 
     while the \gls{es} for the Hubbard model only consider (a-c). 
 \cref{fig:family_classification} shows the rate at which the precise $\ho$ is identified, 
-    as well as the rate with which family of $\ho$ is classified, 
+    as well as the rate with which the family of $\ho$ is classified, 
     compared with increasing resources, \gls{nexp} and \gls{nprt}. 
 As expected, a clear trend demonstrates that the success rates scale with resources,
     which we can leverage in practice in two core ways.
@@ -901,3 +891,22 @@ Secondly, we can mitigate the unpredictable\footnotemark \ failures of \gls{qmla
     systems of interest.
 For example, \gls{qmla} could be used to classify whether a sample is ferromagnetic or antiferromagnetic;
     or further, is best described as a system of bosons or fermions.
+
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics{theoretical_study/figures/model_family_search.pdf}
+        \end{center}
+        \caption[QMLA outcomes for varying training resources]{
+            \gls{qmla} outcomes for varying training resources. 
+            Independent \glspl{es} are implemented for Ising, Heisenberg and Hubbard families, 
+                with $\ho$ cycling through lattices (\emph{a-f}) for the Ising and Heisenberg cases, 
+                and (\emph{a-c}) for the Hubbard case, where lattices' connectivity are as depicted in \cref{fig:lattices}.
+            Each latttice in each family is tested as $\ho$ in five \glspl{instance}, so there are 75 \glspl{instance} per datapoint. 
+            The success rates are shown for \gls{qmla} identifying the correct model precisely (blue),
+                as well as classifying the correct model family (orange), 
+                against the numbers of \glspl{experiment} and \glspl{particle} used to train each candidate model. 
+            \figtableref
+        }
+        \label{fig:family_classification}
+    \end{figure}
+    
