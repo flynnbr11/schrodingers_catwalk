@@ -76,7 +76,7 @@ We can restate the informal description of \glspl{ga}\footnotemark, now in the c
 
 \begin{easylist}[enumerate]
     \ListProperties(Numbers2=l, Numbers3=r)
-    & Sample $N_m$ models from $\population$ at random
+    & Sample $N_m$ models from the total population, $\population$, at random
     && this is the first generation, $\mu$. 
     & \label{qmla_ga:loop} Evaluate each model $\hj \in \mu$
     && train $\hj$ through \gls{qhl};
@@ -213,7 +213,7 @@ We can use \gls{fscore} to measure the success of the algorithm,
     see whether or not the approximation of the system is improving on average. 
 Of course in realistic cases we can not assume knoweldge of $\termset_o$ and therefore cannot compute 
     \gls{fscore}, but it is a useful tool in the development of the \gls{ges} itself, 
-    or in cases where $\ho$ is known, such as when the target system is simualated, e.g. in the case of device calibration.
+    or in cases where $\ho$ is known, such as when the target system is simulated, e.g. in the case of device calibration.
 Our search for an effective \gls{of} can then be guided by seeking the 
     method which most strongly improves the average \gls{fscore} in test-cases.
 We will not use \gls{fscore} within the algorithm\footnote{Except for meta-analysis in \cref{sec:hyperparameter}}, 
@@ -233,7 +233,7 @@ Verifying this hypothesis will allow us to incorporate statistical tools into th
 In \cref{fig:bf_by_fscore}, we show the relationships between \gls{fscore} and \gls{bf} for various conditions. 
 Firstly, under a standard training regime with full \gls{bf} comparisons between all pairs, 
     we see that in most cases, the model with higher \gls{fscore} is favoured by \gls{bf}.
-Some comparisons favour near the diagonals of \cref{fig:bf_by_fscore} favour the model with lower \gls{fscore}, 
+Some comparisons near the diagonals of \cref{fig:bf_by_fscore} favour the model with lower \gls{fscore}, 
     although in these cases we argue that the difference in model quality is not overwhelming, 
     since $\absval{f_i - f_j} \lessapprox 0.1$. 
 In \cref{fig:bf_by_fscore}b, we run a complete model training subroutine, but compute the \gls{bf} based on fewer \glspl{experiment} and \glspl{particle} 
@@ -242,7 +242,7 @@ This verifies an earlier claim from \cref{sec:experiments_for_bf}:
     although the strength of evidence is weaker given reduced \gls{bf} resources, 
     the direction of the evidence is usually the same, i.e. the insight is indicative of the true physics, 
     so we can save considerable compute time by trusting these restricted \gls{bf} calculations. 
-On the other extreme, we see in \cref{fig:bf_by_fscore}\textbf{(c)}, where models are trained with
+On the other extreme, in \cref{fig:bf_by_fscore}\textbf{(c)}, where models are trained with
     -- and \glspl{bf} based upon -- even greater resources than \cref{fig:bf_by_fscore}\textbf{(a)}, we see a similar effect: 
     adding resources strengthens the evidence, but does not fundamentally change the outlook. 
 Finally, in addition to reducing the resources used per \gls{bf} calculation, 
@@ -257,7 +257,7 @@ Essentially we can see that the insight is largely the same
 Note that the time saving reported between full and partial connectivity between models scales with $N_m$: 
     here, with $N_m=10$, the former computes 45 \glspl{bf}, while the latter computes 17;
     for $N_m=60$, as used in full instances/runs presented in this chapter, 
-    these rise to 600 and 1770 \glspl{bf} computations respectively, 
+    these rise to 1770 and 600 \glspl{bf} computations respectively, 
     so the benefit of the latter scheme is amplified. 
 
 \begin{figure}
@@ -285,7 +285,7 @@ Note that the time saving reported between full and partial connectivity between
 
 
 \subsection{Hyperparameter search}
-\label{sec:hyperparameter}[t]
+\label{sec:hyperparameter}
 \begin{figure}
     \begin{center}
         \includegraphics{theoretical_study/figures/gen_alg_param_sweep.pdf}
@@ -309,13 +309,13 @@ That is, we first implement a \gls{ga}, using the mapping between models and chr
     where we fix the numbers of sites $d=4$, and assume full connectivity between the sites, with $x-$, $y-$ and $z-$ couplings available,
         such that there are $N_t = 3 \times {4 \choose 2} = 18$ terms in $\termset$, so that the total population is of size $2^{18}$ chromosomes.
 We can then sweep over the \gls{ga} \glspl{hyperparameter} to find a suitable configuration:
-    in \cref{fig:ga_param_sweep} we show how the choice of parameters affect the success rate of preciesly identifying the 
+    in \cref{fig:ga_param_sweep} we show how the choice of parameters affect the success rate of precisely identifying the 
     target chromosome, which is chosen at random for each instance, and we run 20 \glspl{instance} of each configuration. 
 The studied hyperparameters\footnotemark \ are
 \begin{easylist}[enumerate]
     \ListProperties(Numbers=r)
-    & number of generations, $N_m$;
-    & number of models per generation, $N_g$;
+    & number of generations, $N_g$;
+    & number of models per generation, $N_m$;
     & mutation rate, $r_m$;
     & number of generations for which a candidate must reign as the strongest observed, before the search terminates, the \emph{cutoff}. 
 \end{easylist}
@@ -417,7 +417,7 @@ In our tests, Eqn. \ref{eqn:obj_log_likelihood} is found to be too generous to p
     assigning them non-negligible probability. 
 Its primary flaw, however, is its reliance on $\expset_v$: 
     in order that the \gls{tltl} is significant, it must be based on meaningful \glspl{experiment}, 
-    the design of which can not be gauranteed in advance, or at least risks introducing strong bias
+    the design of which can not be guaranteed in advance, or at least risks introducing strong bias
     towards some models. 
 
 \subsection{Akaike information criterion}\label{sec:akaike_info_criterion}
@@ -512,7 +512,7 @@ We can utilise this facility by computing the \gls{bf} between all
 Note that this is computationally expensive: 
     in order to train $\hi$ on $\expset_j$ requires a further $\lvert \expset_j \rvert$ \glspl{experiment}, 
     each requiring $N_P$ \glspl{particle}\footnote{Caveat the reduction in overhead outlined in \cref{sec:experiments_for_bf}.}, 
-    where each \gls{particle} corresponds to a unitary evolution and therefore the caluclation of a matrix exponential. 
+    where each \gls{particle} corresponds to a unitary evolution and therefore the calculation of a matrix exponential. 
 The size of the \gls{model space} is then quite a heavy disadvantage: 
     examining $N_g$ generations requires $N_g \times {N_m \choose 2}$ \gls{bf} calculations for complete assessment. 
 \par 
@@ -549,7 +549,7 @@ Note here we truncate $\mu$, meaning we remove the worse-performing models and r
     g_i^R = \frac{N_m^{\prime}-R_i+1}{\sum\limits_{j=1}^{N^{\prime}_m} j},
 \end{equation}
     where $R_i$ is the ranking of $\hi$ and $N_m^{\prime}$ is the number of models retained after truncation. 
-\cref{eqn:ranking} has a similary effect to \cref{eqn:bf_points} but awards higher selection probability to 
+\cref{eqn:ranking} has a similar effect to \cref{eqn:bf_points} but awards higher selection probability to 
     the strongest models. 
 However, it too overlooks the nuanced perspective available through the total statistical evidence gathered by the series of \glspl{bf}. 
 
@@ -605,7 +605,7 @@ Reproduced dynamics alone can not capture the prospect that $\hi=\ho$,
 This \gls{of} provides a useful test for \gls{qmla}'s \gls{ga}:
     by simulating the case where parameters \emph{are} learned perfectly, 
     such that we know that $g_i^r$ truly represents the ability of $\hi$ to 
-    mimic $\ho$, then this \gls{of} gaurantees to promote  the strongest models,
+    mimic $\ho$, then this \gls{of} guarantees to promote  the strongest models,
     especially given that $\hi=\ho \implies r_p^e=0 \ \forall \ \{e, p\}$. 
 In realistic cases, however, the non-zero residuals -- even for 
     strong $\hi$ -- may arise from imperfectly learned parameters,
@@ -624,7 +624,7 @@ A popular tool for rating individual competitors in sports and games is the \emp
     e.g. despite two football teams having never played against each other before, 
     it is possible to quantify the difference in quality between those teams, 
     and therefore to predict a result in advance \cite{hvattum2010using}. 
-There is a direct a parallel between these types of competitions and \gls{qmla}:
+There is a direct parallel between these types of competitions and \gls{qmla}:
     we similarly have a pool of individual competitors (models), 
     which we can place in direct competition, 
     and quantify the comparitive outcome through \gls{bf}, 
@@ -647,9 +647,9 @@ Models which share an edge then undergo \gls{bf} comparison.
 For example, with $N_m=60$ this leads to $600$ \gls{bf} calculations, 
     compared with $1770$ calculations in the fully connected graph. 
 While every pair of models $(\hi, \hat{H}_{k})$ are not directly connected, 
-    there is always a chain of length $l \leq l_{max}$ edges between them.
-For $N_m=60$, we find $l_{max}=2$, 
-    e.g. for $\hi, \hat{H}_k$ disconnected, there are comparisons ${(\hi, \hj), (\hj \hat{H}_k)\}$. 
+    there is always a chain of length $l \leq l_{\rm{max}}$ edges between them.
+For $N_m=60$, we find $l_{\rm{max}}=2$, 
+    e.g. for $\hi, \hat{H}_k$ disconnected, there are comparisons $\{(\hi, \hj), (\hj \hat{H}_k)\}$. 
     
 \par 
 
@@ -664,7 +664,7 @@ The Elo update ensures that winning models are rewarded
 As such, this is a fairer mechanism than \gls{bf} points, 
     which award a point for every victory irrespective of the opposition:
     if $\hj$ is already known to be a strong or poor model, 
-    then $\Delta R_i$ proportionally changes the credence we assign to $\hi$. 
+    then $\Delta R_i$ changes the credence of $\hi$ proportional to the latest evidence. 
 It achieves this by first computing the \emph{expected} result of a given comparison
     with respect to each model, with an exponential response to the difference in their current ratings, 
 
@@ -803,17 +803,17 @@ One disadvantage is that it does not explicitly punish models based
     \caption[Comparison between proposed objective functions]{
         Comparison between proposed \acrfullpl{of}. 
         Each \gls{of} trains the same initial generation of $N_m=28$ models with resources
-        $N_E=500, N_P=2000$, and then design a new set of $N_m$ models through 
-        a roulette strategy, such that the only difference between \gls{of}'s output 
-        is how they assign selection probability.
+            $N_E=500, N_P=2000$, and then design a new set of $N_m$ models, $\mu_{\rm{h}}$,        
+            through a roulette strategy, such that the only difference between \gls{of}'s output 
+            is how they assign selection probability.
         We run each \gls{of} 25 times for the same target system, 
             a $4$--qubit Heisenberg--XYZ model. 
-        \textbf{a}, box-plot of spawned models' \gls{fscore}, $f$, 
+        \textbf{a}, Box-plot of \gls{fscore}, $f$, for the models in $\mu_{\rm{h}}$ in each case,
             where the median and inter--quartile ranges are indicated by the boxes,
             as well as those of the initial generation $\mu$ centered on $f_{\mu}=0.45$.
             We mark $f=\{0.4, 0.5, ..., 1.0\}$ for ease of interpretation. 
-        \textbf{b}, box-plots of the time taken to compute the single generation in each case.
-        \textbf{c}, the difference between the median $f$ among the 
+        \textbf{b}, Box-plots of the time taken to compute the single generation in each case.
+        \textbf{c}, Difference between the median $f$ among the 
             newly proposed models from $f_{\mu}$, $\Delta f$,
             plotted against the time to achieve the result. 
     }
@@ -848,10 +848,11 @@ Returning to the task of determining our favoured \gls{of},
     produces under their respective guidance.
 We train the same batch of $N_m=28$ random models in each case, and allow each \gls{of} 
     to compute the selection probabilities for those models, 
-    and therefore direct the design of the hypothetical next generation of models. 
-We plot the distribution of \gls{fscore} that each \gls{of} produces in Fig. \ref{fig:obj_fnc_comparison},
-    also accounting for the time taken in each case, i.e. 
-    we report the time to train and evaluate the single generation on a 16--core node.
+    and therefore direct the design of the hypothetical next generation of models, $\mu_{\rm{h}}$. 
+\cref{fig:obj_fnc_comparison} shows the distribution of \gls{fscore} for the models within $\mu_{\rm{h}}$, 
+    as generated by each proposed \gls{of}, 
+    also accounting for the time taken in each case, 
+    i.e. we report the time to train and evaluate the single generation on a 16--core node.
 \par
 
 We can see that a strong balance of outcome with resource considerations 
@@ -868,10 +869,9 @@ We retain \gls{bfeer}, however, for generality and novelty,
     but rather reflect the constraints of the system under study; 
     each \gls{q} will bring its own unique considerations which can result in 
     significantly stronger or weaker performance under each \gls{of}. 
-In particular, we will later use the residual \gls{of}, \cref{sec:residuals}, 
-    to study a larger \gls{model space} under assumptions of perfect parameter learning, \cref{chapter:many_qubits}.
-
-
+In particular, in \cref{chapter:many_qubits}, we will later use $g^r_i$ 
+    -- the residual \gls{of} described in \cref{sec:residuals} -- 
+    to study a larger \gls{model space} under assumptions of perfect parameter learning.
 
 \section{Application}
 Having introduced all the necessary concepts of \glspl{ga}, 
@@ -894,7 +894,7 @@ In summary of this chapter so far, we use the following settings.
     & Selected parent models are crossed over via a one-point cross-over,
         at crossover location $\kappa \in \left( \frac{N_t}{4}, \frac{3N_t}{4} \right)$, 
         and probabilistically mutated with rate $r_m=0.25$. 
-    & The top two elite models from $\mu$ are included on the subsequent generation $\mu+1$.
+    & The top two elite models from $\mu$, $ \hat{H}_e^{\mu}$, are included on the subsequent generation $\mu+1$.
     & If, after 5 generations, the highest-fitness (elite) model is unchanged, i.e. $\hat{H}_e^{\mu} = \hat{H}_e^{\mu-5}$, 
         we terminate the search and declare that model as the champion, $\hp = \hat{H}_e^{\mu}$. 
     & Otherwise, after $N_g$ generations, the highest-fitness model on the final generation is declared the global champion model, 
@@ -913,12 +913,13 @@ We will use a four-qubit \gls{model space} under the fully parameterised Heisenb
 For practical reasons\footnotemark, we set $N_m=60$ and $N_g=16$, although in most cases the 
     elitism clause is triggered so the search terminates long before $N_g$ is reached. 
 \footnotetext{
-    This is to ensure, with 15 available worker nodes, and accounting for some slowly-learning models, 
+    This is to ensure, with 15 available worker nodes,
     that all $N_m$ models in a generation are trained within $4 t_{\textrm{qhl}}$, 
     where $t_{\textrm{qhl}}$ is the time to train a single model. 
 }
 The true parameters $\al_0$ are assigned randomly in the range $(0.25, 0.75)$; 
-    within \gls{qhl} the prior is set as a multivariate normal distribution $0.5 \pm 0.125$. 
+    within \gls{qhl} the prior is set as a multivariate normal distribution with 
+    mean and standard deviation $0.5 \pm 0.125$. 
 We choose $\ho$ at random to contain half the available terms\footnotemark,
 \begin{equation}
     \label{eqn:gen_alg_true_model}
@@ -981,6 +982,7 @@ For example, the sixth comparison finds $\hj$ as the superior model,
         The $x$-axis marks successive comparisons for $\hi$ against a subset of models from the same generation (see main text).
         \textbf{Inset}, the selection probabilities resulting from the final ratings of this generation. 
         Only $\tau=\nicefrac{1}{3}$ of models are assigned selection probability, 
+            meaning only those models depicted in the pie chart can become parents to new candidates, 
             while the remaining poorer-performing models are discarded. 
         \figtableref
     }
@@ -1083,7 +1085,7 @@ The use-case presented in this chapter is restrictive,
     so cannot be considered as a solution to characterising any black box quantum system.
 Firstly, the set of conceivable terms must be prescribed in advance to facilitate a chromosome mapping;
     this either limits the range of insight \gls{qmla} can achieve to interactions envisaged by the user,
-    or requires a vast set of permissible terms, leading to substantially longer model search phases than shown here. 
+    or requires a vast set of permissible terms, leading to substantially larger \gls{model search} phases than shown here. 
 Secondly, models were trained using \gls{iqle} in order to learn effectively with relatively few resources. 
 \gls{iqle} is only available to train models where we can reliably reverse the evolution of the target system 
     (see \cref{sec:iqle}), and as such it is only useful when we have complete control over \gls{q}, 

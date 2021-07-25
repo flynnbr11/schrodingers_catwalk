@@ -663,7 +663,7 @@ The heuristics tested are:
     \ListProperties(Numbers=r)
     & $\textrm{Random}(0, t_{max})$: Randomly chosen time up to some arbitrary maximum, we set $t_{max} = 1000$ (arbitrary units). 
         This approach is clearly subobtimal, since it does not account whatsoever for the knowledge of the training so far, 
-        and demands the user choose a suitable $t_{max}$, which can be not gauranteed to be meaningful. 
+        and demands the user choose a suitable $t_{max}$, which can be not guaranteed to be meaningful. 
     & $t$ list: forcing the training to consider a set of times decided in advance.
         For instance, when only a small set of experimental measurements are available, it is sensible to train on all of them, perhaps repeatedly. 
         We test uniformly spaced times $t \in \left(0 , t_{max}\right]$, and cycle through the list twice, 
