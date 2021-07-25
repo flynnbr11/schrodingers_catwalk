@@ -2,7 +2,7 @@
 
 All of the details in \cref{chapter:qhl} and \cref{chapter:qmla} are implemented in the \gls{qmla}
     software framework, a (mostly) Python codebase which underlies all of the 
-    arguments, results and figures in this thesis. 
+    arguments, results and figures in this thesis \cite{flynn2021QMLA}. 
 The codebase is designed to simplify the process of running \gls{qmla} or \gls{qhl}
     on novel systems.
 In particular, the core \gls{qmla} algorithm can support a wide range of \glspl{es}, 
@@ -266,7 +266,7 @@ The core \gls{qmla} class manages the database of models and their comparisons,
             which informs the model training procedure, for example the terms and parameters 
             of $\hat{H}_5$. 
         After training, it sends a packet, $R_5$, summarising the result of $\hat{H}_5$'s training. 
-        The right-hand process compares two models with IDs 1 and 2, by first retrievng the results packets
+        The right-hand process compares two models with IDs 1 and 2, by first retrieving the results packets
             $R_1, R_2$, then storing the comparison $C_{1,2}$ on the database. 
     }
     \label{fig:parallel}
@@ -284,7 +284,7 @@ In \gls{qmla}, all the model training and model comparison subroutines can be ru
     so \gls{qmla} can benefit greatly from parallelism.
 \par
 
-While there are a number of strategies for parallelising code over a cluster of individual \emph{processes}\footnote{Each process is a single \acrshort{cpu}}, 
+While there are a number of strategies for parallelising code over a cluster of individual \emph{processes}\footnote{Each process is a single \acrshort{cpu}.}, 
     we use the \emph{master-worker} strategy, where one process acts as the \emph{master}, 
     determining which calculations are required at any given moment, 
     then brokering self-contained \emph{tasks} to \emph{workers}, 
