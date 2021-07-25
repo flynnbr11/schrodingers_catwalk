@@ -50,7 +50,8 @@ Likewise, each additional \gls{experiment} incurs the cost of calculation of \gl
 It is therefore preferable to use as few \glspl{particle} and \glspl{experiment} as possible, 
     though it is important to include sufficient resources that the parameter estimates have the opportunity to converge. 
 Access to a fully operational, trusted quantum simulator admits an exponential 
-    speedup by simulating the unitary evolution instead of computing the matrix exponential classically.
+    speedup by simulating the unitary evolution instead of computing the matrix exponential classically, 
+    via quantum algorithms for time dynamics simulations \cite{childs2018toward, kivlichan2017bounding, childs2012hamiltonian}.
 \par 
 
 \section{Bayes' rule}
@@ -118,6 +119,16 @@ In effect, hypotheses (\glspl{particle}) which are found to be highly likely are
     while those with low likelihood have their credence decreased. 
 
 \section{Sequential Monte Carlo}\label{sec:smc}
+% \glsreset{smc}
+In practice, \gls{qhl} samples from and updates $\Pr(\al)$  via \gls{smc}.
+\gls{smc} samples the \gls{nprt} \glspl{particle} from $\Pr(\al)$, and assigns each \gls{particle} a weight, $w_0 = 1/\Np$.
+Each \gls{particle} corresponds to a unique position in the parameters' space, i.e. $\al_p$.
+Following the calculation of the likelihood, $\Pr(d | \al_p; e)$, 
+    the weight of \gls{particle} $p$ is updated from its initial value of $w_p^{\textrm{old}}$ by \cref{eqn:qhl_weights}.
+\begin{equation}\label{eqn:qhl_weights}
+    w_p^{\textrm{new}} = \frac{\Pr(d | \al_p; e) \times w_p^{\textrm{old}} } { \sum\limits_{p} w_p \Pr(\al_p | d; e) }.
+\end{equation}
+
 \begin{figure}
     \thisfloatpagestyle{empty} % caption goes over page number so supressing it
     \setcounter{subfigure}{0}
@@ -144,11 +155,11 @@ In effect, hypotheses (\glspl{particle}) which are found to be highly likely are
     \includegraphics[scale=1]{algorithms/figures/smc_demo/epoch_500.pdf}
     }
     \hspace{0mm}
-    \subfloat[]{
+    \subfloat{
         \includegraphics[width=\textwidth]{algorithms/figures/smc_demo/cbar.pdf}
     }
     \caption[Quantum Hamiltonian learning via sequential Monte Carlo]{
-        \Acrfull{qhl} via \gls{smc}. 
+        \Acrfull{qhl} via \acrfull{smc}. 
         The studied model has two terms, $\{\sx, \sy\}$ with true parameters $\alpha_{x}=0.9, \alpha_y=0.15$ (dahsed lines), 
             with resources $\Ne=500, \Np=2000$ for training the model. 
         Crosses represent \glspl{particle}, while the distribution $\Pr(\alpha_p)$ for each 
@@ -170,15 +181,8 @@ In effect, hypotheses (\glspl{particle}) which are found to be highly likely are
     }
     \label{fig:qhl_smc}
 \end{figure}
-\glsreset{smc}
-In practice, \gls{qhl} samples from and updates $\Pr(\al)$  via \gls{smc}.
-\gls{smc} samples the \gls{nprt} \glspl{particle} from $\Pr(\al)$, and assigns each \gls{particle} a weight, $w_0 = 1/\Np$.
-Each \gls{particle} corresponds to a unique position in the parameters' space, i.e. $\al_p$.
-Following the calculation of the likelihood, $\Pr(d | \al_p; e)$, 
-    the weight of \gls{particle} $p$ is updated from its initial value of $w_p^{\textrm{old}}$ by \cref{eqn:qhl_weights}.
-\begin{equation}\label{eqn:qhl_weights}
-    w_p^{\textrm{new}} = \frac{\Pr(d | \al_p; e) \times w_p^{\textrm{old}} } { \sum\limits_{p} w_p \Pr(\al_p | d; e) }.
-\end{equation}
+
+
 
 In this way, strong \glspl{particle} -- with high $\Pr(d | \al_p; e)$ -- have their weight increased, 
     while weak \glspl{particle} (low $\Pr(d | \al_p; e)$) have their weights decreased, 
@@ -187,7 +191,7 @@ Within a single experiment, the weights of all \gls{nprt} \glspl{particle} are u
     we \emph{simultaneously} update sampled \glspl{particle}' weights as well as $\Pr(\al)$. 
 The procedure of updating \glspl{particle}' weights iterates for the subsequent experiment, using the \emph{same} \glspl{particle}: 
     we do \emph{not} redraw \gls{nprt} \glspl{particle} for every experiment.
-Eventually, the weights of most \glspl{particle} fall below a threshold, $r_t$, 
+Eventually, the sum of the weights of the \glspl{particle} falls below a threshold, $r_t$, 
     meaning that only that fraction of \glspl{particle} have reasonable \gls{likelihood} of being $\al_0$.
 At this stage, \gls{smc} \emph{resamples}\footnotemark, i.e. selects new \glspl{particle}, according to the updated $\Pr(\al)$.
 Then, the new \glspl{particle} are in the range of parameters which is known to be more likely, 
@@ -206,7 +210,7 @@ Before the tenth experiment, the algorithm resamples, i.e. reassigns weights bas
 The algorithm iteratively reassigns weight to \glspl{particle} based on their likelihoods, redraws $\Pr(\al)$ and resamples. 
 We show the state of the \glspl{particle} after 50, 100 and 500 \glspl{experiment},
     with the overall result of a highly peaked parameter distribution, 
-    whose centre is near the target parameters. 
+    whose mean is near the target parameters. 
 
 \footnotetext{
     \Glspl{particle} are \emph{resampled} according to a resampling algorithm. 
@@ -254,7 +258,7 @@ In principle, larger systems could be condensed for simulation on available clas
 \par 
 
 Adopting the notation used by QInfer \cite{qinfer-1_0}, upon which our software builds, 
-    the \gls{expectation value} for a the unitary operator is given by
+    the \gls{expectation value} for the unitary operator is given by
 \begin{equation}\label{eqn:pr0}
     \Pr(0) =  \lvert \bra{\psi} e^{-i \hat{H}_p t} \ket{\psi}\rvert^2  = l(d=0 | \hat{H}_p; e).
 \end{equation}
@@ -272,7 +276,7 @@ We assume a binary outcome model\footnotemark,
     of eigenstates orthogonal to $\ket{\psi}$ in \cref{eqn:pr1}.
 }
 \par 
-Usually we will refer to the case where \gls{q} is projeced onto the input state $\ket{\psi}$, 
+Usually we will refer to the case where \gls{q} is projected onto the input state $\ket{\psi}$, 
     so the terms \emph{likelihood}, \emph{\gls{expectation value}} and \emph{$\Pr(0)$} are synonymous, 
     unless otherwise stated. 
 
@@ -285,7 +289,7 @@ The \gls{le} concerns the result when \gls{q} is prepared in some initial state 
     evolved forward in time by some $\hat{H}_+$, then evolved \emph{backwards}\footnotemark \ in time by $\hat{H}_{-}$,
     \footnotetext{Equivalently and in practice, evolved forward in time for $(-\hat{H}_{-})$.}
     and projected back onto $\ket{\psi}$. 
-The \gls{le} -- or the \emph{fidelity} -- is given by 
+The \glsentrylong{le} -- or the \emph{fidelity} -- is given by 
 \begin{equation}
     \label{eqn:loschmidt_echo}
     M(t) = \absval{ \braket{ \psi | e^{+i\hat{H}_{-} t} e^{-i \hat{H}_{+} t} | \psi} }^2.
@@ -326,7 +330,7 @@ It is inescapable that the \glspl{likelihood} are exponentially small if the evo
 Furthermore, short-time \glspl{experiment} are known to be uninformative \cite{wiebe2014qhlpra, wiebe2015quantum}.
 Together, these problems render \gls{qle} unscalable.
 We overcome these inherent problems by using a modification of \gls{qle}: \gls{iqle},
-    the key to which is invoking a \gls{likelihood} function other than \cref{eqn:likelihood}.
+    the key to which is invoking a \gls{likelihood} function other than \cref{eqn:likelihood} \cite{Wiebe:2014qhl}.
     
 \par 
 In effect, the \gls{le} guarantees that, for most $t$, if $\hat{H}_{-} \not\approx \hat{H}_{+}$, then $M(t) \ll 1$, 
@@ -347,9 +351,13 @@ In order that the reverse evolution is relibable, it must be performed on a trus
     system and a trusted simulator. 
 This automatically excludes any open quantum systems, as well as most realistic 
     experimental setups, although such channels can be achieved \cite{hensen2015loophole}. 
-The remaining application for \gls{iqle}, and correspondingly \gls{qhl}, 
+The remaining application for \gls{iqle}, and correspondingly \gls{qhl} in this regime, 
     is in the characterisation of untrusted quantum simulators, 
     which can realise such coherent channels \cite{wang2017experimental}. 
+In order to examine realistic systems, then, we will rely solely on \gls{qle};
+    for example \gls{qle} is sufficient for training models in our tests to characterised
+    a real quantum system in \cref{chapter:nv}.
+    
 
 \subsection{Analytical likelihood}\label{sec:analytical_likelihood}
 For some \glspl{hamiltonian}, we can derive an analytical \gls{likelihood} function to describe their dynamics
@@ -414,17 +422,8 @@ We have already used the concept of  \gls{likelihood} to update our parameter di
     where $w_p^{\textrm{old}}$ are the \gls{particle} \emph{weights} for the \gls{particle} with parameterisation $\al_p$.
 For each experiment, we use \gls{total likelihood} as a measure of how well the \emph{distribution} performed overall,
     i.e. we care about how well all \glspl{particle}, $\{p\}$, perform as a collective, representative of how well $\Pr(\al)$ approximates the system,
-    equivalent to the noramlisation factor in \cref{eqn:qhl_weights}, \cite{granade2015characterizationp92}. 
-
-$\lk_{e}$ are strictly positive, and because the natural logarithm is a monotonically increasing function, 
-    we can equivalently work with the \gls{ltl}, 
-    since $ln(\lk_a) > ln(\lk_b) \iff \lk_a > \lk_b$. 
-\gls{ltl} are also beneficial in simplifying calculations, 
-    and are less susceptible to system underflow, 
-    i.e. very small values of $\lk$ will exhaust floating point precision, 
-    but $ln(\lk)$ will not. 
+    equivalent to the noramlisation factor in \cref{eqn:qhl_weights} \cite{granade2015characterizationp92}. 
 \par 
-
 Note, we know the initial weights are normalised,
 
 \begin{equation}
@@ -447,12 +446,21 @@ Note, we know the initial weights are normalised,
 Conversely, a poor batch of \glspl{particle} will have low average $w_i$, so $\lk_{e} \approx 0$. 
 \par
 
+$\lk_{e}$ are strictly positive, and because the natural logarithm is a monotonically increasing function, 
+    we can equivalently work with $\ln{(l_e)}$ --  the \gls{ltl} -- 
+    since $\ln(\lk_a) > \ln(\lk_b) \iff \lk_a > \lk_b$. 
+\gls{ltl} are also beneficial in simplifying calculations, 
+    and are less susceptible to system underflow, 
+    i.e. very small values of $\lk$ will exhaust floating point precision, 
+    but $\ln(\lk)$ will not. 
+\par 
+
 In order to assess the quality of a \emph{model}, $\hi$, 
     we can consider the performance of a set of \glspl{particle} throughout a set of \glspl{experiment} $\expset$, 
     through its \gls{tltl}, 
 \begin{equation}
     \label{eqn:log_total_likelihood}
-    \tll_{i} = \sum\limits_{e \in \expset} ln(\lk_{e}).    
+    \tll_{i} = \sum\limits_{e \in \expset} \ln(\lk_{e}).    
 \end{equation}
 
 The set of \glspl{experiment} on which $\tll_{i}$ is computed, $\expset$, 
@@ -465,8 +473,8 @@ For example, $\hi$ can be trained with $\expset_i$ to optimise $\al_i^{\prime}$,
     $\Pr(\al_i^{\prime})$, and may use a different number of \glspl{particle} than the training phase. 
 \par 
 
-Perfect agreement between the model and the system would result in $\lk_{e}=1 \Rightarrow ln(\lk_{e})=0$, 
-    as opposed to imperfect agreement where $\lk_{e} < 1 \Rightarrow ln(\lk_{e}) < 0$.
+Perfect agreement between the model and the system would result in $\lk_{e}=1 \Rightarrow \ln(\lk_{e})=0$, 
+    as opposed to imperfect agreement where $\lk_{e} < 1 \Rightarrow \ln(\lk_{e}) < 0$.
 In all cases \cref{eqn:log_total_likelihood} is negative, 
     and across a series of \glspl{experiment},
     strong agreement gives low $\lvert \tll_{i} \rvert $, 
@@ -477,7 +485,7 @@ In all cases \cref{eqn:log_total_likelihood} is negative,
 
 \gls{qhl} is a parameter estimation algorithm, so here we introduce some methods to evaluate its performance, 
     which we can reference in later sections of this thesis. 
-The most obvious meausre of the progression of parameter estimation is the error between the true parameterisation, 
+The most obvious measure of the progression of parameter estimation is the error between the true parameterisation, 
     $\al_0$, and the approximation $\al = \mean \bk{ \Pr(\al) }$,
     which can be captured by a large family of loss functions. 
 Among others, we use the \gls{ql}, which captures this error through the sum of the square difference between 
@@ -524,7 +532,8 @@ We use \gls{volume} as a measure of the learning procedure's progress:
 Exponentially decreasing \gls{volume} indicates that the parameters' estimation is improving,
     e.g. the first 300 \glspl{experiment} for the red model in \cref{fig:param_learning_vary_particles},
     whereas converged \gls{volume} (the latter 200 \glspl{experiment})
-    indicate the learning has saturated and there is little benefit to running further \glspl{experiment}.     
+    indicate the learning has saturated and there is little benefit to running further \glspl{experiment} 
+    in the current regime. 
 
 \begin{figure}[t]
     \centering
@@ -555,7 +564,7 @@ Usually, the \gls{edh} attempts to exploit the information available,
 In some cases, however, there may be justification to employ a non-adaptive schedule, 
     for instance to force \gls{qhl} to train upon a full set of experimental data rather than a subset,
     as an adaptive method may advise.
-We can categorise each \gls{edh} as either \emph{online} of \emph{offline},
+We can categorise each \gls{edh} as either \emph{online} or \emph{offline},
     depending on whether it accounts for the current state of the inference procedure, i.e. the posterior.
 The \gls{edh} is modular and can be replaced by any method that returns a valid set of experimental controls, 
     so we can consider numerous approaches, for instance those described in \cite{hincks2018hamiltonian, fiderer2020neural}.
@@ -578,9 +587,46 @@ The principle of \gls{pgh} is that the uncertainty of the posterior limits how w
 For example, consider \cref{eqn:analytical_hamiltonian} with a single parameter $\omega_0 = 10$,
     and current $\{\mean\bk{\Pr(\omega)} = 9, \std\bk{\Pr(\omega)} = 2\}$:
     we can expect that the approximation $\omega^{\prime} = \mean\bk{\Pr(\omega)}$ 
-    is valid up to $t_{max} \approx \nicefrac{1}{\std\bk{\Pr(\omega)}}$. 
+    is valid up to $t_{max} \approx \nicefrac{1}{\std\bk{\Pr(\omega)}}$.
+\cref{fig:likelihood_v_prior} shows the difference in \gls{likelihood} between the system and 
+    proposed parameters, for parameters within the prior.
+For $t < t_{\rm{max}}$, parameters within the prior all perform reasonably well; 
+    while for $t > t_{\rm{max}}$, the prior does not provide a reliable estimation of the true likelihood.
+Experiments using evolution time $t \sim t_{\rm{max}}$, however, provide a sensitive test of hypothesis 
+    \emph{within} the prior: 
+    those values which are closer to $\omega_0$ than $\omega^{\prime}$ perform drastically better than 
+    those further away. 
+We can exploit this insight directly by sampling particles throughout the prior:
+    values around the true parameter, i.e. $\omega^{\prime} < \omega < \omega_0$,
+    will be seen to outperform $\omega < \omega^{\prime}$, 
+    and will therefore be assigned higher weight (see \cref{eqn:qhl_weights}),
+    allowing us to redraw $\Pr(\omega)$ based on meaningful data.
+In short, we can \emph{learn} effectively from likelihoods based on experiments where $t \sim t_{\rm{max}}$. 
+
+\begin{figure}[t]
+    \begin{center}
+        \includegraphics{theoretical_study/figures/likelihood_v_prior.pdf}
+    \end{center}
+    \caption[Difference in likelihood between true and proposed parameters]{
+        Difference in \gls{likelihood} between true and proposed parameters. 
+        The likelihood is given by \cref{eqn:analytical_likleihood}; 
+            the true parameter is $\omega_o=10$ (red).
+        The prior distribution (blue) is characterised by a Gaussian,
+        $\Pr(\omega) = 9 \pm 2$ (arbitrary units).
+        The difference between the true likelihood, $l_0$, and likelihood for proposed parameters, $l$, 
+            is given for values of $\omega$, for varying proposal experiments, i.e. evolution times. 
+        $t_{\rm{max}} = \nicefrac{1.26}{\std(\Pr(\omega))}$ (green), 
+        $t = \nicefrac{t_{\rm{max}}}{2}$ (purple), 
+        $t = 2t_{\rm{max}}$ (orange) are shown.
+    }
+    \label{fig:likelihood_v_prior}
+\end{figure}
+
+
 % TODO make a figure illustrating this point with some wide, medium and thin priors
-It is sensible, then, to use $t \sim t_{max}$ for two reasons: 
+
+Then, it is sensible to use $t \sim t_{max}$ as the bespoke design with respect to a given prior, 
+    for two main reasons: 
     (i) smaller times are already well explained by the posterior, so offer little opportunity to learn;
     (ii) $t_{max}$ is at or near the threshold which \glspl{particle} sampled from the posterior can comfortably explain, 
         so it will expose the relative difference in \gls{likelihood} between the posterior's better and worse \glspl{particle}, 
@@ -696,7 +742,7 @@ In principle it is possible for the \gls{edh} to design a new \gls{probe} at eac
     of size $\Npsi = \absval{\Psi}$.
 Then, a \gls{probe} is chosen at each \gls{experiment} from $\Psi$, 
     allowing for the same $\ket{\psi}$ to be used for multiple \glspl{experiment} within the training, e.g. by iterating over $\Psi$. 
-$\Psi$ can be generated with respect to the individual learning problem as we will examine later\footnote{In \cref{chapter:nv}}, 
+$\Psi$ can be generated with respect to the individual learning problem as we will examine later\footnote{In \cref{sec:nv_constraints}.}, 
     but it is usually sufficient to use generic strategies which should work for all models;
     some straightforward examples are
     \begin{easylist}[enumerate]
@@ -765,11 +811,14 @@ We can draw a number of useful observations from these simple tests:
         is maximally informative: 
         any deviations from the true parameterisation are registered most dramatically in this basis,
         providing the optimal training \gls{probe} for this case.     
-    & These observations are reinforced by \cref{fig:probes_test}\textbf{c}, where a 5-qubit Ising model also 
+    & These observations are reinforced by \cref{fig:probes_test}\textbf{(c)}, where a 5-qubit Ising model also 
         fails to learn from one of its eigenstates, $\ket{0}^{\otimes 5}$.
         Of note, however, is that $\ket{+}^{\otimes 5}$ is not the strongest \gls{probe} here: the much larger Hilbert space here 
         can not be scanned sufficiently using a single probe; 
         using a larger number of probes is more effective, even if those are randomly chosen. 
+    It is reasonable to presue the optimal set of training probes for any given model 
+        would be the set of probes spanned by sums of that model's eigenstates, 
+        since these will most radically encode the unitary evolution.
     & In general the tomographic and random \gls{probe} sets perform reliably, 
         even for complex models.
 \end{easylist}
@@ -780,7 +829,7 @@ It is an open challenge to identify the optimal \gls{probe} for training any giv
 However, for model comparison purposes in general, 
     it is helpful to have a universal set of probes, $\Psi$, upon which all models are trained. 
 The use of $\Psi$ minimises systematic bias towards particlar models, 
-    which might arise from probes which serves as favourable bases for a subset of models, 
+    which might arise from probes which serve as favourable bases for a subset of models, 
     for example $\ket{+}$ in \cref{fig:probes_test}\textbf{(a)}. 
 Careful consideration should be given to $N_{\psi}$ in the choice of the \gls{probe} generator, 
     since it is important to ensure probes robustly test the parameterisation across the entire Hilbert space.
