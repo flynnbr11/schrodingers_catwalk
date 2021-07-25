@@ -232,7 +232,7 @@ We can think of \gls{qmla} as a forest search algorithm\footnotemark:
     Note \gls{qmla} is not a random forest, where decision trees are added at random, 
     because in \gls{qmla} trees are highly structured and included manually. 
 }    
-Each tree in the \gls{qmla} forest corresponds to an independent \emph{ \gls{model search} }, 
+Each tree in the \gls{qmla} forest corresponds to an independent \emph{\gls{model search}}, 
     structured according to a bespoke \gls{es}, which we detail in \cref{sec:exploration_strategies}. 
 \par 
 In short, the components of the iterative \gls{model search} for a given \gls{es}, 
@@ -264,7 +264,7 @@ Following the iterative model generation procedure, the protocol selects the str
     for instance by consolidating the set of branch champions, $\{\hat{H}_C^{\mu} \}$,
     resulting in the nomination of a single \emph{tree champion}, $\hat{H}_{S}^{\prime}$, \cref{fig:qmla_overview}\textbf{(e)}.
 The final step of \gls{qmla} is then to consolidate the set of champion models from all \glspl{et}, $\{\hat{H}_{S}^{\prime} \}$, 
-    in order to delcare a \emph{global} \gls{champion model}, $\hp$, \cref{fig:qmla_overview}\textbf{(f)}. 
+    in order to declare a \emph{global} \gls{champion model}, $\hp$, \cref{fig:qmla_overview}\textbf{(f)}. 
 
 \begin{figure}[t!]
     \begin{center}
@@ -491,7 +491,7 @@ To solidifiy the concept of \glspl{es}, and how they affect the overall
     where each strategy specifies how models are generated, as well as how trained models are consolidated within a branch. 
 Recall that all of these strategies rely on \gls{qhl} as the model training subroutine, 
     so that the run time for training, is $t_{\textrm{QHL}} \sim \Ne\Np t_{U(n)}$, 
-    where $t_{U(n)}$ is the time to compute the unitary evolution via the matrix exponential for an $n$-qubit model 
+    where $t_{U(n)}$ is the time to compute the unitary evolution via the matrix exponential for an $n$-qubit model.
 All models are trained using the default  \gls{likelihood} in \cref{eqn:likelihood}. 
 Assume the conditions
 \begin{easylist}[itemize]
@@ -513,7 +513,7 @@ Assume the conditions
 \noindent Then, consider the following model generation/comparison strategies.
 \begin{easylist}[enumerate]
     \ListProperties(Numbers1=l, Numbers2=r)
-    & \label{gr:predefined} Predefined set of $16$ models $\mathbb{H}$, with \gls{bf} compareisons between every pair of models
+    & \label{gr:predefined} Predefined set of $16$ models $\mathbb{H}$, with \gls{bf} comparisons between every pair of models
     && Training takes $1\textrm{h}$, and there are ${16 \choose 2} = 120$ comparisons spread across 16 processes, requiring $8\textrm{h}$
     && total time is $9\textrm{h}$. 
     & \label{gr:generative_full} Generative procedure for model design, comparing every pair of models,
@@ -554,7 +554,7 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
 \begin{description}
     \item[\Gls{model}] \
     
-    Can mean any description of a quantum system which captures the interactions it is subject to. 
+    Any description of a quantum system which captures the interactions it is subject to. 
     \begin{easylist}[itemize]
         && Here we exclusively consider \gls{hamiltonian} models, but Lindbladian models can also be considered as generators of quantum dynamics. 
     \end{easylist}
@@ -574,7 +574,7 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
     \end{easylist}
     \item[Consolidation] \
     
-    Can be as rigourous as desired by the user. 
+    As rigourous as desired by the user. 
     \begin{easylist}[itemize]
     && Consolidation occurs at the branch level of each \gls{et}, but also in finding the tree champion, 
         and ultimately the global champion. 
