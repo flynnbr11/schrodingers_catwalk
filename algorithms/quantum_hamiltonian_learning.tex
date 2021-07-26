@@ -315,11 +315,11 @@ $t_c$ and $t_s$ generally depend on the similarity between $\hat{H}_+$ and $\hat
     intuitively, as $\|\hat{H}_+ - \hat{H}_{-}\|_2$ decreases, the echo does not saturate until higher evolution times. 
 \par 
 
-Recall that the Bayesian updates to the parameter distribution relies on good hypotheses receiving likelihood $l_e \sim 1$,
-    and weak hypotheses receiving $l_e \sim 0$. 
-The \gls{le} tells us that there is a small range of evolution times ($t \lesssim t_c$) for which even good \glspl{particle} may expect $l_e \sim 1$.
+Recall that the Bayesian updates to the parameter distribution relies on good hypotheses receiving likelihood $l_e \approx 1$,
+    and weak hypotheses receiving $l_e \approx 0$. 
+The \gls{le} tells us that there is a small range of evolution times ($t \lesssim t_c$) for which even good \glspl{particle} may expect $l_e \approx 1$.
 We can exploit this effect, however: 
-    by designing \glspl{experiment} with $t \sim t_c$, the likelihood is extremely sensitive to the parameterisation, 
+    by designing \glspl{experiment} with $t \approx t_c$, the likelihood is extremely sensitive to the parameterisation, 
     in that only \glspl{particle} close to the precise parameters will give a high likelihood in this regime. 
 This is the basis of the \acrlong{pgh}, described in \cref{sec:pgh}. 
 \par 
@@ -592,7 +592,7 @@ For example, consider \cref{eqn:analytical_hamiltonian} with a single parameter 
     proposed parameters, for parameters within the prior.
 For $t < t_{\rm{max}}$, parameters within the prior all perform reasonably well; 
     while for $t > t_{\rm{max}}$, the prior does not provide a reliable estimation of the true likelihood.
-Experiments using evolution time $t \sim t_{\rm{max}}$, however, provide a sensitive test of hypothesis 
+Experiments using evolution time $t \approx t_{\rm{max}}$, however, provide a sensitive test of hypothesis 
     \emph{within} the prior: 
     those values which are closer to $\omega_0$ than $\omega^{\prime}$ perform drastically better than 
     those further away. 
@@ -601,7 +601,7 @@ We can exploit this insight directly by sampling particles throughout the prior:
     will be seen to outperform $\omega < \omega^{\prime}$, 
     and will therefore be assigned higher weight (see \cref{eqn:qhl_weights}),
     allowing us to redraw $\Pr(\omega)$ based on meaningful data.
-In short, we can \emph{learn} effectively from likelihoods based on experiments where $t \sim t_{\rm{max}}$. 
+In short, we can \emph{learn} effectively from likelihoods based on experiments where $t \approx t_{\rm{max}}$. 
 
 \begin{figure}[t]
     \begin{center}
@@ -625,7 +625,7 @@ In short, we can \emph{learn} effectively from likelihoods based on experiments 
 
 % TODO make a figure illustrating this point with some wide, medium and thin priors
 
-Then, it is sensible to use $t \sim t_{max}$ as the bespoke design with respect to a given prior, 
+Then, it is sensible to use $t \approx t_{max}$ as the bespoke design with respect to a given prior, 
     for two main reasons: 
     (i) smaller times are already well explained by the posterior, so offer little opportunity to learn;
     (ii) $t_{max}$ is at or near the threshold which \glspl{particle} sampled from the posterior can comfortably explain, 

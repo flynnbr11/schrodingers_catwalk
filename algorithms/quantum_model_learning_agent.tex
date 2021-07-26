@@ -496,13 +496,13 @@ All models are trained using the default  \gls{likelihood} in \cref{eqn:likeliho
 Assume the conditions
 \begin{easylist}[itemize]
     & all models considered are represented by 4-qubit models;
-    && $t_{U(4)} \sim 10^{-3} \textrm{sec}$. 
+    && $t_{U(4)} \approx 10^{-3} \textrm{sec}$. 
     & each model undergoes a reasonable training regime;
     && $\Ne=1000, \Np=3000$;
-    && $\implies t_{\textrm{QHL}} = \Ne \times \Np \times  t_{U(4)} = 3000s \sim 1 \textrm{h} $;
+    && $\implies t_{\textrm{QHL}} = \Ne \times \Np \times  t_{U(4)} = 3000s \approx 1 \textrm{h} $;
     & Bayes factor calculations use 
     && $\Ne=500, \Np=3000 $
-    && $\implies t_{\textrm{BF}} \sim 2 \times  500 \times 3000 \times  10^{-3} \sim 1 \textrm{h}$;
+    && $\implies t_{\textrm{BF}} \approx 2 \times  500 \times 3000 \times  10^{-3} \approx 1 \textrm{h}$;
     & there are 12 available terms
     && allowing any combination of terms, this admits a \gls{model space} of size $2^{12} = 4096$
     & access to 16 computer cores to parallelise calculations over

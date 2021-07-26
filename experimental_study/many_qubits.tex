@@ -26,13 +26,12 @@ A realistic model may be expected from considering the environment as a finite-s
     consisting of $n_s$ nuclear spins in addition to the \gls+{nvc} spin, 
     i.e. the total number of qubits of such a model is $n_q = 1 + n_s$.   
 The effects of nuclear spins are expected to manifest at higher times than those studied in \cref{chapter:nv}, 
-    i.e. the decoherence of the \gls{nvc} is only effected by the nuclear spins' independent precession at high times, 
-    so we must modify the experimental procedure accordingly.
-Such effects can also be highlighted by Hahn echo measurements, 
-    as in \cref{fig:hahn_bloch_spheres}, 
-    except reversing the evoluting by $t^{\prime} = t$ instead of $t^{\prime} = 2t$
-    \cite{breuer2002theory, childress2006coherent}, so our simulations will use this measurement scheme. 
-    % TODO reference that explicitly says Hahn t=t' gives long-time dynamics
+    e.g. the decoherence of the \gls{nvc} is only effected by the nuclear spins' independent precession at higher times.
+To study these \emph{slowly varying} contributions to the spin's decoherence,   
+    we must modify the experimental procedure:
+    the Hahn echo sequence isolates these types of dynamics when the second free evolution
+    runs for the same duration as the first, $t^{\prime} = t$ \cite{childress2007coherent},
+    detailed in \cref{sec:experimental_procedure}.
 \par 
 
 Since we are simulating the target system, we may choose the approximation we wish to invoke. 
@@ -102,7 +101,7 @@ The complete model is then given by
         \hline 
     \end{tabular}
     \caption[Terms permitted in the QMLA genetic algorithm when modelling the extended nitrogen-vacancy centre systems]{
-        Terms permitted in the \gls{qmla} \glsxtrfull+{ga} when in modelling the extended \glsxtrlong+{nvc} systems.
+        Terms permitted in the \gls{qmla} \glsxtrfull+{ga} when modelling the extended \glsxtrlong+{nvc} systems.
         Each term is permitted in the \gls{model search} from expectations about the system under study. 
         The succinct representaton is listsed as $\hat{t}$, along with an interpretation of the term's physical contribution to the system. 
         The parameter values used in simulations can be found from from the listings of \cref{eqn:complete_long_dynamics_nv_model}. 
@@ -116,7 +115,7 @@ The complete model is then given by
 
 For the purpose of testing \gls{qmla}, we can choose a subset of terms from \cref{eqn:many_qubit_full_model} to 
     consitute the \gls{true model}: to set $\ho$, we use the \emph{secular} approximation, 
-    i.e. we assume the magnetic field is perfectly aligned along the $z$-axis \cite{rowan1965electron}.
+    i.e. we assume the magnetic field is perfectly aligned along the $z$-axis \cite{dutt2007quantum, rowan1965electron}.
 In the secular approximation, the \gls{nvc} spin qubit rotates only about the $z$-axis, 
     and coupling between the \gls{nvc} and nuclear qubits are only via $\hat{S}_z \cdot \hat{A}_z^{\chi}$.
 Here we will include the effect of the nuclear spins' rotations, which are much weaker and only influence the \gls{nvc}'s decoherence at long times. 
@@ -166,7 +165,7 @@ In total, $\absval{\termset} = 3 + 3n_s^{\prime} + 3 n_s^{\prime} = 3 + 6 n_s^{\
 
 Our aim is to test \gls{qmla}, so the choice of $n_s$ and $n_s^{\prime}$ are arbitrary:
     we will allow \gls{qmla} to explore a larger \gls{model space} than is required to 
-    capture the \gls{true model}, in order to give \gls{qmla} the means to overfit as a robust test. 
+    capture the \gls{true model}, in order to give \gls{qmla} the means to overfit, as a robust test. 
 For the target system we use $n_s=3$ proximal spins, 
     so that  $\absval{\termset_0} = 13$;
     we allow candidates up to $n_s^{\prime}=5$, 
@@ -179,7 +178,7 @@ Without imposing any restrictions on which combinations of terms are allowed,
     the total \gls{model space} is therefore of size $2^{\absval{\termset}}=2^{33} \approx 10^{10}$. 
 
 \section{Genetic algorithm}
-\Glspl{ga} provide a robust and thoroughly tested paradigm for searching large candidate spaces; 
+\Acrfullpl{ga} provide a robust and thoroughly tested paradigm for searching large candidate spaces; 
     this is a natural framework through which we can explore such an unrestricted model space 
     as described above. 
 We have already extensively discussed the formalism of \glspl{ga} in \cref{sec:genetic_algorithms}, 
@@ -206,7 +205,7 @@ This \acrfull{of} relies on the definition of a validation dataset, $\expset_v$,
     \end{center}
     \caption[Evaluation dataset for nitrogen-vacancy centre genetic algorithm]{
         Evaluation dataset, $\expset_v$, for \acrlong{nvc} \acrlong{ga}. 
-        \textbf{Left}, Set of \gls{probe} states the \gls{nvc}  qubit is prepared in for evaluation, 
+        \textbf{Left}, Set of 1-qubit \gls{probe} states the \gls{nvc}  qubit is prepared in for evaluation, 
             i.e. $\Psi_v$ is close to the tomographic basis. 
             Shown are the one-qubit \glspl{probe} on the Bloch sphere, which are combined to form 
             $n$-qubit probes used when evaluating candidate models. 
@@ -230,11 +229,17 @@ This assumption is a major caveat to the results of this chapter:
 Moreover, while it is possible to extract information on the nuclear qubits from measuring only the 
     \gls{nvc} qubit, as in the Hahn echo measurements, 
     it is uncertain whether any technique can simultaneously detect parameters of significantly varying orders of magnitude.
-For instance, some terms in \cref{table:nv_gen_alg_term_params} are $\mathcal{O}(\ghz)$, 
+For instance, some terms in \cref{table:nv_gen_alg_term_params} are $\mathcal{O}(\SI{}{\giga\hertz})$, 
     while others are $\mathcal{O}(\SI{}{\kilo\hertz})$;
     it is likely to prove difficult to discern the $\SI{}{\kilo\hertz}$ parameters well, given that their contribution is equivalent 
-    to errors of order $\mathcal{O}(10^{-6})$ in the dominant $\ghz$ terms. 
-Therefore we must caution that the results presented here, 
+    to errors of order $\mathcal{O}(10^{-6})$ in the dominant $\SI{}{\giga\hertz}$ terms. 
+Finally, the terms in candidate models which are \emph{not} in $\ho$ must 
+    be assigned learned parameters as though they had undergone \gls{qhl}; 
+    we do not know how \gls{qhl} would treat such terms in reality, 
+    and here we simply assume such terms would learn the parameter listed in \cref{table:nv_gen_alg_term_params}.
+\par
+
+Given these considerations, therefore, we must caution that the results presented here, 
     while demonstrating that \gls{qmla} \emph{can} operate in large model spaces, 
     are not immediately applicable to experimental systems, 
     since there are outstanding challenges in the assessment of individual candidates, 
@@ -283,8 +288,8 @@ Such a discrepency, as well as the \glspl{win rate} for the models,
 
 By simulating a realistic system, we have hereby shown \gls{qmla}'s ability to operate on physically meaningful data
     in large \glspl{model space}. 
-The \gls{model search} guided by a \gls{ga} instructs \gls{qmla} to consider only $\sim1000$ models out of the 
-    total space of $\sim10^{10}$, 
+The \gls{model search} guided by a \gls{ga} instructs \gls{qmla} to consider only $\mathcal{O}(10^3)$ models out of the 
+    total space of $\mathcal{O}(10^{10})$, 
     clearly showing a drastic speedup in characterising \gls{q} when compared with brute force search.
 This demonstration is moderated by the presumptions which enabled us to perform simulations quickly
     and assume perfect outcomes from model training. 
@@ -303,8 +308,8 @@ However, taken together with the results of examining experimental data from \cr
             normally distributed around $f=0.44 \pm 0.12$. 
         \textbf{b}, The models explored during the model search of all \glspl{instance} combined, 
             $\{\hat{H}_i\}$, show that \gls{qmla} tends towards stronger models overall, 
-            with $f = 0.79 \pm 0.16$ from $\sim 140,000$ chromosomes across the 100 instances, 
-            i.e. each \gls{instance} tests $\sim 1400$ distinct models. 
+            with $f = 0.79 \pm 0.16$ from $\mathcal{O}(140,000)$ chromosomes across the 100 instances, 
+            i.e. each \gls{instance} tests $\mathcal{O}(1400)$ distinct models. 
         \textbf{c}, Champion models from each instance, showing \gls{qmla} finds strong models 
             in general, and in particular finds the \gls{true model} ($\ho$, with $f=1$) in $85\%$ of cases.
         }

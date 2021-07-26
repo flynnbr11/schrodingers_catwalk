@@ -70,7 +70,7 @@ Therefore, irrespective of the initial state,
 \par 
 
 The difference in energy between our defined computational basis states $\ket{0}$ and $\ket{1}$ is 
-    $\sim 2.87 \ghz$, i.e. it is addressible by \gls{mw} radiation.
+    $\approx 2.87 \SI{}{\giga\hertz}$, i.e. it is addressible by \gls{mw} radiation.
 Via antenna, we can deliver a \gls{mw} pulse upon the \gls{nvc}, driving the \gls{nvc} between the two levels
     providing an implementation of an \ttt{X}-gate. 
 Likewise, having initialised the state to $\ket{0}$, we can perform a $\nicefrac{\pi}{2}$ rotation 
@@ -313,7 +313,7 @@ That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{
 
 By varying the evolution time, $t$, used within the Hahn echo sequence, we can map the \gls{likelihood} against time, 
     which we can view as capturing the \emph{dynamics} of the \gls{nvc} spin, \cref{fig:nv_raw_data}.
-We vary the evolution time up to $t \sim 4 \mu s$ in intervals of $\Delta t = 50 \SI{}{\nano\second}$, 
+We vary the evolution time up to $t {\sim} 4 \mu s$ in intervals of $\Delta t = 50 \SI{}{\nano\second}$, 
     so we have 425 data points. 
 Note the data for the studied \gls{nvc} is taken once and analysed offline, 
     i.e. \gls{qmla} does not have complete authority to design \glspl{experiment} 
@@ -367,7 +367,7 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
     \begin{easylist}[itemize]
     && $\Delta_{\textrm{gs}} \hat{S}_z^2$: 
         the \emph{zero-field} splitting, or ground state splitting between the computational basis states.
-        $\Delta_{\textrm{gs}} \sim \ghz$ is a constant offset which does not contribute to the decoherence, 
+        $\Delta_{\textrm{gs}} {\sim} \mathcal{O}(\SI{}{\giga\hertz})$ is a constant offset which does not contribute to the decoherence, 
         so it is excluded from our study.
 
     && $\mu_B g \mathbf{B} \cdot \mathbf{S}$: 
@@ -475,10 +475,10 @@ Next, we consider the hyperfine coupling term.
 In general we sum over the nuclear sites $\{ \chi \}$, 
     since  the \gls{nvc} spin will interact with every nucleus within a certain range.
 We show in \cite{gentile2020learning} that a realistic system requires modelling a 
-    finite-size bath of $|\{\chi\}|\sim 15$ 
+    finite-size bath of $|\{\chi\}|{\sim}15$ 
     nuclei to capture the dynamics of interest, 
     which is infeasible for complete characterisation via classical simulation, 
-    where we are limited to $\sim 11$ qubit calculations\footnotemark. 
+    where we are limited to ${\sim}11$ qubit calculations\footnotemark. 
 Instead, by focusing only on the \emph{short-time} dynamics of the \gls{nvc}, 
     we can isolate the effects of dominant interactions, 
     most notably with a single nearby \gls{carbon}. 
@@ -781,7 +781,7 @@ This bias adds a caveat to the outcome of this study:
 
 The experiment was run with increasing $t$ for the duration of the first decay of the \gls{nvc}, 
     i.e. until it had dephased, 
-    so the data available for examination terminate at $t_{\textrm{max}} \sim \ 4 \mu s$, see \cref{fig:nv_raw_data}. 
+    so the data available for examination terminate at $t_{\textrm{max}} {\sim} 4 \mu s$, see \cref{fig:nv_raw_data}. 
 As discussed in \cref{sec:heuristic}, usually it is helpful to allow an \gls{edh} to
     choose the experimental controls, including the evoltuion time, $t$, against which 
     the model is trained at each experiment;
@@ -830,8 +830,8 @@ We first focus on the overall outcomes:
 In preliminary analysis we run 500 \glspl{instance} with varying $\ho$, 
     varying the cardinality of $\ho$,
     so we can broadly gauge the tendency towards over- and under-fitting:
-    we see that in $\sim50\%$ of \glspl{instance} the correct cardinality is found,  
-    rising to $\sim86\%$ by allowing $\pm1$ term, \cref{fig:exp_qmla_analysis}\textbf{(b)}. 
+    we see that in ${\sim}50\%$ of \glspl{instance} the correct cardinality is found,  
+    rising to ${\sim}86\%$ by allowing $\pm1$ term, \cref{fig:exp_qmla_analysis}\textbf{(b)}. 
 In general, the \glspl{champion model} from each instance are highly predictive: 
     the median \emph{coefficient of determination} between the systems' and corresponding \glspl{champion model}' data is 
     $R^2 = 0.84$. 
