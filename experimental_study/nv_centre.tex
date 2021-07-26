@@ -33,7 +33,7 @@ In this section we describe how we can exploit those energy levels in order to d
 
 \par 
 
-A \emph{manifold} is a set of states with marginal differences, such as a single differing quanutm number.
+A \emph{manifold} is a set of states with marginal differences, such as a single differing quantum number.
 For example, states near the absolute ground state might differ only in their magnetic spin quantum number:
     together they can be characterised as the \emph{ground state manifold}. 
 We consider two principal manifolds of the system:
@@ -145,14 +145,14 @@ We can use this quantity as the  \gls{likelihood} within \gls{qle}, allowing us 
 }
 \par 
 
-In summary then, by assigning basis states $\ket{0}, \ket{1}$ to energy levels of the ground state manifold, 
+In summary then, by assigning computational basis states $\ket{0}, \ket{1}$ to energy levels of the ground state manifold, 
     we are able to ensure the preparation of the \gls{nvc} in $\ket{0}$ by first shining a green laser on the \gls{nvc}. 
 We can then apply \gls{mw} radiation to achieve quantum logical gates on the system, 
     and read out the final state of the system, again by shining a green laser
     and observing the \gls{pl} (i.e. the emitted photons), and inferring the population level of each basis state. 
 We represent these concepts in a simplified format in \cref{fig:nv_centre_energy_levels}. 
 
-\subsection{Experimental procedure}
+\subsection{Experimental procedure}\label{sec:experimental_procedure}
 \begin{figure}
     \begin{center}
         \subfloat[]{
@@ -333,7 +333,6 @@ Note the data for the studied \gls{nvc} is taken once and analysed offline,
     \label{fig:nv_raw_data}
 \end{figure}
 
-\newpage
 \section{Target system}\label{sec:target_system}
 We take the axis of the \gls{nvc}, i.e. the axis connecting the \gls{nitrogen} with the 
     lattice vacancy, as the $z$-axis.
@@ -364,7 +363,7 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
 \begin{description}
     \item[Isolated-spin terms] \
     
-    Describe the spin independent of the environmental nuclei
+    Describe the spin independent of the environmental nuclei.
     \begin{easylist}[itemize]
     && $\Delta_{\textrm{gs}} \hat{S}_z^2$: 
         the \emph{zero-field} splitting, or ground state splitting between the computational basis states.
@@ -402,7 +401,9 @@ First, we will describe each term in \cref{eqn:nv_ham_full},
         nuclear precession terms. 
         $\mu_n$ is the nuclear magneton and $g$ is the nuclear $g$-factor (again from the $g$-factor tensor).
         These terms represent the nuclei independent of the spin -- 
-        these terms lead to decoherence at much higher times than we have access to, since the Hahn echo sequence decouples the spin from the bath. 
+        these terms lead to decoherence at much higher times than we have access to, 
+        since the Hahn echo sequence reverses the contribution on the spin from the bath, 
+        \cref{sec:experimental_procedure}. 
         For the short-time model targeted here, then, these terms can be excluded. 
     \end{easylist}
 
@@ -556,7 +557,7 @@ The hyperfine terms to be entertained by \gls{qmla} are then
     This limitation arises from the requirement to compute the total evolution of the global state, 
     involving calculation of $e^{-i\h t}$, i.e. the characterisation of an $n_q$-qubit model depends on 
     classical exponentiation of the $2^{n_q} \times 2^{n_q}$ \gls{hamiltonian} for each \gls{particle} and experiment in \gls{cle}, 
-    which is a prohibitively expense. 
+    which is prohibitively expense. 
 }
 \par 
 
@@ -604,7 +605,7 @@ Recall from \cref{chapter:qmla} that each model considered must be trained indep
     where the purpose of model training is to optimise the parameter vector $\al$ which characterises the model. 
 For example, the model 
     $\hi = \hat{S}_{x,y} \hat{A}_{z} = \alpha_1 \hat{S}_x  + \alpha_2 \hat{S}_y + \alpha_3 \hat{A}_z$,
-    is trained to retrieve the optimal $\al^{\prime} = \irow{\alpha_1^{\prime} & \alpha_2^{\prime} & \alpha_3^{\prime}}$. 
+    is trained to retrieve the optimal $\al^{\prime}_i = \irow{\alpha_1^{\prime} & \alpha_2^{\prime} & \alpha_3^{\prime}}$. 
 Models are trained through \gls{qhl}, described in \cref{chapter:qhl}, 
     which iteratively updates a probability distribution for the associated parameters, $\Pr(\al)$. 
 As such, a \emph{prior} distribution must be drawn, from which \gls{qhl} begins its training. 
@@ -613,17 +614,17 @@ While \gls{qhl} can redraw the probability distribution iteratively, and even fi
 The algorithm therefore demands that the user specifies the \emph{range} of each parameter in which to search, 
     which can be based on domain knowledge and theoretical predictions. 
 For example, recall from \cref{sec:target_system} that the zero field splitting, $\Delta_{gs}$ in \cref{eqn:nv_ham_full} (and excluded in our modelling),
-    is expected to be $\sim \SI{}{\giga\hertz}$: in order to provide a reasonable chance at learning the true parameter,
+    is expected to be $\mathcal{O}\left( \SI{}{\giga\hertz}\right)$: in order to provide a reasonable chance at learning the true parameter,
     here we would propose a prior distribution of $5 \pm 2 \SI{}{\giga\hertz}$.
-We must similarly identify the rough range in which we reasonably expect to find parameters associated with each term in \cref{eqn:nv_terms}.
+We must similarly identify the broad range in which we reasonably expect to find parameters associated with each term in \cref{eqn:nv_terms}.
 \par
 
 The spin-only terms, $\hat{S}_i$, are consequences of the magnetic field, 
-    expected in the range $\sim 2-3 \mhz$.
-Likewise, the hyperfine terms, $\hat{A}_i$ are expected in the range of $\sim \mhz$ \cite{gali2008ab}, 
+    expected in the range $\mathcal{O}\left(2-3\SI{}{\mega\hertz}\right)$.
+Likewise, the hyperfine terms, $\hat{A}_i$ are expected in the range of $\mathcal{O}\left( \SI{}{\mega\hertz}\right)$ \cite{gali2008ab}, 
     while in the \emph{secular approximation} only the $z$-component is expected to contribute substantially \cite{dutt2007quantum}. 
-The non axial hyperfine terms, i.e. the transverse terms $\hat{T}_{kl}$ are not usually included in effective models, 
-    but can be found of order $\mathcal{O}(10 \khz)$ \cite{hou2019experimental}. 
+The non-axial hyperfine terms, i.e. the transverse terms $\hat{T}_{kl}$ are not usually included in effective models, 
+    but can be found of order $\mathcal{O}(\SI{10}{\kilo\hertz})$ \cite{hou2019experimental}. 
 We utilise this prior understanding of the system to inform the parameter range used for training candidate models:
     for each of the terms in \cref{eqn:nv_terms}, we will adopt a normal prior distribution of $4 \pm 1.5\SI{}{\mega\hertz}$. 
 This range is sufficiently specific to ensure the training subroutine operates in a physically meaningful -- 
@@ -640,7 +641,7 @@ The \gls{es} will account for the details listed in this chapter so far, in summ
     & we aim to assign a model, $\hp$, to the \gls{nvc} to describe its decoherence processes
     && we especially focus on its hyperfine interactions;
     & we use a 2-qubit approximation
-    && the first qubit represent the spin itself;
+    && the first qubit represents the spin itself;
     && the second qubit represents the environment in which the \gls{nvc} resides;
     & we query the \gls{nvc} by performing Hahn echo \glspl{experiment} (\cref{fig:hahn_bloch_spheres});
     & the outcome of those \glspl{experiment} are thought of as the system's \glspl{likelihood}  (\cref{fig:nv_raw_data});
@@ -712,7 +713,7 @@ In effect, we thus verify the statistical significance of each term included in 
 \par 
 
 The total model in \cref{eqn:nv_ham_full} supports $N_t = 1 + 3 + 6 | \chi | + 3 + 3 |\chi| = 7 + 9|\chi| $ terms, 
-    which we reduced to a space of $N_t=3 + 6 |\chi| = 9$ through several approximations\footnotemark.
+    which we reduced to a space of $N_t=3 + 6 |\chi| = 9$ through several approximations.
 Even so, the remainng $2^9$ permitted models were reduced further by building the logic of this \gls{es} 
     from our intuition aroud existing knowledge of typical \gls{nvc} systems.
 As such, the described \gls{es} will only ever consider $<20$ models per instance. 
@@ -804,7 +805,7 @@ We require a custom \gls{edh} to account for the constraints outlined,
     && All nominated $t$ must be mapped to the nearest available $t$ in the dataset
         so that the \glspl{likelihood}  are as close as possible to simulating the true system. 
     & Much of the physics of interest occurs at relatively high times, 
-        i.e. because the rotation ($\mhz$) terms dominate, the decay of the peaks
+        i.e. because the rotation ($\SI{}{\mega\hertz}$) terms dominate, the decay of the peaks
         can be seen as evidence of the bath, notably through hyperfine terms in the model. 
     && We therefore wish to enforce that all models are trained on those data ($t \geq 2 \mu s)$,
         even if their parameter distribution is insufficiently narrow to yield those times naturally. 
@@ -885,7 +886,7 @@ Then, considering the performance of the algorithm on whole,
     where the simulation assumes\footnotemark \ $\ho = \hat{S}_{xyz} \hat{A}_z$.
     The set of models selected most frequently are shown in \cref{fig:exp_qmla_analysis}\textbf{(c)},
     and each model is trained with $\Ne=1000, \Np=3000$,
-    with the \glspl{volume} of those models (in the experimental case) shown in  \cref{fig:exp_qmla_analysis}\textbf{d}.
+    with the \glspl{volume} of those models (in the experimental case) shown in  \cref{fig:exp_qmla_analysis}\textbf{(d)}.
 \footnotetext{
     Here we work backwards by setting the target model as that which \gls{qmla} deemed most appropriate for the available data.
     We posit that this choice is arbitrary and doesn't fundamentally change the discussion of this chapter, 
@@ -973,12 +974,11 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     \figtableref
     } 
     \label{fig:nv_model_composition}
-    % /home/bf16951/Dropbox/QML_share_stateofart/PAPER/Figures/SuppMat/multi_instance_analysis notebook
 \end{figure}
 
 Here we offer some further perspectives, 
     considering the \glspl{run} summarised in \cref{fig:exp_qmla_analysis}.
-\cref{fig:nv_model_composition} first details all models considered in the 200 \glspl{instance} 
+\cref{fig:nv_model_composition} first details all \glspl{model} considered in the 200 \glspl{instance} 
     comprising the experimental and simulated \gls{qmla} \glspl{run}, 
     as well as the  \gls{win rate}  of each model. 
 This \gls{es} is designed to study a small subspace of the overall available space:
@@ -1012,12 +1012,17 @@ We highlight a number of \emph{credible} models which we deem especially valid a
     % in figure_development/nv_dynamics_reproduction.ipynb
 \end{figure}
 
-\cref{fig:nv_model_dynamics} shows the reproduction of dynamics of the top four models
-    from both simulated and experimental \glspl{run}. 
+\cref{fig:nv_model_dynamics} shows the reproduction of dynamics of the top\footnotemark \ 
+    four \glspl{model} from both simulated and experimental \glspl{run}. 
 We see that each model faithfully captures the essential dynamics arising from the respective target systems;
     this alone is insufficient to conclude that the \gls{true model} has been identified, 
     but serves as a valuable \emph{sanity-check}, convincing us that the output of \gls{qmla} is at least a sensible 
     approximation of $\ho$, if not the absolute \gls{true model}.
+\footnotetext{
+    \emph{Top} models in the context of \gls{qmla} are those \glspl{model} within the \gls{run} with 
+    the highest \glspl{win rate}, i.e. which won more \glspl{instance} than other candidates
+    from the \gls{model space}.
+}
 \par 
 
 The key insight promised by \gls{qmla} is to identfiy the interactions present in the studied system, 
@@ -1041,12 +1046,6 @@ The resultant model, $\hat{S}_{xyz}\hat{A}_{z}$ is in agreement with theoretical
     and shows that we can describe the intricate processes involved in decoherence through a relatively simple 
     \gls{hamiltonian}, proving that \gls{qmla} can perform an important role in aiding the understanding of quantum systems.  
 \par 
-
-
-% The parameters found for these terms are of the same order of magnitude as we would have predicted originally, 
-%     but disagreee in the precise value. 
-% For example, the rotation about the $y$-axis, $\hat{S}_y$, has frequency $5.7\mhz$, 
-%     roughly twice the predicted value of $2.7\mhz$. 
 
 \begin{figure}
     \thisfloatpagestyle{empty} % caption goes over page number so supressing it
@@ -1077,7 +1076,6 @@ The resultant model, $\hat{S}_{xyz}\hat{A}_{z}$ is in agreement with theoretical
         \figtableref
     }
     \label{fig:nv_learned_params}
-    % /home/bf16951/Dropbox/QML_share_stateofart/Auxiliary files/QMLA plots via pandas
 \end{figure}
 
 
