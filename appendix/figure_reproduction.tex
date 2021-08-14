@@ -1,41 +1,41 @@
 
 The default behaviour of the \gls{qmla} software framework is to generate 
-    a \emph{\gls{results directory}} for every \gls{run} of the algorithm, 
-    uniquely identified by the date and time the \gls{run} was launched, 
-    e.g. \ttt{qmla/launch/Jan\_01/12\_34}. 
+a \emph{\gls{results directory}} for every \gls{run} of the algorithm, 
+uniquely identified by the date and time the \gls{run} was launched, 
+e.g. \ttt{qmla/launch/Jan\_01/12\_34}. 
 Most of the figures presented in the main text analyse data from \glspl{run} of the \gls{qmla} framework;
-    the \gls{results directory} corresponding to each figure are listed (as \emph{Data}) in \cref{table:figure_reproduction},
-    and all data presented herein can be downloaded from \cite{flynn2021schrodinger}. 
+the \gls{results directory} corresponding to each figure are listed (as \emph{Data}) in \cref{table:figure_reproduction},
+and all data presented herein can be downloaded from \cite{flynn2021schrodinger}. 
 The presented figures are usually available as default analyses through the \gls{qmla} framework, 
-    and therefore can be reproduced by implementing the corresponding configuration. 
+and therefore can be reproduced by implementing the corresponding configuration. 
 In \cref{table:figure_reproduction} we list the core implementation details 
-    -- the number of \glspl{experiment} \gls{nexp}, and \glspl{particle}, \gls{nprt} and the \gls{es} -- used to achieve those results.
+-- the number of \glspl{experiment} \gls{nexp}, and \glspl{particle}, \gls{nprt} and the \gls{es} -- used to achieve those results.
 In some cases, further configuration details are necessary to produce equivalent \glspl{run};
-    complete details and information are available at \cite{flynn2021schrodinger}.
+complete details and information are available at \cite{flynn2021schrodinger}.
 Instructions for installing, configuring and running the \gls{qmla} software are given in \cref{apdx:software_eg}.
 
 \par  
 \section{Structure of results directory}
 Within the \gls{results directory}, the outcome of the \gls{run}'s \glspl{instance} are stored, 
-    with analysis plots broadly grouped as
+with analysis plots broadly grouped as
 \begin{easylist}
-    \ListProperties(Start1=1)
-    & \ttt{evaluation}: plots of probes and times used as the evaluation dataset. 
-    & \ttt{instances}: outcomes of an individual \gls{qmla} \gls{instance}, 
-        grouped by the \gls{instance} ID. 
-        Includes results of training of individual models (in \ttt{model\_training}), 
-        as well as sub-directories for anlaysis at the branch level (in \ttt{branches}) and \ttt{comparisons}. 
-    & \ttt{combined\_datasets}: 
-        \ttt{pandas} dataframes containing most of the data used during analysis of the \gls{run}. 
-        Note that data on the individual model/instance level may be discarded so some minor analyses can not be 
-        performed offline. 
-    & \ttt{exploration\_strategy\_plots} plots specifically required by the \gls{es} at the \gls{run} level.
-    & \ttt{champion\_models}: analysis of the models deemed champions by at least one \gls{instance} in the \gls{run}, 
-        e.g. average parameter estimation for a model which wins multiple instances. 
-    & \ttt{performance}: evaluation of the \gls{qmla} \gls{run}, 
-        e.g. the  \gls{win rate}  of each model and the number of times each term is found in \glspl{champion model}. 
-    & \ttt{meta} analysis of the algorithm' implementation, e.g. timing of jobs on each process in a cluster; 
-        generally users need not be concerned with these. 
+\ListProperties(Start1=1)
+& \ttt{evaluation}: plots of probes and times used as the evaluation dataset. 
+& \ttt{instances}: outcomes of an individual \gls{qmla} \gls{instance}, 
+    grouped by the \gls{instance} ID. 
+    Includes results of training of individual models (in \ttt{model\_training}), 
+    as well as sub-directories for anlaysis at the branch level (in \ttt{branches}) and \ttt{comparisons}. 
+& \ttt{combined\_datasets}: 
+    \ttt{pandas} dataframes containing most of the data used during analysis of the \gls{run}. 
+    Note that data on the individual model/instance level may be discarded so some minor analyses can not be 
+    performed offline. 
+& \ttt{exploration\_strategy\_plots} plots specifically required by the \gls{es} at the \gls{run} level.
+& \ttt{champion\_models}: analysis of the models deemed champions by at least one \gls{instance} in the \gls{run}, 
+    e.g. average parameter estimation for a model which wins multiple instances. 
+& \ttt{performance}: evaluation of the \gls{qmla} \gls{run}, 
+    e.g. the  \gls{win rate}  of each model and the number of times each term is found in \glspl{champion model}. 
+& \ttt{meta} analysis of the algorithm' implementation, e.g. timing of jobs on each process in a cluster; 
+    generally users need not be concerned with these. 
 \end{easylist}    
 \par
 
@@ -45,37 +45,37 @@ Within the \gls{results directory}, the outcome of the \gls{run}'s \glspl{instan
 
 \clearpage
 \begin{table}[h!]
-    \thisfloatpagestyle{empty} % caption goes over page number so supressing it
+\thisfloatpagestyle{empty} % caption goes over page number so supressing it
 % \begin{sidewaystable}
-    \begin{center}
-        \input{appendix/figures/figure_implementations_top.tex}
-    \end{center}
-    \caption[Figure implementation details]{Implementation details for figures used in the main text. 
-        For each \emph{Figure}, we list the \emph{Exploration Strategy} used by the \gls{qmla} framework to achieve 
-            the corresponding results, which are stored in the \gls{results directory} labelled by \emph{Data}.
-            We list the number of \glspl{experiment}, \gls{nexp}, and \glspl{particle}, \gls{nprt}, used in the training of all models
-            within that \gls{run}. 
-            Equivelent \glspl{run} of \gls{qmla} can be launched as outlined in \cref{apdx:software_eg}.
-        Continued in \cref{table:figure_reproduction_contd}.
-    }
-    \label{table:figure_reproduction}
+\begin{center}
+    \input{appendix/figures/figure_implementations_top.tex}
+\end{center}
+\caption[Figure implementation details]{Implementation details for figures used in the main text. 
+    For each \emph{Figure}, we list the \emph{Exploration Strategy} used by the \gls{qmla} framework to achieve 
+        the corresponding results, which are stored in the \gls{results directory} labelled by \emph{Data}.
+        We list the number of \glspl{experiment}, \gls{nexp}, and \glspl{particle}, \gls{nprt}, used in the training of all models
+        within that \gls{run}. 
+        Equivalent \glspl{run} of \gls{qmla} can be launched as outlined in \cref{apdx:software_eg}.
+    Continued in \cref{table:figure_reproduction_contd}.
+}
+\label{table:figure_reproduction}
 % \end{sidewaystable}
 \end{table}
 
 \clearpage
 \begin{table}[h!]
-        \begin{center}
-            \input{appendix/figures/figure_implementations_bottom.tex}
-        \end{center}
-        \caption[Figure implementation details continued]{[Continued from \cref{table:figure_reproduction}] 
-            Implementation details for figures used in the main text.
-            For each \emph{Figure}, we list the \emph{Exploration Strategy} used by the \gls{qmla} framework to achieve 
-            the corresponding results, which are stored in the \gls{results directory} labelled by \emph{Data}.
-            We list the number of \glspl{experiment}, \gls{nexp}, and \glspl{particle}, \gls{nprt}, used in the training of all models
-            within that \gls{run}. 
-            Equivelent \glspl{run} of \gls{qmla} can be launched as outlined in \cref{apdx:software_eg}.
-        }
-        \label{table:figure_reproduction_contd}
+    \begin{center}
+        \input{appendix/figures/figure_implementations_bottom.tex}
+    \end{center}
+    \caption[Figure implementation details continued]{[Continued from \cref{table:figure_reproduction}] 
+        Implementation details for figures used in the main text.
+        For each \emph{Figure}, we list the \emph{Exploration Strategy} used by the \gls{qmla} framework to achieve 
+        the corresponding results, which are stored in the \gls{results directory} labelled by \emph{Data}.
+        We list the number of \glspl{experiment}, \gls{nexp}, and \glspl{particle}, \gls{nprt}, used in the training of all models
+        within that \gls{run}. 
+        Equivalent \glspl{run} of \gls{qmla} can be launched as outlined in \cref{apdx:software_eg}.
+    }
+    \label{table:figure_reproduction_contd}
 \end{table}
-    
+
 \clearpage

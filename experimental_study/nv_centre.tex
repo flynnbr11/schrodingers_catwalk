@@ -20,7 +20,7 @@ Finally we describe the implementation of an \gls{es} for the examination of the
 \label{sec:nv_centres}
 
 Nitrogen vacancies are point defects in diamond, 
-    occuring intrinsically (naturally) \cite{davies1976optical} or extrinsically (synthetically) \cite{meijer2005generation, edmonds2012production}.
+    occurring intrinsically (naturally) \cite{davies1976optical} or extrinsically (synthetically) \cite{meijer2005generation, edmonds2012production}.
 A substitutional \gls{nitrogen} isotope is embedded in a lattice of carbon atoms in diamond, 
     adjacent to a lattice vacancy, 
     such that it is surrounded by three \glspl{carbon} (either $^{12}C$ or $^{13}C$) \cite{lenef1996electronic}. 
@@ -70,7 +70,7 @@ Therefore, irrespective of the initial state,
 \par 
 
 The difference in energy between our defined computational basis states $\ket{0}$ and $\ket{1}$ is 
-    $\approx 2.87 \SI{}{\giga\hertz}$, i.e. it is addressible by \gls{mw} radiation.
+    $\approx 2.87 \SI{}{\giga\hertz}$, i.e. it is addressable by \gls{mw} radiation.
 Via antenna, we can deliver a \gls{mw} pulse upon the \gls{nvc}, driving the \gls{nvc} between the two levels
     providing an implementation of an \ttt{X}-gate. 
 Likewise, having initialised the state to $\ket{0}$, we can perform a $\nicefrac{\pi}{2}$ rotation 
@@ -226,7 +226,7 @@ Intuitively, the stages are as follows:
         up a phase proportional to $t$, such that the spin is now in the state $\frac{1}{\sqrt{2}}\left( \ket{0} + e^{-i \delta t}\ket{1}\right)$. 
     \item A \gls{mw} $\pi$-pulse is applied, which inverts the basis states, yielding the state $\frac{1}{\sqrt{2}}\left( \ket{1} + e^{-i \delta t}\ket{0}\right)$.
     \item The spin is again allowed precess freely, here for a duration $t^{\prime}$. 
-        Again the $\ket{1}$-copmonent gains a phase $e^{-i \delta t^{\prime}}$, 
+        Again the $\ket{1}$-component gains a phase $e^{-i \delta t^{\prime}}$, 
         i.e. the spin is in the state $\frac{1}{\sqrt{2}}\left( e^{-i \delta t}\ket{0} + e^{-i \delta t^{\prime}}\ket{1} \right)$.
     \item A final $\nicefrac{\pi}{2}$ pulse is applied, giving 
         $\frac{1}{\sqrt{2}}\left( e^{-i \delta t}\ket{+} + e^{-i \delta t^{\prime}}\ket{-} \right)$.
@@ -244,7 +244,7 @@ If the second free evolution is run for $t^{\prime} = t$, we retrieve
 This is therefore an excellent scheme when seeking to isolate the spin from its environment, 
     e.g. when the spin is intended to act as a qubit. 
 In practice it is impossible to decouple the environment entirely, 
-    since distant nuclei still interact with the spin, % TODO why are these not cancelled out by the same phase reversal?
+    since distant nuclei still interact with the spin,
     causing decoherence on a relatively long time scale\footnotemark.
 These are what we refer to as \emph{slow} interactions: 
     this decoupling scheme can therefore be viewed as corresponding to a model 
@@ -286,7 +286,7 @@ For the remainder of this chapter, however, we will exploit the latter scheme, \
 \par 
 
 To relate the experimental procedure to the parameter learning technique described in \cref{chapter:qhl}
-    which fulfils the training stage of \gls{qmla}, consider the overal Hahn echo sequence.
+    which fulfils the training stage of \gls{qmla}, consider the overall Hahn echo sequence.
 We depict the stages of the experiment more generally in \cref{fig:hahn_bloch_spheres}, 
     starting from the initialised computational state, $\ket{\psi_0} = \ket{0}$,
     through to its final state which is read out through \gls{pl},
@@ -499,7 +499,7 @@ This reduces the dimension of our approximation:
     since now we only retain qubits for the \gls{nvc} and the \gls{nitrogen} 
     (which also represents the entire bath).
 The hyperfine tensor $\mathbf{A}$ consists of the hyperfine parameters, 
-    i.e. the strength of correspdoning interactions. 
+    i.e. the strength of corresponding interactions. 
 \begin{equation}
     \mathbf{A} = 
     \begin{pmatrix}
@@ -543,12 +543,12 @@ The hyperfine terms to be entertained by \gls{qmla} are then
 
 \begin{equation}
     \termset_{HF} = \left\{
-    \begin{align}  
+    \begin{split}  
         \begin{split}
         & \hat{S}_x\I_x, && \hat{S}_y\I_y, && \hat{S}_z\I_z, \\
         & \hat{S}_x\I_y, && \hat{S}_x\I_z, && \hat{S}_y\I_z 
         \end{split}
-    \end{align}
+    \end{split}
     \right\}.
     \label{eqn:exp_hf_terms}
 \end{equation}
@@ -566,11 +566,11 @@ Finally, combining \cref{eqn:exp_spin_terms} and \cref{eqn:exp_hf_terms},
 
 \begin{equation}
     \termset_{\textrm{NV}} = \left\{
-    \begin{align}
+    \begin{split}
         & \hat{S}_x, && \hat{S}_y, && \hat{S}_z, \\
         & \hat{S}_x\I_x, && \hat{S}_y\I_y, && \hat{S}_z\I_z, \\
         & \hat{S}_x\I_y, && \hat{S}_x\I_z, && \hat{S}_y\I_z 
-    \end{align}
+    \end{split}
     \right\}.
     \label{eqn:nv_terms_verbose}
 \end{equation}
@@ -674,7 +674,7 @@ The outcome of consolidation on $\mu$ is the determination of a single \emph{bra
         Greedy \gls{model search}. 
         Models (purple) are placed on branches, trained and consolidated (green) as in \cref{fig:qmla_overview}, 
             with the branch champion spawning (red) candidates to place on the subsequent branch.  
-        Branches are grouped in tiers, correspdoning to levels of approximation:
+        Branches are grouped in tiers, corresponding to levels of approximation:
             the first tier of the model generation strategy is shown, 
             where $\termset_1 = \{ \hat{S}_x, \hat{S}_y, \hat{S}_z\}$ is explored. 
         The final champion from the first tier seeds the second tier. 
@@ -691,7 +691,7 @@ We break the \gls{et} into three distinct tiers, each corresponding to an intuit
 Within each tier, terms are added greedily to the previous branch's champion, $\hat{H}_{C(\mu)}$.
 So, the first branch is given by $\mu = \{ \hat{S}_x, \hat{S}_y, \hat{S}_z\}$;
     say $\hat{H}_{C(\mu)} = \hat{S}_y$, then $\mu + 1$  determines that $\hat{S}_x, \hat{S}_z$ 
-    are not yet considerd, so it constructs the models $\{\hat{S}_{x,y}, \hat{S}_{y,z}\}$, e.g. \cref{fig:greedy_search}. 
+    are not yet considered, so it constructs the models $\{\hat{S}_{x,y}, \hat{S}_{y,z}\}$, e.g. \cref{fig:greedy_search}. 
 After exhausting all tiers, we consolidate the set of branch champions, $\mathbb{H}_C = \{ \h_{C(\mu)}\}$, 
     to determine the best model considered globally, $\hp$.  
 \par 
@@ -704,7 +704,7 @@ In general, restrictions of this kind undermine the \gls{es} and are considered 
 To account for this, we add a final test of reducibility on the \gls{champion model}, 
     triggered if any of the parameters of $\al^{\prime}$ are potentially negligible, 
     i.e. the posterior distribution of any parameter assigns credibility to the hypothesis that the parameter is 0.
-This champion reducibility test simply removes the negligible-parmeter terms from $\hp$, 
+This champion reducibility test simply removes the negligible-parameter terms from $\hp$, 
     yielding a reduced global champion, $\hp_r$.
 We then compute the \gls{bf} between $\hp, \hp_r$: 
     if the \gls{bf} indicates strong evidence in favour of the reduced version, 
@@ -714,10 +714,10 @@ In effect, we thus verify the statistical significance of each term included in 
 
 The total model in \cref{eqn:nv_ham_full} supports $N_t = 1 + 3 + 6 | \chi | + 3 + 3 |\chi| = 7 + 9|\chi| $ terms, 
     which we reduced to a space of $N_t=3 + 6 |\chi| = 9$ through several approximations.
-Even so, the remainng $2^9$ permitted models were reduced further by building the logic of this \gls{es} 
-    from our intuition aroud existing knowledge of typical \gls{nvc} systems.
+Even so, the remaining $2^9$ permitted models were reduced further by building the logic of this \gls{es} 
+    from our intuition around existing knowledge of typical \gls{nvc} systems.
 As such, the described \gls{es} will only ever consider $<20$ models per instance. 
-The described \gls{es} seems overly perscriptive, 
+The described \gls{es} seems overly prescriptive, 
     but should be viewed as a first attempt at a generalisable approach: 
     essentially we can view the tiers of the greedy search as characterising the system 
     at various approximations, 
@@ -783,7 +783,7 @@ The experiment was run with increasing $t$ for the duration of the first decay o
     i.e. until it had dephased, 
     so the data available for examination terminate at $t_{\textrm{max}} {\sim} 4 \mu s$, see \cref{fig:nv_raw_data}. 
 As discussed in \cref{sec:heuristic}, usually it is helpful to allow an \gls{edh} to
-    choose the experimental controls, including the evoltuion time, $t$, against which 
+    choose the experimental controls, including the evolution time, $t$, against which 
     the model is trained at each experiment;
     the default \gls{pgh} attempts to select $t$ at the upper boundary of times 
     where the model is expected to be predictive, to maximise the information gained by the experiment (see \cref{sec:pgh}). 
@@ -826,7 +826,7 @@ We apply the \gls{es} described in \cref{sec:exp_es} to the raw data of \cref{fi
     the results are summarised in \cref{fig:exp_qmla_analysis}.
 We first focus on the overall outcomes:
     the most blunt figure of merit of interest is simply whether \gls{qmla}
-    overfits or underits the true parameterisation. 
+    overfits or underfits the true parameterisation. 
 In preliminary analysis we run 500 \glspl{instance} with varying $\ho$, 
     varying the cardinality of $\ho$,
     so we can broadly gauge the tendency towards over- and under-fitting:
@@ -856,7 +856,7 @@ In general, the \glspl{champion model} from each instance are highly predictive:
         The \emph{under-parameterised} \emph{ (over-parameterised)} class refers to models with less (more) 
         parameters than $\ho$. 
         \emph{Correct} indicates that exactly $\ho$ was found. 
-        The \emph{mis-parameterised} class groups models with the same parametrisation cardinality as $\ho$, but different \gls{hamiltonian} terms. 
+        The \emph{mis-parameterised} class groups models with the same parameterisation cardinality as $\ho$, but different \gls{hamiltonian} terms. 
         \textbf{Inset}, Histogram of occurrences of $R^2$ values for each retrieved $\hp$ 
         against a sampling of datapoints from $\ho$.
         The blue vertical line groups together all those instance champions with $R^2<0$, and the median $R^2=0.84$ is shown as a red dotted line.
@@ -882,7 +882,7 @@ In general, the \glspl{champion model} from each instance are highly predictive:
     \label{fig:exp_qmla_analysis}
 \end{figure}
 Then, considering the performance of the algorithm on whole, 
-    we perform \glspl{run} of 100 \glspl{instance} on the exerpimental data as well as simulated data,
+    we perform \glspl{run} of 100 \glspl{instance} on the experimental data as well as simulated data,
     where the simulation assumes\footnotemark \ $\ho = \hat{S}_{xyz} \hat{A}_z$.
     The set of models selected most frequently are shown in \cref{fig:exp_qmla_analysis}\textbf{(c)},
     and each model is trained with $\Ne=1000, \ \Np=3000$,
@@ -968,7 +968,7 @@ Each layer, $\mu$, nominates their branch champion, $\hat{H}_{C(\mu)}$;
     during any of the 100 \glspl{instance} on either simulated or experimental data.
     IDs of candidate models are on the vertical axis, and labels for the terms on the horizontal axis.
     The \gls{true model} $\hat{H}_0$ for the simulated case is highlighted in green and a subset of credible models in blue, 
-    i.e. models which may reasonbaly be expected to describe the targeted \glsxtrlong+{nvc} from theoretical arguments.
+    i.e. models which may reasonably be expected to describe the targeted \glsxtrlong+{nvc} from theoretical arguments.
     \textbf{Right,} number of wins for each of the candidate models out of $100$ independent \gls{qmla} \glspl{run}. 
     Cases adopting simulated data are shown by empty bars, with those using the experimental dataset shown by green bars.
     \figtableref
@@ -1025,7 +1025,7 @@ We see that each model faithfully captures the essential dynamics arising from t
 }
 \par 
 
-The key insight promised by \gls{qmla} is to identfiy the interactions present in the studied system, 
+The key insight promised by \gls{qmla} is to identify the interactions present in the studied system, 
     which in this case was the decoherence processes of an \gls{nvc}.
 In \cref{fig:nv_learned_params} we show the number of times each of the terms permitted, 
     i.e. $\hat{t} \in \termset_{\textrm{NV}}$ from \cref{eqn:nv_terms},
@@ -1101,7 +1101,7 @@ The Poincar\'e recurrence time scales polynomially with the number of degrees of
     within the closed system:  $t_R \sim n!$. 
 That is, even though the system of many interacting components \emph{will} rephase, 
     the time required to do so may be greater than the age of the universe \cite{schlosshauer2005decoherence}. 
-Conversely, in our simplistic two-qubit model, the spectrum of eigenenergies is artifically restricted, 
+Conversely, in our simplistic two-qubit model, the spectrum of eigenenergies is artificially restricted, 
     and so revivals will appear unrealistically quickly. 
 \par 
 \cref{fig:predicted_revivals} shows the predicted revivals of $\hp = \hat{S}_{x,y,z}\hat{A}_z$, 
@@ -1131,7 +1131,7 @@ Here our aim was to model the interactions of the \gls{nvc} spin with its neares
 
 Invoking a finite-size bath to approximate the genuine open-system nature of the \gls{nvc} 
     permits us to examine the interaction of the spin with few neighbours, 
-    sufficient to characterise the domainant decoherence processes of a system, as we have done in this chapter.
+    sufficient to characterise the dominant decoherence processes of a system, as we have done in this chapter.
 However, the approximation can not capture all of the spin's interactions, 
     so we are motivated to consider models involving more nuclei, 
     and ultimately models of open quantum system. 

@@ -1,7 +1,7 @@
 \cref{chapter:nv} concerned a two-qubit approximation of the short-time dynamics of an \gls{nvc}. 
 It is valid criticism that the corresponding \gls{model space} searched was reduced substantially through prior knowledge,
     and it therefore remains to test \gls{qmla} in a large model space, on physically meaningful data. 
-In this chapter, we extend \gls{qmla} to consider appoximations of \gls{nvc} sytems using more qubits, 
+In this chapter, we extend \gls{qmla} to consider approximations of \gls{nvc} systems using more qubits, 
     representing several nuclear sites, which aim to capture the interactions between the 
     target \gls{nvc} and the environment more thoroughly. 
 Here we will simulate the target system, allowing us to make definite statements on the performance of \gls{qmla}, 
@@ -103,7 +103,7 @@ The complete model is then given by
     \caption[Terms permitted in the QMLA genetic algorithm when modelling the extended nitrogen-vacancy centre systems]{
         Terms permitted in the \gls{qmla} \glsxtrfull+{ga} when modelling the extended \glsxtrlong+{nvc} systems.
         Each term is permitted in the \gls{model search} from expectations about the system under study. 
-        The succinct representaton is listsed as $\hat{t}$, along with an interpretation of the term's physical contribution to the system. 
+        The succinct representation is listed as $\hat{t}$, along with an interpretation of the term's physical contribution to the system. 
         The parameter values used in simulations can be found from from the listings of \cref{eqn:complete_long_dynamics_nv_model}. 
         The presence of the term in the \gls{true model} is indicated in the final column: 
             $\hat{t}\notin\ho$ do not contribute to the dynamics of \cref{fig:nv_revival_raw} 
@@ -114,7 +114,7 @@ The complete model is then given by
 
 
 For the purpose of testing \gls{qmla}, we can choose a subset of terms from \cref{eqn:many_qubit_full_model} to 
-    consitute the \gls{true model}: to set $\ho$, we use the \emph{secular} approximation, 
+    constitute the \gls{true model}: to set $\ho$, we use the \emph{secular} approximation, 
     i.e. we assume the magnetic field is perfectly aligned along the $z$-axis \cite{dutt2007quantum, rowan1965electron}.
 In the secular approximation, the \gls{nvc} spin qubit rotates only about the $z$-axis, 
     and coupling between the \gls{nvc} and nuclear qubits are only via $\hat{S}_z \cdot \hat{A}_z^{\chi}$.
@@ -187,7 +187,7 @@ Here we will use the same \gls{es} as described in \cref{sec:ga_adaptation_to_qm
     i.e. where model generation is driven by a \gls{ga}, 
     and models are cast to \glspl{chromosome}. 
 In particular, candidate model's fitness will be computed from the residuals
-    between their and the sytem's dynamics, described fully in \cref{sec:residuals}. 
+    between their and the system's dynamics, described fully in \cref{sec:residuals}. 
 This \acrfull{of} relies on the definition of a validation dataset, $\expset_v$,
     which we compose of tomographic \glspl{probe} (see \cref{sec:probes}) 
     and times generated uniformly up to 
@@ -281,7 +281,7 @@ The number of times each of the terms considered, \cref{eqn:nv_ga_terms},
 Here, $\hat{t} \in \termset_0$ are found in $\geq 94\%$ of instances, 
     while $\hat{t} \notin \termset_0$ are found in $\leq 11\%$, 
     shown in \cref{fig:nv_ga_hinton} and listed in \cref{table:nv_ga_term_counts}.
-Such a discrepency, as well as the \glspl{win rate} for the models, 
+Such a discrepancy, as well as the \glspl{win rate} for the models, 
     allows for the clear declaration of the model $\ho$ as the favoured representation 
     for the quantum system. 
 \par 
