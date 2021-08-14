@@ -1,5 +1,3 @@
-
-
 All of the details in \cref{chapter:qhl} and \cref{chapter:qmla} are implemented in the \gls{qmla}
     software framework, a (mostly) Python codebase which underlies all of the 
     arguments, results and figures in this thesis \cite{flynn2021QMLA}. 
@@ -164,7 +162,7 @@ mickey.summarise()
             red objects are \emph{data/properties},
             blue are \emph{functions/methods} 
             and green are \emph{classes}. 
-        Objects are grouped broady, with double lines showing communication channels between (groups of) objects. 
+        Objects are grouped broadly, with double lines showing communication channels between (groups of) objects. 
         \textbf{Infrastructure,} functions for the implementation of model training/comparisons on 
             a remote compute server, \cref{sec:infrastructure}.
         \textbf{Algorithm,} implementation of the iterative procedures and decision-making 
@@ -178,7 +176,7 @@ mickey.summarise()
 \end{figure}
 
 A driving motivation for the development of \gls{qmla} is generality:
-    we endevaour to make \gls{qmla} applicable to any target quantum system, \gls{q}.
+    we endeavour to make \gls{qmla} applicable to any target quantum system, \gls{q}.
 We provide a framework, where users can tailor the inputs and methodology to their needs.
 The main components of the framework are depicted in \cref{fig:software_overview}, 
     broadly grouping concepts as part of its \emph{infrastructure}, \emph{algorithm}
@@ -224,7 +222,7 @@ Our base \gls{es} class uses sensible defaults for this modular functionality,
         The training phase requires a set of probes against which to optimise individual models, 
             as examined in \cref{sec:probes}. 
         Users may wish to specify the design of such probes, for example to match experimental constraints 
-        which restrict the realisible probes in the performance of the experiment. 
+        which restrict the realisable probes in the performance of the experiment. 
         Alternatively, it may be feasible to design probes which increase the information gained per experiment, 
         enabling faster learning. 
     & \Gls{edh}. The choice of \gls{edh} greatly influences how the training will perform, see \cref{sec:heuristic}. 
@@ -260,7 +258,7 @@ The core \gls{qmla} class manages the database of models and their comparisons,
             and places them in a task queue. 
         Worker processes (depicted as computers) retrieve those tasks and compute them in parallel, 
             and interact with a database. 
-        \textbf{Right,} Distributed tasks occuring in parallel, with each process communicating with the database. 
+        \textbf{Right,} Distributed tasks occurring in parallel, with each process communicating with the database. 
         The left-hand process assumes the task of training the model with ID 5, $\hat{H}_5$:
             it first queries the database for a packet of core information, $M_5$, 
             which informs the model training procedure, for example the terms and parameters 
@@ -303,7 +301,7 @@ Thereafter it can perform some analysis; see \cref{sec:qmla_outputs} for further
 
 \footnotetext{Note when running in \emph{serial} (e.g. running locally on a personal machine), it is valid to simply set $N_c=1$.}
 \par 
-\gls{qmla} and all workers have shared access to a database, through which they communciate data pertaining to individual tasks \cite{redis}. 
+\gls{qmla} and all workers have shared access to a database, through which they communicate data pertaining to individual tasks \cite{redis}. 
 We use a simple \emph{task queue} for the distribution of jobs: 
     \gls{qmla} adds tasks to the queue and any available worker can take the next job and compute it \cite{redis_queue}.
 The queue can be accessed by only one thread at a time, to ensure tasks are not duplicated. 
@@ -324,7 +322,7 @@ It is worth noting that tasks are completely independent, so some worker process
     although the comparison between $\hi, \hj$ can not begin until both $R_i, R_j$ are available. 
 To ensure tasks are not launched in advance of their dependencies, we enforce a \emph{blocking} protocol, 
     whereby new batches of jobs are not released until the master receives all the results of jobs on which the new tasks depend:
-    \gls{qmla} simply waits until all models on a given branch have been trained before queueing comparisons 
+    \gls{qmla} simply waits until all models on a given branch have been trained before queuing comparisons 
     on that branch.
 \par
 

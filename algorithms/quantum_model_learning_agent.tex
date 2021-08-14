@@ -1,5 +1,3 @@
-
-
 A \emph{model} is the mathematical description of a quantum system of interest, \gls{q}.
 In \cref{chapter:qhl}, we discussed a number of systems in terms of their \gls{hamiltonian} descriptions,
     although in general the description of a quantum system need not be Hamiltonian, 
@@ -29,7 +27,7 @@ We will first introduce some concepts which will prove useful when discussing \g
 In this thesis, \glspl{model} are synonymous with \glspl{hamiltonian},
     composed of a set of \emph{\glspl{term}}, $\termset = \{ \hat{t} \}$, 
     where each $\hat{t}$ is a matrix. 
-Each term is assosiated with a multiplicative scalar, which may be referred to as that term's \emph{parameter}: 
+Each term is associated with a multiplicative scalar, which may be referred to as that term's \emph{parameter}: 
     we impose order on the terms and parameters such that we can succinctly summarise any model as 
 
 \begin{align}
@@ -97,7 +95,7 @@ Intuitively, we see that the \gls{bf} is the ratio of the \gls{likelihood}, i.e.
     \gls{experiment} set $\expset$, against the same \gls{likelihood} for model $\hj$.
 \glspl{bf} are known to be statistically significative of the stronger model 
     from a pair when both models attempt to explain observed data,
-    while favouring models of low cardinality, thereby supressing overfitting models. 
+    while favouring models of low cardinality, thereby suppressing overfitting models. 
 \par 
 
 We have that, for independent \glspl{experiment}, and recalling \cref{eqn:total_likelihood}, 
@@ -140,7 +138,7 @@ This is simply the exponential of the difference between two models' \glspl{tltl
 Intuitively, if $\hi$ performs well, and therefore has a high \gls{tltl}, $\tll_{i}=-10$, 
     and $\hj$ performs worse with $\tll_{j}=-100$, then $B_{ij} = e^{-10-(-100)} = e^{90} \gg 1$.
 Conversely for $\tll_{i}=-100, \tll_{j}=-10$, then $B_{ij} = e^{-90} \ll 1$. 
-Therfore $\lvert B_{ij} \rvert$ is the strength of the statistical evidence
+Therefore $\lvert B_{ij} \rvert$ is the strength of the statistical evidence
     in favour of the interpretation 
 
 \begin{equation}
@@ -250,7 +248,7 @@ In short, the components of the iterative \gls{model search} for a given \gls{es
     
     The performance of candidates in $\mu$ are ranked relative to each other, 
         such that some models are favoured over others, for instance through selection of a \emph{branch champion}, $\hat{H}_C^{\mu}$. 
-        Consolidation can rely on any statistical test, with \glspl{bf} providing a robust platform to disinguish 
+        Consolidation can rely on any statistical test, with \glspl{bf} providing a robust platform to distinguish 
         any pair of candidates.
     
     \item[Spawn] \  
@@ -274,12 +272,12 @@ The final step of \gls{qmla} is then to consolidate the set of champion models f
         Schematic of \acrfull{qmla}. 
         \textbf{a-d,} \Gls{model search} phase within an \acrfull{es}.
         \textbf{a,} Models are placed as (empty, purple) nodes on the \emph{active branch} $\mu$, 
-            where each model is a sum of terms $\hat{t}_k$ multiplied by corrresponding scalar parameters $\alpha_k$. 
+            where each model is a sum of terms $\hat{t}_k$ multiplied by corresponding scalar parameters $\alpha_k$. 
         \textbf{b,} Each active model is trained according to a subroutine such as 
             \acrlong{qhl} to optimise $\al_i$, 
             resulting in the trained $\hat{H}(\al_i^{\prime})$ (filled purple node). 
         \textbf{c,} $\mu$ is consolidated, i.e. models are evaluated relative to other
-            models on $\mu$, according to the consolidation mechanism specificed by the \gls{es}.
+            models on $\mu$, according to the consolidation mechanism specified by the \gls{es}.
             In this example, pairwise Bayes factors, $B_{ij}$, between $\hi, \hj$ are computed, 
             resulting in the election of a single branch champion $\hat{H}_C^{\mu}$ (bronze). 
         \textbf{d,} A new set of models are \emph{spawned} according to the chosen
@@ -486,7 +484,7 @@ These can be chosen to match the requirements of the user, and are set via the \
 \end{description}
 
 \subsection{Exploration strategy examples}
-To solidifiy the concept of \glspl{es}, and how they affect the overall
+To solidify the concept of \glspl{es}, and how they affect the overall
     reach and runtime of a given \gls{et}, consider the following examples, 
     where each strategy specifies how models are generated, as well as how trained models are consolidated within a branch. 
 Recall that all of these strategies rely on \gls{qhl} as the model training subroutine, 
@@ -533,7 +531,7 @@ These examples illustrate some of the design decisions involved in composing an 
     namely whether timing considerations are more important than thoroughly exploring the model space.
 They also show considerable time--savings in cases where it is
     acceptable to forego all model comparisons. 
-The approch in (a) is clearly limited in its applicability, 
+The approach in (a) is clearly limited in its applicability, 
     mainly in that there is a heavy requirement for prior knowledge, 
     and it is only useful in cases where we either know $\ho \in \mathbb{H}$, 
     or would be satisfied with approximating $\ho$ as the closest available $\hj \in \mathbb{H}$. 
@@ -574,7 +572,7 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
     \end{easylist}
     \item[Consolidation] \
     
-    As rigourous as desired by the user. 
+    As rigorous as desired by the user. 
     \begin{easylist}[itemize]
     && Consolidation occurs at the branch level of each \gls{et}, but also in finding the tree champion, 
         and ultimately the global champion. 
@@ -596,7 +594,7 @@ More precisely, we can view individual models as \emph{learning agents} accordin
         & a \emph{problem generator}: designs actions in an attempt to learn about the system -- this is precisely the role of the \gls{edh};
         & a \emph{performance element}: implements the designed actions and measures the outcome
             -- the measurement of a datum following the \gls{experiment} designed by the \gls{edh}; 
-        & a \emph{critic}: the likleihood function informs whether the designed action (experiment) was successful; 
+        & a \emph{critic}: the likelihood function informs whether the designed action (experiment) was successful; 
         & a \emph{learning element}: the updates to the weights and overall parameter distribution improve the model's performance over time. 
     \end{easylist}
 
@@ -628,7 +626,7 @@ The  \gls{model search}  itself is listed in \cref{alg:model_search},
     \caption{Quantum Model Learning Agent}
     \label{alg:qmla}
     \DontPrintSemicolon
-    \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulateable quantum system}}
+    \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulatable quantum system}}
     \KwIn{ $\mathbb{S}$ \tcp*[1]{set of exploration strategies}}
     \KwOut{$\hat{H}^{\prime}$ \tcp*[1]{\gls{champion model}}}\;
     
@@ -647,7 +645,7 @@ The  \gls{model search}  itself is listed in \cref{alg:model_search},
     \caption{Exploration strategy subroutine: \ttt{model\_search}}
     \label{alg:model_search}
     \DontPrintSemicolon
-    \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulateable quantum system}}
+    \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulatable quantum system}}
     \KwIn{ $S$ \tcp*[1]{exploration strategy: collection of rules/subroutines}}
     \KwOut{$\hat{H}_{S}^{\prime}$ \tcp*[1]{exploration strategy's nominated \gls{champion model}}}\;
      
@@ -797,7 +795,7 @@ The  \gls{model search}  itself is listed in \cref{alg:model_search},
     \caption{Bayes Factor calculation}
     \label{alg:bayes_factor}
     \DontPrintSemicolon
-    \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulateable quantum system.}}
+    \KwIn{ $Q$ \tcp*[1]{some physically measurable or simulatable quantum system.}}
     \KwIn{ $\hat{H}_j, \hat{H}_k$ \tcp*[1]{\gls{hamiltonian} models to compare }}
     \KwIn{ $\Pr_{j}(\al), \Pr_{k}(\al)$ \tcp*[1]{posterior distribution following training for $\hat{H}_j, \hat{H}_k$}}    
     \KwIn{$\Np^{\prime}$ \tcp*[1]{number of \glspl{particle} to draw from posteriors for evaluation}}
