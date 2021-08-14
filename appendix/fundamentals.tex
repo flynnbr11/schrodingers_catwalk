@@ -21,7 +21,7 @@ We will briefly recall some definitions for reference.
         Adjoint & $\ket{\psi}^{\dag}  = (\ket{\psi}^{*})^{T}$\\
         \hline 
     \end{tabular}
-    \caption[Linear algebra defintions]{Linear algebra definitions.}
+    \caption[Linear algebra definitions]{Linear algebra definitions.}
     \label{table:linear_algebra}
 \end{table}
 The dual vector of a vector, or \emph{ket} $\ket{\psi}$, is given by its \emph{bra},  $\bra{\psi} = \ket{\psi}^{\dag}$. 
@@ -53,34 +53,43 @@ Each version of the statements aims to achieve the same foundation, so we endeav
 
 \begin{postulate}
 \item \label{postulate:conservative_force_field} 
-    Every moving particle in a conservative force field has an associated wave-function, $\ket{\psi}$. 
-    From this wave-function, it is possible to determine all physical information about the system. 
+    Every moving particle in a conservative force field has an associated state vector, 
+        known as its wavefunction, $\ket{\psi} \in \mathcal{H}$, 
+        where $\mathcal{H}$ is the \emph{Hilbert space} to which the particle belongs. 
+    Normalised linear combinations of state vectors are valid state vectors, 
+        known as \emph{superpositions}.
+    From this wavefunction, it is possible to determine all physical information about the system. 
 \item \label{postulate:eigenvalues} 
-    All particles have physical properties called observables (denoted \gls{q}). 
-    In order to determine a value, \gls{q}, for a particular observable, there is an associated \emph{operator} $\hat{Q}$, which, 
-        when acting on the particles wavefunction, yields the value times the wavefunction. 
-    The observable \gls{q} is then the eigenvalue of the operator $\hat{Q}$.
+    Particles have physically \emph{observable} properties, $Q$, corresponding to a linear operator $\hat{Q}$.
+    Measurement of such an observable -- i.e. $\hat{Q}$ acting on $\ket{\psi}$ -- 
+        will only ever result in an \emph{eigenvalue} of that operator, $q$, 
+        with the system immediately after measurement in the corresponding eigenstate, $\ket{q}$:
     \begin{equation}
-    \hat{Q} \ket{\psi} = q | \psi \rangle
+    \hat{Q} \ket{\psi} = q \ket{\psi}.
     \end{equation}
+    The set of eigenvalues, $\{q\}$, is the spectrum of $\hat{Q}$: 
+        in the case where the spectrum is discrete, 
+        the possible outcomes of measurement are \emph{quantised}.
 \item \label{postulate:hermiticity}
-    Any such operator  $\hat{Q}$ is Hermitian
+    Any such operator  $\hat{Q}$ is Hermitian,
     \begin{equation}
-        \hat{Q}^\dag = \hat{Q}
+        \hat{Q}^\dag = \hat{Q}.
     \end{equation}
 \item \label{postulate:eigenfunction}
-    The set of eigenfunctions for any operator $\hat{Q}$ forms a complete set of linearly independent functions.
+    The set of eigenfunctions for an observable operator $\hat{Q}$ forms a complete set of linearly independent functions, 
+    i.e. a \emph{basis} of the Hilbert space.
 \item \label{postulate:expectation_values}
-    For a system with wavefunction $ | \psi \rangle$, the expectation value of an observable \gls{q}  with respect to an operator $\hat{Q}$ is  denoted by $\la q \ra$ and is given by 
+    For a system with wavefunction $ \ket{\psi}$, the expectation value of an observable $Q$
+        with respect to an operator $\hat{Q}$, denoted $\braket{q}$, is given by 
     \begin{equation}
-    \la q \ra = \langle \psi | \hat{Q} | \psi \rangle
+    \braket{q} = \langle \psi | \hat{Q} \ket{\psi} = \sum_{n} q_n \braket{q_n | \hat{Q} | q_n}.
     \end{equation}
 \item \label{postulate:schrodinger_eqn}
-    The time evolution of $ | \psi \rangle$ is given by the time dependent \emph{\schrodinger Equation}
+    The time evolution of $ \ket{\psi}$ is given by the time dependent \emph{\schrodinger Equation}
     \begin{equation}
     i \hbar \frac{\partial \ket{\psi}}{\partial t} = \hat{H} \ket{\psi},
     \end{equation}
-    where $\hat{H}$ is the system's Hamiltonian.
+    where $\hat{H}$ is the system's \gls{hamiltonian}.
 \end{postulate}
  
 Using these building blocks, we can begin to construct a language to describe quantum systems. 
@@ -102,7 +111,7 @@ In general, if $ \{ \ket{x} \} $ are the eigenstates of a system, then the syste
 
 
 The \emph{state space} of a physical system (classical or quantum) is then the set of all possible states the system can exist in, 
-    i.e the set of all possible values for $\ket{\psi}$ such that \cref{vector_norm} are satisfied. 
+    i.e. the set of all possible values for $\ket{\psi}$ such that \cref{vector_norm} are satisfied. 
 \par 
 
 For example, photons can be polarised horizontally ($\leftrightarrow$) or vertically ($\updownarrow$);
@@ -238,7 +247,7 @@ There are certain restrictions on a physically possible quantum transformation: 
     % it should be equally valid to first apply $U$ to $\ket{\psi}$ and then measuring, as it is to first measure and then transform the result. %\todo{Does this make any sense?}
 
 To fulfil these properties, we require that $U$ \emph{preserve the inner product}:
-$$ \langle \psi_0 | U^{\dag}U | \psi \rangle = \langle \psi_0 | \psi \rangle. $$
+$$ \langle \psi_0 | U^{\dag}U \ket{\psi} = \langle \psi_0 \ket{\psi}. $$
 
 That is, we require that any such transformation be \emph{unitary}:
 
@@ -414,7 +423,7 @@ We can similarly define any operator which acts on an $n$ qubit state as a linea
 
 \begin{example}
     To define a transformation that will exchange basis vectors $\ket{00}$ and $\ket{11}$, 
-        while leaving $\ket{01}$ and $\ket{10}$ unchanged (ie exchanging $\ket{01} \leftrightarrow \ket{01}, \ket{10} \leftrightarrow \ket{10} $) 
+        while leaving $\ket{01}$ and $\ket{10}$ unchanged (i.e. exchanging $\ket{01} \leftrightarrow \ket{01}, \ket{10} \leftrightarrow \ket{10} $) 
         we define an operator
     \begin{equation}
         \hat{Q} = \ket{00} \bra{11} + \ket{11} \bra{00} + |10 \ra \bra{10} + \ket{01} \la 01| 

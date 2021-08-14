@@ -8,7 +8,7 @@ Its history is therefore imprecise since a number of early, apparently unrelated
     which now constitute \gls{ml} routines \cite{mcculloch1943logical, turing2009computing}. 
 Nevertheless, the field of \gls{ml} has been advancing rapidly since the second half of the $20^{\textrm{th}}$ century \cite{russell2002artificial}, 
     especially recently due to the availability of advanced hardware such as \glspl{gpu}, 
-    facilitating significant progress through an ever-increasing aresnal of powerful open source software \cite{pedregosa2011scikit, abadi2016tensorflow, paszke2019pytorch}. 
+    facilitating significant progress through an ever-increasing arsenal of powerful open source software \cite{pedregosa2011scikit, abadi2016tensorflow, paszke2019pytorch}. 
 \par 
 
 Throughout this thesis, we endeavour to combine known methods from the \gls{ml} literature with capabilities of \glspl{qc}\footnotemark. 
@@ -387,11 +387,11 @@ A number of candidates are sampled at random from $\population$ into a single \e
 Candidates from the generation are then mixed together to produce the next generation's candidates: 
     this \emph{crossover} process aims to combine only relatively strong candidates, such that the average 
     candidates' fitness improve at each successive generation, 
-    mimicing the biological mechanism whereby the genetic makeup of \emph{offspring} is an even mixture of both parents
+    mimicking the biological mechanism whereby the genetic makeup of \emph{offspring} is an even mixture of both parents
     through the philosophy of \emph{survival of the fittest}. 
 The selection of strong candidates as parents for future generations is therefore imperative; 
     in general parents are chosen according to their fitness as determined by the \gls{of}. 
-Buidling on this biological motivation, much of the power of \glspl{ga} comes from the concept of \emph{mutation}: 
+Building on this biological motivation, much of the power of \glspl{ga} comes from the concept of \emph{mutation}: 
     while offspring retain most of the genetic expressions of their parents, some elements are mutated at random.
 Mutation is crucial in avoiding local optima of the \gls{of} landscape
     by maintaining diversity in the examined subspace of the population.
@@ -415,7 +415,7 @@ Given access to the population, $\population$,
     & Map the fitnesses of each candidate, $\{g_j\}$, to selection probabilities for each candidate, $\{s_j\}$
     && e.g. by normalising the fitnesses, or by removing some poorly-performing candidates and then normalising. 
     & Generate the next generation of candidates
-    && teset $\mu = \{ \}$;
+    && reset $\mu = \{ \}$;
     && \label{ga:select} Select pairs of parents, $\left\{\gamma_{p_1}, \gamma_{p_2}\right\}$, from $\mu$
     &&& each candidate's probability of being chosen is given by their $s_j$;
     && cross over $\left\{\gamma_{p_1}, \gamma_{p_2}\right\}$ to produce children candidates, $\left\{\gamma_{c_1}, \gamma_{c_2}\right\}$
@@ -432,7 +432,7 @@ Given access to the population, $\population$,
     \label{alg:ga}
     \DontPrintSemicolon
     \KwIn{ $\population$ \tcp*[1]{population of candidate solutions to given problem}}
-    \KwIn{ $g()$ \tcp*[1]{function to compute objective funtion}}
+    \KwIn{ $g()$ \tcp*[1]{function to compute objective function}}
     \KwIn{ $\ttt{map\_g\_to\_s}()$ \tcp*[1]{function to map fitness to selection probability}}
     \KwIn{ $\ttt{select\_parents}()$ \tcp*[1]{function to select parents among generation}}
     \KwIn{ $\ttt{crossover}()$ \tcp*[1]{function to cross over two parents to produce offspring}}
@@ -483,7 +483,7 @@ In general, \glspl{gene} can have continuous values, although usually, and for a
     in the \gls{chromosome}. 
 
 \subsection{Illustrative example: knapsack problem}\label{sec:knapsack}
-One commonly referenced combinatorial optimisation problem is the \emph{knacksack problem},
+One commonly referenced combinatorial optimisation problem is the \emph{knapsack problem},
     which we will use to elucidate the abstract concepts described so far, 
     and introduce further concepts with immediate illustration. 
 The knapsack problem is stated as:
@@ -696,7 +696,7 @@ The one-point crossover is shown for $n=6$ with $\kappa=3$ in \cref{fig:gen_alg_
     recalling the chromosome structure from \cref{fig:gen_alg_reproduction}.
 \par 
 By allowing $\kappa$ other than the midpoint, we drastically increase the number of combinations of parents available for reproduction. 
-Finally, then, parent selection is done by constructing a database of pairs of potentital parents with all available crossover points, 
+Finally, then, parent selection is done by constructing a database of pairs of potential parents with all available crossover points, 
     with selection probability given by the product of their individual fitnesses. 
 This is conceptually equivalent to selection via roulette wheel as above. 
 Recalling the fitnesses (values) of \cref{table:knapsack_candidates}, we generate the parent selection database
@@ -722,8 +722,8 @@ Within every generation of the \gls{ga}, each candidate must be evaluated,
     candidates for the next generation.
 In the example of the knapsack problem, candidate solutions were evaluated by the value of their contents, 
     but also by whether they would fit in the knapsack. 
-Idenitfiyng the appropriate method by which to evaluate candidates is arguably the most important aspect of designing a \gls{ga}:
-    while the choice of hyperperameters ($N_g, N_m, \tau, r_m$) dictate the efficacy of the search, 
+Identifying the appropriate method by which to evaluate candidates is arguably the most important aspect of designing a \gls{ga}:
+    while the choice of hyperparameters ($N_g, N_m, \tau, r_m$) dictate the efficacy of the search, 
     the lack of an effective metric by which to distinguish candidates would render the procedure pointless.
 Considerations are hence usually built into the \acrlong{of};
     \gls{ga} implementations later in this thesis therefore demand we design \acrlongpl{of} 

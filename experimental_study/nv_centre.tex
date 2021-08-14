@@ -251,7 +251,7 @@ These are what we refer to as \emph{slow} interactions:
     where the Hamiltonian consists solely of slow terms, 
     enabling us to study the spin's interactions with its environment beyond 
     the nearest \gls{carbon} atom.
-We will explore this possibility in \cref{chapter:many_qubits}.
+We will utilise this strategy in \cref{chapter:many_qubits}.
 \footnotetext{
     The timescales on which these interactions decohere the spin are orders of magnitude higher
     then available through alternative decoupling schemes,
@@ -313,7 +313,7 @@ That is, we assign this projection as the quantity $\Pr(0 | \ho, t)$ (the  \gls{
 
 By varying the evolution time, $t$, used within the Hahn echo sequence, we can map the \gls{likelihood} against time, 
     which we can view as capturing the \emph{dynamics} of the \gls{nvc} spin, \cref{fig:nv_raw_data}.
-We vary the evolution time up to $t {\sim} 4 \mu s$ in intervals of $\Delta t = 50 \SI{}{\nano\second}$, 
+We vary the evolution time up to $t \approx 4 \mu s$ in intervals of $\Delta t = 50 \SI{}{\nano\second}$, 
     so we have 425 data points. 
 Note the data for the studied \gls{nvc} is taken once and analysed offline, 
     i.e. \gls{qmla} does not have complete authority to design \glspl{experiment} 
@@ -885,7 +885,7 @@ Then, considering the performance of the algorithm on whole,
     we perform \glspl{run} of 100 \glspl{instance} on the exerpimental data as well as simulated data,
     where the simulation assumes\footnotemark \ $\ho = \hat{S}_{xyz} \hat{A}_z$.
     The set of models selected most frequently are shown in \cref{fig:exp_qmla_analysis}\textbf{(c)},
-    and each model is trained with $\Ne=1000, \Np=3000$,
+    and each model is trained with $\Ne=1000, \ \Np=3000$,
     with the \glspl{volume} of those models (in the experimental case) shown in  \cref{fig:exp_qmla_analysis}\textbf{(d)}.
 \footnotetext{
     Here we work backwards by setting the target model as that which \gls{qmla} deemed most appropriate for the available data.
@@ -1137,8 +1137,8 @@ However, the approximation can not capture all of the spin's interactions,
     and ultimately models of open quantum system. 
 In \cref{chapter:many_qubits} we consider a similar \gls{nvc} setup in simulation, 
     to explore \gls{qmla}'s capability while relaxing the effect of the finite size bath,
-    and we note in \cref{chapter:outlook} that in order for \gls{qmla} to prove useful 
-    in characterisation genuine quantum systems, we must incorporate complete open system models. 
+    and we note in \cref{chapter:outlook} that in order for \gls{qmla} to  meaningfully characterise
+    genuine quantum systems, it must explore models of open systems. 
 
 \subsection{Outlook}
 We have thus characterised the interactions which dominate the decoherence process for a given \gls{nvc}. 
