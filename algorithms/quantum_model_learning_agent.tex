@@ -298,6 +298,7 @@ The final step of \gls{qmla} is then to consolidate the set of champion models f
 \end{figure}
 
 % %%%%%%%%%%% EXPLORATION STRATEGIES %%%%%%%%%%% 
+\clearpage
 \section{Exploration strategies}\label{sec:exploration_strategies}
 \glsreset{es}
 \gls{qmla} is implemented by running $\Nt$ \glspl{et} concurrently, 
@@ -454,7 +455,6 @@ These can be chosen to match the requirements of the user, and are set via the \
         && In general it is preferable to use numerous probes in order to avoid biasing particular terms. 
         && In some cases we are restricted to a small number of available input probes, e.g. to match experimental constraints.
     \end{easylist}
-
     \item[\acrlong{edh}] \ 
     
     The method through which to design bespoke \glspl{experiment} to maximise the information 
@@ -581,6 +581,8 @@ Several aspects of \gls{qmla} are deliberately vague in order to facilitate gene
     \end{easylist}
 \end{description}
 
+\input{algorithms/figures/agents.tex}
+\clearpage
 \subsection{Agency}\label{sec:agency}
 While the concept of \emph{agency} is contentious \cite{franklin1996agent}, 
     we can view our overall protocol as a multi-agent system \cite{wooldridge2009introduction}, 
@@ -597,8 +599,9 @@ More precisely, we can view individual models as \emph{learning agents} accordin
         & a \emph{critic}: the likelihood function informs whether the designed action (experiment) was successful; 
         & a \emph{learning element}: the updates to the weights and overall parameter distribution improve the model's performance over time. 
     \end{easylist}
-
 We depict this analogy in \cref{fig:learning_agent}.
+\par 
+
 Overall, the \gls{qmla} \gls{model search} can be regarded as an unsupervised \gls{ml} algorithm, 
     since the \gls{true model} is unknown.  
 However, the flexibility of the \gls{es} paradigm permits any model design mechanism:
@@ -606,8 +609,6 @@ However, the flexibility of the \gls{es} paradigm permits any model design mecha
     is \emph{guided} by the environment, i.e. it learns whether subspaces of candidates are effective from 
     interaction with the system. 
 We are therefore justified in labelling the entire procedure as the \emph{quantum model learning agent}. 
-
-\input{algorithms/figures/agents.tex}
 
 
 %%%%%%%%%%% PSEUDOCODE %%%%%%%%%%% 
@@ -621,7 +622,6 @@ The  \gls{model search}  itself is listed in \cref{alg:model_search},
     branch consolidation (which can be based upon \gls{bf}, \cref{alg:bayes_factor})
     and centers on the generation of new models, an example of which -- based on a \emph{greedy search} prerogative -- 
     is given in  \cref{alg:generate_models}. 
-
 \begin{algorithm}
     \caption{Quantum Model Learning Agent}
     \label{alg:qmla}
