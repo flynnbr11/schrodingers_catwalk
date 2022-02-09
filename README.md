@@ -92,6 +92,8 @@ Corresponding to the `List of Publications`.
 
 * Papers
   * [1] The quantum model learning agent was written about in this [Nature Physics paper](https://www.nature.com/articles/s41567-021-01201-7) ([arxiv](https://arxiv.org/abs/2002.06169)). 
+  * [2] [Quantum Model Learning Agent: characterisation of quantum systems through machine learning
+](https://arxiv.org/abs/2112.08409).
 
 * Software
   * The QMLA framework is [available here](https::/github.com/flynnbr11/QMLA). 
