@@ -1,7 +1,7 @@
 # Schrodingers Catwalk
 
 This repository holds the LaTeX source code to my PhD thesis, `Schrodinger's Catwalk`, 
-[which can be downloaded as a PDF here](https://github.com/flynnbr11/schrodingers_catwalk/blob/main/thesis.pdf). 
+[which can be downloaded as a PDF here](https://research-information.bris.ac.uk/ws/portalfiles/portal/286042492/SchrodingersCatwalk_79b355.pdf). 
 
 ## Abstract
 
